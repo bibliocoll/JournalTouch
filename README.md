@@ -1,6 +1,6 @@
 # About
 
-JournalTouch provides a touch-optimized interface for browsing current journal tables of contents in responsive design. Fun!
+JournalTouch provides a touch-optimized interface for browsing current journal tables of contents in Responsive Design. Fun!
 
 # License
 
