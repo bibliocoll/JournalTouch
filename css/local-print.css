@@ -1,0 +1,8 @@
+nav, #actions, #actionGreeter,.columns.print {
+display:none;
+}
+
+/* hide URL hrefs */
+a[href]:after {
+   content:"" !important;
+}
