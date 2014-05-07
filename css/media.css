@@ -1,0 +1,69 @@
+/* Styles for large screens ***********************************************/
+/* make things a bit larger for higher touch sensitivity on large screens */
+@media only screen and (min-width: 85.063em) {
+/*************** Header **************************************************/
+
+.top-bar .name h1 {
+font-size:x-large;
+}
+
+.top-bar-section ul li > a#aboutLink {
+font-size:large;
+}
+
+.top-bar-section ul li > a {
+font-size:x-large;
+}
+
+.top-bar-section ul li > a.filter {
+font-size:initial;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+padding-bottom: 14px;
+}
+
+/**************** General ************************************************/
+
+.close-reveal-modal, .reveal-modal .close-reveal-modal {
+font-size: 5.375rem;!important
+}
+
+/* fancy screensaver for large (touch) screen */
+
+#screensaver {
+position: fixed;
+/*background: url('../img/bgcoll-logo.png') no-repeat center bottom;*/
+min-height:90%;
+left: 50%;
+z-index: 99;
+height: auto;
+margin-left: -40%;
+width: 80%;
+background-color: #F0F8FF;
+padding: 1.25rem;
+border: solid 1px #666;
+-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+top: 3.25rem;
+}
+
+/* filter position */
+#filterPanel {
+position:fixed;
+z-index:99;
+top: 100px;
+right: 50px;
+}
+
+/**************** Checkout ***********************************************/
+div#popoverButtons a.radius {
+font-size:larger;
+}
+
+#emptyCartSuccess .alert-box {
+font-size:larger;
+}
+
+}
+/* End large screens       ***********************************************/

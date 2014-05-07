@@ -1,0 +1,420 @@
+/*************** Default Styles ******************************************/
+
+/*************** Header **************************************************/
+
+/* nav bar */
+ul.title-area {
+padding-left: 15px;
+}
+
+.top-bar {
+height:75px;
+padding-top:15px;
+}
+
+.top-bar .title-area {
+height:75px;
+}
+
+.top-bar, 
+.top-bar.expanded, 
+.top-bar.expanded .title-area,
+.top-bar-section li:not(.has-form) a:not(.button) {
+background-color: #007095!important;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button):hover {
+background-color: #035773!important;
+}
+
+.top-bar-section > ul {
+background-color: #007095;
+}
+
+.top-bar-section > ul > .divider {
+border-right: dotted 1px #FFFFFF;
+}
+
+div.logo {
+background: url('../img/bgcoll-logo.png') no-repeat left top;
+height:254px; /* reserve space */
+}
+
+/* header: filter + filter on panel */
+.filterSelected, 
+#filterPanel,
+.top-bar-section li:not(.has-form) a.filterSelected {
+color:#fff;
+background-color:#035773;
+}
+
+#filterPanel:hover {
+background-color:#008CBA!important;
+}
+
+.top-bar.expanded .toggle-topbar a span {
+-webkit-box-shadow: none;
+box-shadow: none;
+color:#fff
+}
+
+nav a:hover {
+color:#FFFFFF;
+background-color:#043747!important;
+}
+
+nav a, nav h1 {
+color:#FFFFFF;
+}
+
+#aboutLink {
+margin-left: 20px;
+}
+
+/*************** Footer **************************************************/
+
+footer {
+border-top: solid 1px #DED9D9;
+background-color:#007095;
+min-height:150px;
+}
+footer > div {
+background: url('../img/bgcoll-logo-w.png') no-repeat left top;
+color:#efefef;
+padding: 24px 0 10px;
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+margin-top: 0;
+margin-bottom: 0;
+max-width: 62.5em;
+min-height:150px;
+}
+
+
+footer a:hover {
+color:#FFFFFF;
+background-color:#043747!important;
+}
+
+footer a {
+color:#FFFFFF;
+}
+
+/*************** General *************************************************/
+
+body *, .accordion dd > a, .top-bar-section ul li > a, button, .button {
+/*font-family: Tahoma, Verdana, Segoe, sans-serif;*/
+/*font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;*/
+font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+}
+
+/* About page Modal */
+#about > .row:first-child {
+background: url('../img/bgcoll-logo.png') no-repeat right top;
+}
+
+i.switcher {
+cursor: pointer;
+}
+
+.invisible {
+display:none;
+}
+
+.panel.callout {
+background-color: #efefef;
+border-color: #879cc6;
+}
+
+.headerRow {
+display:none
+}
+
+.itemRow {
+padding-bottom: 10px;
+}
+
+/* set a min-height for tocModal to give our preloader decent room */
+#tocModal {
+min-height: 110px;
+}
+
+#tocAlertText {
+font-size: 1rem;
+padding-right: 50px;
+}
+
+.close-reveal-modal, .reveal-modal .close-reveal-modal {
+font-size: 2.375rem;
+z-index:99;
+}
+
+/* sticky basket */
+#stickyBasket {
+position:fixed;
+z-index:99;
+bottom: 50px;
+right: 50px;
+}
+
+/* sticky go up */
+#stickyGoUpLarge {
+position:fixed;
+z-index:99;
+bottom: 50px;
+left: 50px;
+font-size: 3em;
+}
+
+#stickyGoUpSmall {
+position:fixed;
+z-index:99;
+bottom: 20px;
+right: 20px;
+font-size: 2em;
+}
+
+/*************** Orbit image slider **************************************/
+
+.orbit-bullets { display: none; }
+
+.orbit-container, .slideshow-wrapper .orbit-container {
+background-color: rgba(51,51,51,0.8)
+}
+
+/* hide images until orbit has loaded to avoid stacking (graceful loading) */
+.slideshow-wrapper img { display: none; }
+
+.preloader {
+margin-top: 120px;
+}
+
+.toc.preloader {
+width: 80px;
+height: 80px;
+top: 5%;
+}
+
+/* center image */
+.orbit-container img {
+margin: 0 auto
+}
+
+.orbit-caption {
+text-align: center;
+}
+
+/*************** Journal (Cover) List : GENERAL **************************/
+
+.getTOC { 
+cursor: pointer;
+}
+
+img.getTOC {
+height: 254px;
+width: 170px;
+}
+
+
+.fresh {
+color: #077dac;
+font-size: smaller;
+}
+
+
+
+/*************** Journal (Cover) List : LIST (ACCORDION) *****************/
+
+dl.accordion dd.active a.item_name {
+background-color:#fff;
+}
+dl.accordion dd.active a.item_add {
+background-color:#007095;
+}
+
+dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {
+background: #43ac41!important;
+}
+
+.accordion dd {
+border-top: solid 1px #879CC6;
+}
+
+/* E-Mail library notification button on errors */
+dl.accordion a.button {
+background-color: #008CBA!important;
+}
+dl.accordion a.button:hover {
+background-color: #007095!important;
+}
+
+dl.accordion a.close {
+background:none;
+}
+
+.accordion .fi-burst-new {
+color: #077dac;
+font-size:xx-large;
+position: absolute;
+font-size: 40pt;
+margin-left: 80%;
+margin-top: -25px;
+}
+
+/* click history: accordion */
+.accordion .fi-paperclip.large { 
+position: absolute;
+z-index:2;
+font-size: 40pt;
+margin-left: -38px;
+margin-top: -50px;
+color: #dbd417;
+}
+
+
+/*************** Journal (Cover) List : GRID  ****************************/
+
+/* set min height so that titles on two lines won't break the layout (long titles (>2 lines) will still break! */
+div.panel.content {
+height: 110px;
+}
+
+.div-grid .fi-burst-new.large {
+color: #077dac;
+font-size:xx-large; 
+position: absolute;
+font-size: 40pt;
+margin-left: 20px;
+/*margin-top: -24px;*/
+}
+
+/* click history: grid */
+.div-grid .fi-paperclip.large { 
+position: absolute;
+z-index:2;
+font-size: 40pt;
+margin-left: -18px;
+margin-top: -18px;
+color: #dbd417;
+}
+
+/*************** Display TOC *********************************************/
+
+/* disable the links, see also disabled click setting in conduit.js */
+a.item_name {
+text-decoration:none;
+cursor: text;
+color: #000;
+}
+
+.simpleCart_shelfItem {
+border-bottom: dotted 1px #d6d2d2;
+}
+
+.simpleCart_shelfItem .columns.textbox {
+min-height: 90px;
+}
+
+/* buttons */
+.simpleCart_shelfItem .columns.buttonbox {
+min-height: 90px;
+text-align:right;
+}
+
+.simpleCart_shelfItem .columns {
+line-height:90px;
+}
+
+.toctitle a, .toctitle span, .abstract span {
+display:inline-block;
+line-height:normal;
+vertical-align:middle;
+}
+
+#fillTOC a.abstract {
+background-color:#2F334D!important;
+}
+
+#fillTOC a.disabled {
+background-color:#FFFFFF!important;
+}
+
+
+/* special for Orbit */
+#TOCbox h4, #TOCbox h5 {
+display:inline;
+}
+
+
+/*************** Shopping Bag ********************************************/
+
+#shelfIsEmpty {
+font-size:larger;
+color: red;
+}
+
+.simpleCart_items{
+padding-bottom: 20px;
+}
+
+.item-remove {
+padding-top: 15px;
+padding-bottom: 20px;
+}
+
+.simpleCart_remove {
+color:#ffffff;
+background-color:#f04124;
+padding:3px;
+}
+
+.simpleCart_remove:hover {
+color:#ffffff;
+background-color:#f04124;
+padding:3px;
+}
+
+/* confirm Delete */
+div#emptyConfirm a#emptyCartButton, a#emptyCart, a#DoNotemptyCartButton {
+font-size: 2em;
+color:#fff;
+position:relative;
+}
+
+/*************** Checkout ************************************************/
+
+#actions a {
+/*margin:20px;*/
+display: block;
+}
+
+#actions a.close {
+margin:0;
+margin-top: -0.6875rem!important;
+}
+
+.columns.print {
+text-align: right;
+font-size: x-large;
+}
+
+input.submit {
+background: #43AC41!important;
+}
+
+input.submit:hover {
+background: #2A9828!important;
+}
+
+#mailForm div {
+padding-bottom: 15px;
+}
+
+.sendArticlesToUser, .sendArticlesToLib {
+display: none;
+}
+
+.sendArticlesToUser label {
+font-size: larger;
+}
