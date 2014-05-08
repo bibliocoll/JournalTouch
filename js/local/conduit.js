@@ -198,12 +198,6 @@ $(document).ready(function() {
 				});
 		});
 
-/* disable the links (to avoid problems with touch screen presentation) */
-		// $(document).on("click","a.item_name",function() {
-		// 		event.preventDefault();
-    //     event.stopPropagation();
-		// });
-
 /* click action for fulltext link from toc */
 /* open links in popup (handy when you have a touchscreen in fullscreen mode, but not imperative!) */ 
 		// $(document).on("click","a.item_name",function() {

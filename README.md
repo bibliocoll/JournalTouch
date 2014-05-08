@@ -257,6 +257,11 @@ By default it is only active on large screens (see CSS in *css/media.css*).
 
 On scrolling, the current letter will be highlighted (*#letterbox* is appended dynamically via jQuery). For configuration, see *js/local/conduit.js*. For this to work, be sure to have the *waypoints.min.js*-Plugin included in your *index.php*.
 
+### Configuring the tables of contents
+
+The TOCs are injected with an HTML snippet. Configure in the *ajax* directory. If for some reason you do not want links to appear, set the *config.ini* setting to false (group *toc*).
+Please note: to make sure that you really have full text access, you might want to inject an OpenURL service like SFX beforehand. It should be easy at least with CrossRef -- the service is already sending a valid OpenUrl ("coins" field). Configure for example in the *ajax* directory.
+
 ## Icons
 
 Default for an unified look are the Foundation icons [Foundation-Icons](http://zurb.com/playground/foundation-icon-fonts-3). 

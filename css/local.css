@@ -311,13 +311,6 @@ background-color:#efefef;
 
 /*************** Display TOC *********************************************/
 
-/* disable the links, see also disabled click setting in conduit.js */
-a.item_name {
-text-decoration:none;
-cursor: text;
-color: #000;
-}
-
 .simpleCart_shelfItem {
 border-bottom: dotted 1px #d6d2d2;
 }

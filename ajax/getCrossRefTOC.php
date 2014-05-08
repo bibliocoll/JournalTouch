@@ -16,7 +16,8 @@
 error_reporting(0);
 
 $config = parse_ini_file('../config/config.ini', TRUE);
-$toAddress = $config['mailer']['toAddress'];
+//$toAddress = $config['mailer']['toAddress'];
+$alink = $config['toc']['alink'];
 $issn = $_GET['issn'];
 
 // results output is limited to 20 per page, so send at least two queries
@@ -129,15 +130,21 @@ if (empty($toc)) {
                 
                 echo '<div class="small-10 medium-9 large-9 columns textbox">';
                 echo '<div class="toctitle">';
-                //echo "<a href=\"".$item['link']."\" class=\"item_name\">";
-                echo "<span class=\"item_name\">";
+                if ($alink == true) {
+                    echo "<a href=\"".$item['link']."\" class=\"item_name\">";
+                } else {
+                    echo "<span class=\"item_name\">";
+                }
                 if (is_array($item['author'])) {
                     echo (!empty($item['author'][0]) ? $item['author'][0].", " : "") . (!empty($item['author'][1]) ? $item['author'][1].": " :  "");
                 } else {
                     echo (!empty($item['author']) ? $item['author'].": " : "");
                 }
-                // echo $item['title']."</a>";
-                echo $item['title']."</span>";
+                if ($alink == true) {
+                    echo $item['title']."</a>";
+                } else {
+                    echo $item['title']."</span>";
+                }
                 //echo $item['source']."</a>";
                 //echo $item['source']."</span>";
                 echo '</div>';
