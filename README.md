@@ -21,7 +21,9 @@ already included:
 - jQuery 2+ [http://jquery.com]
 - simpleCart js [http://simplecartjs.org] **slightly modified**
 - Unveil.js [https://github.com/luis-almeida/unveil] for lazy loading
+- waypoints.js [https://github.com/imakewebthings/jquery-waypoints]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
+
 
 # Live Demo
 
@@ -250,6 +252,10 @@ For all available options refer to the [Foundation Orbit Documentation](http://f
 
 If you want a screensaver functionality, change the text in the *#screensaver*-div in *index.php*, and check out the function in *js/local/conduit.js*, which loads a block after a click/touch timeout.
 By default it is only active on large screens (see CSS in *css/media.css*).
+
+### Dynamic Alphabet
+
+On scrolling, the current letter will be highlighted (*#letterbox* is appended dynamically via jQuery). For configuration, see *js/local/conduit.js*. For this to work, be sure to have the *waypoints.min.js*-Plugin included in your *index.php*.
 
 ## Icons
 

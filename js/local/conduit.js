@@ -1,4 +1,4 @@
-/*
+/*!
  * jQuery conduit.js 
  * Interface actions for JournalTouch
  *
@@ -46,12 +46,29 @@ $(document).ready(function() {
 		}
 
 		showActiveLettersOnly();
+
+/* Highlight letter in viewport (depends on Waypoints jQuery plugin) */
+/* works only in grid view! */
+
+		/* set up a letterbox with default letter 'A' */
+		$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
+		/* animate box */
+		if ($('#view-grid').is(':visible')) {
+				$('div.div-grid h5').waypoint(function(direction) {
+						// get the first letter 
+						var cL = $(this).attr('title').slice(0,1);
+						$('#letterbox').text(cL);
+						//alert('Top of thing hit top of viewport.');
+				}, { offset: '50%' });
+		}
 		
 /* animate the GoUp button */
 
 		$('#stickyGoUp').click(function() {
 				$('html, body').animate({ scrollTop: 0 }, 'fast');
 		});
+
+/* click on a journal */
 													 
 		$('.getTOC').click(function() {
 
@@ -273,10 +290,10 @@ $(document).ready(function() {
 						/* show on panel */
 						$('#filterPanel').fadeIn();
 						$('#filterPanelFilter').text($(this).text());
-
-						showActiveLettersOnly();
-
 				}
+
+				showActiveLettersOnly();
+
 		});
 
 /* filter: deactivate panel on click */
@@ -404,7 +421,7 @@ $(document).ready(function() {
 				clearTimeout(s_saver);
 				s_saver = setTimeout(function(){
 										$('#screensaver').fadeIn(900);
-				}, 15000);
+				}, 30000);
 				$('#screensaver').fadeOut(100);
 		});
 

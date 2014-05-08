@@ -299,6 +299,16 @@ margin-top: -18px;
 color: #dbd417;
 }
 
+/* Dynamic Letter Box */
+#letterbox {
+position:fixed;
+top:15%;
+right:4%;
+font-size:4rem;
+color:#007095;
+background-color:#efefef;
+}
+
 /*************** Display TOC *********************************************/
 
 /* disable the links, see also disabled click setting in conduit.js */

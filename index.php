@@ -67,9 +67,9 @@ $filters = $lister->getFilters();
 
 		<!-- Make a sticky GoUp -->
 		<!-- for large screens -->
-		<a href="#" id="stickyGoUpLarge" class="button secondary round show-for-large-up"><i class="fi-arrow-up"></i></a>
+		<a href="#" id="stickyGoUpLarge" class="button round show-for-large-up"><i class="fi-arrow-up"></i></a>
     <!-- for small screens -->
-		<a href="#" id="stickyGoUpSmall" class="button secondary round hide-for-large-up"><i class="fi-arrow-up"></i></a>
+		<a href="#" id="stickyGoUpSmall" class="button round hide-for-large-up"><i class="fi-arrow-up"></i></a>
 
 		<!-- About page -->
 		<div id="about" class="reveal-modal" data-reveal>
@@ -332,6 +332,7 @@ $filters = $lister->getFilters();
     <script src="js/foundation.min.js"></script>
     <script src="js/local/simpleCart.custom.js"></script>
     <script src="js/vendor/jquery.unveil.min.js"></script>
+    <script src="js/vendor/waypoints.min.js"></script>
     <script src="js/local/conduit.js"></script>
     <script>
 			simpleCart({
