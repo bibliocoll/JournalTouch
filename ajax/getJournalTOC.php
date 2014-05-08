@@ -105,7 +105,7 @@ if (empty($toc)) {
 
             echo '<div class="simpleCart_shelfItem row">';
 
-            echo '<div class="small-6 medium-7 large-9 columns textbox">';
+            echo '<div class="small-6 medium-7 large-8 columns textbox">';
             echo '<div class="toctitle">';
             if ($alink == true) {
                 echo "<a href=\"".$item['link']."\" class=\"item_name\">";
@@ -127,11 +127,11 @@ if (empty($toc)) {
             echo "<span class=\"item_link invisible\">".$item['link']."</span>";
             echo "<span class=\"item_source invisible\">".$item['source']."</span>";
             echo '</div>';
-            echo '<div class="small-6 medium-5 large-3 columns buttonbox">';
+            echo '<div class="small-6 medium-5 large-4 columns buttonbox">';
             /* abstract button: let us assume that strlen>300 == abstract */
-            echo (strlen($item['abstract'])>300 ? '<a class="button medium abstract">Abstract</a>&nbsp;' : '');
+            echo (strlen($item['abstract'])>300 ? '<a class="button medium radius abstract">Abstract</a>&nbsp;' : '');
             /* add button */
-            echo "<a class=\"item_add button medium\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
+            echo "<a class=\"item_add button medium radius\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
             echo '</div>';
 
             echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" : "");

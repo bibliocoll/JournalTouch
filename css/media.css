@@ -1,4 +1,19 @@
-/* Styles for large screens ***********************************************/
+/* Define here styles for different media ********************************/
+/* Special definitions for screen sizes **********************************/
+
+
+/* STYLES FOR MEDIUM SCREENS *********************************************/
+@media only screen and (min-width: 45.063em)  {
+/**************** Checkout ***********************************************/
+#actions {
+width: 60%;
+margin-left: auto;
+margin-right: auto;
+}
+}
+/* END MEDIUM SCREENS *****************************************************/
+
+/* STYLES FOR LARGE SCREENS ***********************************************/
 /* make things a bit larger for higher touch sensitivity on large screens */
 @media only screen and (min-width: 85.063em) {
 /*************** Header **************************************************/
@@ -26,7 +41,8 @@ padding-bottom: 14px;
 /**************** General ************************************************/
 
 .close-reveal-modal, .reveal-modal .close-reveal-modal {
-font-size: 5.375rem;!important
+font-size: 3.375rem!important;
+color:#fff;
 }
 
 /* fancy screensaver for large (touch) screen */
@@ -70,6 +86,12 @@ background-color:#efefef;
 }
 
 /**************** Checkout ***********************************************/
+#actions {
+width: 40%;
+margin-left: auto;
+margin-right: auto;
+}
+
 div#popoverButtons a.radius {
 font-size:larger;
 }
@@ -79,4 +101,4 @@ font-size:larger;
 }
 
 }
-/* End large screens       ***********************************************/
+/* END LARGE SCREENS *****************************************************/

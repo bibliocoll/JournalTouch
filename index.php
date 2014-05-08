@@ -104,7 +104,7 @@ $filters = $lister->getFilters();
 				</div>
 			</div>
 			
-				<a class="close-reveal-modal">&#215;</a>
+				<a class="close-reveal-modal button radius alert">&#215;</a>
 		</div>
 
 
@@ -119,7 +119,7 @@ $filters = $lister->getFilters();
 				<a id="checkOutButton" href="javascript:;" class="simpleCart_checkout radius small success button"><i class="fi-share"></i> Send/Save my articles</a>
 				<!--<a id="emptyCartButton" href="javascript:;" class="simpleCart_empty radius small alert button"><i class="fi-trash"></i> Empty my basket</a>-->
 				<a id="emptyConfirmButton" class="radius small alert button" data-reveal-id="emptyConfirm"><i class="fi-trash"></i> Empty my basket</a>
-				<a class="close-reveal-modal">&#215;</a>
+				<a class="close-reveal-modal button radius">&#215;</a>
 			</div>
 		</div><!--End #cartPopover-->
 		
@@ -219,7 +219,7 @@ $filters = $lister->getFilters();
 					   echo $j['title']; 
 					   echo (!empty($j['new']) ? ' <span class="fresh">[new in week ' . $j['week'] . ']</span>' : "");
 					   echo '</a>';
-					   echo '<div id="issn'.$j['id'].'" class="content"></div>';
+					   echo '<div id="issn'.$j['id'].'" class="content">				<div class="toc preloader"></div></div>';
 					  echo '</dd>';
 					 }
 				?>
@@ -266,7 +266,7 @@ $filters = $lister->getFilters();
 						<i class="fi-mail"></i>&nbsp;Please notify us!
 					</a>
 				</div>
-				<a class="close-reveal-modal">&#215;</a>
+				<a class="close-reveal-modal button radius alert">&#215;</a>
       </div>
 
 		</div>

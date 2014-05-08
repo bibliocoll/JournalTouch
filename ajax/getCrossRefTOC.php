@@ -154,9 +154,9 @@ if (empty($toc)) {
                 echo '</div>';
                 echo '<div class="small-2 medium-3 large-3 columns buttonbox">';
                 /* abstract button: let us assume that strlen>300 == abstract */
-                echo (strlen($item['abstract'])>300 ? '<a class="button medium abstract">Abstract</a>&nbsp;' : '');
+                echo (strlen($item['abstract'])>300 ? '<a class="button medium radius abstract">Abstract</a>&nbsp;' : '');
                 /* add button */
-                echo "<a class=\"item_add button medium\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
+                echo "<a class=\"item_add button medium radius\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
                 echo '</div>';
                 
                 echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" : "");
