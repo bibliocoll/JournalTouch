@@ -37,11 +37,7 @@ $action = new CheckoutActions();
 			<ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
 				<!-- Title Area -->
 				<li class="name">
-					<h1>
-						<a href="#">
-							JournalTouch<em>beta</em> - a library service - Checkout
-						</a>
-					</h1>
+					<h1>JournalTouch<em>beta</em> - a library service - Checkout</h1>
 				</li>
 				<li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php">&nbsp;Back</a></li>
 			</ul>
@@ -120,7 +116,7 @@ $action = new CheckoutActions();
 		<!-- End Header and Nav -->
 
 		<div id="actions" class="row">
-			<div class="small-12 medium-9 large-8 text-center columns">
+			<div class="small-12 text-center columns">
 				<a id="printArticles" href="#" class="radius button large"><i class="fi-print"></i> View &amp; Print</a>
 				<!--<a id="saveArticles" href="#" class="radius button large disabled"><i class="fi-save"></i> Save/Export</a>-->
 				<?php if(empty($_POST['mailer'])) { ?>

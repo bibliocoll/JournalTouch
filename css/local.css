@@ -146,7 +146,8 @@ padding-right: 50px;
 }
 
 .close-reveal-modal, .reveal-modal .close-reveal-modal {
-font-size: 2.375rem;
+font-size: 2rem;
+color:#fff;
 z-index:99;
 }
 
@@ -272,6 +273,12 @@ margin-top: -50px;
 color: #dbd417;
 }
 
+.accordion .toc.preloader {
+position: relative;
+margin-top: 1px;
+width: 80px;
+height: 80px;
+}
 
 /*************** Journal (Cover) List : GRID  ****************************/
 
