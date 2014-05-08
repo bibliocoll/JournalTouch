@@ -56,6 +56,19 @@ top: 100px;
 right: 50px;
 }
 
+/***************** Grid ***************************************************/
+
+/* Dynamic Letter Box */
+#letterbox {
+position:fixed;
+top:10%;
+left:4%;
+width:14rem;
+font-size:8rem;
+padding:2rem;
+background-color:#efefef;
+}
+
 /**************** Checkout ***********************************************/
 div#popoverButtons a.radius {
 font-size:larger;
