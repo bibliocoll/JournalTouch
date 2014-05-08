@@ -59,6 +59,7 @@
 <li>simpleCart js [<a href="http://simplecartjs.org">http://simplecartjs.org</a>] <strong>slightly modified</strong>
 </li>
 <li>Unveil.js [<a href="https://github.com/luis-almeida/unveil">https://github.com/luis-almeida/unveil</a>] for lazy loading</li>
+<li>waypoints.js [<a href="https://github.com/imakewebthings/jquery-waypoints">https://github.com/imakewebthings/jquery-waypoints</a>]</li>
 <li>PHPMailer [<a href="https://github.com/PHPMailer/PHPMailer">https://github.com/PHPMailer/PHPMailer</a>]</li>
 </ul><h1>
 <a name="live-demo" class="anchor" href="#live-demo"><span class="octicon octicon-link"></span></a>Live Demo</h1>
@@ -323,6 +324,11 @@ configure the image slider directly in index.php.</p>
 
 <p>If you want a screensaver functionality, change the text in the <em>#screensaver</em>-div in <em>index.php</em>, and check out the function in <em>js/local/conduit.js</em>, which loads a block after a click/touch timeout.
 By default it is only active on large screens (see CSS in <em>css/media.css</em>).</p>
+
+<h3>
+<a name="dynamic-alphabet" class="anchor" href="#dynamic-alphabet"><span class="octicon octicon-link"></span></a>Dynamic Alphabet</h3>
+
+<p>On scrolling, the current letter will be highlighted (<em>#letterbox</em> is appended dynamically via jQuery). For configuration, see <em>js/local/conduit.js</em>. For this to work, be sure to have the <em>waypoints.min.js</em>-Plugin included in your <em>index.php</em>.</p>
 
 <h2>
 <a name="icons" class="anchor" href="#icons"><span class="octicon octicon-link"></span></a>Icons</h2>
