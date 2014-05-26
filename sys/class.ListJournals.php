@@ -5,7 +5,7 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-04-25 12:18:51 zimmel"
+ * Time-stamp: "2014-05-26 17:22:09 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
@@ -82,7 +82,7 @@ class ListJournals
 
     function getCover($issn) {
         if ($this->coverAPI) {
-            $img = "http://www.vub.de/cover/data/".$issn."/max/true/de/mpi/cover.png";
+            $img = ""; // fill in your API URL here or from config
         } else {
             $png = 'img/'.$issn.'.png';
             $jpg = 'img/'.$issn.'.jpg';
