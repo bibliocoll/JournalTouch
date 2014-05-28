@@ -22,6 +22,7 @@ already included:
 - simpleCart js [http://simplecartjs.org] **slightly modified**
 - Unveil.js [https://github.com/luis-almeida/unveil] for lazy loading
 - waypoints.js [https://github.com/imakewebthings/jquery-waypoints]
+- timeago.js [https://github.com/rmm5t/jquery-timeago]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
 
 
@@ -95,19 +96,25 @@ This webapp is reported to run sluggishly on touch devices running Chrome and Wi
 The input file feeds the journal list. Be careful if you change the structure of your CSV file (you may need to reconfigure the csv group in *config/config.ini*).
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
-There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. 
-Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/latest-issns.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the ISSNs with the existing file, and adds it to the file with the current calendar week (although the week is not used right now). Old weeks will be deleted. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config/config.ini* (section updates).
+Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/latest-issns.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the ISSNs with the existing file, and adds it to the file with the current date. Old entries will be deleted. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
 Configure the file and your custom JournalTOCs URL in *config/config.ini*.
 
+Please note! This service slows down the initial loading of the page. Please rewrite more efficiently; eg. write the updates directly to the CSV file, or solve it via AJAX loading.
+
 Alternatively, you could set up alerting services for yourself (e-mail, feeds...) and keep the input file up-to-date manually:
-for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (*config.ini*-default: *week*). Fill in the current calendar week when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).
+for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (*config.ini*-default: *date*). Fill in the current date ("YYYY-mm-dd") when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).
 
 The default setting is that you can combine the two functions (automatic comparison and manual setting).
 
 Please note: Orbit tends to slow things a lot on mobile devices if you have lots of images (any image will be preloaded by default). To change this, either do not use Orbit, or modify its source to implenent some sort of lazy loading.
 
-You can configure a column (default: "important") to mark important journals (fill in what you like). 
+You can configure a column (default: "important") to mark important journals (fill in what you like).
+
+For date display, you can use the timeago jQuery plugin (display timespans instead of dates). For reference, see https://github.com/rmm5t/jquery-timeago. E.g., activation for all HTML5 'time' elements with attribute 'timeago' and date in ISO 8601 timestamp happens in *js/local/conduit.js*:
+
+          		$('time.timeago').timeago();
 
 ## Cover images
 
