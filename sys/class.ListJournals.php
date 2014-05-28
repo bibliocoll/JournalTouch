@@ -5,7 +5,7 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-05-26 17:22:09 zimmel"
+ * Time-stamp: "2014-05-28 12:07:48 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
@@ -20,8 +20,9 @@ class ListJournals
     protected $csv_col_issn_alt;
     protected $csv_important;
     protected $csv_filter;
-    protected $csv_week;
+    protected $csv_date;
     protected $csv_separator;
+    protected $updates_display;
     protected $placeholder;
     protected $coverAPI;
 
@@ -36,13 +37,13 @@ class ListJournals
         $this->csv_separator = $config['csv']['separator'];
         $this->csv_important = $config['csv']['important'];
         $this->csv_filter = $config['csv']['filter'];
-        $this->csv_week = $config['csv']['week'];
+        $this->csv_date = $config['csv']['date'];
         if (!empty($this->csv_filter)) {
         $this->filters = $config['filter'];
         }
-
         $this->placeholder = $config['img']['placeholder'];
         $this->coverAPI = $config['img']['api'];
+        $this->updates_display = $config['updates']['display'];
         $this->updates = $config['updates']['outfile'];
     }
 
@@ -58,22 +59,39 @@ class ListJournals
         return false;
     }
 
-    function isCurrent($week,$issn) {
-        $timespan = (!empty($week) ? $week+1 : "0");
-        $curWeek = date("W");
-        if ($timespan >= $curWeek) {
-            return true;
+    /* date comparison; return a date, if it is defined as 'current', else return false */
+    function isCurrent($date,$issn) {
+        /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
+        $td = strtotime($date);
+        $cdate = date("Y-m-d", strtotime("+1 month", $td));
+        /* if there is a $date (e.g. from csv), compare with current date */
+        $curDate = new DateTime(); // today
+        $myDate   = new DateTime($cdate);
+
+        if ($myDate >= $curDate) {
+             return $date;
+        /* if csv_date is empty, check with a json list of current journals */
         } else { 
-            /* extra compare loop; compare with a json issn list of current journals */
-            /* uncomment this if you do not want to compare with a list or you do not have a file */
-            if (file_exists($this->updates)) {
-            $json = $this->updates;
-            $arrCmp = json_decode(file_get_contents($json), true);
-            if ($this->search_array($issn, $arrCmp)) {
-                return true;
-            } else {
-                return false;
-            }
+            if ($this->updates_display) {
+                if (file_exists($this->updates)) {
+                    $json = $this->updates;
+                    $arrCmp = json_decode(file_get_contents($json), true);
+                    if ($this->search_array($issn, $arrCmp)) {
+                        foreach ($arrCmp as $k1=>$v) {
+                            
+                            foreach ($v as $k2 => $r) {
+                                if($r == $issn) {
+                                    $date = next($v);
+                                }
+                            }
+                        }
+                        return $date;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             } else {
                 return false;
             }
@@ -114,18 +132,18 @@ class ListJournals
                 $myISSN = (strlen($data[$this->csv_col_issn] < 1) ? $data[$this->csv_col_issn_alt] : $data[$this->csv_col_issn]);
 
                 $row++;
-                $week = $data[$this->csv_week];
+                $date = $this->isCurrent($data[$this->csv_date],$myISSN);
                 $filter = (!empty($data[$this->csv_filter]) ? strtolower($data[$this->csv_filter]) : "any");
                 $topJ = (!empty($data[$this->csv_important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);
-                $new = ($this->isCurrent($week,$myISSN) ? true : false);
+                $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
 
                 $journals[] = array(
                     'id' => $myISSN,
                     'title' => $data[$this->csv_col_title],
                     'filter' => $filter,
                     'topJ' => $topJ,
-                    'week' => $week,
+                    'date' => $date,
                     'img' => $img,
                     'new' => $new
                 );

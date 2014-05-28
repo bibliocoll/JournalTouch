@@ -213,13 +213,16 @@ $filters = $lister->getFilters();
 				<?php
         /* see Class setup */
            foreach ($journals as $j) {
+               /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
+               $timestring = date('c', strtotime($j['date'])); // 
+               $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 					   echo '<dd class="filter-'.$j['filter'].' '.$j['topJ'].'">';
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
 					   echo $j['title']; 
-					   echo (!empty($j['new']) ? ' <span class="fresh">[new in week ' . $j['week'] . ']</span>' : "");
+					   echo (!empty($j['new']) ? ' <span class="fresh">[last update ' . $wF . ']</span>' : "");
 					   echo '</a>';
-					   echo '<div id="issn'.$j['id'].'" class="content">				<div class="toc preloader"></div></div>';
+					   echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
 					  echo '</dd>';
 					 }
 				?>
@@ -243,12 +246,16 @@ $filters = $lister->getFilters();
 				<?php
 					 /* see Class setup */
 					    foreach ($journals as $j) {
+                            /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
+                            $timestring = date('c', strtotime($j['date'])); // 
+                            $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
+
 					      echo '<div class="large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
 					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
-					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">[new in week ' . $j['week'] . ']</span> </h6>' : "");
+					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">[last update ' . $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
 					    } 
 					 ?>
@@ -333,6 +340,7 @@ $filters = $lister->getFilters();
     <script src="js/local/simpleCart.custom.js"></script>
     <script src="js/vendor/jquery.unveil.min.js"></script>
     <script src="js/vendor/waypoints.min.js"></script>
+    <script src="js/vendor/jquery.timeago.js"></script>
     <script src="js/local/conduit.js"></script>
     <script>
 			simpleCart({

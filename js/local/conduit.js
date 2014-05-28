@@ -74,7 +74,7 @@ $(document).ready(function() {
 
 				$('#fillTOC').remove(); // clean up
 				$('#tocAlertBox').hide(); // clean up
-				if ($(this).is('.panel')) { var issn = $(this).prev('img').attr('id').trim();
+				if ($(this).is('.panel')) { var issn = $(this).prevAll('img').attr('id').trim();
 				} else {
 				var issn = $(this).attr('id').trim();
 				}
@@ -418,6 +418,12 @@ $(document).ready(function() {
 				}, 30000);
 				$('#screensaver').fadeOut(100);
 		});
+
+
+
+/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
+		$('time.timeago').timeago();
+
 
 });
 

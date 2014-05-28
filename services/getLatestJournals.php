@@ -47,7 +47,15 @@ function search_array($needle, $haystack) {
    return false;
 }
 
-$x = $updatesURL;
+/* query loop for multiple update URLs from config */
+
+
+
+foreach ($updatesURL as $updateURL) {
+
+    echo "querying " .$updateURL."...";
+
+$x = $updateURL;
 
 $neuDom = new DOMDocument;
 
@@ -78,6 +86,7 @@ foreach ( $records as $item ) {
 	$link = myget("//x:link",$xpath);
 	$issn = myget("//prism:issn",$xpath);
 	$eIssn = myget("//prism:eIssn",$xpath);
+    $date = myget("//dc:date",$xpath);
 
     $abstract = myget("//x:description",$xpath);
   
@@ -86,21 +95,22 @@ foreach ( $records as $item ) {
         'link' => $link,
         'issn' => $issn,
         'eIssn' => $eIssn,
-        'abstract' => strip_tags($abstract)); // strip any HTML to avoid errors
+        'date' => $date
+    );
 }
 
-$curWeek = date("W");
-$newissns = array();
 
 /* load the current array of issns into $data (compare later) */
-$json = "../".$outFile;
-$file = file_get_contents($json);
-$data = json_decode($file, true);
+/* $json = "../".$outFile; */
+/* $file = file_get_contents($json); */
+/* $data = json_decode($file, true); */
 
-print_r($data);
-echo '<hr/>';
+/* echo '<h1>Read file contents:</h1>'; */
+/* print_r($data); */
 
-unset($file);//prevent memory leaks for large json.
+/* echo '<hr/>'; */
+
+/* unset($file);//prevent memory leaks for large json. */
 
 if (empty($toc)) {
 	echo 'ERROR!';
@@ -108,32 +118,67 @@ if (empty($toc)) {
 	$no_records = count($toc);
 
 	echo '<h5>'.$journalTitle.'</h5>';
-
+    $json = "../".$outFile;
     $arrCmp = json_decode(file_get_contents($json), true);
+
+    foreach ($arrCmp as $k1=>$v) {
+
+        foreach ($v as $k2 => $r) {
+            if (strlen($r) == 10) {
+            /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
+            $td = strtotime($r);
+            $cdate = date("Y-m-d", strtotime("+1 month", $td));
+            /* if there is a $date (e.g. from csv), compare with current date */
+            $curDate = new DateTime(); // today
+            $myDate   = new DateTime($cdate);
+            // if ($r <= $weekSpan) {
+            if ($r >= $curDate) {
+                unset($arrCmp[$k1]);
+            }
+            }
+        }
+    }
 
     foreach ( $toc as $item ) {
         
         if (!empty($item['title'])) {
 
+            /* convert found date of last update in the data to calendar week */
+            $date = new DateTime($item['date']);
+            /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
+            $td = strtotime($item['date']);
+            $cdate = date("Y-m-d", strtotime("+1 month", $td));
+            /* if there is a $date (e.g. from csv), compare with current date */
+            $curDate = new DateTime(); // today
+            $myDate   = new DateTime($cdate);
+
             /* if we have new issns not already in our array, add them */
 
-            if(!empty($item['eIssn']) && !search_array($item['eIssn'], $arrCmp)) {
-              array_push($data, array('issn' => $item['eIssn'], 'cw' => $curWeek));
+            /* skip entries too old */
+            if ($myDate >= $curDate) {
+                if(!empty($item['eIssn']) && !search_array($item['eIssn'], $arrCmp)) {
+                    array_push($arrCmp, array('issn' => $item['eIssn'], 'date' => $item['date']));
+                }
+                if(!empty($item['issn']) && !search_array($item['issn'], $arrCmp)) {
+                    array_push($arrCmp, array('issn' => $item['issn'], 'date' => $item['date']));
+                }
             }
-            if(!empty($item['issn']) && !search_array($item['issn'], $arrCmp)) {
-              array_push($data, array('issn' => $item['issn'], 'cw' => $curWeek));
-            }
+
         }
     }
 }
 
 /* new $data */
-print_r($data);
+echo ' <strong>done.</strong><br/>';
+//print_r($arrCmp);
+
 
 //save updated data
-file_put_contents($json,json_encode($data));
+file_put_contents($json,json_encode($arrCmp));
 unset($data);//release memory
+unset($arrCmp);//release memory
 
+}
 
 ?>
 
