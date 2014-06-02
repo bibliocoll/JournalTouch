@@ -35,6 +35,16 @@ function myget ($query,$xpath) {
   }
 }
 
+/* sort function */
+function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
+    $sort_col = array();
+    foreach ($arr as $key=> $row) {
+        $sort_col[$key] = $row[$col];
+    }
+
+    array_multisort($sort_col, $dir, $arr);
+}
+
 $x = "http://www.journaltocs.ac.uk/api/journals/".$issn."?output=articles&user=".$apiUserKey;
 
 $neuDom = new DOMDocument;
@@ -50,12 +60,6 @@ $xpath->registerNamespace('x', $rootNamespace);
 /* $xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/"); */
 /* $xpath->registerNamespace("mn","http://usefulinc.com/rss/manifest/"); */
 
-// get the title (plain, without vol/no)
-// $journalTitle = myget("//x:channel/x:title",$xpath);
-// get the title second option (incl. vol/no = snatch from first item & cut pages) (beware!)
-$journalTitle = myget("//x:item[1]/dc:source",$xpath);
-$journalTitle = preg_replace('/pp\..+/','',$journalTitle);
-if (empty($journalTitle)) { $journalTitle = myget("//x:channel/x:title",$xpath); }  // more robust
 $records = $xpath->query("//x:item");
 $toc = array();
  
@@ -67,6 +71,7 @@ foreach ( $records as $item ) {
 	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI); 
 	$xpath->registerNamespace('x', $rootNamespace); 
 	$xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/");
+    $xpath->registerNamespace("prism", "http://prismstandard.org/namespaces/1.2/basic/");
 
 	$title = myget("//x:title",$xpath);
 	$link = myget("//x:link",$xpath);
@@ -76,15 +81,27 @@ foreach ( $records as $item ) {
     preg_match_all("/\((.*?)\)/", $author, $matches);
     $author = ($matches[1] ? $matches[1] : $author);
     $abstract = myget("//x:description",$xpath);
-  
+    $date = myget("//dc:date",$xpath);
+    if (empty($date)) {
+        $prismDate = myget("//prism:publicationDate",$xpath);
+        if (!empty($prismDate)) {
+            $date = date('Y-m-d',strtotime($prismDate));
+        } else {
+            //  if date && prismDate are empty, fill in a current date to get those articles sorted; assume they are new
+            $date = date('Y-m-d');            
+        }
+    }
+    
+
 	$toc[] = array(
         'title' => $title, 
         'link' => $link,
         'source' => $source,
         'author' => $author,
+        'date' => $date,
         'abstract' => strip_tags($abstract)); // strip any HTML to avoid errors
 }
-	
+
 if (empty($toc)) {
     /* write something we can read from our caller script */
     echo '<span id="noTOC"/>';
@@ -93,10 +110,17 @@ if (empty($toc)) {
     echo '</div>';
 } else {
 	$no_records = count($toc);
+
+    // sort array by date
+    array_sort_by_column($toc, 'date', SORT_DESC);
+
+// get the title from the first item (incl. vol/no = snatch from first item & cut pages) (beware!)
+    $journalTitle = $toc[0]['source'];
+    $journalTitle = preg_replace('/pp\..+/','',$journalTitle);
+    //   if (empty($journalTitle)) { $journalTitle = "TEST". myget("//x:channel/x:title",$xpath); }  // more robust
+
 	//	echo "<br/>Found " .$no_records . " current articles from <strong>".$journalTitle."</strong>:<br/><br/>";
-	echo '<h5>'.$journalTitle.'</h5>';    
-// debugging:
-//    echo '<h4 style="background-color:yellow">debuggin info: JournalTOCs</h4>';
+	echo '<h5>'.$journalTitle.'</h5>';   
 
     foreach ( $toc as $item ) {
         //print "<br>";print_r($item); print "<br>";
