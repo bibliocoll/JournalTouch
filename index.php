@@ -269,8 +269,15 @@ $filters = $lister->getFilters();
 				<!-- This alert box will be switched on if something goes wrong (see conduit.js) -->
 				<div data-alert id="tocAlertBox" class="alert-box warning invisible">
 					<span id="tocAlertText">Something seems to be wrong with the network</span>
-					<a href="mailto:biblio@coll.mpg.de?subject=Feed%20error%20report%20for%20ISSN%20'+issn+'&body=Error%20report%20from%20CONDuIT" class="button">
+					<a class="button radius" href="checkout.php?action=contact&message=Feed%20error%20report&body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000" class="button">
 						<i class="fi-mail"></i>&nbsp;Please notify us!
+					</a>
+				</div>
+				<!-- This alert box will be switched on if no tocs are found (see conduit.js) -->
+				<div data-alert id="tocNotFoundBox" class="alert-box info invisible">
+					<span id="tocAlertText">No table of contents found! Are you interested in this title?</span>
+					<a class="button radius" href="checkout.php?action=contact&message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000">
+						<i class="fi-comment"></i> Please notify us!
 					</a>
 				</div>
 				<a class="close-reveal-modal button radius alert">&#215;</a>

@@ -78,11 +78,18 @@ $(document).ready(function() {
 		$('.getTOC').click(function() {
 
 				$('#fillTOC').remove(); // clean up
-				$('#tocAlertBox').hide(); // clean up
+				$('#tocAlertBox, #tocNotFoundBox').hide(); // clean up
 				if ($(this).is('.panel')) { var issn = $(this).prevAll('img').attr('id').trim();
 				} else {
 				var issn = $(this).attr('id').trim();
 				}
+				// append current issn to error boxes by default
+				$('#tocModal div.alert-box a').each(function() {
+						var _href = $(this).attr('href');
+						// cut any ISSN value from end of string (9 chars) and append new ISSN
+						$(this).attr('href', _href.substring(0, _href.length - 9) + issn);
+				});
+				
 				cur = $(this);
 				// check where the user is coming from, accordion or orbit slider
 				if ($(this).is('.accordion')) { accordion = true; grid = false; } 
@@ -126,6 +133,9 @@ $(document).ready(function() {
 										data: {'issn' : issn}
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
+										if ($(returnData).filter('#noTOC').length > 0) {
+												$('#tocNotFoundBox').fadeIn('slow');
+										}
 										$('#fillTOC').append(returnData).fadeIn('slow');
 										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
 										$('time.timeago').timeago();
@@ -154,6 +164,9 @@ $(document).ready(function() {
 										data: {'issn' : issn}
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
+										if ($(returnData).filter('#noTOC').length > 0) {
+												$('#tocNotFoundBox').fadeIn('slow');
+										}
 										$('#fillTOC').append(returnData).fadeIn('slow');
 										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
 										$('time.timeago').timeago();
