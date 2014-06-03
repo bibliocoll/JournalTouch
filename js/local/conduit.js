@@ -43,24 +43,29 @@ $(document).ready(function() {
 								}
 						});
 				}
+
 		}
 
 		showActiveLettersOnly();
 
-/* Highlight letter in viewport (depends on Waypoints jQuery plugin) */
-/* works only in grid view! */
-
-		/* set up a letterbox with default letter 'A' */
-		$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
-		/* animate box */
-		if ($('#view-grid').is(':visible')) {
-				$('div.div-grid h5').waypoint(function(direction) {
-						// get the first letter 
-						var cL = $(this).attr('title').slice(0,1);
-						$('#letterbox').text(cL);
-						//alert('Top of thing hit top of viewport.');
-				}, { offset: '50%' });
+		/* Highlight letter in viewport (depends on Waypoints jQuery plugin) */
+		/* works only in grid view! */
+		function setLetterBox() {
+				/* set up a letterbox with default letter 'A' */
+				$('#letterbox').remove();
+				$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
+				/* animate box */
+				if ($('#view-grid').is(':visible')) {
+						$('div.div-grid h5').waypoint(function(direction) {
+								// get the first letter 
+								var cL = $(this).attr('title').slice(0,1);
+								$('#letterbox').text(cL);
+								//alert('Top of thing hit top of viewport.');
+						}, { offset: '50%' });
+				}
 		}
+
+		setLetterBox();
 		
 /* animate the GoUp button */
 
@@ -107,17 +112,17 @@ $(document).ready(function() {
 				/* get Journal TOC */
 
 				$.ajax({
-						url: 'ajax/getCrossRefTOC.php', /* CrossRef */
+						url: 'ajax/getJournalTOC.php', /* first call */
 						data: {'issn' : issn},
 						timeout: 5000 /* set default timeout of 5 sec. */
 				}).done(function(returnData) {
 
 
-						/* fire a second call, if CrossRef is empty */
+						/* fire a second call, if first call is empty */
 						/* uncomment, if you do not want a second call; see also below for network failure events ("ajax.fail")*/
 						if ($(returnData).filter('#noTOC').length > 0) {
 								$.ajax({
-										url: 'ajax/getJournalTOC.php', /* JournalTocs */
+										url: 'ajax/getCrossRefTOC.php', /* JournalTocs */
 										data: {'issn' : issn}
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
@@ -129,10 +134,9 @@ $(document).ready(function() {
 										$('#tocModal .preloader').hide();
 										$('#tocAlertBox').fadeIn('slow');
 								});
-						}
-						
-
+						} else {	
 						$('.toc.preloader').fadeOut('slow');
+						}
 						$('#fillTOC').append(returnData).fadeIn('slow');
 						if (accordion) {
 						$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
@@ -142,7 +146,7 @@ $(document).ready(function() {
 				}).fail(function(j,t,m) {
 						if(t==="timeout") {
 								$.ajax({
-										url: 'ajax/getJournalTOC.php', /* JournalTocs */
+										url: 'ajax/getCrossRefTOC.php', /* JournalTocs */
 										data: {'issn' : issn}
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
@@ -286,7 +290,9 @@ $(document).ready(function() {
 						$('#filterPanelFilter').text($(this).text());
 				}
 
+				/* reload values */
 				showActiveLettersOnly();
+				setLetterBox();
 
 		});
 
@@ -296,8 +302,10 @@ $(document).ready(function() {
 				$('dd, div.div-grid').show();
 				$('.alphabet li a').show(); /* show everything */
 				showActiveLettersOnly();
+				setLetterBox();
 				/* hide on panel */
 				$('#filterPanel').fadeOut();
+
 		});
 
 /* switch views */
