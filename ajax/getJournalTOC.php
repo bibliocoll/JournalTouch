@@ -105,9 +105,7 @@ foreach ( $records as $item ) {
 if (empty($toc)) {
     /* write something we can read from our caller script */
     echo '<span id="noTOC"/>';
-	/* echo '<div data-alert class="alert-box info"><span id="tocAlertText">No table of contents found! Are you interested in this title?</span>'; */
-    /* echo '<a class="button radius" href="checkout.php?action=contact&message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20(ISSN:%20'.$issn.')"><i class="fi-comment"></i> Please notify us!</a>'; */
-    /* echo '</div>'; */
+/* trigger error response from conduit.js; configure in index.php */
 } else {
 	$no_records = count($toc);
 
