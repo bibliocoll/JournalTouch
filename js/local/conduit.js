@@ -127,6 +127,8 @@ $(document).ready(function() {
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
 										$('#fillTOC').append(returnData).fadeIn('slow');
+										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
+										$('time.timeago').timeago();
 										if (accordion) {
 												$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
 										}	
@@ -138,6 +140,8 @@ $(document).ready(function() {
 						$('.toc.preloader').fadeOut('slow');
 						}
 						$('#fillTOC').append(returnData).fadeIn('slow');
+						/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
+						$('time.timeago').timeago();
 						if (accordion) {
 						$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
 						}	
@@ -151,6 +155,8 @@ $(document).ready(function() {
 								}).done(function(returnData) {
 										$('.toc.preloader').fadeOut('slow');
 										$('#fillTOC').append(returnData).fadeIn('slow');
+										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
+										$('time.timeago').timeago();
 										if (accordion) {
 												$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
 										}	

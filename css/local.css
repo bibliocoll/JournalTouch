@@ -318,6 +318,11 @@ background-color:#efefef;
 
 /*************** Display TOC *********************************************/
 
+#fillTOC h6 {
+color:#3E9C12;
+font-weight:bold;
+}
+
 .simpleCart_shelfItem {
 border-bottom: dotted 1px #d6d2d2;
 }

@@ -105,22 +105,27 @@ foreach ( $records as $item ) {
 if (empty($toc)) {
     /* write something we can read from our caller script */
     echo '<span id="noTOC"/>';
-	echo '<div data-alert class="alert-box info"><span id="tocAlertText">No table of contents found! Are you interested in this title?</span>';
-    echo '<a class="button radius" href="checkout.php?action=contact&message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20(ISSN:%20'.$issn.')"><i class="fi-comment"></i> Please notify us!</a>';
-    echo '</div>';
+	/* echo '<div data-alert class="alert-box info"><span id="tocAlertText">No table of contents found! Are you interested in this title?</span>'; */
+    /* echo '<a class="button radius" href="checkout.php?action=contact&message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20(ISSN:%20'.$issn.')"><i class="fi-comment"></i> Please notify us!</a>'; */
+    /* echo '</div>'; */
 } else {
 	$no_records = count($toc);
 
     // sort array by date
     array_sort_by_column($toc, 'date', SORT_DESC);
 
-// get the title from the first item (incl. vol/no = snatch from first item & cut pages) (beware!)
+// get the title & date from the first item (incl. vol/no = snatch from first item & cut pages) (beware!)
     $journalTitle = $toc[0]['source'];
     $journalTitle = preg_replace('/pp\..+/','',$journalTitle);
+    $journalTitle = preg_replace('/,\s+\(.+\)$/','',$journalTitle);
+    $journalTitle = preg_replace('/,$/','',$journalTitle);
     //   if (empty($journalTitle)) { $journalTitle = "TEST". myget("//x:channel/x:title",$xpath); }  // more robust
+    // set time
+    $timestring = date('c', strtotime($toc[0]['date'])); 
 
 	//	echo "<br/>Found " .$no_records . " current articles from <strong>".$journalTitle."</strong>:<br/><br/>";
-	echo '<h5>'.$journalTitle.'</h5>';   
+	echo '<h4>'.$journalTitle.'</h4>';
+    echo '<h6><i class="fi-asterisk"></i> last update: <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
     foreach ( $toc as $item ) {
         //print "<br>";print_r($item); print "<br>";
