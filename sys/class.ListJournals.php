@@ -26,6 +26,11 @@ class ListJournals
     protected $placeholder;
     protected $coverAPI;
 
+    /// \brief \b STR Keeps value of csv's column 10
+    protected $csv_tags;
+    /// \brief \b ARY All tags, key = tagname, value = total count of tag usage
+    protected $tagcloud = array();
+
     public function __construct()
     /* load some configuration */
     {
@@ -45,6 +50,8 @@ class ListJournals
         $this->coverAPI = $config['img']['api'];
         $this->updates_display = $config['updates']['display'];
         $this->updates = $config['updates']['outfile'];
+
+        $this->csv_tags = $config['csv']['tags'];
     }
 
     /* helper function for compare (TODO: put in helper class with other things) */
@@ -119,12 +126,55 @@ class ListJournals
         }
     }
 
-    function getJournals() {
 
+    /**
+     * @brief   Returns all tags as tagcloud (prepared HTML)
+     *
+     * @todo
+     * - Don't use fixed modulo value (5). Create maxtag-count/5 groups
+     * - Use classes instead of fixed font-sizes
+     *
+     * @param $limit  \b INT  Minimum count that a tag has to be used to show in
+     *                        the cloud
+     * @return \b STR <p>aragraph with tagcloud
+     */
+    function getTagcloud($limit = 3) {
+        if (!empty($this->tagcloud)) {
+            $cloud = '';
+            foreach ($this->tagcloud AS $tag => $count) {
+              if ($count >= $limit) {
+                $weight = round($count-($count % 5), 0);
+                if ($weight > 10) $weight = 10;
+                $fontsize = 8 + $weight.'px';
+                $cloud .= '<span style="font-size:'.$fontsize.'"><a class="filter" id="tag-'.$tag.'" href="#">'.$tag.'</a> ('.$count.')</span> ';
+              }
+            }
+            $cloud = "<p align=\"center\">$cloud</p>";
+            return $cloud;
+        } else {
+            return '';
+        }
+    }
+
+
+    /**
+     * @brief   Reads all csv columns into an array.
+     *
+     * @todo
+     * - Tagcloud: don't use underscores for spaces. Multi array or something instead
+     *
+     * @return
+     * - \b ARY array('id' => ISSN, 'title' => x, 'filter' => x,
+     *            'topJ' => x, 'date' => x, 'img' => x, 'new' => x,
+     *            'tags' => x)
+     * - \b ARY ListJournals::$tagcloud
+     */
+    function getJournals() {
         $row = 1;
         $journals = array();
  
         if (($handle = fopen($this->csv_file, "r")) !== FALSE) {
+            $tagcloud = array();
             while (($data = fgetcsv($handle, 1000, $this->csv_separator)) !== FALSE) {
                 $num = count($data);
 	
@@ -138,6 +188,21 @@ class ListJournals
                 $img = $this->getCover($myISSN);
                 $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
 
+                $tags_row = array();
+                if (!empty($data[$this->csv_tags])) {
+                  // remove space between comma and tag; better readable but...
+                  $tags_row = str_replace(', ', ',', $data[$this->csv_tags]);
+                  // ...multi word tags have to be "js ready"
+                  $tags_row = str_replace(' ', '_', $tags_row);
+                  $tags_row = explode(',', $tags_row);
+                  // move row tags to our "big cloud"
+                  $tagcloud = array_merge($tagcloud, $tags_row);
+                } else {
+                  $tags_row[] = 'NoTag';
+                }
+                $tags = implode(' tag-', $tags_row);
+                $tags = 'tag-'.$tags;
+
                 $journals[] = array(
                     'id' => $myISSN,
                     'title' => $data[$this->csv_col_title],
@@ -145,11 +210,15 @@ class ListJournals
                     'topJ' => $topJ,
                     'date' => $date,
                     'img' => $img,
-                    'new' => $new
+                    'new' => $new,
+                    'tags' => $tags
                 );
 
             } 
             fclose($handle);
+            // set our "big cloud" as class property (and sort alphabetically)
+            $this->tagcloud = array_count_values($tagcloud);
+            ksort($this->tagcloud);
         }
         return $journals;
     }
