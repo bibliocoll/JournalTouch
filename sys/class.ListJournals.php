@@ -10,6 +10,12 @@
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
+ *
+ * @todo (Ideas)
+ * - Maybe fetch more infos per http://amsl.technology/issn-resolver/
+ * -- Maybe automatically fetch publish frequency and create "paging" for journals?
+ * - Switch config.ini > alink automatically if in network with fulltext access
+ * - Use SFX to directly download article (or link to print)
  */
 class ListJournals
 {
