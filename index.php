@@ -182,8 +182,20 @@ $filters = $lister->getFilters();
 			<div class="row">
 				<div id="TOCbox" class="small-12 columns">		
 
+<!-- start Tagcloud - only temporary until better place is found ;) -->
+        <style type="text/css">
+          #tagcloud{display: none;}
+          #tagcloudShow:hover #tagcloud {display : block;}
+        </style>
+        <div id="tagcloudShow"><h4><a id="tz_a" href="#"><b>Tagcloud</b> (hover your mouse over me to filter by topic!)</a></h4>
+          <div id="tagcloud">
+            <?php echo $lister->getTagcloud(1); ?>
+          </div>
+        </div>
+<!-- end Tagcloud -->
+
 					<!-- A-Z button bar -->
-					
+
 					<div class="button-bar alphabet">
 						<ul class="button-group radius">
 							<?php
@@ -216,7 +228,7 @@ $filters = $lister->getFilters();
                /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
                $timestring = date('c', strtotime($j['date'])); // 
                $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
-					   echo '<dd class="filter-'.$j['filter'].' '.$j['topJ'].'">';
+					   echo '<dd class="filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
 					   echo $j['title']; 
@@ -250,7 +262,7 @@ $filters = $lister->getFilters();
                             $timestring = date('c', strtotime($j['date'])); // 
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
-					      echo '<div class="large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['topJ'].'">';
+					      echo '<div class="large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
