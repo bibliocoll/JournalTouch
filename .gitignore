@@ -9,3 +9,4 @@ input/*
 config/config.ini
 /.project
 img/*
+export/*
