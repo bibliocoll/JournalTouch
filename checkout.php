@@ -1,4 +1,5 @@
 <?php
+require_once 'sys/jt-gettext.php';
 $mylist = $_POST;
 /* do we have GET parameters? (currently only used for contact) */
 $myaction = $_GET;
@@ -16,7 +17,7 @@ $action = new CheckoutActions();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MPI JournalTouch - Checkout</title>
+    <title><?php echo __('MPI JournalTouch') ?> - <?php echo __('Checkout') ?></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
@@ -37,7 +38,7 @@ $action = new CheckoutActions();
 			<ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
 				<!-- Title Area -->
 				<li class="name">
-					<h1>JournalTouch<em>beta</em> - a library service - Checkout</h1>
+					<h1><?php echo __('JournalTouch <em><strong>beta</strong></em> - a library service') ?></h1>
 				</li>
 				<li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php">&nbsp;Back</a></li>
 			</ul>
@@ -46,7 +47,7 @@ $action = new CheckoutActions();
 				<!-- Right Nav Section -->
 				<ul class="right">
 					<li class="divider"></li>
-					<li><a class="i fi-arrow-left" href="index.php">&nbsp;Back to journal selection</a></li>
+					<li><a class="i fi-arrow-left" href="index.php">&nbsp;<?php echo __('Back to journal selection') ?></a></li>
 				</ul>
 			</section>
 		</nav>
@@ -57,20 +58,20 @@ $action = new CheckoutActions();
 		<?php if($_GET && $_GET['action'] == 'contact') { ?>
 		<div class="row">
 			<div class="small-12 columns" style="padding-top:20px">
-				<h1>Send your feedback to the library</h1>
+				<h1><?php echo __('Send your feedback to the library') ?></h1>
 			</div>
 		</div>
 			<form name="Feedback" method="post" action="<?php print $_SERVER['REQUEST_URI']; ?>">
 
 				<div class="row">
 					<div class="small-12 columns">
-						<label>Your e-mail
+						<label><?php echo __('Your e-mail') ?>
 
 							<?php 
 								 $userHandle = new GetUsers();
 								 $users = $userHandle->getUsers();
 							     if ($users == false) {  
-							       print '<input name="username" placeholder="your username" type="text"/>';
+							       print '<input name="username" placeholder="__(\'your username\')" type="text"/>';
                    } else {                             
 							       print '<select name="username">';
 								     foreach ($users as $name=>$pw) {
@@ -81,15 +82,15 @@ $action = new CheckoutActions();
                 ?>
 
 						</label>
-						<small id="errorUsername" class="error" style="display:none">please choose a name</small>
+						<small id="errorUsername" class="error" style="display:none"><?php echo __('please choose a name') ?></small>
 
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="small-12 columns">
-						<label>Your feedback message
-							<textarea name="message" placeholder="if you have any comments for us please put them here!"><?php if ($_GET['message']) { print $_GET['message']; } ?></textarea>
+						<label><?php echo __('Your feedback message') ?>
+							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!') ?>"><?php if ($_GET['message']) { print $_GET['message']; } ?></textarea>
 						</label>
 					</div>
 				</div>
@@ -109,7 +110,7 @@ $action = new CheckoutActions();
 
 		<div class="row" id="actionGreeter">
 			<div class="small-12 columns" style="padding-top:20px">
-				<h1>I want to...</h1>
+				<h1><?php echo __('I want to...') ?></h1>
 			</div>
 		</div>
 		
@@ -117,25 +118,25 @@ $action = new CheckoutActions();
 
 		<div id="actions" class="row">
 			<div class="small-12 text-center columns">
-				<a id="printArticles" href="#" class="radius button large"><i class="fi-print"></i> View &amp; Print</a>
+				<a id="printArticles" href="#" class="radius button large"><i class="fi-print"></i> <?php echo __('View &amp; Print') ?></a>
 				<!--<a id="saveArticles" href="#" class="radius button large disabled"><i class="fi-save"></i> Save/Export</a>-->
 				<?php if(empty($_POST['mailer'])) { ?>
-			  <a id="sendArticlesToUser" href="#" class="button radius large mailForm"><i class="fi-mail"></i> Send to my mailbox</a>
-				<a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> Send to library to get PDFs</a>
+			  <a id="sendArticlesToUser" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to my mailbox') ?></a>
+				<a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to library to get PDFs') ?></a>
 				<?php } else { ?>
-				<a id="sendDone" href="#" class="radius button large success"><i class="fi-check"></i> You already sent your files </a>
+				<a id="sendDone" href="#" class="radius button large success"><i class="fi-check"></i> <?php echo __('You already sent your files') ?> </a>
 				<?php } ?>
-				<a id="resetActions" href="#" class="radius button large reset" style="display:none"><i class="fi-arrow-left"></i> choose another option</a>
+				<a id="resetActions" href="#" class="radius button large reset" style="display:none"><i class="fi-arrow-left"></i> <?php echo __('choose another option') ?></a>
 				<!--<a id="emptyCart" href="#" class="radius button large alert"><i class="fi-arrows-out"></i> Clear Data and Logout</a>-->
-				<a id="emptyCartConfirm" class="radius large alert button" data-reveal-id="emptyConfirm"><i class="fi-arrows-out"></i> Clear Data and Logout</a>  
+				<a id="emptyCartConfirm" class="radius large alert button" data-reveal-id="emptyConfirm"><i class="fi-arrows-out"></i> <?php echo __('Clear Data and Logout') ?></a>
 			</div>  
 		</div>
 
 		<!-- Security confirmation on delete -->
 		<div id="emptyConfirm" class="reveal-modal" data-reveal>
-			<h3>Do you really want to empty your basket?</h3>
-			<a id="emptyCart" href="#" class="radius small alert button close-reveal-modal"><i class="fi-trash"></i> OK, empty my basket!</a>
-			<a id="DoNotemptyCartButton" class="radius small success button close-reveal-modal"><i class="fi-trash"></i> No, keep basket!</a>
+			<h3><?php echo __('Do you really want to empty your basket?') ?></h3>
+			<a id="emptyCart" href="#" class="radius small alert button close-reveal-modal"><i class="fi-trash"></i> <?php echo __('OK, empty my basket!') ?></a>
+			<a id="DoNotemptyCartButton" class="radius small success button close-reveal-modal"><i class="fi-trash"></i> <?php echo __('No, keep basket!') ?></a>
 		</div>
 
 		<?php } /* end GET query */ ?>
@@ -143,7 +144,7 @@ $action = new CheckoutActions();
 		<div id="emptyCartSuccess" class="row invisible">
 			<div class="small-12 text-center columns">
 				<div data-alert class="alert-box success radius">
-					<i class="fi-check"></i> Your articles have been successfully deleted! You will automatically be taken to the start page.
+					<i class="fi-check"></i> <?php echo __('Your articles have been successfully deleted! You will automatically be taken to the start page.') ?>
 					<a href="#" class="close">&times;</a>
 				</div>
 			</div>
@@ -173,7 +174,7 @@ $action = new CheckoutActions();
    <div class="row">
 	   <div class="small-12 text-center columns">
 		   <div data-alert class="alert-box success radius">
-				 <i class="fi-check"></i>&nbsp; Your message has been successfully sent!  <a href="#" class="close">&times;</a>
+				 <i class="fi-check"></i>&nbsp; <?php echo __('Your message has been successfully sent!') ?>  <a href="#" class="close">&times;</a>
 		   </div>
 		 </div>
 	 </div>
@@ -215,13 +216,13 @@ $action = new CheckoutActions();
 
 				<div class="row sendArticlesToLib sendArticlesToUser">
 					<div class="small-12 columns">
-						<label>Your e-mail
+						<label><?php echo __('Your e-mail') ?>
 
 							<?php 
 								 $userHandle = new GetUsers();
 								 $users = $userHandle->getUsers();
 							     if ($users == false) {  
-							       print '<input name="username" placeholder="your username" type="text"/>';
+							       print '<input name="username" placeholder="__(\'your username\')" type="text"/>';
                    } else {                             
 							       print '<select name="username">';
 								     foreach ($users as $name=>$pw) {
@@ -232,14 +233,14 @@ $action = new CheckoutActions();
                 ?>
 
 						</label>
-						<small id="errorUsername" class="error" style="display:none">please choose a name</small>
+						<small id="errorUsername" class="error" style="display:none"><?php echo __('please choose a name') ?></small>
 
 					</div>
 				</div>
 
 				<div class="row sendArticlesToUser">
 					<div class="small-12 columns">
-						<label>Attach citations?</label><!--<small class="error">beware: experimental feature</small>-->
+						<label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
 						<input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
 						<input type="radio" disabled id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX"><s>BibTeX</s></label>
 						<input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
@@ -248,8 +249,8 @@ $action = new CheckoutActions();
 
 				<div class="row sendArticlesToLib">
 					<div class="small-12 columns">
-						<label>Your message
-							<textarea name="message" placeholder="if you have any comments for us please put them here!"></textarea>
+						<label><?php echo __('Your message') ?>
+							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!') ?>"></textarea>
 						</label>
 					</div>
 				</div>
