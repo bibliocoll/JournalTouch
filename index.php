@@ -42,7 +42,7 @@ $filters = $lister->getFilters();
                     <?php if (!empty($filters)) { /* show filters only if set */?>
 					<li class="has-dropdown"><a id="filter-view" href="#"><i class="fi-filter"></i>&nbsp;filter</a>
 						<ul class="dropdown">
-							<li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&nbsp;MPI favorites</a></li>
+							<li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&nbsp;TUB-Empfehlungen</a></li>
                             <?php 
                             /* read all filters from the config file (see $lister->getFilters() )*/
                             foreach ($filters as $key=>$f) {
@@ -137,7 +137,7 @@ $filters = $lister->getFilters();
 			<div class="row">
 
 				<div class="large-12 columns" style="padding-top:20px">
-					<h3>Most recent updates:</h3>
+					<h3>Die neusten Ausgaben:</h3>
 					<?php // print date('M d Y',strtotime('-7 day'))." - " .date('M d Y',strtotime('today'));  ?>
 				</div>
 			</div>
@@ -156,14 +156,14 @@ $filters = $lister->getFilters();
           <?php
 
 					/* /\* see Class setup *\/ */
-					/* 	 foreach ($journals as $j) { */
-					/* 	   if (!empty($j['topJ'])) { */
-					/* 	     echo '<li data-orbit-slide="headline">'; */
-					/* 	     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>'; */
-					/* 	     echo '<div class="orbit-caption">'.$j['title'].'</div>'; */
-					/* 	     echo '</li>'; */
-					/* 	   } */
-					/* 	 } */
+					 	 foreach ($journals as $j) {
+					 	   if (!empty($j['topJ'])) {
+					 	     echo '<li data-orbit-slide="headline">';
+					 	     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
+					 	     echo '<div class="orbit-caption">'.$j['title'].'</div>';
+					 	     echo '</li>';
+					 	   }
+					 	 }
 					?>
 
 					</ul>
@@ -189,7 +189,7 @@ $filters = $lister->getFilters();
         </style>
         <div id="tagcloudShow"><h4><a id="tz_a" href="#"><b>Tagcloud</b> (hover your mouse over me to filter by topic!)</a></h4>
           <div id="tagcloud">
-            <?php echo $lister->getTagcloud(1); ?>
+            <?php echo $lister->getTagcloud(); ?>
           </div>
         </div>
 <!-- end Tagcloud -->
@@ -317,6 +317,7 @@ $filters = $lister->getFilters();
 		</footer>
 
 		<!-- a fancy screensaver when screen is idle (see css for switching) -->
+<!-- TEMP DISABLE TZ
 		<div id="screensaver" style="display:none">
 						<div class="row">
 				<div class="small-12 medium-12 large-12 columns left">
@@ -351,7 +352,7 @@ $filters = $lister->getFilters();
 			<div class="row">
 				<p class="text-center"><img src="img/bgcoll-logo.png"></img></p>
 			</div>
-
+-->
 			<!-- end screensaver -->
 
     <script src="js/vendor/jquery.js"></script>
