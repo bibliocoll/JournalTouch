@@ -1,5 +1,6 @@
 *~
 Thumbs.db
+<<<<<<< HEAD
 _stuff/*
 config/*
 doc/html/*
@@ -10,3 +11,5 @@ config/config.ini
 /.project
 img/*
 export/*
+=======
+>>>>>>> parent of 5cb9773... Local Config
