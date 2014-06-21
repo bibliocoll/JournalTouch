@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 23:46+0100\n"
-"PO-Revision-Date: 2014-06-19 23:46+0100\n"
+"POT-Creation-Date: 2014-06-21 11:36+0100\n"
+"PO-Revision-Date: 2014-06-21 11:36+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,6 +43,11 @@ msgstr ""
 #: checkout.php:68
 #: checkout.php:219
 msgid "Your e-mail"
+msgstr ""
+
+#: checkout.php:74
+#: checkout.php:225
+msgid "your username"
 msgstr ""
 
 #: checkout.php:85
