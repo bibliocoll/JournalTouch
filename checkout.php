@@ -71,7 +71,7 @@ $action = new CheckoutActions();
 								 $userHandle = new GetUsers();
 								 $users = $userHandle->getUsers();
 							     if ($users == false) {  
-							       print '<input name="username" placeholder="__(\'your username\')" type="text"/>';
+							       print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
                    } else {                             
 							       print '<select name="username">';
 								     foreach ($users as $name=>$pw) {
@@ -90,7 +90,7 @@ $action = new CheckoutActions();
 				<div class="row">
 					<div class="small-12 columns">
 						<label><?php echo __('Your feedback message') ?>
-							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!') ?>"><?php if ($_GET['message']) { print $_GET['message']; } ?></textarea>
+							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!'); ?>"><?php if (isset($_GET['message'])) { print $_GET['message']; } ?></textarea>
 						</label>
 					</div>
 				</div>
@@ -222,7 +222,7 @@ $action = new CheckoutActions();
 								 $userHandle = new GetUsers();
 								 $users = $userHandle->getUsers();
 							     if ($users == false) {  
-							       print '<input name="username" placeholder="__(\'your username\')" type="text"/>';
+							       print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
                    } else {                             
 							       print '<select name="username">';
 								     foreach ($users as $name=>$pw) {
@@ -250,7 +250,7 @@ $action = new CheckoutActions();
 				<div class="row sendArticlesToLib">
 					<div class="small-12 columns">
 						<label><?php echo __('Your message') ?>
-							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!') ?>"></textarea>
+							<textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!'); ?>"></textarea>
 						</label>
 					</div>
 				</div>
