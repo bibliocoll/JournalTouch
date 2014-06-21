@@ -1,2 +1,12 @@
 *~
 Thumbs.db
+_stuff/*
+config/*
+doc/html/*
+doc/def/*
+doc/*.tmp
+input/*
+config/config.ini
+/.project
+img/*
+export/*
