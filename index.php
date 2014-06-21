@@ -39,6 +39,9 @@ $filters = $lister->getFilters();
 				<!-- Right Nav Section -->
 				<ul class="right">
 					<li class="divider"></li>
+          <?php if (count($lister->tagcloud) > 1) { ?>
+					   <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&nbsp;<?php echo __('Tags') ?></a></li>
+          <?php } ?>
                     <?php if (!empty($filters)) { /* show filters only if set */?>
 					<li class="has-dropdown"><a id="filter-view" href="#"><i class="fi-filter"></i>&nbsp;<?php echo __('filter') ?></a>
 						<ul class="dropdown">
@@ -55,6 +58,7 @@ $filters = $lister->getFilters();
                     <?php } ?>
 					<li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&nbsp;<?php echo __('list view') ?></span></a></li>
 					<li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&nbsp;<?php echo __('my basket') ?> (<span class="simpleCart_quantity"></span>)</a></li>
+					<li class="divider"></li>
           <?php
             // Nasty and only works with two languages ;)
             if (isset($_GET['lang'])) {
@@ -63,7 +67,6 @@ $filters = $lister->getFilters();
             else {
               $href_lang = 'en_US';
             }
-					  echo '<li class="divider"></li>';
             echo "<li><a id=\"switch-language\" href=\"index.php?lang=$href_lang\"><img src=\"locale/$href_lang.gif\" /></a></li>";
             ?>
 				</ul>
@@ -120,6 +123,17 @@ $filters = $lister->getFilters();
 
 
 		<!-- End Header and Nav -->
+
+    <!-- start Tagcloud -->
+    <?php if (count($lister->tagcloud) > 1) { ?>
+    <div id="tagsPopover" class="reveal-modal" data-reveal>
+      <h3><?php echo __('Tagcloud') ?></h3>
+      <a class="close-reveal-modal button radius">×</a>
+      <p><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&nbsp;<?php echo __('show all') ?></a></p>
+      <?php echo $lister->getTagcloud(); ?>
+    </div>
+    <?php } ?>
+    <!-- end Tagcloud -->
 		
 		<div id="cartPopover" class="reveal-modal" data-reveal>
 			<div class="simpleCart_items"></div>
@@ -193,18 +207,6 @@ $filters = $lister->getFilters();
 			<div class="row">
 				<div id="TOCbox" class="small-12 columns">		
 
-<!-- start Tagcloud - only temporary until better place is found ;) -->
-        <style type="text/css">
-          #tagcloud{display: none;}
-          #tagcloudShow:hover #tagcloud {display : block;}
-        </style>
-        <div id="tagcloudShow"><h4><a id="tz_a" href="#"><?php echo __('<b>Tagcloud</b> (hover your mouse over me to filter by topic!)') ?></a></h4>
-          <div id="tagcloud">
-            <?php echo $lister->getTagcloud(); ?>
-          </div>
-        </div>
-<!-- end Tagcloud -->
-
 					<!-- A-Z button bar -->
 
 					<div class="button-bar alphabet">
@@ -243,7 +245,7 @@ $filters = $lister->getFilters();
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
 					   echo $j['title']; 
-					   echo (!empty($j['new']) ? ' <span class="fresh">[last update ' . $wF . ']</span>' : "");
+					   echo (!empty($j['new']) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "");
 					   echo '</a>';
 					   echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
 					  echo '</dd>';
@@ -278,7 +280,7 @@ $filters = $lister->getFilters();
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
 					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
-					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">[__("last update") ' . $wF . ']</span> </h6>' : "");
+					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
 					    } 
 					 ?>

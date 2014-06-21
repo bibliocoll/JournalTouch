@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-19 23:38+0100\n"
-"PO-Revision-Date: 2014-06-19 23:53+0100\n"
+"POT-Creation-Date: 2014-06-21 12:31+0100\n"
+"PO-Revision-Date: 2014-06-21 12:43+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -43,6 +43,11 @@ msgstr "Feedback an die Bibliothek senden"
 #: checkout.php:219
 msgid "Your e-mail"
 msgstr "Ihre E-Mail"
+
+#: checkout.php:74
+#: checkout.php:225
+msgid "your username"
+msgstr "Ihre TU-Mail (ohne @tuhh.de)"
 
 #: checkout.php:85
 #: checkout.php:236
@@ -139,11 +144,11 @@ msgstr "TUB-Empfehlungen"
 
 #: index.php:56
 msgid "list view"
-msgstr "Listenansicht"
+msgstr "Liste"
 
 #: index.php:57
 msgid "my basket"
-msgstr "Meine Merkliste"
+msgstr "Merkliste"
 
 #: index.php:77
 msgid "Send articles"
@@ -212,6 +217,11 @@ msgstr "Aktive Filter:"
 msgid "Browse all journals from A to Z (list view):"
 msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
 
+#: index.php:246
+#: index.php:281
+msgid "last update"
+msgstr "Letzte Aktualisierung"
+
 #: index.php:262
 msgid "Browse all journals from A to Z (grid view):"
 msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
@@ -256,12 +266,6 @@ msgstr "Berühren Sie den Bildschirm..."
 #: index.php:383
 msgid "remove"
 msgstr "entfernen"
-
-#: sys/php-gettext/examples/pigs_dropin.php:77
-msgid ""
-"This is how the story goes.\n"
-"\n"
-msgstr ""
 
 #~ msgid ""
 #~ "Tables of contents are provided by <strong>CrossRef</strong> and "
@@ -662,8 +666,6 @@ msgstr ""
 #~ msgstr "Keine"
 #~ msgid "Copies"
 #~ msgstr "Exemplare"
-#~ msgid "Last Update"
-#~ msgstr "Letzte Aktualisierung"
 #~ msgid "Item Code can't be empty!"
 #~ msgstr "Barcode muss angegeben sein!"
 #~ msgid "Item Data Successfully Updated"
@@ -1879,8 +1881,6 @@ msgstr ""
 #~ msgstr "Aktivitäten bis"
 #~ msgid "Real Name"
 #~ msgstr "Name"
-#~ msgid "Login Username"
-#~ msgstr "Anmeldename"
 #~ msgid "Bibliography Data Entry"
 #~ msgstr "Titel aufgenommen"
 #~ msgid "Item Data Entry"
