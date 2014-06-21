@@ -35,7 +35,7 @@ class ListJournals
     /// \brief \b STR Keeps value of csv's column 10
     protected $csv_tags;
     /// \brief \b ARY All tags, key = tagname, value = total count of tag usage
-    protected $tagcloud = array();
+    public $tagcloud = array();
 
     public function __construct()
     /* load some configuration */
@@ -144,15 +144,35 @@ class ListJournals
      *                        the cloud
      * @return \b STR <p>aragraph with tagcloud
      */
-    function getTagcloud($limit = 3) {
+    function getTagcloud($limit = 0, $ignoreTag = 'noTag') {
         if (!empty($this->tagcloud)) {
+            $countcloud = $this->tagcloud;
+            if ($limit) {
+              foreach ($countcloud AS $tag => $count) {
+                if ($count < $limit) unset($countcloud[$tag]);
+              }
+            }
+            if (isset($countcloud[$ignoreTag])) unset($countcloud[$ignoreTag]);
+
+            $fontsteps = 5;
+            $tag_min  = min($countcloud);
+            $tag_max  = max($countcloud);
+            $tag_avg  = array_sum($countcloud) / count($countcloud);
+            $tag_span = $tag_max - $tag_min;
+            $step = $tag_span / $fontsteps; // get 5 diffferent font-sizes
+
             $cloud = '';
             foreach ($this->tagcloud AS $tag => $count) {
+              $fontsize = 0.73;
               if ($count >= $limit) {
-                $weight = round($count-($count % 5), 0);
-                if ($weight > 10) $weight = 10;
-                $fontsize = 8 + $weight.'px';
-                $cloud .= '<span style="font-size:'.$fontsize.'"><a class="filter" id="tag-'.$tag.'" href="#">'.$tag.'</a> ('.$count.')</span> ';
+                if ($tag == $ignoreTag) {
+                  $multiplier = $step * $fontsteps;
+                }
+                else {
+                  $multiplier = round($count-($count % $step), 0);
+                }
+                $fontsize += 0.04 * $multiplier;
+                $cloud .= '<span style="font-size:'.$fontsize.'em"><a class="filter" id="tag-'.$tag.'" href="javascript:;" onclick="$(\'.reveal-modal\').trigger(\'reveal:close\');">'.$tag.'</a> ('.$count.')</span> ';
               }
             }
             $cloud = "<p align=\"center\">$cloud</p>";
@@ -201,11 +221,11 @@ class ListJournals
                   // ...multi word tags have to be "js ready"
                   $tags_row = str_replace(' ', '_', $tags_row);
                   $tags_row = explode(',', $tags_row);
-                  // move row tags to our "big cloud"
-                  $tagcloud = array_merge($tagcloud, $tags_row);
                 } else {
                   $tags_row[] = 'NoTag';
                 }
+                // move row tags to our "big cloud" (tags from all rows)
+                $tagcloud = array_merge($tagcloud, $tags_row);
                 $tags = implode(' tag-', $tags_row);
                 $tags = 'tag-'.$tags;
 

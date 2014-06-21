@@ -283,6 +283,8 @@ $(document).ready(function() {
 /* filter */
 
 		$('a.filter').click(function(){
+        /* remove any open modal */
+        $('.reveal-modal').foundation('reveal', 'close');
 				/* reset alphabet */
 				$('.alphabet li a').show();
 				var curFilter = $(this).attr('id');
