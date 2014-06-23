@@ -20,7 +20,7 @@ msgstr ""
 #: checkout.php:20
 #: index.php:15
 msgid "MPI JournalTouch"
-msgstr "TUB JournalTouch"
+msgstr "MPI JournalTouch"
 
 #: checkout.php:20
 msgid "Checkout"
@@ -47,7 +47,7 @@ msgstr "Ihre E-Mail"
 #: checkout.php:74
 #: checkout.php:225
 msgid "your username"
-msgstr "Ihre TU-Mail (ohne @tuhh.de)"
+msgstr "Ihr Benutzername"
 
 #: checkout.php:85
 #: checkout.php:236
@@ -132,7 +132,7 @@ msgstr "über"
 
 #: index.php:43
 msgid "filter"
-msgstr "Portfolios"
+msgstr "Filter"
 
 #: index.php:45
 msgid "show all"
@@ -140,7 +140,7 @@ msgstr "alle anzeigen"
 
 #: index.php:46
 msgid "MPI favorites"
-msgstr "TUB-Empfehlungen"
+msgstr "MPI-Empfehlungen"
 
 #: index.php:56
 msgid "list view"
@@ -161,7 +161,7 @@ msgstr "Über"
 #: index.php:90
 #: index.php:337
 msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
-msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>TUB Hamburg/Harburg</strong> für aktuelle Zeitschriftenausgaben."
+msgstr "<em>JournalTouch</em> ist der Alerting Service des <strong>MPI zur Erforschung von Gemeinschaftsgütern</strong> für aktuelle Zeitschriftenausgaben."
 
 #: index.php:92
 #: index.php:339
@@ -187,7 +187,7 @@ msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>Jou
 #: index.php:113
 #: index.php:323
 msgid "Get in touch!"
-msgstr "Mail mich an!"
+msgstr "Kontakt"
 
 #: index.php:128
 msgid "Your basket is empty."
