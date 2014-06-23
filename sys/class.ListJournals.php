@@ -166,13 +166,13 @@ class ListJournals
               $fontsize = 0.73;
               if ($count >= $limit) {
                 if ($tag == $ignoreTag) {
-                  $multiplier = $step * $fontsteps;
+                  $multiplier = $fontsteps;
                 }
                 else {
-                  $multiplier = round($count-($count % $step), 0);
+                  $multiplier = round(($count % $step), 0);
                 }
-                $fontsize += 0.04 * $multiplier;
-                $cloud .= '<span style="font-size:'.$fontsize.'em"><a class="filter" id="tag-'.$tag.'" href="javascript:;" onclick="$(\'.reveal-modal\').trigger(\'reveal:close\');">'.$tag.'</a> ('.$count.')</span> ';
+                $css = 'tagcloud'.$multiplier;
+                $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
               }
             }
             $cloud = "<p align=\"center\">$cloud</p>";
