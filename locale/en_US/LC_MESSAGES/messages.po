@@ -1,0 +1,270 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: JournalTouch\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-21 12:31+0100\n"
+"PO-Revision-Date: 2014-06-21 12:31+0100\n"
+"Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_ngettext:1,2\n"
+"X-Poedit-Basepath: ../../../\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: checkout.php:20
+#: index.php:15
+msgid "MPI JournalTouch"
+msgstr ""
+
+#: checkout.php:20
+msgid "Checkout"
+msgstr ""
+
+#: checkout.php:41
+#: index.php:30
+msgid "JournalTouch <em><strong>beta</strong></em> - a library service"
+msgstr ""
+
+#: checkout.php:50
+msgid "Back to journal selection"
+msgstr ""
+
+#: checkout.php:61
+msgid "Send your feedback to the library"
+msgstr ""
+
+#: checkout.php:68
+#: checkout.php:219
+msgid "Your e-mail"
+msgstr ""
+
+#: checkout.php:74
+#: checkout.php:225
+msgid "your username"
+msgstr ""
+
+#: checkout.php:85
+#: checkout.php:236
+msgid "please choose a name"
+msgstr ""
+
+#: checkout.php:92
+msgid "Your feedback message"
+msgstr ""
+
+#: checkout.php:93
+#: checkout.php:253
+msgid "if you have any comments for us please put them here!"
+msgstr ""
+
+#: checkout.php:113
+msgid "I want to..."
+msgstr ""
+
+#: checkout.php:121
+msgid "View &amp; Print"
+msgstr ""
+
+#: checkout.php:124
+msgid "Send to my mailbox"
+msgstr ""
+
+#: checkout.php:125
+msgid "Send to library to get PDFs"
+msgstr ""
+
+#: checkout.php:127
+msgid "You already sent your files"
+msgstr ""
+
+#: checkout.php:129
+msgid "choose another option"
+msgstr ""
+
+#: checkout.php:131
+msgid "Clear Data and Logout"
+msgstr ""
+
+#: checkout.php:137
+#: index.php:139
+msgid "Do you really want to empty your basket?"
+msgstr ""
+
+#: checkout.php:138
+#: index.php:140
+msgid "OK, empty my basket!"
+msgstr ""
+
+#: checkout.php:139
+#: index.php:141
+msgid "No, keep basket!"
+msgstr ""
+
+#: checkout.php:147
+msgid "Your articles have been successfully deleted! You will automatically be taken to the start page."
+msgstr ""
+
+#: checkout.php:177
+msgid "Your message has been successfully sent!"
+msgstr ""
+
+#: checkout.php:243
+msgid "Attach citations?"
+msgstr ""
+
+#: checkout.php:252
+msgid "Your message"
+msgstr ""
+
+#: index.php:32
+msgid "menu"
+msgstr ""
+
+#: index.php:37
+msgid "about"
+msgstr ""
+
+#: index.php:43
+msgid "filter"
+msgstr ""
+
+#: index.php:45
+msgid "show all"
+msgstr ""
+
+#: index.php:46
+msgid "MPI favorites"
+msgstr ""
+
+#: index.php:56
+msgid "list view"
+msgstr ""
+
+#: index.php:57
+msgid "my basket"
+msgstr ""
+
+#: index.php:77
+msgid "Send articles"
+msgstr ""
+
+#: index.php:89
+msgid "About"
+msgstr ""
+
+#: index.php:90
+#: index.php:337
+msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
+msgstr ""
+
+#: index.php:92
+#: index.php:339
+msgid ""
+"It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
+"\t\t\t\t\t\tavailable, it will be indicated with an extra button.\n"
+"\t\t\t\t\t\tWhen you are finished, click on your basket to check out.\n"
+"\t\t\t\t\t\tYou can now send the article information to your e-mail address, send a\n"
+"\t\t\t\t\t\trequest for the PDF files to the library, or view/save it as a\n"
+"\t\t\t\t\t\tlist. Export for citation management systems like Endnote is also available. <br/>\n"
+"\t\t\t\t\t\tThe list of journals is a selection of the journals licensed to the library."
+msgstr ""
+
+#: index.php:106
+msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
+msgstr ""
+
+#: index.php:107
+#: index.php:353
+msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
+msgstr ""
+
+#: index.php:113
+#: index.php:323
+msgid "Get in touch!"
+msgstr ""
+
+#: index.php:128
+msgid "Your basket is empty."
+msgstr ""
+
+#: index.php:130
+msgid "Send/Save my articles"
+msgstr ""
+
+#: index.php:132
+msgid "Empty my basket"
+msgstr ""
+
+#: index.php:151
+msgid "The newest editions"
+msgstr ""
+
+#: index.php:201
+msgid "<b>Tagcloud</b> (hover your mouse over me to filter by topic!)"
+msgstr ""
+
+#: index.php:225
+msgid "Filter active:"
+msgstr ""
+
+#: index.php:234
+msgid "Browse all journals from A to Z (list view):"
+msgstr ""
+
+#: index.php:246
+#: index.php:281
+msgid "last update"
+msgstr ""
+
+#: index.php:262
+msgid "Browse all journals from A to Z (grid view):"
+msgstr ""
+
+#: index.php:294
+msgid "Something seems to be wrong with the network"
+msgstr ""
+
+#: index.php:296
+#: index.php:303
+msgid "Please notify us!"
+msgstr ""
+
+#: index.php:301
+msgid "No table of contents found! Are you interested in this title?"
+msgstr ""
+
+#: index.php:318
+msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
+msgstr ""
+
+#: index.php:335
+msgid "Touch me!"
+msgstr ""
+
+#: index.php:336
+msgid "What is this?"
+msgstr ""
+
+#: index.php:352
+msgid "If a journal is missing, please let us know and we will add it to the list."
+msgstr ""
+
+#: index.php:352
+msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
+msgstr ""
+
+#: index.php:359
+msgid "Touch the screen to get started..."
+msgstr ""
+
+#: index.php:383
+msgid "remove"
+msgstr ""
+

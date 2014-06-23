@@ -10,6 +10,12 @@
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
+ *
+ * @todo (Ideas)
+ * - Maybe fetch more infos per http://amsl.technology/issn-resolver/
+ * -- Maybe automatically fetch publish frequency and create "paging" for journals?
+ * - Switch config.ini > alink automatically if in network with fulltext access
+ * - Use SFX to directly download article (or link to print)
  */
 class ListJournals
 {
@@ -25,6 +31,11 @@ class ListJournals
     protected $updates_display;
     protected $placeholder;
     protected $coverAPI;
+
+    /// \brief \b STR Keeps value of csv's column 10
+    protected $csv_tags;
+    /// \brief \b ARY All tags, key = tagname, value = total count of tag usage
+    public $tagcloud = array();
 
     public function __construct()
     /* load some configuration */
@@ -45,6 +56,8 @@ class ListJournals
         $this->coverAPI = $config['img']['api'];
         $this->updates_display = $config['updates']['display'];
         $this->updates = $config['updates']['outfile'];
+
+        $this->csv_tags = $config['csv']['tags'];
     }
 
     /* helper function for compare (TODO: put in helper class with other things) */
@@ -119,12 +132,75 @@ class ListJournals
         }
     }
 
-    function getJournals() {
 
+    /**
+     * @brief   Returns all tags as tagcloud (prepared HTML)
+     *
+     * @todo
+     * - Don't use fixed modulo value (5). Create maxtag-count/5 groups
+     * - Use classes instead of fixed font-sizes
+     *
+     * @param $limit  \b INT  Minimum count that a tag has to be used to show in
+     *                        the cloud
+     * @return \b STR <p>aragraph with tagcloud
+     */
+    function getTagcloud($limit = 0, $ignoreTag = 'noTag') {
+        if (!empty($this->tagcloud)) {
+            $countcloud = $this->tagcloud;
+            if ($limit) {
+              foreach ($countcloud AS $tag => $count) {
+                if ($count < $limit) unset($countcloud[$tag]);
+              }
+            }
+            if (isset($countcloud[$ignoreTag])) unset($countcloud[$ignoreTag]);
+
+            $fontsteps = 5;
+            $tag_min  = min($countcloud);
+            $tag_max  = max($countcloud);
+            $tag_avg  = array_sum($countcloud) / count($countcloud);
+            $tag_span = $tag_max - $tag_min;
+            $step = $tag_span / $fontsteps; // get 5 diffferent font-sizes
+
+            $cloud = '';
+            foreach ($this->tagcloud AS $tag => $count) {
+              $fontsize = 0.73;
+              if ($count >= $limit) {
+                if ($tag == $ignoreTag) {
+                  $multiplier = $step * $fontsteps;
+                }
+                else {
+                  $multiplier = round($count-($count % $step), 0);
+                }
+                $fontsize += 0.04 * $multiplier;
+                $cloud .= '<span style="font-size:'.$fontsize.'em"><a class="filter" id="tag-'.$tag.'" href="javascript:;" onclick="$(\'.reveal-modal\').trigger(\'reveal:close\');">'.$tag.'</a> ('.$count.')</span> ';
+              }
+            }
+            $cloud = "<p align=\"center\">$cloud</p>";
+            return $cloud;
+        } else {
+            return '';
+        }
+    }
+
+
+    /**
+     * @brief   Reads all csv columns into an array.
+     *
+     * @todo
+     * - Tagcloud: don't use underscores for spaces. Multi array or something instead
+     *
+     * @return
+     * - \b ARY array('id' => ISSN, 'title' => x, 'filter' => x,
+     *            'topJ' => x, 'date' => x, 'img' => x, 'new' => x,
+     *            'tags' => x)
+     * - \b ARY ListJournals::$tagcloud
+     */
+    function getJournals() {
         $row = 1;
         $journals = array();
  
         if (($handle = fopen($this->csv_file, "r")) !== FALSE) {
+            $tagcloud = array();
             while (($data = fgetcsv($handle, 1000, $this->csv_separator)) !== FALSE) {
                 $num = count($data);
 	
@@ -138,6 +214,21 @@ class ListJournals
                 $img = $this->getCover($myISSN);
                 $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
 
+                $tags_row = array();
+                if (!empty($data[$this->csv_tags])) {
+                  // remove space between comma and tag; better readable but...
+                  $tags_row = str_replace(', ', ',', $data[$this->csv_tags]);
+                  // ...multi word tags have to be "js ready"
+                  $tags_row = str_replace(' ', '_', $tags_row);
+                  $tags_row = explode(',', $tags_row);
+                } else {
+                  $tags_row[] = 'NoTag';
+                }
+                // move row tags to our "big cloud" (tags from all rows)
+                $tagcloud = array_merge($tagcloud, $tags_row);
+                $tags = implode(' tag-', $tags_row);
+                $tags = 'tag-'.$tags;
+
                 $journals[] = array(
                     'id' => $myISSN,
                     'title' => $data[$this->csv_col_title],
@@ -145,11 +236,15 @@ class ListJournals
                     'topJ' => $topJ,
                     'date' => $date,
                     'img' => $img,
-                    'new' => $new
+                    'new' => $new,
+                    'tags' => $tags
                 );
 
             } 
             fclose($handle);
+            // set our "big cloud" as class property (and sort alphabetically)
+            $this->tagcloud = array_count_values($tagcloud);
+            ksort($this->tagcloud);
         }
         return $journals;
     }
