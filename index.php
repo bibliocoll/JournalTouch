@@ -110,13 +110,33 @@ $filters = $lister->getFilters();
 						<br/>	<?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
 					</p>
 				</div>
-				
+
 				<div class="small-4 medium-3 large-3 columns right">
 					<ul class="inline-list right">
 						<li><a class="button radius" href="checkout.php?action=contact"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
 					</ul>
 				</div>
 			</div>
+
+<div class="row">
+<div class="small-8 medium-9 large-9 columns left">
+<h3>Tobias: Was Schönes doch denkbar wäre:</h3>
+  <p>
+<ul>
+<li>Link zu TUBfind für mehr á la <a href="https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate">https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate</a></li>
+<li>Theoretisch ließe sich aus dem <a href="https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate&view=rss">TUBfind-RSS</a> auch ein TOC ableiten, wo eCrossRef und JournalToc das nicht hergeben</li>
+<li>Anzeigen, ob Print/Print-only (P)</li>
+<li>Anzeigen, ob E-Print/E-only (E)</li>
+<li>Anzeigen, ob TOC (toc)</li>
+<li>Direktlink nur, wenn Eprint - und dann vielleicht noch direkter per SFX?</li>
+<li>Anzeigen, wo im Regal (BAZ-101)</li>
+<li>E-Mail zu Inhouse-Liefer/Abholdienst umfunktionieren</li>
+<li>"Journal of (the)", "The", "der, die, das" etc. entfernen</li>
+<li>... :)</li>
+</ul>
+  </p>
+</div>
+</div>
 			
 				<a class="close-reveal-modal button radius alert">&#215;</a>
 		</div>
@@ -130,7 +150,7 @@ $filters = $lister->getFilters();
       <h3><?php echo __('Tagcloud') ?></h3>
       <a class="close-reveal-modal button radius">×</a>
       <p><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&nbsp;<?php echo __('show all') ?></a></p>
-      <?php echo $lister->getTagcloud(); ?>
+      <?php echo $lister->getTagcloud(3); ?>
     </div>
     <?php } ?>
     <!-- end Tagcloud -->
@@ -244,7 +264,7 @@ $filters = $lister->getFilters();
 					   echo '<dd class="filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
-					   echo $j['title']; 
+					   echo $j['title'];
 					   echo (!empty($j['new']) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "");
 					   echo '</a>';
 					   echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
@@ -275,11 +295,17 @@ $filters = $lister->getFilters();
                             $timestring = date('c', strtotime($j['date'])); // 
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
+                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> TOC<br />' : "");
+                $meta .= (($j['metaOnline']) ? '<i class="'.$j['metaOnline'].'"> </i><a href="https://katalog.tub.tu-harburg.de/Search/Results?ui=standard&shard[]=Primo+Central&filter[]=format%3A%22Articles%22&type=ISN&sort=publishDate&lookfor='.$j['issn'].'" class="popup">Web</a><br />': "<br />");
+                $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
+                $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
+
 					      echo '<div class="large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
-					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
+                echo '<span class="metaInfo"><div>'.$meta.'</div></span>';
+					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
+					      echo '<h5 title="'.$j['title'].'"> '.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
 					    } 
