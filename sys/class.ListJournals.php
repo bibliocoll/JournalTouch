@@ -241,7 +241,7 @@ class ListJournals
                 // meta
                 $metaPrint  = (!empty($data[$this->csv_metaPrint]) ? 'fi-page-copy' : '');
                 $metaOnline = (!empty($data[$this->csv_metaOnline]) ? 'fi-download' : '');
-                $metaGotToc = (!($data[$this->csv_metaGotToc]) ? 'fi-dislike' : 'fi-like');
+                $metaGotToc = (!empty($data[$this->csv_metaGotToc]) && !($data[$this->csv_metaGotToc]) ? 'fi-dislike' : 'fi-like');
                 $metaShelfmark = (!empty($data[$this->csv_metaShelfmark]) ? $data[$this->csv_metaShelfmark] : '');
 
                 $tags_row = array();
