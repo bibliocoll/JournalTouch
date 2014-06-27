@@ -454,5 +454,11 @@ $(document).ready(function() {
 		$('time.timeago').timeago();
 
 
+/* Open web link in popup */
+    $('a.popup').click(function(event) {
+      window.open($(this).attr("href"), "popupWindow", "width=1050,height=600,scrollbars=yes");
+      return false;
+    });
+
 });
 

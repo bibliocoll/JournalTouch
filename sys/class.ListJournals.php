@@ -57,6 +57,12 @@ class ListJournals
         $this->updates_display = $config['updates']['display'];
         $this->updates = $config['updates']['outfile'];
 
+
+        $this->csv_metaPrint = $config['csv']['metaPrint'];
+        $this->csv_metaOnline = $config['csv']['metaOnline'];
+        $this->csv_metaGotToc = $config['csv']['metaGotToc'];
+        $this->csv_metaShelfmark = $config['csv']['metaShelfmark'];
+
         $this->csv_tags = $config['csv']['tags'];
     }
 
@@ -136,15 +142,15 @@ class ListJournals
     /**
      * @brief   Returns all tags as tagcloud (prepared HTML)
      *
-     * @todo
-     * - Don't use fixed modulo value (5). Create maxtag-count/5 groups
-     * - Use classes instead of fixed font-sizes
-     *
-     * @param $limit  \b INT  Minimum count that a tag has to be used to show in
-     *                        the cloud
+     * @param $limit      \b INT  Minimum count that a tag has to be used to
+     *                            show in the cloud
+     * @param $cssClasses \b INT  Number of font sizes to show
+     * @param $ignoreTag  \b INT  Tag that should not be count as maximum,
+     *                            usually NoTag that is set in
+     *                            ListJournals::getJournals()
      * @return \b STR <p>aragraph with tagcloud
      */
-    function getTagcloud($limit = 0, $ignoreTag = 'noTag') {
+    function getTagcloud($limit = 0, $cssClasses = 5, $ignoreTag = 'NoTag') {
         if (!empty($this->tagcloud)) {
             $countcloud = $this->tagcloud;
             if ($limit) {
@@ -154,22 +160,17 @@ class ListJournals
             }
             if (isset($countcloud[$ignoreTag])) unset($countcloud[$ignoreTag]);
 
-            $fontsteps = 5;
             $tag_min  = min($countcloud);
             $tag_max  = max($countcloud);
-            $tag_avg  = array_sum($countcloud) / count($countcloud);
-            $tag_span = $tag_max - $tag_min;
-            $step = $tag_span / $fontsteps; // get 5 diffferent font-sizes
 
             $cloud = '';
             foreach ($this->tagcloud AS $tag => $count) {
-              $fontsize = 0.73;
               if ($count >= $limit) {
                 if ($tag == $ignoreTag) {
-                  $multiplier = $fontsteps;
+                  $multiplier = $cssClasses;
                 }
                 else {
-                  $multiplier = round(($count % $step), 0);
+                  $multiplier = $this->GetTagSizeLogarithmic($count, $tag_min, $tag_max, 1, $cssClasses+1);
                 }
                 $css = 'tagcloud'.$multiplier;
                 $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
@@ -182,6 +183,29 @@ class ListJournals
         }
     }
 
+    /**
+     * @brief   Gets a logarithmic value for given values.
+     *
+     * @param $count      \b INT  Total count of tag
+     * @param $mincount   \b INT  Lowest overall tag count
+     * @param $maxcount   \b INT  Highest overall tag count
+     * @param $minsize    \b INT  Minimum (font) size
+     * @param $maxsize    \b INT  Maximum (font) size
+     * @param $tresholds  \b INT  Which $minsize values to ignore
+     *
+     * @return \b INT A value between $minsize and $maxsize
+     */
+    function GetTagSizeLogarithmic( $count, $mincount, $maxcount, $minsize, $maxsize, $tresholds = 1 ) {
+      if( !is_int($tresholds) || $tresholds<2 ) {
+        $tresholds = $maxsize-$minsize;
+        $treshold = 1;
+      }
+      else {
+        $treshold = ($maxsize-$minsize)/($tresholds-1);
+      }
+      $a = $tresholds*log($count - $mincount+2)/log($maxcount - $mincount+2)-1;
+      return round($minsize+round($a)*$treshold);
+    }
 
     /**
      * @brief   Reads all csv columns into an array.
@@ -214,6 +238,12 @@ class ListJournals
                 $img = $this->getCover($myISSN);
                 $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
 
+                // meta
+                $metaPrint  = (!empty($data[$this->csv_metaPrint]) ? 'fi-page-copy' : '');
+                $metaOnline = (!empty($data[$this->csv_metaOnline]) ? 'fi-download' : '');
+                $metaGotToc = (!($data[$this->csv_metaGotToc]) ? 'fi-dislike' : 'fi-like');
+                $metaShelfmark = (!empty($data[$this->csv_metaShelfmark]) ? $data[$this->csv_metaShelfmark] : '');
+
                 $tags_row = array();
                 if (!empty($data[$this->csv_tags])) {
                   // remove space between comma and tag; better readable but...
@@ -237,6 +267,11 @@ class ListJournals
                     'date' => $date,
                     'img' => $img,
                     'new' => $new,
+                    'metaPrint' => $metaPrint,
+                    'metaOnline' => $metaOnline,
+                    'metaGotToc' => $metaGotToc,
+                    'metaShelfmark' => $metaShelfmark,
+                    'issn' => $myISSN,
                     'tags' => $tags
                 );
 
