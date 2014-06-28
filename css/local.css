@@ -443,6 +443,7 @@ font-size: larger;
 .tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
 .tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
 
+
 /*************** Metainfo ************************************************/
 
 .div-grid .metaInfo {
@@ -463,3 +464,11 @@ width: 123px;
 
 .div-grid .fi-dislike {color: red;}
 .div-grid .fi-like {color: green;}
+
+
+/*************** Search ************************************************/
+#search {height: 35px;}
+.fi-magnifying-glass {height: 35px; font-size: 14pt !important; background-color: #007095 !important; color: #ffffff !important; padding: 6px !important;}
+::-webkit-input-placeholder {font-size: 16px;}
+::-moz-placeholder {font-size: 16px;}
+:-ms-input-placeholder {font-size: 16px;}
