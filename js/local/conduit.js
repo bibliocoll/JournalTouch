@@ -301,9 +301,8 @@ $(document).ready(function() {
 						$('.'+curFilter).show();
 						/* special handling for some data (we should really do this in the data, not here) */
 						if (curFilter == "filter-wir") {$('.filter-fin').show();}
-						/* fix for unveil.js so all visible elements will get their appropriate image content 
-						 * (because lazy load works only on scroll, we will scroll a bit) */
-						$('html,body').animate({scrollTop: $('#switch-view').offset().top},'slow');
+						/* trigger for unveil.js: show all filtered images */
+						$('.'+curFilter+ '> img').trigger('unveil');
 						/* show on panel */
 						$('#filterPanel').fadeIn();
 						$('#filterPanelFilter').text($(this).text());
