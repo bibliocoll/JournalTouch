@@ -23,6 +23,7 @@ already included:
 - Unveil.js [https://github.com/luis-almeida/unveil] for lazy loading
 - waypoints.js [https://github.com/imakewebthings/jquery-waypoints]
 - timeago.js [https://github.com/rmm5t/jquery-timeago]
+- quicksearch.js [http://deuxhuithuit.github.io/quicksearch/]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
 
 

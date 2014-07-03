@@ -283,8 +283,6 @@ $(document).ready(function() {
 /* filter */
 
 		$('a.filter').click(function(){
-        /* remove any open modal */
-        $('.reveal-modal').foundation('reveal', 'close');
 				/* reset alphabet */
 				$('.alphabet li a').show();
 				var curFilter = $(this).attr('id');
@@ -453,6 +451,21 @@ $(document).ready(function() {
 /* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
 		$('time.timeago').timeago();
 
+
+/* quicksearch setup */
+		$('input#search').quicksearch('.search-filter', {
+				/* trigger for unveil.js so _all_ elements will get their appropriate image content */
+				/* (note: 'show' works, but breaks: why? */
+				// 'show': function () { $(this).addClass('show'); }, 
+				// 'hide': function () { $(this).removeClass('show'); }
+				'minValLength': 2,
+				'onValTooSmall': function (val) {
+						$('h3.view-heading').toggle();
+				},
+				'noResults': '#search-form #noresults',
+				'onAfter': function() {
+						$('.search-filter img').trigger('unveil');}
+		});
 
 });
 
