@@ -223,6 +223,14 @@ color: #077dac;
 font-size: smaller;
 }
 
+/** Search box **/
+
+#search {
+height: 35px;
+}
+#search-form fieldset {
+background-color: aliceblue;
+}
 
 
 /*************** Journal (Cover) List : LIST (ACCORDION) *****************/
@@ -449,7 +457,7 @@ font-size: larger;
 .div-grid .metaInfo {
 color: #077dac;
 position: absolute;
-font-size: 15pt;
+font-size: 14.5pt;
 margin-left: 10px;
 }
 
@@ -464,11 +472,3 @@ width: 123px;
 
 .div-grid .fi-dislike {color: red;}
 .div-grid .fi-like {color: green;}
-
-
-/*************** Search ************************************************/
-#search {height: 35px;}
-.fi-magnifying-glass {height: 35px; font-size: 14pt !important; background-color: #007095 !important; color: #ffffff !important; padding: 6px !important;}
-::-webkit-input-placeholder {font-size: 16px;}
-::-moz-placeholder {font-size: 16px;}
-:-ms-input-placeholder {font-size: 16px;}

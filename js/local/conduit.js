@@ -303,9 +303,8 @@ $(document).ready(function() {
 						$('.'+curFilter).show();
 						/* special handling for some data (we should really do this in the data, not here) */
 						if (curFilter == "filter-wir") {$('.filter-fin').show();}
-						/* fix for unveil.js so all visible elements will get their appropriate image content 
-						 * (because lazy load works only on scroll, we will scroll a bit) */
-						$('html,body').animate({scrollTop: $('#switch-view').offset().top},'slow');
+						/* trigger for unveil.js: show all filtered images */
+						$('.'+curFilter+ '> img').trigger('unveil');
 						/* show on panel */
 						$('#filterPanel').fadeIn();
 						$('#filterPanelFilter').text($(this).text());
@@ -454,6 +453,22 @@ $(document).ready(function() {
 		$('time.timeago').timeago();
 
 
+/* quicksearch setup */
+		$('input#search').quicksearch('.search-filter', {
+				/* trigger for unveil.js so _all_ elements will get their appropriate image content */
+				/* (note: 'show' works, but breaks: why? */
+				// 'show': function () { $(this).addClass('show'); },
+				// 'hide': function () { $(this).removeClass('show'); }
+				'minValLength': 2,
+				'onValTooSmall': function (val) {
+            $('#filterPanel').fadeOut();
+            $('h3.view-heading').toggle();
+				},
+				'noResults': '#search-form #noresults',
+				'onAfter': function() {
+						$('.search-filter img').trigger('unveil');}
+		});
+
 /* Open web link in popup */
     $('a.popup').click(function(event) {
       window.open($(this).attr("href"), "popupWindow", "width=1050,height=600,scrollbars=yes");
@@ -461,4 +476,3 @@ $(document).ready(function() {
     });
 
 });
-
