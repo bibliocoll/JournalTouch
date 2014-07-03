@@ -223,6 +223,14 @@ color: #077dac;
 font-size: smaller;
 }
 
+/** Search box **/
+
+#search {
+height: 35px;
+}
+#search-form fieldset {
+background-color: aliceblue;
+}
 
 
 /*************** Journal (Cover) List : LIST (ACCORDION) *****************/

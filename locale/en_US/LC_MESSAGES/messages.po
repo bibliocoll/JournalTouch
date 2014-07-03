@@ -218,6 +218,14 @@ msgstr ""
 msgid "Browse all journals from A to Z (list view):"
 msgstr ""
 
+#: index.php:236
+msgid "Search journal"
+msgstr ""
+
+#: index.php:238
+msgid "No journals found"
+msgstr ""
+
 #: index.php:246
 #: index.php:281
 msgid "last update"

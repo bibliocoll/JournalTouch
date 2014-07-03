@@ -228,6 +228,18 @@ $filters = $lister->getFilters();
 				</div>
 			</div>
 
+			<form id="search-form">
+				<div class="row">
+					<div class="small-12 columns">
+							<fieldset>
+								<label class="error">
+									<input id="search" type="text" id="right-label" placeholder="<?php echo __('Search journal') ?>">
+								</label>
+								<small id="noresults" class="error" style="display:none"><?php echo __('No journals found') ?></small>
+							</fieldset>
+					</div>
+				</div>
+			</form>
 		
 		<!-- Version 2: List -->
 		<div id="view-accordion" class="row invisible">
@@ -241,7 +253,7 @@ $filters = $lister->getFilters();
                /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
                $timestring = date('c', strtotime($j['date'])); // 
                $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
-					   echo '<dd class="filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+					   echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
 					   echo $j['title']; 
@@ -275,7 +287,7 @@ $filters = $lister->getFilters();
                             $timestring = date('c', strtotime($j['date'])); // 
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
-					      echo '<div class="large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
@@ -374,6 +386,7 @@ $filters = $lister->getFilters();
     <script src="js/vendor/waypoints.min.js"></script>
     <script src="js/vendor/jquery.timeago.js"></script>
     <script src="js/local/conduit.js"></script>
+    <script src="js/vendor/jquery.quicksearch.min.js"></script>
     <script>
 			simpleCart({
 				checkout: {
