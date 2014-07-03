@@ -459,6 +459,7 @@ $(document).ready(function() {
 				// 'hide': function () { $(this).removeClass('show'); }
 				'minValLength': 2,
 				'onValTooSmall': function (val) {
+						$('#filterPanel').fadeOut();
 						$('h3.view-heading').toggle();
 				},
 				'noResults': '#search-form #noresults',
