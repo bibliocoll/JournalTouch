@@ -118,26 +118,6 @@ $filters = $lister->getFilters();
 				</div>
 			</div>
 
-<div class="row">
-<div class="small-8 medium-9 large-9 columns left">
-<h3>Tobias: Was Schönes doch denkbar wäre:</h3>
-  <p>
-<ul>
-<li>Link zu TUBfind für mehr á la <a href="https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate">https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate</a></li>
-<li>Theoretisch ließe sich aus dem <a href="https://katalog.tub.tu-harburg.de/Search/Results?lookfor=0013-9165&type=ISN&sort=publishDate&view=rss">TUBfind-RSS</a> auch ein TOC ableiten, wo eCrossRef und JournalToc das nicht hergeben</li>
-<li>Anzeigen, ob Print/Print-only (P)</li>
-<li>Anzeigen, ob E-Print/E-only (E)</li>
-<li>Anzeigen, ob TOC (toc)</li>
-<li>Direktlink nur, wenn Eprint - und dann vielleicht noch direkter per SFX?</li>
-<li>Anzeigen, wo im Regal (BAZ-101)</li>
-<li>E-Mail zu Inhouse-Liefer/Abholdienst umfunktionieren</li>
-<li>"Journal of (the)", "The", "der, die, das" etc. entfernen</li>
-<li>... :)</li>
-</ul>
-  </p>
-</div>
-</div>
-			
 				<a class="close-reveal-modal button radius alert">&#215;</a>
 		</div>
 
@@ -237,13 +217,6 @@ $filters = $lister->getFilters();
                                      echo '<li><a href="#" class="tiny button secondary">'.$letter.'</a></li>';
 								 }
 								 ?>
-              <li>&nbsp;&nbsp;</li>
-              <li><i class="tiny button secondary fi-magnifying-glass"></i></li>
-              <li>
-              	<form id="search-form">
-           				<input type="text" id="search" placeholder="<?php echo __('Search journal') ?>">
-              	</form>
-              </li>
 						</ul>
 					</div>
 				</div>
@@ -255,6 +228,18 @@ $filters = $lister->getFilters();
 				</div>
 			</div>
 
+			<form id="search-form">
+				<div class="row">
+					<div class="small-12 columns">
+							<fieldset>
+								<label class="error">
+									<input id="search" type="text" id="right-label" placeholder="<?php echo __('Search journal') ?>">
+								</label>
+								<small id="noresults" class="error" style="display:none"><?php echo __('No journals found') ?></small>
+							</fieldset>
+					</div>
+				</div>
+			</form>
 		
 		<!-- Version 2: List -->
 		<div id="view-accordion" class="row invisible">
@@ -407,10 +392,7 @@ $filters = $lister->getFilters();
     <script src="js/vendor/waypoints.min.js"></script>
     <script src="js/vendor/jquery.timeago.js"></script>
     <script src="js/local/conduit.js"></script>
-    <script src="js/quicksearch/dist/jquery.quicksearch.min.js"></script>
-    <script>
-    	$('input#search').quicksearch('.search-filter');
-    </script>
+    <script src="js/vendor/jquery.quicksearch.min.js"></script>
 
     <script>
 			simpleCart({
