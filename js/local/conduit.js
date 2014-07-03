@@ -471,7 +471,12 @@ $(document).ready(function() {
 
 /* Open web link in popup */
     $('a.popup').click(function(event) {
-      window.open($(this).attr("href"), "popupWindow", "width=1050,height=600,scrollbars=yes");
+      var url = $(this).attr("href");
+      var dHeight = $(window).height() -280;
+
+      $('#externalPopover').foundation('reveal', 'open');
+      $("#externalFrame").height(dHeight);
+      $("#externalFrame").attr('src', url);
       return false;
     });
 

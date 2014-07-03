@@ -124,6 +124,16 @@ $filters = $lister->getFilters();
 
 		<!-- End Header and Nav -->
 
+
+    <!-- start external link -->
+    <div id="externalPopover" class="reveal-modal" data-reveal>
+      <h3><?php echo __('External Source') ?></h3>
+      <a class="close-reveal-modal button radius">×</a>
+      <iframe src="" id="externalFrame" width="90%" height="100%" scrollbars="yes"></iframe>
+    </div>
+    <!-- end external link -->
+
+
     <!-- start Tagcloud -->
     <?php if (count($lister->tagcloud) > 1) { ?>
     <div id="tagsPopover" class="reveal-modal" data-reveal>
@@ -287,15 +297,17 @@ $filters = $lister->getFilters();
                             $timestring = date('c', strtotime($j['date'])); // 
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
+                $meta = false;
                 $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> TOC<br />' : "");
-                $meta .= (($j['metaOnline']) ? '<i class="'.$j['metaOnline'].'"> </i><a href="https://katalog.tub.tu-harburg.de/Search/Results?ui=standard&shard[]=Primo+Central&filter[]=format%3A%22Articles%22&type=ISN&sort=publishDate&lookfor='.$j['issn'].'" class="popup">Web</a><br />': "<br />");
+                $link = 'https://katalog.tub.tu-harburg.de/Search/Results?ui=standard&shard[]=Primo+Central&filter[]=format%3A%22Articles%22&type=ISN&sort=publishDate&lookfor='.$j['issn'];
+                $meta .= (($j['metaOnline']) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">Web</a><br />': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
                 $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
 
 					      echo '<div class="large-4 medium-5 small-12 columns search-filter div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-                echo '<span class="metaInfo"><div>'.$meta.'</div></span>';
+                echo (($meta) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
 					      echo '<h5 title="'.$j['title'].'"> '.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
