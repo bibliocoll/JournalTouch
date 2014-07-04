@@ -441,3 +441,33 @@ display: none;
 .sendArticlesToUser label {
 font-size: larger;
 }
+
+
+/*************** Tagcloud ************************************************/
+
+.tagcloud1 a, .tagcloud1 {font-size: 0.8em; color: #563E0B;}
+.tagcloud2 a, .tagcloud2 {font-size: 0.85em; color: #0A2E36;}
+.tagcloud3 a, .tagcloud3 {font-size: 0.875em; color: #99C228;}
+.tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
+.tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
+
+/*************** Metainfo ************************************************/
+
+.div-grid .metaInfo {
+color: #077dac;
+position: absolute;
+font-size: 15pt;
+margin-left: 10px;
+}
+
+.div-grid .metaInfo div {
+margin-top: 173px;
+background: none repeat scroll 0 0 #f2f2f2;
+border: 1px solid #d8d8d8;
+border-bottom-style: dotted;
+padding: 10px;
+width: 123px;
+}
+
+.div-grid .fi-dislike {color: red;}
+.div-grid .fi-like {color: green;}
