@@ -110,14 +110,14 @@ $filters = $lister->getFilters();
 						<br/>	<?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
 					</p>
 				</div>
-				
+
 				<div class="small-4 medium-3 large-3 columns right">
 					<ul class="inline-list right">
 						<li><a class="button radius" href="checkout.php?action=contact"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
 					</ul>
 				</div>
 			</div>
-			
+
 				<a class="close-reveal-modal button radius alert">&#215;</a>
 		</div>
 
@@ -130,7 +130,7 @@ $filters = $lister->getFilters();
       <h3><?php echo __('Tagcloud') ?></h3>
       <a class="close-reveal-modal button radius">×</a>
       <p><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&nbsp;<?php echo __('show all') ?></a></p>
-      <?php echo $lister->getTagcloud(); ?>
+      <?php echo $lister->getTagcloud(3); ?>
     </div>
     <?php } ?>
     <!-- end Tagcloud -->
@@ -256,7 +256,7 @@ $filters = $lister->getFilters();
 					   echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
 					   echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
 					   echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
-					   echo $j['title']; 
+					   echo $j['title'];
 					   echo (!empty($j['new']) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "");
 					   echo '</a>';
 					   echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
@@ -290,7 +290,7 @@ $filters = $lister->getFilters();
 					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">'; 
+					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
 					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
@@ -342,7 +342,6 @@ $filters = $lister->getFilters();
 		</footer>
 
 		<!-- a fancy screensaver when screen is idle (see css for switching) -->
-<!-- TEMP DISABLE TZ
 		<div id="screensaver" style="display:none">
 						<div class="row">
 				<div class="small-12 medium-12 large-12 columns left">
@@ -376,7 +375,7 @@ $filters = $lister->getFilters();
 			<div class="row">
 				<p class="text-center"><img src="img/bgcoll-logo.png"></img></p>
 			</div>
--->
+
 			<!-- end screensaver -->
 
     <script src="js/vendor/jquery.js"></script>
@@ -418,3 +417,4 @@ $filters = $lister->getFilters();
 
   </body>
 </html>
+
