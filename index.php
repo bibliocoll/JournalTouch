@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'sys/jt-gettext.php';
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -298,7 +298,8 @@ $filters = $lister->getFilters();
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
                 $meta = false;
-                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> TOC<br />' : "");
+                $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
+                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">TOC</a><br />' : "");
                 $link = 'https://katalog.tub.tu-harburg.de/Search/Results?ui=standard&shard[]=Primo+Central&filter[]=format%3A%22Articles%22&type=ISN&sort=publishDate&lookfor='.$j['issn'];
                 $meta .= (($j['metaOnline']) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">Web</a><br />': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");

@@ -476,7 +476,10 @@ $(document).ready(function() {
 
       $('#externalPopover').foundation('reveal', 'open');
       $("#externalFrame").height(dHeight);
-      $("#externalFrame").attr('src', url);
+      $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
+      setTimeout(function() {
+        $("#externalFrame").attr('src',url);
+      }, 100);
       return false;
     });
 
