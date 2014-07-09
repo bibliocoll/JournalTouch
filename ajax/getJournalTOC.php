@@ -30,8 +30,9 @@ function myget ($query,$xpath) {
 	
   switch (sizeof($result)) {
   case 0: return ""; break; // if empty
-  case 1: return $result[0]; break; // single
-  default: return $result; // multiple
+      // turn any control characters to a space:
+  case 1: return preg_replace('/[\x00-\x1F\x7F]/', ' ', $result[0]); break; // single
+  default: return preg_replace('/[\x00-\x1F\x7F]/', ' ', $result); // multiple
   }
 }
 
@@ -130,10 +131,10 @@ if (empty($toc)) {
         
         if (!empty($item['title'])) {
 
-            echo '<div class="simpleCart_shelfItem row">';
+            echo '<div class="simpleCart_shelfItem row">' . PHP_EOL;
 
-            echo '<div class="small-6 medium-7 large-8 columns textbox">';
-            echo '<div class="toctitle">';
+            echo '<div class="small-6 medium-7 large-8 columns textbox">' . PHP_EOL;
+            echo '<div class="toctitle">' . PHP_EOL;
             if ($alink == true) {
                 echo "<a href=\"".$item['link']."\" class=\"item_name\">";
             } else {
@@ -149,21 +150,21 @@ if (empty($toc)) {
             } else {
                 echo $item['title']."</span>";
             }
-            echo '</div>';
+            echo '</div>' . PHP_EOL;
             /* get extra options, set class to invisible (change in css) */
             echo "<span class=\"item_link invisible\">".$item['link']."</span>";
             echo "<span class=\"item_source invisible\">".$item['source']."</span>";
-            echo '</div>';
+            echo '</div>' . PHP_EOL;
             echo '<div class="small-6 medium-5 large-4 columns buttonbox">';
             /* abstract button: let us assume that strlen>300 == abstract */
             echo (strlen($item['abstract'])>300 ? '<a class="button medium radius abstract">Abstract</a>&nbsp;' : '');
             /* add button */
             echo "<a class=\"item_add button medium radius\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
-            echo '</div>';
+            echo '</div>' . PHP_EOL;
 
-            echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" : "");
+            echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" . PHP_EOL : "");
 
-            echo '</div>';
+            echo '</div>' . PHP_EOL;
             
         }
     }
