@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once 'sys/jt-gettext.php';
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -39,7 +39,7 @@ $filters = $lister->getFilters();
 				<!-- Right Nav Section -->
 				<ul class="right">
 					<li class="divider"></li>
-          <?php if (count($lister->tagcloud) > 1) { ?>
+          <?php if (count($lister->tagcloud) > 1 && $lister->prefs['showTagcloud']) { ?>
 					   <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&nbsp;<?php echo __('tags') ?></a></li>
           <?php } ?>
                     <?php if (!empty($filters)) { /* show filters only if set */?>
@@ -299,16 +299,17 @@ $filters = $lister->getFilters();
 
                 $meta = false;
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">TOC</a><br />' : "");
-                $link = 'https://katalog.tub.tu-harburg.de/Search/Results?ui=standard&shard[]=Primo+Central&filter[]=format%3A%22Articles%22&type=ISN&sort=publishDate&lookfor='.$j['issn'];
-                $meta .= (($j['metaOnline']) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">Web</a><br />': "<br />");
+                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
+                $link = ($lister->prefs['instLink']) ? $lister->prefs['instLink'].$j['issn'] : '';
+                $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
+                $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
                 $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
 
 					      echo '<div class="large-4 medium-5 small-12 columns search-filter div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-                echo (($meta) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
+                echo (($meta && $lister->prefs['showMeta']) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
 					      echo '<h5 title="'.$j['title'].'"> '.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
