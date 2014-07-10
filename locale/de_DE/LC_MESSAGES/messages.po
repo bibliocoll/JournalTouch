@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-10 03:03+0100\n"
-"PO-Revision-Date: 2014-07-10 03:04+0100\n"
+"PO-Revision-Date: 2014-07-10 20:24+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: checkout.php:20
 #: index.php:15
 msgid "MPI JournalTouch"
-msgstr "TUB JournalTouch"
+msgstr ""
 
 #: checkout.php:20
 msgid "Checkout"
@@ -145,7 +145,7 @@ msgstr "alle anzeigen"
 
 #: index.php:49
 msgid "MPI favorites"
-msgstr "TUB-Empfehlungen"
+msgstr ""
 
 #: index.php:59
 msgid "list view"
@@ -249,7 +249,7 @@ msgstr ""
 
 #: index.php:304
 msgid "Library"
-msgstr "TUBfind"
+msgstr "UB"
 
 #: index.php:305
 msgid "Journal"
