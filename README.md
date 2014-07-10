@@ -98,11 +98,13 @@ The input file feeds the journal list. Be careful if you change the structure of
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
 There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config/config.ini* (section updates).
-Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/latest-issns.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the ISSNs with the existing file, and adds it to the file with the current date. Old entries will be deleted. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+
+Additionally, you may want to include the JSON file to display a list of recently updated journals. The function ``getJournalUpdates()`` in *sys/class.ListJournals.php* will give you an array you can read from index.php. See the exemplary code there.
 
 Configure the file and your custom JournalTOCs URL in *config/config.ini*.
 
-Please note! This service slows down the initial loading of the page. Please rewrite more efficiently; eg. write the updates directly to the CSV file, or solve it via AJAX loading.
+Please note! This service slows down the initial loading of the page if the file is too big. 
 
 Alternatively, you could set up alerting services for yourself (e-mail, feeds...) and keep the input file up-to-date manually:
 for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (*config.ini*-default: *date*). Fill in the current date ("YYYY-mm-dd") when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).

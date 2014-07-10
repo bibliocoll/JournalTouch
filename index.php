@@ -4,6 +4,7 @@ require 'sys/class.ListJournals.php';
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
+$journalUpdates = $lister->getJournalUpdates();
 $filters = $lister->getFilters();
 ?>
 <!doctype html>
@@ -241,6 +242,24 @@ $filters = $lister->getFilters();
 				</div>
 			</form>
 		
+      <!-- show updates - this is only some example code how to include the latest journal updates -->
+			<!-- please refer to the README on how to use it -->
+<!--
+			<div class="row">
+				<div id="updateBox" class="small-12 columns">
+					<ul>
+					<?php
+						if (!empty($journalUpdates)) {
+						  foreach ($journalUpdates as $j) {
+                print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
+							}
+						}
+					?>
+					</ul>
+				</div>
+			</div>
+-->
+
 		<!-- Version 2: List -->
 		<div id="view-accordion" class="row invisible">
 			<div class="small-12 columns">

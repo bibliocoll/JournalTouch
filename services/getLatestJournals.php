@@ -1,12 +1,10 @@
-<?php
+<?php 
 /**
- * Run a regular check against JournalTocs for updates and store it to a JSON file (run separately)
+ * Run a regular check against JournalTocs for updates and store it to a JSON file
+ * this is read by sys/class.ListJournals.php (getJournalUpdates())
+ * You may also want to include the output file via AJAX queries for example
  * a JournalTOCs Premium API account is essential for this service (or write a similar service)
- * 
- * TODO: remove old entries in json file (calendar week - 4 or sth like that)
- *
- * 
- * Time-stamp: "2014-04-10 15:03:26 zimmel"
+ * Time-stamp: "2014-07-10 12:44:40 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
@@ -15,12 +13,18 @@
 // do not show system errors, these should be handled in js or below
 //error_reporting(0);
 
+require_once dirname(__FILE__).'/../sys/class.ListJournals.php';
+/* setup methods & objects */
+$lister = new ListJournals();
+$journals = $lister->getJournals();
+
 $config = parse_ini_file('../config/config.ini', TRUE);
 $apiUserKey = $config['journaltocs']['apiUserKey'];
-$toAddress = $config['mailer']['toAddress'];
 $updatesURL = $config['updates']['url'];
-$outFile = $config['updates']['outfile'];
 $issn = $_GET['issn'];
+
+$jsonFile = "../input/updates.json.txt";
+
 
 function myget ($query,$xpath) {
   $result=array();
@@ -36,6 +40,7 @@ function myget ($query,$xpath) {
   }
 }
 
+
 function search_array($needle, $haystack) {
      if(in_array($needle, $haystack)) {
           return true;
@@ -47,9 +52,10 @@ function search_array($needle, $haystack) {
    return false;
 }
 
+// fresh array:
+$upd = array();
+
 /* query loop for multiple update URLs from config */
-
-
 
 foreach ($updatesURL as $updateURL) {
 
@@ -86,6 +92,8 @@ foreach ( $records as $item ) {
 	$link = myget("//x:link",$xpath);
 	$issn = myget("//prism:issn",$xpath);
 	$eIssn = myget("//prism:eIssn",$xpath);
+    // write only one $issn
+    $issn = !empty($issn) ? $issn : $eIssn;
     $date = myget("//dc:date",$xpath);
 
     $abstract = myget("//x:description",$xpath);
@@ -94,91 +102,56 @@ foreach ( $records as $item ) {
         'title' => $title, 
         'link' => $link,
         'issn' => $issn,
-        'eIssn' => $eIssn,
+        //'eIssn' => $eIssn,
         'date' => $date
     );
 }
 
-
-/* load the current array of issns into $data (compare later) */
-/* $json = "../".$outFile; */
-/* $file = file_get_contents($json); */
-/* $data = json_decode($file, true); */
-
-/* echo '<h1>Read file contents:</h1>'; */
-/* print_r($data); */
-
-/* echo '<hr/>'; */
-
-/* unset($file);//prevent memory leaks for large json. */
-
 if (empty($toc)) {
 	echo 'ERROR!';
 } else {
-	$no_records = count($toc);
 
-	echo '<h5>'.$journalTitle.'</h5>';
-    $json = "../".$outFile;
-    $arrCmp = json_decode(file_get_contents($json), true);
-
-    foreach ($arrCmp as $k1=>$v) {
-
-        foreach ($v as $k2 => $r) {
-            if (strlen($r) == 10) {
-            /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
-            $td = strtotime($r);
-            $cdate = date("Y-m-d", strtotime("+1 month", $td));
-            /* if there is a $date (e.g. from csv), compare with current date */
-            $curDate = new DateTime(); // today
-            $myDate   = new DateTime($cdate);
-            // if ($r <= $weekSpan) {
-            if ($r >= $curDate) {
-                unset($arrCmp[$k1]);
-            }
-            }
-        }
-    }
+	echo '<h5>Most recent journal updates from the last 2 weeks</h5>';
 
     foreach ( $toc as $item ) {
         
         if (!empty($item['title'])) {
 
-            /* convert found date of last update in the data to calendar week */
-            $date = new DateTime($item['date']);
-            /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
-            $td = strtotime($item['date']);
-            $cdate = date("Y-m-d", strtotime("+1 month", $td));
-            /* if there is a $date (e.g. from csv), compare with current date */
-            $curDate = new DateTime(); // today
-            $myDate   = new DateTime($cdate);
-
-            /* if we have new issns not already in our array, add them */
-
-            /* skip entries too old */
-            if ($myDate >= $curDate) {
-                if(!empty($item['eIssn']) && !search_array($item['eIssn'], $arrCmp)) {
-                    array_push($arrCmp, array('issn' => $item['eIssn'], 'date' => $item['date']));
-                }
-                if(!empty($item['issn']) && !search_array($item['issn'], $arrCmp)) {
-                    array_push($arrCmp, array('issn' => $item['issn'], 'date' => $item['date']));
-                }
+            if (!empty($item['issn'])) {
+                if (search_array($item['issn'], $journals)) {
+                     
+                    $date = new DateTime($item['date']);
+                    /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
+                    $td = strtotime($item['date']);
+                    $cdate = date("Y-m-d", strtotime("+2 weeks", $td));
+                    /* compare with current date */
+                    $curDate = new DateTime(); // today
+                    $myDate   = new DateTime($cdate);
+                    
+                    /* only store current dates (not older than the given date in $cdate) */
+                    if ($myDate >= $curDate) {
+                        print $item['title'] . ", last update on ".$item['date']."<br/>";
+                        // save to array
+                        array_push($upd, array(
+                            'issn' => $item['issn'], 
+                            'date' => $item['date'],
+                            'title' => $item['title'], 
+                            'timestr' => date('c', strtotime($item['date']))));
+                    }
+                 }
             }
-
         }
     }
 }
 
+
 /* new $data */
 echo ' <strong>done.</strong><br/>';
-//print_r($arrCmp);
-
+echo '<p><hr/></p>';
+}
 
 //save updated data
-file_put_contents($json,json_encode($arrCmp));
-unset($data);//release memory
-unset($arrCmp);//release memory
-
-}
+file_put_contents($jsonFile,json_encode($upd));
 
 ?>
 
