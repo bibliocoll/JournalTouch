@@ -5,9 +5,10 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-05-28 12:07:48 zimmel"
+ * Time-stamp: "2014-07-10 14:50:49 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
+ * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  *
@@ -40,7 +41,7 @@ class ListJournals
     public function __construct()
     /* load some configuration */
     {
-        $config = parse_ini_file('config/config.ini', TRUE);
+        $config = parse_ini_file(dirname(__FILE__).'/../config/config.ini', TRUE);
         $this->csv_file = $config['csv']['file'];
         $this->csv_col_title = $config['csv']['title'];
         $this->csv_col_issn = $config['csv']['issn'];
@@ -115,6 +116,17 @@ class ListJournals
                 return false;
             }
         }
+    }
+
+    /* get updates from json list */
+    function getJournalUpdates() {
+        if (file_exists($this->updates)) {
+            $json = $this->updates;
+            $journalUpdates = json_decode(file_get_contents($json), true);
+            return $journalUpdates;
+        } else {
+            return false;
+        } 
     }
 
     function getCover($issn) {
