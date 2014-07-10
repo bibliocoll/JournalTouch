@@ -469,4 +469,18 @@ $(document).ready(function() {
 						$('.search-filter img').trigger('unveil');}
 		});
 
+/* Open web link in popup */
+    $('a.popup').click(function(event) {
+      var url = $(this).attr("href");
+      var dHeight = $(window).height() -280;
+
+      $('#externalPopover').foundation('reveal', 'open');
+      $("#externalFrame").height(dHeight);
+      $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
+      setTimeout(function() {
+        $("#externalFrame").attr('src',url);
+      }, 100);
+      return false;
+    });
+
 });
