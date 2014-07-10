@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-03 22:31+0100\n"
-"PO-Revision-Date: 2014-07-03 22:31+0100\n"
+"POT-Creation-Date: 2014-07-10 03:03+0100\n"
+"PO-Revision-Date: 2014-07-10 03:04+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -164,12 +164,12 @@ msgid "About"
 msgstr "Über"
 
 #: index.php:93
-#: index.php:368
+#: index.php:371
 msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
 msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>TUB Hamburg/Harburg</strong> für aktuelle Zeitschriftenausgaben."
 
 #: index.php:95
-#: index.php:370
+#: index.php:373
 msgid ""
 "It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
 "\t\t\t\t\t\tavailable, it will be indicated with an extra button.\n"
@@ -185,12 +185,12 @@ msgid "If a journal is missing, please let us know and we will add it to the lis
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu!<br/><br/> <strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
 #: index.php:110
-#: index.php:384
+#: index.php:387
 msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
 msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>JournalTocs</strong> bezogen."
 
 #: index.php:116
-#: index.php:354
+#: index.php:357
 msgid "Get in touch!"
 msgstr "Mail mich an!"
 
@@ -235,7 +235,7 @@ msgid "Browse all journals from A to Z (list view):"
 msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
 
 #: index.php:270
-#: index.php:312
+#: index.php:315
 msgid "last update"
 msgstr "Letzte Aktualisierung"
 
@@ -243,44 +243,56 @@ msgstr "Letzte Aktualisierung"
 msgid "Browse all journals from A to Z (grid view):"
 msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
 
-#: index.php:325
+#: index.php:302
+msgid "TOC"
+msgstr ""
+
+#: index.php:304
+msgid "Library"
+msgstr "TUBfind"
+
+#: index.php:305
+msgid "Journal"
+msgstr "Website"
+
+#: index.php:328
 msgid "Something seems to be wrong with the network"
 msgstr "Leider scheint es Probleme mit dem Netzzugang zu geben."
 
-#: index.php:327
-#: index.php:334
+#: index.php:330
+#: index.php:337
 msgid "Please notify us!"
 msgstr "Benachrichtigen Sie uns!"
 
-#: index.php:332
+#: index.php:335
 msgid "No table of contents found! Are you interested in this title?"
 msgstr "Kein Inhaltsverzeichnis gefunden! Sind Sie an dieser Zeitschrift interessiert?"
 
-#: index.php:349
+#: index.php:352
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr "Inhaltsverzeichnise werden von <a href=\"http://www.crossref.org\">CrossRef</a> und <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a> bezogen"
 
-#: index.php:366
+#: index.php:369
 msgid "Touch me!"
 msgstr "Berühr mich!"
 
-#: index.php:367
+#: index.php:370
 msgid "What is this?"
 msgstr "Was ist das?"
 
-#: index.php:383
+#: index.php:386
 msgid "If a journal is missing, please let us know and we will add it to the list."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu."
 
-#: index.php:383
+#: index.php:386
 msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
 msgstr "<strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:390
+#: index.php:393
 msgid "Touch the screen to get started..."
 msgstr "Berühren Sie den Bildschirm..."
 
-#: index.php:416
+#: index.php:419
 msgid "remove"
 msgstr "entfernen"
 
@@ -2300,8 +2312,6 @@ msgstr "entfernen"
 #~ msgstr "Globale Anwendungseinstellungen anpassen"
 #~ msgid "Settings saved. Refreshing page"
 #~ msgstr "Einstellungen gespeichert. Seite wird aktualisiert"
-#~ msgid "Library Name"
-#~ msgstr "Bibliotheksname"
 #~ msgid "Library Subname"
 #~ msgstr "Namenszusatz"
 #~ msgid "Public Template"

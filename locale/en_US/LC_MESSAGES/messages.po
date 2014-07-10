@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-03 22:31+0100\n"
-"PO-Revision-Date: 2014-07-03 22:31+0100\n"
+"POT-Creation-Date: 2014-07-10 03:03+0100\n"
+"PO-Revision-Date: 2014-07-10 03:03+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -165,12 +165,12 @@ msgid "About"
 msgstr ""
 
 #: index.php:93
-#: index.php:368
+#: index.php:371
 msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
 msgstr ""
 
 #: index.php:95
-#: index.php:370
+#: index.php:373
 msgid ""
 "It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
 "\t\t\t\t\t\tavailable, it will be indicated with an extra button.\n"
@@ -186,12 +186,12 @@ msgid "If a journal is missing, please let us know and we will add it to the lis
 msgstr ""
 
 #: index.php:110
-#: index.php:384
+#: index.php:387
 msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
 msgstr ""
 
 #: index.php:116
-#: index.php:354
+#: index.php:357
 msgid "Get in touch!"
 msgstr ""
 
@@ -236,7 +236,7 @@ msgid "Browse all journals from A to Z (list view):"
 msgstr ""
 
 #: index.php:270
-#: index.php:312
+#: index.php:315
 msgid "last update"
 msgstr ""
 
@@ -244,44 +244,56 @@ msgstr ""
 msgid "Browse all journals from A to Z (grid view):"
 msgstr ""
 
-#: index.php:325
+#: index.php:302
+msgid "TOC"
+msgstr ""
+
+#: index.php:304
+msgid "Library"
+msgstr ""
+
+#: index.php:305
+msgid "Journal"
+msgstr ""
+
+#: index.php:328
 msgid "Something seems to be wrong with the network"
 msgstr ""
 
-#: index.php:327
-#: index.php:334
+#: index.php:330
+#: index.php:337
 msgid "Please notify us!"
 msgstr ""
 
-#: index.php:332
+#: index.php:335
 msgid "No table of contents found! Are you interested in this title?"
 msgstr ""
 
-#: index.php:349
+#: index.php:352
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr ""
 
-#: index.php:366
+#: index.php:369
 msgid "Touch me!"
 msgstr ""
 
-#: index.php:367
+#: index.php:370
 msgid "What is this?"
 msgstr ""
 
-#: index.php:383
+#: index.php:386
 msgid "If a journal is missing, please let us know and we will add it to the list."
 msgstr ""
 
-#: index.php:383
+#: index.php:386
 msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
 msgstr ""
 
-#: index.php:390
+#: index.php:393
 msgid "Touch the screen to get started..."
 msgstr ""
 
-#: index.php:416
+#: index.php:419
 msgid "remove"
 msgstr ""
 
