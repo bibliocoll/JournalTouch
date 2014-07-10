@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 require_once 'sys/jt-gettext.php';
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -135,12 +136,12 @@ $filters = $lister->getFilters();
 
 
     <!-- start Tagcloud -->
-    <?php if (count($lister->tagcloud) > 1) { ?>
+    <?php if (count($lister->tagcloud) > 1 && $lister->prefs['showTagcloud']) { ?>
     <div id="tagsPopover" class="reveal-modal" data-reveal>
       <h3><?php echo __('Tagcloud') ?></h3>
       <a class="close-reveal-modal button radius">×</a>
       <p><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&nbsp;<?php echo __('show all') ?></a></p>
-      <?php echo $lister->getTagcloud(3); ?>
+      <?php echo $lister->getTagcloud(); ?>
     </div>
     <?php } ?>
     <!-- end Tagcloud -->
@@ -439,3 +440,7 @@ $filters = $lister->getFilters();
 
   </body>
 </html>
+
+<?php
+ob_end_flush();
+?>
