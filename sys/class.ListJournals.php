@@ -5,7 +5,7 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-07-10 14:50:49 zimmel"
+ * Time-stamp: "2014-07-10 16:16:18 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
@@ -59,10 +59,12 @@ class ListJournals
         $this->updates = $config['updates']['outfile'];
 
 
+        $this->prefs = $config['prefs'];
         $this->csv_metaPrint = $config['csv']['metaPrint'];
         $this->csv_metaOnline = $config['csv']['metaOnline'];
         $this->csv_metaGotToc = $config['csv']['metaGotToc'];
         $this->csv_metaShelfmark = $config['csv']['metaShelfmark'];
+        $this->csv_metaWebsite = $config['csv']['metaWebsite'];
 
         $this->csv_tags = $config['csv']['tags'];
     }
@@ -91,14 +93,14 @@ class ListJournals
         if ($myDate >= $curDate) {
              return $date;
         /* if csv_date is empty, check with a json list of current journals */
-        } else { 
+        } else {
             if ($this->updates_display) {
                 if (file_exists($this->updates)) {
                     $json = $this->updates;
                     $arrCmp = json_decode(file_get_contents($json), true);
                     if ($this->search_array($issn, $arrCmp)) {
                         foreach ($arrCmp as $k1=>$v) {
-                            
+
                             foreach ($v as $k2 => $r) {
                                 if($r == $issn) {
                                     $date = next($v);
@@ -145,7 +147,7 @@ class ListJournals
     function getFilters() {
         if (!empty($this->filters)) {
             return $this->filters;
-        } else { 
+        } else {
             return false;
         }
     }
@@ -234,12 +236,12 @@ class ListJournals
     function getJournals() {
         $row = 1;
         $journals = array();
- 
+
         if (($handle = fopen($this->csv_file, "r")) !== FALSE) {
             $tagcloud = array();
             while (($data = fgetcsv($handle, 1000, $this->csv_separator)) !== FALSE) {
                 $num = count($data);
-	
+
                 /* check for alternative ISSN if strlen is < 1 */
                 $myISSN = (strlen($data[$this->csv_col_issn] < 1) ? $data[$this->csv_col_issn_alt] : $data[$this->csv_col_issn]);
 
@@ -250,26 +252,35 @@ class ListJournals
                 $img = $this->getCover($myISSN);
                 $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
 
-                // meta
-                $metaPrint  = (!empty($data[$this->csv_metaPrint]) ? 'fi-page-copy' : '');
-                $metaOnline = (!empty($data[$this->csv_metaOnline]) ? 'fi-download' : '');
-                $metaGotToc = (!empty($data[$this->csv_metaGotToc]) && !($data[$this->csv_metaGotToc]) ? 'fi-dislike' : 'fi-like');
-                $metaShelfmark = (!empty($data[$this->csv_metaShelfmark]) ? $data[$this->csv_metaShelfmark] : '');
-
-                $tags_row = array();
-                if (!empty($data[$this->csv_tags])) {
-                  // remove space between comma and tag; better readable but...
-                  $tags_row = str_replace(', ', ',', $data[$this->csv_tags]);
-                  // ...multi word tags have to be "js ready"
-                  $tags_row = str_replace(' ', '_', $tags_row);
-                  $tags_row = explode(',', $tags_row);
-                } else {
-                  $tags_row[] = 'NoTag';
+                // Meta
+                $metaPrint = $metaOnline = $metaGotToc = $metaShelfmark = $metaWebsite = '';
+                if ($this->prefs['showMeta'] == true) {
+                  $metaPrint  = (!empty($data[$this->csv_metaPrint]) ? 'fi-page-copy' : '');
+                  $metaOnline = (!empty($data[$this->csv_metaOnline]) ? 'fi-download' : '');
+                  $metaGotToc = (!empty($data[$this->csv_metaGotToc]) && $data[$this->csv_metaGotToc] != 'false') ? true : false;
+                  $metaGotToc = ($metaGotToc) ? 'fi-like' : 'fi-dislike';
+                  $metaShelfmark = (!empty($data[$this->csv_metaShelfmark]) ? $data[$this->csv_metaShelfmark] : '');
+                  $metaWebsite = (!empty($data[$this->csv_metaWebsite]) ? $data[$this->csv_metaWebsite] : '');
                 }
-                // move row tags to our "big cloud" (tags from all rows)
-                $tagcloud = array_merge($tagcloud, $tags_row);
-                $tags = implode(' tag-', $tags_row);
-                $tags = 'tag-'.$tags;
+
+                // Tagcloud
+                $tags = '';
+                if ($this->prefs['showTagcloud'] == true) {
+                  $tags_row = array();
+                  if (!empty($data[$this->csv_tags])) {
+                    // remove space between comma and tag; better readable but...
+                    $tags_row = str_replace(', ', ',', $data[$this->csv_tags]);
+                    // ...multi word tags have to be "js ready"
+                    $tags_row = str_replace(' ', '_', $tags_row);
+                    $tags_row = explode(',', $tags_row);
+                  } else {
+                    $tags_row[] = 'NoTag';
+                  }
+                  // move row tags to our "big cloud" (tags from all rows)
+                  $tagcloud = array_merge($tagcloud, $tags_row);
+                  $tags = implode(' tag-', $tags_row);
+                  $tags = 'tag-'.$tags;
+                }
 
                 $journals[] = array(
                     'id' => $myISSN,
@@ -283,15 +294,18 @@ class ListJournals
                     'metaOnline' => $metaOnline,
                     'metaGotToc' => $metaGotToc,
                     'metaShelfmark' => $metaShelfmark,
+                    'metaWebsite' => $metaWebsite,
                     'issn' => $myISSN,
                     'tags' => $tags
                 );
 
-            } 
+            }
             fclose($handle);
             // set our "big cloud" as class property (and sort alphabetically)
-            $this->tagcloud = array_count_values($tagcloud);
-            ksort($this->tagcloud);
+            if (isset($tagcloud)) {
+              $this->tagcloud = array_count_values($tagcloud);
+              ksort($this->tagcloud);
+            }
         }
         return $journals;
     }

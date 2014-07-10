@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-21 12:31+0100\n"
-"PO-Revision-Date: 2014-06-21 12:43+0100\n"
+"POT-Creation-Date: 2014-07-10 03:03+0100\n"
+"PO-Revision-Date: 2014-07-10 03:04+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -92,17 +92,17 @@ msgid "Clear Data and Logout"
 msgstr "Löschen und mich abmelden"
 
 #: checkout.php:137
-#: index.php:139
+#: index.php:163
 msgid "Do you really want to empty your basket?"
 msgstr "Wolle Sie Ihre Merkliste wirklich löschen?"
 
 #: checkout.php:138
-#: index.php:140
+#: index.php:164
 msgid "OK, empty my basket!"
 msgstr "Ok, meine Merkliste löschen!"
 
 #: checkout.php:139
-#: index.php:141
+#: index.php:165
 msgid "No, keep basket!"
 msgstr "Nein, Merkliste behalten!"
 
@@ -131,40 +131,45 @@ msgid "about"
 msgstr "über"
 
 #: index.php:43
+msgid "tags"
+msgstr "Tags"
+
+#: index.php:46
 msgid "filter"
 msgstr "Filter"
 
-#: index.php:45
+#: index.php:48
+#: index.php:142
 msgid "show all"
 msgstr "alle anzeigen"
 
-#: index.php:46
+#: index.php:49
 msgid "MPI favorites"
 msgstr "MPI-Empfehlungen"
 
-#: index.php:56
+#: index.php:59
 msgid "list view"
 msgstr "Liste"
 
-#: index.php:57
+#: index.php:60
 msgid "my basket"
 msgstr "Merkliste"
 
-#: index.php:77
+#: index.php:80
 msgid "Send articles"
 msgstr "Artikelliste schicken"
 
-#: index.php:89
+#: index.php:92
 msgid "About"
 msgstr "Über"
 
-#: index.php:90
-#: index.php:337
+#: index.php:93
+#: index.php:371
 msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
 msgstr "<em>JournalTouch</em> ist der Alerting Service des <strong>MPI zur Erforschung von Gemeinschaftsgütern</strong> für aktuelle Zeitschriftenausgaben."
 
-#: index.php:92
-#: index.php:339
+#: index.php:95
+#: index.php:373
 msgid ""
 "It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
 "\t\t\t\t\t\tavailable, it will be indicated with an extra button.\n"
@@ -175,106 +180,122 @@ msgid ""
 "\t\t\t\t\t\tThe list of journals is a selection of the journals licensed to the library."
 msgstr ""
 
-#: index.php:106
+#: index.php:109
 msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu!<br/><br/> <strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:107
-#: index.php:353
+#: index.php:110
+#: index.php:387
 msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
 msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>JournalTocs</strong> bezogen."
 
-#: index.php:113
-#: index.php:323
+#: index.php:116
+#: index.php:357
 msgid "Get in touch!"
 msgstr "Kontakt"
 
-#: index.php:128
+#: index.php:130
+msgid "External Source"
+msgstr "Artikel zur Zeitschrift"
+
+#: index.php:140
+msgid "Tagcloud"
+msgstr ""
+
+#: index.php:152
 msgid "Your basket is empty."
 msgstr "Ihre Merkliste ist leer."
 
-#: index.php:130
+#: index.php:154
 msgid "Send/Save my articles"
 msgstr "Sende/Speichere meine Artikel"
 
-#: index.php:132
+#: index.php:156
 msgid "Empty my basket"
 msgstr "Merkliste löschen"
 
-#: index.php:151
+#: index.php:175
 msgid "The newest editions"
 msgstr "Die neuesten Ausgaben"
 
-#: index.php:201
-msgid "<b>Tagcloud</b> (hover your mouse over me to filter by topic!)"
-msgstr "<b>Tagcloud</b> (Mauszeiger hierher bewegen zum Anzeigen!)"
-
-#: index.php:225
+#: index.php:237
 msgid "Filter active:"
 msgstr "Aktive Filter:"
 
-#: index.php:234
-msgid "Browse all journals from A to Z (list view):"
-msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
-
-#: index.php:236
+#: index.php:246
 msgid "Search journal"
-msgstr "Suche Zeitschrift"
+msgstr "Suche Journal"
 
-#: index.php:238
+#: index.php:248
 msgid "No journals found"
 msgstr "Keine Zeitschriften gefunden"
 
-#: index.php:246
-#: index.php:281
+#: index.php:258
+msgid "Browse all journals from A to Z (list view):"
+msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
+
 msgid "last update"
 msgstr "Letzte Aktualisierung"
 
-#: index.php:262
+#: index.php:286
 msgid "Browse all journals from A to Z (grid view):"
 msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
 
-#: index.php:294
+#: index.php:302
+msgid "TOC"
+msgstr ""
+
+#: index.php:304
+msgid "Library"
+msgstr "Bibliothek"
+
+#: index.php:305
+msgid "Journal"
+msgstr "Website"
+
+#: index.php:328
 msgid "Something seems to be wrong with the network"
 msgstr "Leider scheint es Probleme mit dem Netzzugang zu geben."
 
-#: index.php:296
-#: index.php:303
+#: index.php:330
+#: index.php:337
 msgid "Please notify us!"
 msgstr "Benachrichtigen Sie uns!"
 
-#: index.php:301
+#: index.php:335
 msgid "No table of contents found! Are you interested in this title?"
 msgstr "Kein Inhaltsverzeichnis gefunden! Sind Sie an dieser Zeitschrift interessiert?"
 
-#: index.php:318
+#: index.php:352
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr "Inhaltsverzeichnise werden von <a href=\"http://www.crossref.org\">CrossRef</a> und <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a> bezogen"
 
-#: index.php:335
+#: index.php:369
 msgid "Touch me!"
 msgstr "Berühr mich!"
 
-#: index.php:336
+#: index.php:370
 msgid "What is this?"
 msgstr "Was ist das?"
 
-#: index.php:352
+#: index.php:386
 msgid "If a journal is missing, please let us know and we will add it to the list."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu."
 
-#: index.php:352
+#: index.php:386
 msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
 msgstr "<strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:359
+#: index.php:393
 msgid "Touch the screen to get started..."
 msgstr "Berühren Sie den Bildschirm..."
 
-#: index.php:383
+#: index.php:419
 msgid "remove"
 msgstr "entfernen"
 
+#~ msgid "<b>Tagcloud</b> (hover your mouse over me to filter by topic!)"
+#~ msgstr "<b>Tagcloud</b> (Mauszeiger hierher bewegen zum Anzeigen!)"
 #~ msgid ""
 #~ "Tables of contents are provided by <strong>CrossRef</strong> and "
 #~ "<strong>JournalTocs</strong>"
@@ -429,8 +450,6 @@ msgstr "entfernen"
 #~ msgstr "Neues Mitglied"
 #~ msgid "Add New Library Member Data"
 #~ msgstr "Ein neues Bibliotheksmitglied hinzufügen"
-#~ msgid "Search"
-#~ msgstr "Suchen"
 #~ msgid "Item Code"
 #~ msgstr "Barcode"
 #~ msgid "Member ID"
@@ -2035,8 +2054,6 @@ msgstr "entfernen"
 #~ msgstr "Exemplare absolut ausgeliehen"
 #~ msgid "Stock Take Participants"
 #~ msgstr "Inventurmitarbeiter"
-#~ msgid "Status"
-#~ msgstr "Status"
 #~ msgid "Report"
 #~ msgstr "Bericht"
 #~ msgid "Currently Active"
@@ -2293,8 +2310,6 @@ msgstr "entfernen"
 #~ msgstr "Globale Anwendungseinstellungen anpassen"
 #~ msgid "Settings saved. Refreshing page"
 #~ msgstr "Einstellungen gespeichert. Seite wird aktualisiert"
-#~ msgid "Library Name"
-#~ msgstr "Bibliotheksname"
 #~ msgid "Library Subname"
 #~ msgstr "Namenszusatz"
 #~ msgid "Public Template"
