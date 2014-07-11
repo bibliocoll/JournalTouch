@@ -319,12 +319,12 @@ $filters = $lister->getFilters();
 
                 $meta = false;
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
+                $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
                 $link = ($lister->prefs['instLink']) ? $lister->prefs['instLink'].$j['issn'] : '';
-                $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
-                $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
+                $meta .= (($j['metaOnline'] && $link) ? '<span class="button small radius"><i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a></span>': "<br />");
+                $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-                $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
+                $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 
 					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
