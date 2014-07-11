@@ -47,6 +47,8 @@ class GetJournalInfos {
   /// \brief \b OBJ @see config.php
   protected $csv_col;
   /// \brief \b OBJ @see config.php
+  protected $api_all;
+  /// \brief \b OBJ @see config.php
   protected $jt;
   /// \brief \b OBJ @see config.php
   //public $prefs;
@@ -83,6 +85,7 @@ class GetJournalInfos {
     require_once('../config.php');
     $this->csv_file = $cfg->csv_file;
     $this->csv_col  = $cfg->csv_col;
+    $this->api_all  = $cfg->api->all;
     $this->jt       = $cfg->api->jt;
     //$this->prefs    = $cfg->prefs;
   }
@@ -256,6 +259,9 @@ class GetJournalInfos {
    * @return \b BOL True if journal is found, else false
    */
   public function journaltoc_fetch_recent($issn, $user, $max_age_days = 15) {
+    // if called directly with a limit setting use it. Otherwise use setting from config.php
+    if ($max_age_days == 15 && $this->api_all->is_new_days) $max_age_days = $this->api_all->is_new_days;
+
     $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
     $xml = simplexml_load_file($jtURL);
 
@@ -527,5 +533,3 @@ class GetJournalInfos {
   }
 }
 ?>
-
-

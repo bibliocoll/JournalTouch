@@ -133,7 +133,7 @@ if (empty($toc)) {
 
             echo '<div class="small-6 medium-7 large-8 columns textbox">' . PHP_EOL;
             echo '<div class="toctitle">' . PHP_EOL;
-            if ($cfg->api->articleLink == true) {
+            if ($cfg->api->all->articleLink == true) {
                 echo "<a href=\"".$item['link']."\" class=\"item_name\">";
             } else {
                 echo "<span class=\"item_name\">";
@@ -143,7 +143,7 @@ if (empty($toc)) {
             } else {
                 echo (!empty($item['author']) ? $item['author'].": " : "");
             }
-            if ($cfg->api->articleLink == true) {
+            if ($cfg->api->all->articleLink == true) {
                 echo $item['title']."</a>";
             } else {
                 echo $item['title']."</span>";
