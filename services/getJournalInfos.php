@@ -164,7 +164,7 @@ class GetJournalInfos {
         $already_checked = ($already_checked == 'JToc' || $already_checked == 'CRtoc' || $already_checked == 'false') ? true : false;
 
         // !!! Journaltoc: Update meta data if wanted AND if not done before (so JToc/CRtoc is an important information ;) !!!)
-        if ($fetch_meta && !$already_checked) {
+        if ($fetch_meta && !$already_checked && $this->jt_api_key) {
           $already_checked = $this->journaltoc_fetch_meta($this->issn, $this->jt_api_key);
         }
         // !!! Crossref: Update meta data if wanted AND if not done before (CRtoc) AND no result from JT
@@ -230,7 +230,7 @@ class GetJournalInfos {
       $this->log .= "<b>MATCH for JT (meta)</b>: <a href=\"$jt_link\" target=\"_blank\">$jt_title (=".$this->journal_row['title'].")</a> (p: $jt_pIssn /e: $jt_eIssn) von $jt_publisher ($jt_rights). Thema: $jt_subjects (<a href=\"$jtURL\" target=\"_blank\">JT</a>).<br>";
 
       $csv_tags = '';
-      if ($jt_publisher) $newTags[] = 'JTpub-'.$jt_publisher;
+      if ($jt_publisher) $newTags[] = 'JTpub-'.str_replace(',', ' ', $jt_publisher);
       if ($jt_subjects)  $newTags[] = 'JTtag-'.$jt_subjects;
       if ($jt_rights)    $newTags[] = 'JTlegal-'.$jt_rights;
       if ($newTags) $csv_tags = implode(', ', $newTags);
