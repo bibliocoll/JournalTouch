@@ -4,10 +4,11 @@
  *
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
- *
- * Time-stamp: "2014-05-28 12:07:48 zimmel"
+ * 
+ * Time-stamp: "2014-07-10 16:16:18 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
+ * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
  * @copyright 2014 MPI for Research on Collective Goods, Library
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  *
@@ -117,6 +118,17 @@ class ListJournals
         else {
           return false;
             }
+    }
+
+    /* get updates from json list */
+    function getJournalUpdates() {
+        if (file_exists($this->updates)) {
+            $json = $this->jt->outfile;
+            $journalUpdates = json_decode(file_get_contents($json), true);
+            return $journalUpdates;
+        } else {
+            return false;
+        } 
     }
 
 

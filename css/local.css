@@ -451,7 +451,6 @@ font-size: larger;
 .tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
 .tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
 
-
 /*************** Metainfo ************************************************/
 
 .div-grid .metaInfo {
@@ -459,15 +458,29 @@ color: #077dac;
 position: absolute;
 font-size: 14.5pt;
 margin-left: 10px;
+margin-top: -153px;
 }
 
 .div-grid .metaInfo div {
 margin-top: 153px;
-background: none repeat scroll 0 0 #f2f2f2;
-border: 1px solid #d8d8d8;
-border-bottom-style: dotted;
+/* background: none repeat scroll 0 0 #f2f2f2; */
+/* border: 1px solid #d8d8d8; */
+/* border-bottom-style: dotted; */
 padding: 10px;
 width: 123px;
+}
+
+.div-grid .metaInfo .button {
+background-color: #CFCFCF;
+width: 110px;
+}
+
+.div-grid .metaInfo .button:hover {
+background-color: #949090!important;
+}
+
+.div-grid .metaInfo .button a {
+color: #000;
 }
 
 .div-grid .fi-dislike {color: red;}

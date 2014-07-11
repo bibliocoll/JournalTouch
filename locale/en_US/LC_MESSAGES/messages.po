@@ -279,8 +279,6 @@ msgstr ""
 msgid "Browse all journals from A to Z (list view):"
 msgstr ""
 
-#: index.php:270
-#: index.php:315
 msgid "last update"
 msgstr ""
 
