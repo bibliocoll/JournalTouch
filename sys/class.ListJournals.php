@@ -122,7 +122,7 @@ class ListJournals
 
     /* get updates from json list */
     function getJournalUpdates() {
-        if (file_exists($this->updates)) {
+        if (file_exists($this->jt->outfile)) {
             $json = $this->jt->outfile;
             $journalUpdates = json_decode(file_get_contents($json), true);
             return $journalUpdates;

@@ -32,7 +32,10 @@ $cfg->prefs->show_metainfo = true;      // Show the block with the meta infos ri
 $cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
 $cfg->prefs->min_tag_freq  = 1;         // How often must a tag be used at least to show up in the tagcloud?
 
-$cfg->prefs->lib_name      = 'MPI Collective Goods Library, Bonn';
+$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
+$cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
+
+$cfg->prefs->lib_name      = 'MPI Collective Goods Library';
 $cfg->prefs->lib_initials  = 'MPI';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
 $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
@@ -59,7 +62,7 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
-$cfg->api->jt->outfile  = 'input/latest-issns.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularily
+$cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularily
 
 
 
