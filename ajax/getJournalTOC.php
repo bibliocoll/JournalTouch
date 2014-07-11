@@ -15,10 +15,8 @@
 // do not show system errors, these should be handled in js or below
 error_reporting(0);
 
-$config = parse_ini_file('../config/config.ini', TRUE);
-$apiUserKey = $config['journaltocs']['apiUserKey'];
+require_once('../config.php');
 // $toAddress = $config['mailer']['toAddress'];
-$alink = $config['toc']['alink'];
 $issn = $_GET['issn'];
 
 function myget ($query,$xpath) {
@@ -46,7 +44,7 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_DESC) {
     array_multisort($sort_col, $dir, $arr);
 }
 
-$x = "http://www.journaltocs.ac.uk/api/journals/".$issn."?output=articles&user=".$apiUserKey;
+$x = "http://www.journaltocs.ac.uk/api/journals/".$issn."?output=articles&user=".$cfg->api->jt->account;
 
 $neuDom = new DOMDocument;
 
@@ -135,7 +133,7 @@ if (empty($toc)) {
 
             echo '<div class="small-6 medium-7 large-8 columns textbox">' . PHP_EOL;
             echo '<div class="toctitle">' . PHP_EOL;
-            if ($alink == true) {
+            if ($cfg->api->articleLink == true) {
                 echo "<a href=\"".$item['link']."\" class=\"item_name\">";
             } else {
                 echo "<span class=\"item_name\">";
@@ -145,7 +143,7 @@ if (empty($toc)) {
             } else {
                 echo (!empty($item['author']) ? $item['author'].": " : "");
             }
-            if ($alink == true) {
+            if ($cfg->api->articleLink == true) {
                 echo $item['title']."</a>";
             } else {
                 echo $item['title']."</span>";

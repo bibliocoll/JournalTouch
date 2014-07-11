@@ -1,12 +1,11 @@
 <?php 
 ob_start();
-require_once 'sys/jt-gettext.php';
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
-$filters = $lister->getFilters();
 ?>
+
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -40,17 +39,17 @@ $filters = $lister->getFilters();
 				<!-- Right Nav Section -->
 				<ul class="right">
 					<li class="divider"></li>
-          <?php if (count($lister->tagcloud) > 1 && $lister->prefs['showTagcloud']) { ?>
+          <?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
 					   <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&nbsp;<?php echo __('tags') ?></a></li>
           <?php } ?>
-                    <?php if (!empty($filters)) { /* show filters only if set */?>
+                    <?php if ($lister->filters) { /* show filters only if set */?>
 					<li class="has-dropdown"><a id="filter-view" href="#"><i class="fi-filter"></i>&nbsp;<?php echo __('filter') ?></a>
 						<ul class="dropdown">
 							<li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&nbsp;<?php echo __('show all') ?></a></li>
 							<li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&nbsp;<?php echo __('MPI favorites') ?></a></li>
                             <?php 
-                            /* read all filters from the config file (see $lister->getFilters() )*/
-                            foreach ($filters as $key=>$f) {
+                            /* read all filters from the config file */
+                            foreach ($lister->filters as $key=>$f) {
                             print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
                             }
                             ?>
@@ -136,7 +135,7 @@ $filters = $lister->getFilters();
 
 
     <!-- start Tagcloud -->
-    <?php if (count($lister->tagcloud) > 1 && $lister->prefs['showTagcloud']) { ?>
+    <?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
     <div id="tagsPopover" class="reveal-modal" data-reveal>
       <h3><?php echo __('Tagcloud') ?></h3>
       <a class="close-reveal-modal button radius">×</a>
@@ -301,7 +300,7 @@ $filters = $lister->getFilters();
                 $meta = false;
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
                 $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
-                $link = ($lister->prefs['instLink']) ? $lister->prefs['instLink'].$j['issn'] : '';
+                $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
                 $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
                 $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
@@ -310,7 +309,7 @@ $filters = $lister->getFilters();
 					      echo '<div class="large-4 medium-5 small-12 columns search-filter div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-                echo (($meta && $lister->prefs['showMeta']) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
+                echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
 					      echo '<h5 title="'.$j['title'].'"> '.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");

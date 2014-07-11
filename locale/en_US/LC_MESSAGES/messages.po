@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-10 03:03+0100\n"
-"PO-Revision-Date: 2014-07-10 03:03+0100\n"
+"POT-Creation-Date: 2014-07-11 11:19+0100\n"
+"PO-Revision-Date: 2014-07-11 11:20+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -121,6 +121,50 @@ msgstr ""
 
 #: checkout.php:252
 msgid "Your message"
+msgstr ""
+
+#: config.php:76
+msgid "Feedback from JournalTouch"
+msgstr ""
+
+#: config.php:80
+msgid "Your Library JournalTouch"
+msgstr ""
+
+#: config.php:81
+msgid "Your saved articles from JournalTouch"
+msgstr ""
+
+#: config.php:82
+msgid "You sent the following message"
+msgstr ""
+
+#: config.php:83
+msgid "Here are your articles, enjoy!"
+msgstr ""
+
+#: config.php:84
+msgid "Best regards, your library team!"
+msgstr ""
+
+#: config.php:88
+msgid "New order for the library from JournalTouch"
+msgstr ""
+
+#: config.php:89
+msgid "New order from JournalTouch"
+msgstr ""
+
+#: config.php:148
+msgid "Psychology"
+msgstr ""
+
+#: config.php:149
+msgid "Politics"
+msgstr ""
+
+#: config.php:150
+msgid "Yet another filter"
 msgstr ""
 
 #: index.php:32

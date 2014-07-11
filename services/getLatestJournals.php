@@ -15,11 +15,8 @@
 // do not show system errors, these should be handled in js or below
 //error_reporting(0);
 
-$config = parse_ini_file('../config/config.ini', TRUE);
-$apiUserKey = $config['journaltocs']['apiUserKey'];
-$toAddress = $config['mailer']['toAddress'];
-$updatesURL = $config['updates']['url'];
-$outFile = $config['updates']['outfile'];
+require_once('../config.php');
+$updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 $issn = $_GET['issn'];
 
 function myget ($query,$xpath) {
@@ -101,7 +98,7 @@ foreach ( $records as $item ) {
 
 
 /* load the current array of issns into $data (compare later) */
-/* $json = "../".$outFile; */
+/* $json = "../".$cfg->api->jt->outfile; */
 /* $file = file_get_contents($json); */
 /* $data = json_decode($file, true); */
 
@@ -118,7 +115,7 @@ if (empty($toc)) {
 	$no_records = count($toc);
 
 	echo '<h5>'.$journalTitle.'</h5>';
-    $json = "../".$outFile;
+    $json = "../".$cfg->api->jt->outfile;
     $arrCmp = json_decode(file_get_contents($json), true);
 
     foreach ($arrCmp as $k1=>$v) {

@@ -5,7 +5,7 @@
  *
  * includes SimpleCart js css classes (see below)
  * CAVEAT: be careful to change the HTML layout (linked to jQuery Selectors)
- * 
+ *
  * Time-stamp: "2014-04-10 15:03:26 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -15,9 +15,8 @@
 // do not show system errors, these should be handled in js or below
 error_reporting(0);
 
-$config = parse_ini_file('../config/config.ini', TRUE);
+require_once('../config.php');
 //$toAddress = $config['mailer']['toAddress'];
-$alink = $config['toc']['alink'];
 $issn = $_GET['issn'];
 
 // results output is limited to 20 per page, so send at least two queries
@@ -36,7 +35,7 @@ $j2 = json_decode($file2, true);
 $j3 = json_decode($file3, true);
 $j4 = json_decode($file4, true);
 
-// merge 
+// merge
 $records = array_merge_recursive( $j1, $j2, $j3, $j4 );
 
 $toc = array();
@@ -50,7 +49,7 @@ foreach ( $records as $item ) {
 	$link = $item['doi'];
 	//$source = $item['fullCitation'];
     $source = $pcoins['rft_jtitle'] . ", Vol. " . $pcoins['rft_volume'] . ", No. " . $pcoins['rft_issue'] . " (" . $pcoins['rft_date'] . ")";
-    $author = $pcoins['rft_au']; 
+    $author = $pcoins['rft_au'];
     $abstract = '';
     $year = $item['year'];
     $vol = $pcoins['rft_volume'];
@@ -64,9 +63,9 @@ foreach ( $records as $item ) {
 
     /* only move to array if year is current or before */
     $curY = date("Y");
-    if ($year >= $curY-1) { 
+    if ($year >= $curY-1) {
 	$toc[] = array(
-        'title' => $title, 
+        'title' => $title,
         'link' => $link,
         'source' => $source,
         'author' => $author,
@@ -77,10 +76,10 @@ foreach ( $records as $item ) {
         'jtitle' => urldecode($jtitle),
         'sortStr' => $sortStr,
         'volStr' => $volStr
-    ); 
+    );
     }
 }
-	
+
 /* sort array with our sort string to have the latest first */
   function cmp($a, $b)
     {
@@ -121,12 +120,12 @@ if (empty($toc)) {
         // echo $item['sortStr']. " # ";
 
             if (!empty($item['title'])) {
-                
+
                 echo '<div class="simpleCart_shelfItem row">';
-                
+
                 echo '<div class="small-10 medium-9 large-9 columns textbox">';
                 echo '<div class="toctitle">';
-                if ($alink == true) {
+                if ($cfg->api->articleLink == true) {
                     echo "<a href=\"".$item['link']."\" class=\"item_name\">";
                 } else {
                     echo "<span class=\"item_name\">";
@@ -136,7 +135,7 @@ if (empty($toc)) {
                 } else {
                     echo (!empty($item['author']) ? $item['author'].": " : "");
                 }
-                if ($alink == true) {
+                if ($cfg->api->articleLink == true) {
                     echo $item['title']."</a>";
                 } else {
                     echo $item['title']."</span>";
@@ -154,15 +153,15 @@ if (empty($toc)) {
                 /* add button */
                 echo "<a class=\"item_add button medium radius\" href=\"javascript:;\"><i class=\"fi-plus\"></i> </a>&nbsp;";
                 echo '</div>';
-                
+
                 echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" : "");
-                
+
                 echo '</div>';
-                
+
             }
         }
     }
-    
+
 }
 
 

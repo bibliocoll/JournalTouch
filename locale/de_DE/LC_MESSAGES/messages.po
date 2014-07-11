@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-10 03:03+0100\n"
-"PO-Revision-Date: 2014-07-10 20:24+0100\n"
+"POT-Creation-Date: 2014-07-11 11:20+0100\n"
+"PO-Revision-Date: 2014-07-11 11:27+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -122,6 +122,50 @@ msgstr "Datei für Literaturverwaltung als Anhang?"
 msgid "Your message"
 msgstr "Ihre Nachricht"
 
+#: config.php:76
+msgid "Feedback from JournalTouch"
+msgstr "Mail mich an!"
+
+#: config.php:80
+msgid "Your Library JournalTouch"
+msgstr "Universitätsbibliothek"
+
+#: config.php:81
+msgid "Your saved articles from JournalTouch"
+msgstr "JournalTouch: Ihre Artikel"
+
+#: config.php:82
+msgid "You sent the following message"
+msgstr "Sie schrieben folgende Nachricht"
+
+#: config.php:83
+msgid "Here are your articles, enjoy!"
+msgstr "Ihre aus JournalTouch versendeten Artikel."
+
+#: config.php:84
+msgid "Best regards, your library team!"
+msgstr "Mit freundlichem Gruß<br>Ihre Bibliothek"
+
+#: config.php:88
+msgid "New order for the library from JournalTouch"
+msgstr "Neue Bestellung für die Bibliothek aus JournalTouch"
+
+#: config.php:89
+msgid "New order from JournalTouch"
+msgstr "Neue Bestellung aus JournalTouch"
+
+#: config.php:148
+msgid "Psychology"
+msgstr "Psychologie"
+
+#: config.php:149
+msgid "Politics"
+msgstr "Politik"
+
+#: config.php:150
+msgid "Yet another filter"
+msgstr ""
+
 #: index.php:32
 msgid "menu"
 msgstr "menü"
@@ -145,7 +189,7 @@ msgstr "alle anzeigen"
 
 #: index.php:49
 msgid "MPI favorites"
-msgstr ""
+msgstr "MPI-Favoriten"
 
 #: index.php:59
 msgid "list view"

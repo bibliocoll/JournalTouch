@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-
 echo "<h1>Test</h1>";
 $test = new GetJournalInfos();
 $test->update_journals_csv();
@@ -35,24 +33,32 @@ $test->update_journals_csv();
  *   know how the premium output looks, yet.
  * - Maybe implement getting toc like in /ajax/*.php
  * - Maybe add interface class and create extended classes for each service...
+ *
+ * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
 class GetJournalInfos {
-  protected $jt_api_key;
-  protected $journals_csv;
-  protected $csv_separator;
-
-  protected $csv_col_ids = array();
-
-  protected $journal_row = array();
-  protected $issn;
-
   /// \brief \b FLOAT Script timing is always fun.
   private $starttime = 0;
   /// \brief \b INT Maximum script execution time. Firefox default for network.http.keep-alive.timeout is 115
   private $maxtime = 6000;
 
+  /// \brief \b OBJ @see config.php
+  protected $csv_file;
+  /// \brief \b OBJ @see config.php
+  protected $csv_col;
+  /// \brief \b OBJ @see config.php
+  protected $jt;
+  /// \brief \b OBJ @see config.php
+  //public $prefs;
+
+  /// \brief \b STR The ISSN of the current journal. Maybe useful somewhere (currently only a warning if datediff is pretty high)
+  protected $issn;
+  /// \brief \b ARY Holds a complete joural row and its infos. Populated in GetJournalInfos::update_journals_csv
+  protected $journal_row = array();
+  /// \brief \b ARY Saves all rows. They are written to file only after everything is done (performance)
   protected $journals_buffer = array();
 
+  // Vars to keep track of statistics
   private $hits_jt_meta = 0;
   private $hits_jt_new = 0;
   private $hits_jt_badDate = 0;
@@ -64,45 +70,21 @@ class GetJournalInfos {
 
   private $tmpDateLog = '';
 
+
   /**
    * @brief   Load config, set properties
    *
-   * @param $conf_file    \b STR  Path to config file
    * @return \b void
    */
-  public function __construct($conf_file = '../config/config.ini') {
+  public function __construct() {
     set_time_limit($this->maxtime);
     $this->script_timer();
 
-
-    $config = parse_ini_file($conf_file, TRUE);
-
-    $this->jt_api_key    = $config['journaltocs']['apiUserKey'];
-    $this->journals_csv  = $config['csv']['file'];
-    $this->csv_separator = $config['csv']['separator'];
-
-    $this->csv_col_ids['title']         = $config['csv']['title'];          // = 0
-    $this->csv_col_ids['filter']        = $config['csv']['filter'];         // = 1
-    $this->csv_col_ids['2']             = 2;                                //?
-    $this->csv_col_ids['important']     = $config['csv']['important'];      // = 3
-    $this->csv_col_ids['4']             = 4;                                // = 4
-    $this->csv_col_ids['issn']          = $config['csv']['issn'];           // = 5
-    $this->csv_col_ids['issn_alt']      = $config['csv']['issn_alt'];       // = 6
-    $this->csv_col_ids['7']             = 7;                                // ?
-    $this->csv_col_ids['new']           = 8;                                // new
-    $this->csv_col_ids['date']          = $config['csv']['date'];           // = 9
-    $this->csv_col_ids['lastIssue']     = $config['csv']['lastIssue'];      // = 10
-    $this->csv_col_ids['metaPrint']     = $config['csv']['metaPrint'];      // = 11
-    $this->csv_col_ids['metaOnline']    = $config['csv']['metaOnline'];     // = 12
-    $this->csv_col_ids['metaGotToc']    = $config['csv']['metaGotToc'];     // = 13
-    $this->csv_col_ids['metaShelfmark'] = $config['csv']['metaShelfmark'];  // = 14
-    $this->csv_col_ids['metaWebsite']   = $config['csv']['metaWebsite'];    // = 15
-    $this->csv_col_ids['tags']          = $config['csv']['tags'];           // = 16
-
-    // just copy, content will be overwritten
-    ob_start();
-    $this->journal_row = $this->csv_col_ids;
-    ob_end_flush();
+    require_once('../config.php');
+    $this->csv_file = $cfg->csv_file;
+    $this->csv_col  = $cfg->csv_col;
+    $this->jt       = $cfg->api->jt;
+    //$this->prefs    = $cfg->prefs;
   }
 
 
@@ -146,42 +128,44 @@ class GetJournalInfos {
    * @return \b void
    */
   public function update_journals_csv($fetch_meta = true) {
-    if (($handle = fopen('../'.$this->journals_csv, "r")) !== FALSE) {
-      while (($journal_rows = fgetcsv($handle, 1000, $this->csv_separator)) !== FALSE) {
+    ob_start();
+    if (($handle = fopen('../'.$this->csv_file->path, "r")) !== FALSE) {
+      while (($journal_rows = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
         //if ($this->processed > 3) break(1);
         $this->processed++;
         $this->log .= '<p>';
 
         // make row class property
-        foreach ($this->csv_col_ids AS $name => $rowid) {
+        foreach ($this->csv_col AS $name => $rowid) {
           $this->journal_row[$name] = $journal_rows[$rowid];
         }
 
         /* check for alternative ISSN if strlen is < 1 */
-        $this->issn = (strlen($this->journal_row['issn'] < 1) ? $this->journal_row['issn_alt'] : $this->journal_row['issn']);
+        $issn = (strlen($this->journal_row['issn'] < 1) ? $this->journal_row['issn_alt'] : $this->journal_row['issn']);
+        $this->issn = $issn;
 
         $already_checked = $this->journal_row['metaGotToc'];
         $already_checked = ($already_checked == 'JToc' || $already_checked == 'CRtoc' || $already_checked == 'false') ? true : false;
 
         // !!! Journaltoc: Update meta data if wanted AND if not done before (so JToc/CRtoc is an important information ;) !!!)
-        if ($fetch_meta && !$already_checked && $this->jt_api_key) {
-          $already_checked = $this->journaltoc_fetch_meta($this->issn, $this->jt_api_key);
+        if ($fetch_meta && !$already_checked && $this->jt->account) {
+          $already_checked = $this->journaltoc_fetch_meta($issn, $this->jt->account);
         }
         // !!! Crossref: Update meta data if wanted AND if not done before (CRtoc) AND no result from JT
         if ($fetch_meta && !$already_checked) {
-          $already_checked = $this->crossref_fetch_meta($this->issn);
+          $already_checked = $this->crossref_fetch_meta($issn);
         }
         // TEMP try journalseek if still no result
         if ($fetch_meta && !$already_checked) {
-          $already_checked = $this->journalseek_fetch_meta($this->issn);
+          $already_checked = $this->journalseek_fetch_meta($issn);
         }
 
         // Fetch info if journal is listed by JournalToc or CrossRef
-        if ($this->journal_row['metaGotToc'] == 'JToc') {
-          $new_issue = $this->journaltoc_fetch_recent($this->issn, $this->jt_api_key);
+        if ($this->journal_row['metaGotToc'] == 'JToc' && $this->jt->account) {
+          $new_issue = $this->journaltoc_fetch_recent($issn, $this->jt->account);
         }
         elseif ($this->journal_row['metaGotToc'] == 'CRtoc') {
-          $new_issue = $this->crossref_fetch_recent($this->issn);
+          $new_issue = $this->crossref_fetch_recent($issn);
         }
 
 
@@ -193,11 +177,12 @@ class GetJournalInfos {
       }
       fclose($handle);
       $file_date = date('Y-m-d_H\Hi');
-      rename('../'.$this->journals_csv, "../input/journals_$file_date.csv");
+      rename('../'.$this->csv_file->path, "../input/journals_$file_date.csv");
 
       $all_rows = implode("\n", $this->journals_buffer);
-      file_put_contents ('../'.$this->journals_csv, $all_rows);
+      file_put_contents ('../'.$this->csv_file->path, $all_rows);
     }
+    ob_end_flush();
   }
 
 
@@ -236,7 +221,7 @@ class GetJournalInfos {
       if ($newTags) $csv_tags = implode(', ', $newTags);
 
       $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
-      if ($jt_link) $this->journal_row['metaWebsite'] = $jt_link;
+      if ($jt_link && !$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $jt_link;
       $this->journal_row['metaGotToc'] = 'JToc';
 
       $this->hits_jt_meta++;
@@ -293,7 +278,7 @@ class GetJournalInfos {
           //$this->tmpDateLog .= "$journal_date\$chk_date<br>";
 
         // What a messy check...
-        if (date('Y', $chk_date) == 1970) {
+        if (date('Y', strtotime($chk_date)) == 1970) {
           // Check stuff like "Apr.-June  2014", "Apr.-June.  2014", "Jan.-Feb.  2015"
           $pos = strpos($journal_date , '.-');
           if ($pos > 0) {
@@ -319,8 +304,6 @@ class GetJournalInfos {
         // Anyway, for now break if date was found
         if ($journal_date) break(1);
     }
-
-    if ($day_diff > 365) echo "<b>JT (recent)</b>: $issn not updated for over a year!?<br>";
 
     $this->journal_row['date'] = $journal_date;
     if ($is_new) {
@@ -359,7 +342,7 @@ class GetJournalInfos {
     if (isset($crJournal[0]['fullCitation'])) $crTitle = $crJournal[0]['fullCitation'];
 
     if ($crLink) {
-      $this->journal_row['metaWebsite'] = $crLink;
+      if (!$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $crLink;
       $this->journal_row['metaGotToc'] = 'CRtoc';
       $this->log .= "<b>MATCH for CrossRef (meta)</b>: <a href=\"$crLink\" target=\"_blank\">$crTitle (=".$this->journal_row['title'].")</a>.<br>";
 
@@ -465,15 +448,15 @@ class GetJournalInfos {
     // Publisher
     $filtered = $domxpath->query("//p[contains(., 'Published/Hosted')]/a");
 
-    if (is_object($filtered->item(0)->nodeValue)) $js_publisher = 'JSpub-'.$filtered->item(0)->nodeValue;
+    if (is_object($filtered->item(0))) $js_publisher = 'JSpub-'.$filtered->item(0)->nodeValue;
 
     // Journal website
     $filtered = $domxpath->query("//dd[1]/ul/li/a/@href");
-    if (is_object($filtered->item(0)->nodeValue)) $js_link = $filtered->item(0)->nodeValue;
+    if (is_object($filtered->item(0))) $js_link = $filtered->item(0)->nodeValue;
 
     // Tags
     $filtered = $domxpath->query("//dd[2]/ul/li/a");
-    if (is_object($filtered->item(0)->nodeValue)) $js_subjects = $filtered->item(0)->nodeValue;
+    if (is_object($filtered->item(0))) $js_subjects = $filtered->item(0)->nodeValue;
 
     if (isset($js_subjects)) {
       $js_subjects = str_replace ('  ', ' ', $js_subjects);
@@ -484,13 +467,13 @@ class GetJournalInfos {
     // Update row
     if (isset($js_publisher)) $newTags[] = $js_publisher;
     if (isset($js_subjects))  $newTags[] = $js_subjects;
-    if (isset($newTags)) $csv_tags = implode(', ', $newTags);
+    $csv_tags = (isset($newTags)) ? implode(', ', $newTags) : '';
     $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
     if (isset($js_link) && !$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $js_link;
     $this->journal_row['metaGotToc'] = 'false';
 
     // Feedback
-    if (isset($js_link) || isset($csv_tags)) {
+    if (isset($js_link) || $csv_tags) {
       $this->log .= "<b>MATCH for Jseek (meta)</b>: <a href=\"$js_link\" target=\"_blank\">".$this->journal_row['title']."</a><br>";
       $this->hits_cs_meta++;
       return true;
@@ -520,6 +503,8 @@ class GetJournalInfos {
 
     $day_diff = $current_day - $journal_day;
     $is_new = ($current_year == $journal_year && $day_diff < $max_age_days) ? true : false;
+
+    if ($day_diff > 365) $this->log .= "<b>$this->issn</b>: not updated for over a year!?<br>";
 
     return $is_new;
   }

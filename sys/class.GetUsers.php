@@ -12,16 +12,14 @@
  */
 class GetUsers 
 {
-
-    protected $userlist;
+    /// \brief \b OBJ @see config.php
+    protected $dbusers;
 
     public function __construct()
     /* load some configuration */
     {
-        $config = parse_ini_file('config/config.ini', TRUE);
-        $this->userlist = $config['users']['userlist'];
-        $this->dbuser = $config['users']['dbuser'];
-        $this->dbpass = $config['users']['dbpass'];
+        require('config.php');
+        $this->dbusers = $cfg->dbusers;
     }
 
     private function _sql_query ($sql, $db)
@@ -38,11 +36,11 @@ class GetUsers
 
     public function getUsers() {
 
-        if ($this->userlist == true) {
+        if ($this->dbusers->userlist == true) {
 
 // Get data from DB
-            $db_user=$this->dbuser;
-            $db_pass=$this->dbpass;
+            $db_user=$this->dbusers->dbuser;
+            $db_pass=$this->dbusers->dbpass;
             $db_ext='drupal_extern';
             $db_int='drupal_intern';
             
