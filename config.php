@@ -52,7 +52,7 @@ $cfg->api->jt = new stdClass();
  */
 $cfg->api->articleLink = true;      // Should articles in fetched toc's be clickable links? Set false if not.
 
-$cfg->api->jt->account  = 'tzeumer@verweisungsform.de';       // The mail you are registered with at JournalToc
+$cfg->api->jt->account  = '';       // The mail you are registered with at JournalToc
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
