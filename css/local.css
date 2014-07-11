@@ -453,6 +453,28 @@ font-size: larger;
 
 /*************** Metainfo ************************************************/
 
+.div-grid .fi-dislike {color: red;}
+.div-grid .fi-like {color: green;}
+
+.div-grid .metaInfo {
+color: #077dac;
+position: absolute;
+font-size: 14.5pt;
+margin-left: 10px;
+}
+
+.div-grid .metaInfo div {
+margin-top: 163px;
+background: none repeat scroll 0 0 #f2f2f2;
+border: 1px solid #d8d8d8;
+border-bottom-style: dotted;
+padding: 5px;
+width: 123px;
+}
+
+/***
+/* bibliocoll's try for nicer display of meta info
+
 .div-grid .metaInfo {
 color: #077dac;
 position: absolute;
@@ -463,9 +485,6 @@ margin-top: -145px;
 
 .div-grid .metaInfo div {
 margin-top: 190px;
-/* background: none repeat scroll 0 0 #f2f2f2; */
-/* border: 1px solid #d8d8d8; */
-/* border-bottom-style: dotted; */
 padding: 5px;
 width: 123px;
 }
@@ -482,7 +501,5 @@ background-color: #949090!important;
 .div-grid .metaInfo .button a {
 color: #000;
 }
-
-.div-grid .fi-dislike {color: red;}
-.div-grid .fi-like {color: green;}
+*/
 
