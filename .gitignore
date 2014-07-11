@@ -1,15 +1,8 @@
 *~
-Thumbs.db
-<<<<<<< HEAD
-_stuff/*
+.project
 doc/html/*
 doc/def/*
 doc/*.tmp
 input/*
-/.project
 img/*
 export/*
-=======
->>>>>>> parent of 5cb9773... Local Config
-doc/notes.txt
-
