@@ -124,7 +124,7 @@ if (empty($toc)) {
             if (strlen($r) == 10) {
             /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
             $td = strtotime($r);
-            $cdate = date("Y-m-d", strtotime("+1 month", $td));
+            $cdate = date("Y-m-d", strtotime("+{$cfg->api->all->is_new_days} day", $td));
             /* if there is a $date (e.g. from csv), compare with current date */
             $curDate = new DateTime(); // today
             $myDate   = new DateTime($cdate);
@@ -144,7 +144,7 @@ if (empty($toc)) {
             $date = new DateTime($item['date']);
             /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
             $td = strtotime($item['date']);
-            $cdate = date("Y-m-d", strtotime("+1 month", $td));
+            $cdate = date("Y-m-d", strtotime("+{$cfg->api->all->is_new_days} day", $td));
             /* if there is a $date (e.g. from csv), compare with current date */
             $curDate = new DateTime(); // today
             $myDate   = new DateTime($cdate);
@@ -178,5 +178,4 @@ unset($arrCmp);//release memory
 }
 
 ?>
-
 

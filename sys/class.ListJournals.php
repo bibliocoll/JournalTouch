@@ -27,6 +27,8 @@ class ListJournals
     /// \brief \b OBJ @see config.php
     protected $covers;
     /// \brief \b OBJ @see config.php
+    protected $api_all;
+    /// \brief \b OBJ @see config.php
     protected $jt;
     /// \brief \b ARY @see config.php
     public $filters;
@@ -52,6 +54,7 @@ class ListJournals
         $this->csv_file = $cfg->csv_file;
         $this->csv_col  = $cfg->csv_col;
         $this->covers   = $cfg->covers;
+        $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
         $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
@@ -85,7 +88,7 @@ class ListJournals
     function isCurrent($date,$issn) {
         /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
         $td = strtotime($date);
-        $cdate = date("Y-m-d", strtotime("+1 month", $td));
+        $cdate = date("Y-m-d", strtotime("+{$this->api_all->is_new_days} day", $td));
         /* if there is a $date (e.g. from csv), compare with current date */
         $curDate = new DateTime(); // today
         $myDate   = new DateTime($cdate);
@@ -144,15 +147,24 @@ class ListJournals
     /**
      * @brief   Returns all tags as tagcloud (prepared HTML)
      *
+     * @todo    $cssClasses and especially $ignoreTag aren't good parameters.
+     *          And further: only $limit is configurable in config.php...
+     *
      * @param $limit      \b INT  Minimum count that a tag has to be used to
      *                            show in the cloud
      * @param $cssClasses \b INT  Number of font sizes to show
-     * @param $ignoreTag  \b INT  Tag that should not be count as maximum,
-     *                            usually NoTag that is set in
-     *                            ListJournals::getJournals()
+     * @param $ignoreTag  \b INT  Tag that should not be shown in the cloud.
+     *                            Usually NoTag that is set in
+     *                            ListJournals::getJournals(). If you really
+     *                            want to show it (or hide something else),
+     *                            change it. Showing NoTag is useful for
+     *                            "editorial" work :)
      * @return \b STR <p>aragraph with tagcloud
      */
     function getTagcloud($limit = 0, $cssClasses = 5, $ignoreTag = 'NoTag') {
+        // if called directly with a limit setting use it. Otherwise use setting from config.php
+        if ($limit == 0 && $this->prefs->min_tag_freq) $limit = $this->prefs->min_tag_freq;
+
         if (!empty($this->tagcloud)) {
             $countcloud = $this->tagcloud;
             if ($limit) {
@@ -169,13 +181,13 @@ class ListJournals
             foreach ($this->tagcloud AS $tag => $count) {
               if ($count >= $limit) {
                 if ($tag == $ignoreTag) {
-                  $multiplier = $cssClasses;
+                  unset($this->tagcloud[$tag]);
                 }
                 else {
                   $multiplier = $this->GetTagSizeLogarithmic($count, $tag_min, $tag_max, 1, $cssClasses+1);
+                  $css = 'tagcloud'.$multiplier;
+                  $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
                 }
-                $css = 'tagcloud'.$multiplier;
-                $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
               }
             }
             $cloud = "<p align=\"center\">$cloud</p>";
@@ -301,3 +313,4 @@ class ListJournals
     }
 }
 ?>
+

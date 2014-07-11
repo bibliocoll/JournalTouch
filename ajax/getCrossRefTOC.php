@@ -125,7 +125,7 @@ if (empty($toc)) {
 
                 echo '<div class="small-10 medium-9 large-9 columns textbox">';
                 echo '<div class="toctitle">';
-                if ($cfg->api->articleLink == true) {
+                if ($cfg->api->all->articleLink == true) {
                     echo "<a href=\"".$item['link']."\" class=\"item_name\">";
                 } else {
                     echo "<span class=\"item_name\">";
@@ -135,7 +135,7 @@ if (empty($toc)) {
                 } else {
                     echo (!empty($item['author']) ? $item['author'].": " : "");
                 }
-                if ($cfg->api->articleLink == true) {
+                if ($cfg->api->all->articleLink == true) {
                     echo $item['title']."</a>";
                 } else {
                     echo $item['title']."</span>";
@@ -166,3 +166,4 @@ if (empty($toc)) {
 
 
 ?>
+

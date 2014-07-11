@@ -24,12 +24,13 @@ $cfg->prefs = new stdClass();
  * Preferences for your library. Look & Feel of JournalTouch
  *
  * Note: inst_service might be used to link to your own discovery system or SFX
- *       whichmay provide addiotional direct links. Add an url where only the
+ *       which may provide additional direct links. Add an url where only the
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
-$cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
 $cfg->prefs->show_metainfo = true;      // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
+$cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
+$cfg->prefs->min_tag_freq  = 1;         // How often must a tag be used at least to show up in the tagcloud?
 
 $cfg->prefs->lib_name      = 'MPI Collective Goods Library, Bonn';
 $cfg->prefs->lib_initials  = 'MPI';
@@ -39,6 +40,7 @@ $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=adv
 
 
 $cfg->api = new stdClass();
+$cfg->api->all = new stdClass();
 $cfg->api->jt = new stdClass();
 /**
  * API: Settings to fetch the table of contents
@@ -50,7 +52,8 @@ $cfg->api->jt = new stdClass();
  * services/getJournalInfos.php (preferrably on a daily basis). But you still need a
  * standard account.
  */
-$cfg->api->articleLink = true;      // Should articles in fetched toc's be clickable links? Set false if not.
+$cfg->api->all->articleLink = true; // Should articles in fetched toc's be clickable links? Set false if not.
+$cfg->api->all->is_new_days = 30;   // On update: for how many days mark an issue as new after publishing date?
 
 $cfg->api->jt->account  = '';       // The mail you are registered with at JournalToc
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
@@ -196,3 +199,4 @@ $cfg->sys->abspath  = dirname(__FILE__).'/';    // absolute path to JournalTouch
 //var_dump($cfg);
 
 ?>
+
