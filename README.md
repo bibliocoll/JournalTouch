@@ -35,16 +35,16 @@ Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 ## General
 
 The main page is *index.php* and reads the relevant journals from *input/*. Put a CSV file in here. Alternatively, set up a Google Drive Spreadsheet and read it directly from the web.
-It must at least contain the journal titles and a valid ISSN; configure optional columns in the *config/config.ini* (e.g. for filters). You can add any columns you like (extend the PHP classes).
+It must at least contain the journal titles and a valid ISSN; configure optional columns in the *config.php* (e.g. for filters). You can add any columns you like (extend the PHP classes).
 
 ### Configure sources for the TOCs
 
-External (TOC) contents will be read from *index.php* with an AJAX call to *ajax/getCrossRefTOC.php* or *ajax/getJournalTOC.php*, respectively. This file outputs HTML to the caller which is ready to be inserted in *index.php* (Todo: make it more API-like). You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config/config.ini*.
+External (TOC) contents will be read from *index.php* with an AJAX call to *ajax/getCrossRefTOC.php* or *ajax/getJournalTOC.php*, respectively. This file outputs HTML to the caller which is ready to be inserted in *index.php* (Todo: make it more API-like). You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
 If you want to read from other sources, write a similar handler like *ajax/getJournalTOC.php*.
 
 By default there are two queries; the first one queries the (experimental) CrossRef-API, and as a fallback option, there is a query to JournalTocs. To change this precedence and for more details refer to the corresponding ajax function in *js/local/conduit.js*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). By default, if the frist query fails after five seconds, the first query gets canceled and the second query gets fired (change in *js/local/conduit.js*). Any other errors should be captured in the callers directly (*ajax/*).
 
-Please note: while you could set up an alternative ISSN in the config.ini, it is ignored by now.
+Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
 For example: 
 
@@ -75,13 +75,18 @@ Important note for Excel CSV exports: expect problems if your file is not UTF-8 
 
 ## Setup configuration file
 
-The configuration is handled in *config/config.ini*.
+The configuration is handled in *config.php*.
 Configuration parameters are grouped and will be read in the PHP classes as a multidimensional array. For details refer to the PHP documentation for parse_ini_file().
 
-**Example: read a configuration variable into the construct function in some class**
+**Example 1: read all configuration variables into the construct function in some class**
 
-        $config = parse_ini_file('config/config.ini', TRUE);
-        $this->csv_col_title = $config['csv']['title'];
+        require_once('config.php');
+        $this->cfg = $cfg;
+
+**Example 2: map only some variables into the construct function in some class**
+
+        require_once('config.php');
+        $this->jt = $cfg->api->jt;
 
 ## Touch devices
 
@@ -93,18 +98,18 @@ This webapp is reported to run sluggishly on touch devices running Chrome and Wi
 
 ## Maintaining journal updates
 
-The input file feeds the journal list. Be careful if you change the structure of your CSV file (you may need to reconfigure the csv group in *config/config.ini*).
+The input file feeds the journal list. Be careful if you change the structure of your CSV file (you may need to reconfigure the csv group in *config.php*).
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
-There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config/config.ini* (section updates).
+There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config.php* (section updates).
 Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/latest-issns.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the ISSNs with the existing file, and adds it to the file with the current date. Old entries will be deleted. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
-Configure the file and your custom JournalTOCs URL in *config/config.ini*.
+Configure the file and your custom JournalTOCs URL in *config.php*.
 
 Please note! This service slows down the initial loading of the page. Please rewrite more efficiently; eg. write the updates directly to the CSV file, or solve it via AJAX loading.
 
 Alternatively, you could set up alerting services for yourself (e-mail, feeds...) and keep the input file up-to-date manually:
-for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (*config.ini*-default: *date*). Fill in the current date ("YYYY-mm-dd") when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).
+for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (*config.php*-default: *date*). Fill in the current date ("YYYY-mm-dd") when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).
 
 The default setting is that you can combine the two functions (automatic comparison and manual setting).
 
@@ -118,8 +123,8 @@ For date display, you can use the timeago jQuery plugin (display timespans inste
 
 ## Cover images
 
-If you have access to a cover service API, set the setting in *config/config.ini* to ``true``, and configure your service in *sys/class.ListJournals.php* (``getCover()``). 
-By default, cover images will be loaded from *img/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config/config.ini*).
+If you have access to a cover service API, set the setting in *config.php* to ``true``, and configure your service in *sys/class.ListJournals.php* (``getCover()``).
+By default, cover images will be loaded from *img/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config.php*).
 
 All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwith), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
 
@@ -197,7 +202,7 @@ Actions for adding/removing/displaying the basket are handled in *js/local/condu
 
 The default checkout main file is *checkout.php*. The click actions are configured in *js/local/conduit.js*.
 
-The text for E-Mail notifications is configured in *config/config.ini*.
+The text for E-Mail notifications is configured in *config.php*.
 
 Please note: the current mixing of GET/POST and jQuery bits is chaotic. Beware of bugs. Please rewrite.
 
@@ -208,12 +213,12 @@ By default, a time-hashed file will be written to *export/* on calling *checkout
 
 ## Mailer
 
-Mailing service configuration happens with PHPMailer. Configure your mail preferences in *config/config.ini*.
+Mailing service configuration happens with PHPMailer. Configure your mail preferences in *config.php*.
 
-By default, mailing is only possible for user accounts registered at a given host. Set the *domain* in the mailer group in *config/config.ini*. The users only put in their user names.
+By default, mailing is only possible for user accounts registered at a given host. Set the *domain* in the mailer group in *config.php*. The users only put in their user names.
 For an alternative behavior, or if you want to allow free input, change the function ``sendArticlesAsMail()`` in *sys/classCheckoutActions.php*.
 
-If you want to offer a predefined list of allowed user mail accounts, set the option *userlist* to *true* in *config/config.ini*, and set up a function in *sys/class.GetUsers.php*.
+If you want to offer a predefined list of allowed user mail accounts, set the option *userlist* to *true* in *config.php*, and set up a function in *sys/class.GetUsers.php*.
 Return an array of users. Get it for example from a database query (add a function to the class, see the example *class.GetUsers.php*).
 
 # Customization
@@ -266,7 +271,7 @@ On scrolling, the current letter will be highlighted (*#letterbox* is appended d
 
 ### Configuring the tables of contents
 
-The TOCs are injected with an HTML snippet. Configure in the *ajax* directory. If for some reason you do not want links to appear, set the *config.ini* setting to false (group *toc*).
+The TOCs are injected with an HTML snippet. Configure in the *ajax* directory. If for some reason you do not want links to appear, set the *config.php* setting to false (group *toc*).
 Please note: to make sure that you really have full text access, you might want to inject an OpenURL service like SFX beforehand. It should be easy at least with CrossRef -- the service is already sending a valid OpenUrl ("coins" field). Configure for example in the *ajax* directory.
 
 ## Icons
@@ -279,7 +284,7 @@ Default for an unified look are the Foundation icons [Foundation-Icons](http://z
 
 ## Filter
 
-You can use the entries in a CSV column of your input file as filters. Set the column and filters in *config/config.ini*, group csv. 
+You can use the entries in a CSV column of your input file as filters. Set the column and filters in *config.php*, group csv.
 Comment out the filter value in the csv group if you do not have/want filters.
 Please note: anything in the "important" col. will get the special CSS-ID "topJ" (see
 *sys/class.ListJournals.php*). The other column contents will be added as CSS-IDs to the DOM.
@@ -306,7 +311,7 @@ For details on the setup see README.Android.md
 # Admin Module
 
 There is no administration module.
-A comfortable way is using the Google Drive API for managing the Spreadsheet data; just publish it on the web and read the file directly from Google Drive. Set in *config/config.ini*.
+A comfortable way is using the Google Drive API for managing the Spreadsheet data; just publish it on the web and read the file directly from Google Drive. Set in *config.php*.
 
 # TODO
 

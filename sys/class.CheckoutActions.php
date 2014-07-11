@@ -13,37 +13,18 @@
 class CheckoutActions
 {
     
+    protected $mail;
+
     protected $html;
     protected $endnote;
     public $contents;
 
-    protected $toAddress;
-    protected $fromAddress;
-    protected $fromName;
-    protected $subjectToUser;
-    protected $subjectToLib;
-    protected $subjectFB;
-    protected $domain;
-    protected $bodySalutation;
-    protected $bodyMessage;
-    protected $bodyOrder;
-    protected $bodyClosing;
 
     public function __construct()
     /* load some configuration */
     {
-        $config = parse_ini_file('config/config.ini', TRUE);
-        $this->toAddress = $config['mailer']['toAddress'];
-        $this->fromAddress = $config['mailer']['fromAddress'];
-        $this->fromName = $config['mailer']['fromName'];
-        $this->subjectToUser = $config['mailer']['subjectToUser'];
-        $this->subjectToLib = $config['mailer']['subjectToLib'];
-        $this->subjectFB = $config['mailer']['subjectFB'];
-        $this->domain = $config['mailer']['domain'];
-        $this->bodySalutation = $config['mailer']['bodySalutation'];
-        $this->bodyMessage = $config['mailer']['bodyMessage'];
-        $this->bodyOrder = $config['mailer']['bodyOrder'];
-        $this->bodyClosing = $config['mailer']['bodyClosing'];
+        require('config.php');
+        $this->mail = $cfg->mail;
     }
 
     function getArticlesAsHTML($file) {
@@ -53,6 +34,7 @@ class CheckoutActions
         $this->html.='<div class="panel">';
 
         if (($handle = fopen($file, "r")) !== FALSE) {
+            $row = 0;
             while (($data = fgetcsv($handle, 1000, "#")) !== FALSE) {
                 $num = count($data);
                 $row++;
@@ -113,25 +95,25 @@ class CheckoutActions
     function sendArticlesAsMail($file, $email) {
 
         try {
-            $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.$this->bodyMessage.': '.$_POST['message'].'</p>' : '');
+            $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.$this->mail->bodyMessage.': '.$_POST['message'].'</p>' : '');
             $email->CharSet = 'utf-8';
             $email->Encoding = '8bit';
             $email->isHTML(true);
             $file = isset($_POST['file']) ? $_POST['file'] : '';
             $fileBody = (!empty($file)) ? $this->getArticlesAsHTML($file) : '';
-            $user = isset($_POST['username']) ? $_POST['username'] : $this->fromAddress;
+            $user = isset($_POST['username']) ? $_POST['username'] : $this->mail->fromAddress;
             if (isset($_POST['action']) && $_POST['action'] == "sendArticlesToLib") {
-                $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->domain : $this->fromAddress;
-                $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->domain : $this->fromAddress;
-                $email->Subject   = $this->subjectToLib . ' (from '.$user.')';
-                $email->Body     = '<h2>'.$this->bodyOrder.'</h2><p>'.$message.'</p><hr/>'.$fileBody;
-                $email->AddAddress($this->toAddress);
+                $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
+                $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
+                $email->Subject   = $this->mail->subjectToLib . ' (from '.$user.')';
+                $email->Body     = '<h2>'.$this->mail->bodyOrder.'</h2><p>'.$message.'</p><hr/>'.$fileBody;
+                $email->AddAddress($this->mail->toAddress);
             } else {
-                $email->FromName  = $this->fromName;
-                $email->From      = $this->fromAddress;
-                $email->Subject   = $this->subjectToUser;
-                $email->Body     = '<h2>'.$this->bodySalutation.'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->bodyClosing.'</p>';
-                $email->AddAddress($user.'@'.$this->domain);
+                $email->FromName  = $this->mail->fromName;
+                $email->From      = $this->mail->fromAddress;
+                $email->Subject   = $this->mail->subjectToUser;
+                $email->Body     = '<h2>'.$this->mail->bodySalutation.'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->mail->bodyClosing.'</p>';
+                $email->AddAddress($user.'@'.$this->mail->domain);
             }
             
             
@@ -171,11 +153,11 @@ class CheckoutActions
             $email->Encoding = '8bit';
             $email->isHTML(false);
             $email->Body     = $message;
-            $user = isset($_POST['username']) ? $_POST['username'] : $this->fromAddress;
-            $email->Subject   = $this->subjectFB . ' (from '.$user.')';
-            $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->domain : $this->fromAddress;
-            $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->domain : $this->fromAddress;
-            $email->AddAddress($this->toAddress); 
+            $user = isset($_POST['username']) ? $_POST['username'] : $this->mail->fromAddress;
+            $email->Subject   = $this->mail->subjectFB . ' (from '.$user.')';
+            $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
+            $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
+            $email->AddAddress($this->mail->toAddress);
 
             $email->Send();
             return "OK";
