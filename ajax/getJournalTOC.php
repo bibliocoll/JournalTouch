@@ -5,7 +5,7 @@
  *
  * includes SimpleCart js css classes (see below)
  * CAVEAT: be careful to change the HTML layout (linked to jQuery Selectors)
- *
+ * 
  * Time-stamp: "2014-04-10 15:03:26 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -23,9 +23,9 @@ function myget ($query,$xpath) {
   $result=array();
 
   foreach ($xpath->query($query) as $item) {
-    if (!empty($item->nodeValue)) { $result[]=trim($item->nodeValue);}
+    if (!empty($item->nodeValue)) { $result[]=trim($item->nodeValue);} 
   }
-
+	
   switch (sizeof($result)) {
   case 0: return ""; break; // if empty
       // turn any control characters to a space:
@@ -49,10 +49,10 @@ $x = "http://www.journaltocs.ac.uk/api/journals/".$issn."?output=articles&user="
 $neuDom = new DOMDocument;
 
 $neuDom->load($x);
-$xpath = new DOMXPath( $neuDom );
+$xpath = new DOMXPath( $neuDom ); 
 
-$rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI);
-$xpath->registerNamespace('x', $rootNamespace);
+$rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI); 
+$xpath->registerNamespace('x', $rootNamespace); 
 
 /* $xpath->registerNamespace("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#"); */
 /* $xpath->registerNamespace("prism","http://prismstandard.org/namespaces/1.2/basic/"); */
@@ -61,14 +61,14 @@ $xpath->registerNamespace('x', $rootNamespace);
 
 $records = $xpath->query("//x:item");
 $toc = array();
-
+ 
 foreach ( $records as $item ) {
 	$newDom = new DOMDocument;
 	$newDom->appendChild($newDom->importNode($item,true));
-
-	$xpath = new DOMXPath( $newDom );
-	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI);
-	$xpath->registerNamespace('x', $rootNamespace);
+ 
+	$xpath = new DOMXPath( $newDom ); 
+	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI); 
+	$xpath->registerNamespace('x', $rootNamespace); 
 	$xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/");
     $xpath->registerNamespace("prism", "http://prismstandard.org/namespaces/1.2/basic/");
 
@@ -87,13 +87,13 @@ foreach ( $records as $item ) {
             $date = date('Y-m-d',strtotime($prismDate));
         } else {
             //  if date && prismDate are empty, fill in a current date to get those articles sorted; assume they are new
-            $date = date('Y-m-d');
+            $date = date('Y-m-d');            
         }
     }
-
+    
 
 	$toc[] = array(
-        'title' => $title,
+        'title' => $title, 
         'link' => $link,
         'source' => $source,
         'author' => $author,
@@ -118,7 +118,7 @@ if (empty($toc)) {
     $journalTitle = preg_replace('/,$/','',$journalTitle);
     //   if (empty($journalTitle)) { $journalTitle = "TEST". myget("//x:channel/x:title",$xpath); }  // more robust
     // set time
-    $timestring = date('c', strtotime($toc[0]['date']));
+    $timestring = date('c', strtotime($toc[0]['date'])); 
 
 	//	echo "<br/>Found " .$no_records . " current articles from <strong>".$journalTitle."</strong>:<br/><br/>";
 	echo '<h4>'.$journalTitle.'</h4>';
@@ -126,7 +126,7 @@ if (empty($toc)) {
 
     foreach ( $toc as $item ) {
         //print "<br>";print_r($item); print "<br>";
-
+        
         if (!empty($item['title'])) {
 
             echo '<div class="simpleCart_shelfItem row">' . PHP_EOL;
@@ -140,7 +140,7 @@ if (empty($toc)) {
             }
             if (is_array($item['author'])) {
                 echo (!empty($item['author'][0]) ? $item['author'][0].", " : "") . (!empty($item['author'][1]) ? $item['author'][1].": " :  "");
-            } else {
+            } else { 
                 echo (!empty($item['author']) ? $item['author'].": " : "");
             }
             if ($cfg->api->all->articleLink == true) {
@@ -163,13 +163,13 @@ if (empty($toc)) {
             echo (!empty($item['abstract']) ? "<div class=\"abstract invisible\"><span>".$item['abstract']."</span></div>" . PHP_EOL : "");
 
             echo '</div>' . PHP_EOL;
-
+            
         }
     }
 
 
-
-
+    
+    
 }
 
 

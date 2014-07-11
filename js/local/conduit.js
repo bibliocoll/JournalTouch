@@ -457,12 +457,12 @@ $(document).ready(function() {
 		$('input#search').quicksearch('.search-filter', {
 				/* trigger for unveil.js so _all_ elements will get their appropriate image content */
 				/* (note: 'show' works, but breaks: why? */
-				// 'show': function () { $(this).addClass('show'); },
+				// 'show': function () { $(this).addClass('show'); }, 
 				// 'hide': function () { $(this).removeClass('show'); }
 				'minValLength': 2,
 				'onValTooSmall': function (val) {
-            $('#filterPanel').fadeOut();
-            $('h3.view-heading').toggle();
+						$('#filterPanel').fadeOut();
+						$('h3.view-heading').toggle();
 				},
 				'noResults': '#search-form #noresults',
 				'onAfter': function() {

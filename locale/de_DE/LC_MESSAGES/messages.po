@@ -20,7 +20,7 @@ msgstr ""
 #: checkout.php:20
 #: index.php:15
 msgid "MPI JournalTouch"
-msgstr ""
+msgstr "MPI JournalTouch"
 
 #: checkout.php:20
 msgid "Checkout"
@@ -47,7 +47,7 @@ msgstr "Ihre E-Mail"
 #: checkout.php:74
 #: checkout.php:225
 msgid "your username"
-msgstr "Ihre TU-Mail (ohne @tuhh.de)"
+msgstr "Ihr Benutzername"
 
 #: checkout.php:85
 #: checkout.php:236
@@ -180,6 +180,7 @@ msgstr "Tags"
 
 #: index.php:46
 msgid "filter"
+msgstr "Filter"
 msgstr "Portfolios"
 
 #: index.php:48
@@ -189,7 +190,7 @@ msgstr "alle anzeigen"
 
 #: index.php:49
 msgid "MPI favorites"
-msgstr "MPI-Favoriten"
+msgstr "MPI-Empfehlungen"
 
 #: index.php:59
 msgid "list view"
@@ -210,7 +211,7 @@ msgstr "Über"
 #: index.php:93
 #: index.php:371
 msgid "<em>JournalTouch</em> is the <strong>MPI Collective Goods library's</strong> alerting service for newly published journal issues."
-msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>TUB Hamburg/Harburg</strong> für aktuelle Zeitschriftenausgaben."
+msgstr "<em>JournalTouch</em> ist der Alerting Service des <strong>MPI zur Erforschung von Gemeinschaftsgütern</strong> für aktuelle Zeitschriftenausgaben."
 
 #: index.php:95
 #: index.php:373
@@ -236,11 +237,11 @@ msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>Jou
 #: index.php:116
 #: index.php:357
 msgid "Get in touch!"
-msgstr "Mail mich an!"
+msgstr "Kontakt"
 
 #: index.php:130
 msgid "External Source"
-msgstr "Artikel zur Zeitschrift in TUBfind"
+msgstr "Artikel zur Zeitschrift"
 
 #: index.php:140
 msgid "Tagcloud"
@@ -278,8 +279,6 @@ msgstr "Keine Zeitschriften gefunden"
 msgid "Browse all journals from A to Z (list view):"
 msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
 
-#: index.php:270
-#: index.php:315
 msgid "last update"
 msgstr "Letzte Aktualisierung"
 
@@ -293,7 +292,7 @@ msgstr ""
 
 #: index.php:304
 msgid "Library"
-msgstr "UB"
+msgstr "Bibliothek"
 
 #: index.php:305
 msgid "Journal"

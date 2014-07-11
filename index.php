@@ -4,6 +4,7 @@ require 'sys/class.ListJournals.php';
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
+$journalUpdates = $lister->getJournalUpdates();
 ?>
 
 <!doctype html>
@@ -40,7 +41,7 @@ $journals = $lister->getJournals();
 				<ul class="right">
 					<li class="divider"></li>
           <?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
-					   <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&nbsp;<?php echo __('tags') ?></a></li>
+					   <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&nbsp;<?php echo __('Tags') ?></a></li>
           <?php } ?>
                     <?php if ($lister->filters) { /* show filters only if set */?>
 					<li class="has-dropdown"><a id="filter-view" href="#"><i class="fi-filter"></i>&nbsp;<?php echo __('filter') ?></a>
@@ -251,6 +252,24 @@ $journals = $lister->getJournals();
 				</div>
 			</form>
 		
+      <!-- show updates - this is only some example code how to include the latest journal updates -->
+			<!-- please refer to the README on how to use it -->
+<!--
+			<div class="row">
+				<div id="updateBox" class="small-12 columns">
+					<ul>
+					<?php
+						if (!empty($journalUpdates)) {
+						  foreach ($journalUpdates as $j) {
+                print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
+							}
+						}
+					?>
+					</ul>
+				</div>
+			</div>
+-->
+
 		<!-- Version 2: List -->
 		<div id="view-accordion" class="row invisible">
 			<div class="small-12 columns">
@@ -299,19 +318,19 @@ $journals = $lister->getJournals();
 
                 $meta = false;
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-                $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
+                $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
                 $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-                $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
-                $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
+                $meta .= (($j['metaOnline'] && $link) ? '<span class="button small radius"><i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a></span>': "<br />");
+                $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-                $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
+                $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 
-					      echo '<div class="large-4 medium-5 small-12 columns search-filter div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
                 echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
 					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
-					      echo '<h5 title="'.$j['title'].'"> '.$j['title'].'</h5>';
+					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
 					    } 
@@ -362,7 +381,6 @@ $journals = $lister->getJournals();
 		</footer>
 
 		<!-- a fancy screensaver when screen is idle (see css for switching) -->
-<!-- TEMP DISABLE TZ
 		<div id="screensaver" style="display:none">
 						<div class="row">
 				<div class="small-12 medium-12 large-12 columns left">
@@ -396,7 +414,7 @@ $journals = $lister->getJournals();
 			<div class="row">
 				<p class="text-center"><img src="img/bgcoll-logo.png"></img></p>
 			</div>
--->
+
 			<!-- end screensaver -->
 
     <script src="js/vendor/jquery.js"></script>
