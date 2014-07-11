@@ -109,7 +109,9 @@ if (empty($toc)) {
 	echo 'ERROR!';
 } else {
 
-	echo '<h5>'.__('Most recent journal updates from the last %d days', $cfg->api->all->is_new_days).'</h5>';
+  $heading = __('Most recent journal updates from the last PLACEHOLDER days');
+  $heading = str_replace('PLACEHOLDER', $cfg->api->all->is_new_days, $heading);
+	echo '<h5>'.$heading.'</h5>';
 
     foreach ( $toc as $item ) {
         
