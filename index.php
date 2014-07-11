@@ -312,6 +312,16 @@ $journalUpdates = $lister->getJournalUpdates();
         $timestring = date('c', strtotime($j['date'])); //
         $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
+
+        $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
+        $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
+        $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
+        $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
+        $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
+        $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
+        $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
+/***
+/* bibliocoll's try for nicer display of meta info
         $meta = false;
         $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
         $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
@@ -320,6 +330,7 @@ $journalUpdates = $lister->getJournalUpdates();
         $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
         $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
         $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+*/
 
         echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
         echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
