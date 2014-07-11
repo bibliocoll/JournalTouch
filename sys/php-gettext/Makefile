@@ -36,3 +36,4 @@ dist: check
 
 clean:
 	rm -f $(PACKAGE).tar.gz
+
