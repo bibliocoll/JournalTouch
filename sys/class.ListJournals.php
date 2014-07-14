@@ -257,7 +257,7 @@ class ListJournals
                 $num = count($data);
 
                 /* check for alternative ISSN if strlen is < 1 */
-                $myISSN = (strlen($data[$this->csv_col->issn] < 1) ? $data[$this->csv_col->issn_alt] : $data[$this->csv_col->issn]);
+                $myISSN = (strlen($data[$this->csv_col->p_issn] < 1) ? $data[$this->csv_col->e_issn] : $data[$this->csv_col->p_issn]);
 
                 $row++;
                 $date = $this->isCurrent($data[$this->csv_col->date],$myISSN);
@@ -271,7 +271,7 @@ class ListJournals
                 if ($this->prefs->show_metainfo == true) {
                   $metaPrint  = (!empty($data[$this->csv_col->metaPrint]) ? 'fi-page-copy' : '');
                   $metaOnline = (!empty($data[$this->csv_col->metaOnline]) ? 'fi-download' : '');
-                  $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] != 'false') ? true : false;
+                  $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] != 'Jseek') ? true : false;
                   $metaGotToc = ($metaGotToc) ? 'fi-like' : 'fi-dislike';
                   $metaShelfmark = (!empty($data[$this->csv_col->metaShelfmark]) ? $data[$this->csv_col->metaShelfmark] : '');
                   $metaWebsite = (!empty($data[$this->csv_col->metaWebsite]) ? $data[$this->csv_col->metaWebsite] : '');
