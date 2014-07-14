@@ -196,6 +196,10 @@ Basic configuration is in *index.php*. The CSS classes and IDs for the
 articles (``item_*``) need to exist in the HTML snippet that includes the table of contents (*ajax/getJournalTOC.php*).
 Actions for adding/removing/displaying the basket are handled in *js/local/conduit.js*.
 
+# Additional metadata
+
+-- TODO -- see *config.ini* and *index.php* for details on how to provide extra metadata. By default it is not shown.
+
 # Checkout options 
 
 The default checkout main file is *checkout.php*. The click actions are configured in *js/local/conduit.js*.
@@ -301,6 +305,12 @@ function ``saveArticlesAsEndnote()``.
 
 Caveat: in the current implementation, mapping of the metadata is limited to the given *simpleCart* fields (``item_name``, ``item_link``, ``item_options_``), and will be re-read from the source string when exporting. This is by no means a clean implementation. It would be better to modify the *simpleCart* js for a cleaner mapping (it is not really a mapping right now). (TODO)
 
+## Localization
+
+-- TODO -- 
+
+JournalTouch has multilanguage support by default. For details and customization see *locale/*.
+
 # Android Hints
 
 To port it to a native mobile environment, you can use Apache Cordova / PhoneGap.
@@ -320,10 +330,6 @@ More reliable integration of hotness
 Wrap in Cordova iOS
 
 Authentication/Personalization
-
-Cover API integration
-
-Admin Module for manipulating the CSV file if you do not want to use Google Drive or set a local solution (Excel including hassles).
 
 Cleanup/Rewrite Checkout (GET/POST handling is a bit chaotic)
 
