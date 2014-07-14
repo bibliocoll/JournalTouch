@@ -318,6 +318,7 @@ $filters = $lister->getFilters();
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
                 $meta = false;
+/** TODO **
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
                 $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
                 $link = ($lister->prefs['instLink']) ? $lister->prefs['instLink'].$j['issn'] : '';
@@ -325,7 +326,7 @@ $filters = $lister->getFilters();
                 $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
                 $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
-
+  **/
 					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
                           echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
@@ -334,6 +335,7 @@ $filters = $lister->getFilters();
 					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
 					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
 					      echo '</div></div>';
+
 					    } 
 					 ?>
 
