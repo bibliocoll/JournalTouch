@@ -11,21 +11,21 @@ $test->update_journals_csv();
  * Update metadata (once) and fetch recent issues (do it daily via cron)
  *
  * @notes   Initial time for 1000 titles (fetching metadata and recent issues)
- *          takes about 18 Minutes. Yeah, hard, but I think it may be much
- *          faster most of the time - and the meta data has to be fetches only
- *          once. Stats in Detail
+ *          takes about 12 Minutes. Yeah, hard, but the meta data has to be
+ *          fetches only once. Example stats in detail:
  * - Processed lines: 1071
  * - Hits JournalToc (meta): 637
- * - Hits JournalToc (new issues): 48
+ * - Hits JournalToc (new issues): 83
  * - Hits JournalToc (bad date): 35
  * - Hits CrossRef (meta): 29
  * - Hits CrossRef (new issues): 0
- * - Hits JournalSeek (meta only): 153
- * - This page was created in 1071.0866951942 seconds.
+ * - Hits JournalSeek (meta only): 405
+ * - This page was created in 713.84962916374 seconds.
  *          Subsequent runs (checkingfor new issues) take about 3-4 minutes.
  *
  * @notes   Interesting stuff
  * - http://zetoc.mimas.ac.uk/ (uk only...)
+ * - http://amsl.technology/issn-resolver/
  *
  * @todo
  * - Implement something like journaltoc_fetch_recent_premium to avoid the
@@ -60,6 +60,16 @@ class GetJournalInfos {
   /// \brief \b ARY Saves all rows. They are written to file only after everything is done (performance)
   protected $journals_buffer = array();
 
+  /// \brief \b BOL If missing in source csv, add print reps. eissn
+  public $amend_issn = true;
+
+  /// \brief \b BOL List journals not on journaltoc. @see jt_suggest_csv
+  public $jt_suggest_create = true;
+  /// \brief \b STR Temporarily save publisher here, since this information is not part of journals.csv
+  protected $jt_suggest_publisher = '';
+  /// \brief \b ARY Saves all rows for jt journaltoc suggestion file
+  protected $jt_suggest_buffer = array();
+
   // Vars to keep track of statistics
   private $hits_jt_meta = 0;
   private $hits_jt_new = 0;
@@ -79,6 +89,8 @@ class GetJournalInfos {
    * @return \b void
    */
   public function __construct() {
+    header('Content-Type: text/html; charset=utf-8');
+    ob_start();
     set_time_limit($this->maxtime);
     $this->script_timer();
 
@@ -95,7 +107,6 @@ class GetJournalInfos {
   * @brief   Deconstructor. Shows script time...
   */
   function __destruct() {
-    header('Content-Type: text/html; charset=utf-8');
     echo $this->log;
     echo '<pre>';
     echo 'Processed lines: '.$this->processed;
@@ -108,6 +119,7 @@ class GetJournalInfos {
     echo '<br>This page was created in ' . $this->script_timer() . ' seconds.';
 
     echo $this->tmpDateLog;
+    ob_end_flush();
   }
 
 
@@ -131,7 +143,6 @@ class GetJournalInfos {
    * @return \b void
    */
   public function update_journals_csv($fetch_meta = true) {
-    ob_start();
     if (($handle = fopen('../'.$this->csv_file->path, "r")) !== FALSE) {
       while (($journal_rows = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
         //if ($this->processed > 3) break(1);
@@ -144,23 +155,26 @@ class GetJournalInfos {
         }
 
         /* check for alternative ISSN if strlen is < 1 */
-        $issn = (strlen($this->journal_row['issn'] < 1) ? $this->journal_row['issn_alt'] : $this->journal_row['issn']);
+        $issn = (strlen($this->journal_row['p_issn'] < 1) ? $this->journal_row['e_issn'] : $this->journal_row['p_issn']);
         $this->issn = $issn;
 
         $already_checked = $this->journal_row['metaGotToc'];
-        $already_checked = ($already_checked == 'JToc' || $already_checked == 'CRtoc' || $already_checked == 'false') ? true : false;
+        $already_checked = ($already_checked == 'JToc' || $already_checked == 'CRtoc' || $already_checked == 'Jseek') ? true : false;
 
         // !!! Journaltoc: Update meta data if wanted AND if not done before (so JToc/CRtoc is an important information ;) !!!)
-        if ($fetch_meta && !$already_checked && $this->jt->account) {
-          $already_checked = $this->journaltoc_fetch_meta($issn, $this->jt->account);
-        }
-        // !!! Crossref: Update meta data if wanted AND if not done before (CRtoc) AND no result from JT
-        if ($fetch_meta && !$already_checked) {
-          $already_checked = $this->crossref_fetch_meta($issn);
-        }
-        // TEMP try journalseek if still no result
-        if ($fetch_meta && !$already_checked) {
-          $already_checked = $this->journalseek_fetch_meta($issn);
+        if ($fetch_meta) {
+          if (!$already_checked && $this->jt->account) {
+            $already_checked = $this->journaltoc_fetch_meta($issn, $this->jt->account);
+          }
+          // !!! Crossref: Update meta data if wanted AND if not done before (CRtoc) AND no result from JT
+          if (!$already_checked) $already_checked = $this->crossref_fetch_meta($issn);
+          // TEMP try journalseek if still no result
+          if (!$already_checked) $already_checked = $this->journalseek_fetch_meta($issn);
+
+          // Want a little help in trying to suggest missing journals to journaltoc?
+          if ($this->jt_suggest_create) {
+            $this->jt_suggest_csv();
+          }
         }
 
         // Fetch info if journal is listed by JournalToc or CrossRef
@@ -171,7 +185,6 @@ class GetJournalInfos {
           $new_issue = $this->crossref_fetch_recent($issn);
         }
 
-
         // no matter if we got a hit or not - every line has to be written to the new csv...
         $new_row = implode(';', $this->journal_row);
         $this->journals_buffer[] = $new_row;
@@ -180,12 +193,17 @@ class GetJournalInfos {
       }
       fclose($handle);
       $file_date = date('Y-m-d_H\Hi');
-      rename('../'.$this->csv_file->path, "../input/journals_$file_date.csv");
+      rename('../'.$this->csv_file->path, "../input/backup/journals_$file_date.csv");
 
       $all_rows = implode("\n", $this->journals_buffer);
       file_put_contents ('../'.$this->csv_file->path, $all_rows);
+
+      if ($this->jt_suggest_create && $this->jt_suggest_buffer) {
+        $all_rows = implode("\n", $this->jt_suggest_buffer);
+        file_put_contents ('../input/journaltoc-suggest_'.$file_date.'.csv', $all_rows);
+      }
+      
     }
-    ob_end_flush();
   }
 
 
@@ -226,6 +244,12 @@ class GetJournalInfos {
       $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
       if ($jt_link && !$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $jt_link;
       $this->journal_row['metaGotToc'] = 'JToc';
+
+      // Add new issns, nothing to lose, since we search via issn and found something
+      if ($this->amend_issn) {
+        if ($jt_pIssn) $this->journal_row['p_issn'] = $jt_pIssn;
+        if ($jt_pIssn) $this->journal_row['e_issn'] = $jt_eIssn;
+      }
 
       $this->hits_jt_meta++;
       return true;
@@ -293,7 +317,7 @@ class GetJournalInfos {
 
             $chk_date = strtotime($fix_date);
             $chk_date = date('Y-m-d', $chk_date);
-            if (date('Y', $chk_date) == 1970) $chk_date = false;
+            if (date('Y', strtotime($chk_date)) == 1970) $chk_date = false;
           }
 
           if (!$pos && !$chk_date) {
@@ -329,7 +353,8 @@ class GetJournalInfos {
   /**
    * @brief   Fetches only journal infos from crossref
    *
-   * Currently only doi...
+   * Currently only doi... The only real use is THAT we know CrossRef provides
+   * data for a specific journal.
    *
    * @todo
    * - Keep parameters and add $row so this method can be used "alone"?
@@ -395,7 +420,10 @@ class GetJournalInfos {
     parse_str(urldecode(html_entity_decode($crArticle[0]['coins'])), $coins);
 
     // Make issues comparable as year/vol/issue (we don't get more)
-    $current_issue = $coins['rft_date'].'/'.$coins['rft_volume'].'/'.$coins['rft_issue'];
+    $current_issue = '';
+    $current_issue .= (isset($coins['rft_date']))   ? $coins['rft_date'].'/' : '/';
+    $current_issue .= (isset($coins['rft_volume'])) ? $coins['rft_volume'].'/' : '/';
+    $current_issue .= (isset($coins['rft_issue']))  ? $coins['rft_issue'] : '';
     $current_date = date('Y-m-d');
 
     // Is this the first check?
@@ -453,12 +481,31 @@ class GetJournalInfos {
 
     // Publisher
     $filtered = $domxpath->query("//p[contains(., 'Published/Hosted')]/a");
-
     if (is_object($filtered->item(0))) $js_publisher = 'JSpub-'.$filtered->item(0)->nodeValue;
+
+    // Issn's
+    $filtered = $domxpath->query("//p[contains(., 'Published/Hosted')]");
+    $check_issn = (is_object($filtered->item(0))) ? $filtered->item(0)->nodeValue : '';
+
+    // Usually pissn...
+    $str_pissn = 'ISSN (printed): ';
+    $pos_pissn = ($check_issn) ? strpos($check_issn, $str_pissn) : '';
+    if ($check_issn && $pos_pissn) $pissn = substr ($check_issn, $pos_pissn + strlen($str_pissn), 9);
+
+    // ... and eissn
+    $str_eissn = 'ISSN (electronic): ';
+    $pos_eissn = ($check_issn) ? strpos($check_issn, $str_eissn) : '';
+    if ($check_issn && $pos_eissn) $eissn = substr ($check_issn, $pos_eissn + strlen($str_eissn), 9);
+
+    // very seldom: only (p)issn
+    $str_pissn = 'ISSN: ';
+    $pos_pissn = ($check_issn) ? strpos($check_issn, $str_pissn) : '';
+    if ($check_issn && $pos_pissn) $pissn = substr ($check_issn, $pos_pissn + strlen($str_pissn), 9);
+
 
     // Journal website
     $filtered = $domxpath->query("//dd[1]/ul/li/a/@href");
-    if (is_object($filtered->item(0))) $js_link = $filtered->item(0)->nodeValue;
+    $js_link = (is_object($filtered->item(0))) ? $js_link = $filtered->item(0)->nodeValue : '';
 
     // Tags
     $filtered = $domxpath->query("//dd[2]/ul/li/a");
@@ -476,7 +523,15 @@ class GetJournalInfos {
     $csv_tags = (isset($newTags)) ? implode(', ', $newTags) : '';
     $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
     if (isset($js_link) && !$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $js_link;
-    $this->journal_row['metaGotToc'] = 'false';
+    $this->journal_row['metaGotToc'] = 'Jseek';
+    // Add new issns, nothing to lose, since we search via issn and found something
+    if ($this->amend_issn) {
+      if (isset($pissn)) $this->journal_row['p_issn'] = $pissn;
+      if (isset($eissn)) $this->journal_row['e_issn'] = $eissn;
+    }
+
+    $this->jt_suggest_publisher = '';
+    if ($this->jt_suggest_create && isset($js_publisher)) $this->jt_suggest_publisher = $js_publisher;
 
     // Feedback
     if (isset($js_link) || $csv_tags) {
@@ -488,6 +543,31 @@ class GetJournalInfos {
       $this->log .= "<b>NO HIT for Jseek (meta)</b>: ".$this->journal_row['title']." ($issn)<br>";
       return false;
     }
+  }
+
+
+  /**
+   * @brief   Creates a csv if metaGotToc is not "JToc"
+   *
+   * Creates a file that can be used to sent to journaltocs@hw.ac.uk
+   * (http://www.journaltocs.ac.uk/suggest.php); you have to check for feeds
+   * yourself anyway
+   *
+   * @return \b BOL True if journal is found, else false
+   */
+  private function jt_suggest_csv() {
+    if ($this->journal_row['metaGotToc'] == 'JToc') return false;
+
+    $this->jt_suggest_buffer[0] = 'Journal Title;Print ISSN;Electonic ISSN;Journal Homepage URL;Journal TOC RSS URL;Publisher;Comments';
+    $row = $this->journal_row['title'].';';
+    $row .= $this->journal_row['p_issn'].';';
+    $row .= $this->journal_row['e_issn'].';';
+    $row .= $this->journal_row['metaWebsite'].';';
+    $row .= 'CheckYourself!;';
+    $row .= $this->jt_suggest_publisher.';';
+
+    $this->jt_suggest_buffer[] = $row;
+    return true;
   }
 
 
