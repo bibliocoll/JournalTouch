@@ -1,0 +1,10 @@
+*~
+.project
+doc/html/*
+doc/def/*
+doc/*.tmp
+input/*
+img/*
+export/*
+
+input/journals.csv
