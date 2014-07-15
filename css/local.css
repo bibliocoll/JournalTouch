@@ -20,7 +20,7 @@ height:75px;
 .top-bar.expanded, 
 .top-bar.expanded .title-area,
 .top-bar-section li:not(.has-form) a:not(.button) {
-background-color: #007095!important;
+background-color: #007095;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button):hover {
@@ -486,3 +486,48 @@ color: #000;
 .div-grid .fi-dislike {color: red;}
 .div-grid .fi-like {color: green;}
 
+/*************** Animations & Transitions ********************************/
+/* Glowing Basket */
+
+#myArticles.full {
+    display: inline;
+    padding: 8px;
+    color: white;
+    background-color: #749a02; 
+    -webkit-border-radius:6px;
+    -webkit-animation: glow 2s infinite;
+		border-radius:6px;
+		animation: glow 2s infinite;
+}
+
+@-webkit-keyframes glow {
+    0% { 
+        background-color: #749a02; 
+        -webkit-box-shadow: 0 0 9px #ccc; 
+    }
+    50% { 
+        background-color: #91bd09; 
+        -webkit-box-shadow: 0 0 18px #91bd09; 
+    }
+    100% { 
+        background-color: #749a02; 
+        -webkit-box-shadow: 0 0 9px #ccc; 
+    }
+}
+
+@keyframes glow {
+    0% { 
+        background-color: #749a02; 
+        box-shadow: 0 0 9px #ccc; 
+    }
+    50% { 
+        background-color: #91bd09; 
+        box-shadow: 0 0 18px #91bd09; 
+    }
+    100% { 
+        background-color: #749a02; 
+        box-shadow: 0 0 9px #ccc; 
+    }
+}
+
+/* End Glowing Basket */
