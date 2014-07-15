@@ -46,6 +46,7 @@ $journalUpdates = $lister->getJournalUpdates();
           <ul class="dropdown">
             <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
             <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo __('MPI favorites') ?></a></li>
+            <li><a class="filter" id="new-issue" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
             <?php
                 /* read all filters from the config file */
                   foreach ($lister->filters as $key=>$f) {
@@ -281,11 +282,13 @@ $journalUpdates = $lister->getJournalUpdates();
           /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
           $timestring = date('c', strtotime($j['date'])); //
           $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
-          echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+          $new_issues = ($j['new']) ? 'new-issue' : '';
+
+          echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
           echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
-          echo (!empty($j['new']) ? ' <i class="fi-burst-new large"></i>' : "");
+          echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
           echo $j['title'];
-          echo (!empty($j['new']) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "");
+          echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
           echo '</a>';
           echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
           echo '</dd>';
@@ -332,13 +335,14 @@ $journalUpdates = $lister->getJournalUpdates();
         $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 */
 
-        echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+        $new_issues = ($j['new']) ? 'new-issue' : '';
+        echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
         echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
-        echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
+        echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
         echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
         echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
         echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
-        echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
+        echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
         echo '</div></div>';
       }
     ?>
@@ -356,7 +360,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <!-- This alert box will be switched on if no tocs are found (see conduit.js) -->
     <div data-alert="" id="tocNotFoundBox" class="alert-box info invisible">
       <span id="tocAlertText"><?php echo __('No table of contents found! Are you interested in this title?') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i><?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
     </div>
     <a class="close-reveal-modal button radius alert">×</a>
   </div>
