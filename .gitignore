@@ -6,3 +6,5 @@ doc/*.tmp
 input/*
 img/*
 export/*
+
+input/journals.csv
