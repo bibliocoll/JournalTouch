@@ -30,15 +30,15 @@ $cfg->prefs = new stdClass();
  */
 $cfg->prefs->show_metainfo = true;      // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
 $cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
-$cfg->prefs->min_tag_freq  = 1;         // How often must a tag be used at least to show up in the tagcloud?
+$cfg->prefs->min_tag_freq  = 3;         // How often must a tag be used at least to show up in the tagcloud?
 
-$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
+$cfg->prefs->show_screensaver = false;  // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
 
-$cfg->prefs->lib_name      = 'MPI Collective Goods Library';
-$cfg->prefs->lib_initials  = 'MPI';
+$cfg->prefs->lib_name      = 'Technische Universitätsbibliothek Hamburg';
+$cfg->prefs->lib_initials  = 'TUBHH';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
-$cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
+$cfg->prefs->inst_service  = 'https://katalog.tub.tu-harburg.de/Search/Results?type=ISN&sort=publishDate&lookfor=';  // See note im comment block
 
 
 
@@ -58,7 +58,7 @@ $cfg->api->jt = new stdClass();
 $cfg->api->all->articleLink = true; // Should articles in fetched toc's be clickable links? Set false if not.
 $cfg->api->all->is_new_days = 30;   // On update: for how many days mark an issue as new after publishing date?
 
-$cfg->api->jt->account  = '';       // The mail you are registered with at JournalToc
+$cfg->api->jt->account  = 'tzeumer@verweisungsform.de';       // The mail you are registered with at JournalToc
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
@@ -78,11 +78,11 @@ $cfg->mail = new stdClass();
  *
  * @todo  This domain thing seriously should be changed to optional.
  */
-$cfg->mail->domain         = ''; // Your mailer domain (my-library.net)
+$cfg->mail->domain         = 'tuhh.de'; // Your mailer domain (my-library.net)
 $cfg->mail->subjectFB      = __('Feedback from JournalTouch'); // Feedback button caption
 
 // Sending article list to user
-$cfg->mail->fromAddress    = ''; // Your default address (service@my-library.net)
+$cfg->mail->fromAddress    = 'bibliothek@tuhh.de'; // Your default address (service@my-library.net)
 $cfg->mail->fromName       = __('Your Library JournalTouch');
 $cfg->mail->subjectToUser  = __('Your saved articles from JournalTouch');
 $cfg->mail->bodyMessage    = __('You sent the following message');
@@ -90,7 +90,7 @@ $cfg->mail->bodySalutation = __('Here are your articles, enjoy!');
 $cfg->mail->bodyClosing    = __('Best regards, your library team!');
 
 // Sending order from user to library
-$cfg->mail->toAddress      = ''; // Your contact address (journaltouch@my-library.net)
+$cfg->mail->toAddress      = 'bibliothek@tuhh.de'; // Your contact address (journaltouch@my-library.net)
 $cfg->mail->subjectToLib   = __('New order for the library from JournalTouch');
 $cfg->mail->bodyOrder      = __('New order from JournalTouch');
 
@@ -151,9 +151,16 @@ $cfg->filter = array();
  *
  * Note: the  __() isn't required, but makes it translatable.
  */
-$cfg->filter['psy'] = __('Psychology');
-$cfg->filter['pol'] = __('Politics');
-$cfg->filter['wir'] = __('Yet another filter');
+$cfg->filter['ba'] = __('Bauingenieurwesen');
+$cfg->filter['bu'] = __('Bibliothek');
+$cfg->filter['ch'] = __('Chemie');
+$cfg->filter['ma'] = __('Mathematik');
+$cfg->filter['ms'] = __('Maschinenbau');
+$cfg->filter['ph'] = __('Physik');
+$cfg->filter['ti'] = __('Technische Informatik');
+$cfg->filter['us'] = __('Umweltwissenschaften');
+$cfg->filter['vt'] = __('Verfahrenstechnik');
+$cfg->filter['wk'] = __('Werkstoffwissenschaften');
 
 
 
