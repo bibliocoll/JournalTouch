@@ -437,17 +437,31 @@ $filters = $lister->getFilters();
 				},
 				cartColumns: [
 						{ attr: "name" , label: "Name" } ,
-						{ view: "remove" , text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" , label: false }
+						{ view: "remove" , text: "remove <i class=\"fi-trash\"></i>" , label: false }
 				]
 		});
 
       simpleCart.bind( 'beforeRemove' , function(){
- 			  if ($(".row-1").length == false) {
-				  $("#shelfIsEmpty").show();
-				  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+ 			  if (simpleCart.quantity() == 1) {
+						$("#shelfIsEmpty").show();
+						$('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+            // remove class to button (for CSS formatting)
+            $('#myArticles').removeClass('full');
 		    } else {
-				  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
+						$('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
     		}
+      });
+
+      simpleCart.bind( 'afterAdd' , function(){
+          // add class to button (for CSS formatting)
+          $('#myArticles').addClass('full');
+      });
+
+      simpleCart.bind( 'load' , function(){
+					if (simpleCart.quantity() > 0) { 
+							// add class to button (for CSS formatting)
+							$('#myArticles').addClass('full');
+					}
       });
 
 		</script>
