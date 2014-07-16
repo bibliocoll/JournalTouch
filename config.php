@@ -38,7 +38,7 @@ $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the n
 $cfg->prefs->lib_name      = 'Technische Universitätsbibliothek Hamburg';
 $cfg->prefs->lib_initials  = 'TUBHH';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
-$cfg->prefs->inst_service  = 'https://katalog.tub.tu-harburg.de/Search/Results?type=ISN&sort=publishDate&lookfor=';  // See note im comment block
+$cfg->prefs->inst_service  = 'https://katalog.tub.tu-harburg.de/Search/Results?shard[]=Primo%20Central&tab=primo&type=ISN&sort=publishDate&lookfor=';  // See note im comment block
 
 
 
