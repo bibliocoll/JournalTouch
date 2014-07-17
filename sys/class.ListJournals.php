@@ -5,7 +5,7 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-07-10 16:16:18 zimmel"
+ * Time-stamp: "2014-07-17 16:17:14 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tobias.zeumer@tuhh.de>

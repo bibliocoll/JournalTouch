@@ -318,23 +318,24 @@ $filters = $lister->getFilters();
                             $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
                 $meta = false;
-/** TODO **
+
                 $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-                $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
+                $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button small radius popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : "");
                 $link = ($lister->prefs['instLink']) ? $lister->prefs['instLink'].$j['issn'] : '';
-                $meta .= (($j['metaOnline'] && $link) ? '<span class="button small radius"><i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a></span>': "<br />");
-                $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
+                $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button small radius popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': "<br />");
+                $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button small radius popup"><i class="fi-home"></i> '.__('Journal').'</a>': "<br />");
                 $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
                 $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
-  **/
-					      echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
-                          echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
-					      echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
-                            echo (($meta && $lister->prefs['showMeta']) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
-					      echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
-					      echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
-					      echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
-					      echo '</div></div>';
+
+                            echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].'">';
+                            echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+                            echo (!empty($j['new']) ? '<i class="fi-burst-new large"></i>' : "");
+                            /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
+                            echo (($meta && $lister->prefs['showMeta']) ? '<span class="metaInfo" style="display:none"><div>'.$meta.'</div></span>' : "");
+                            echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
+                            echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
+                            echo (!empty($j['new']) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "");
+                            echo '</div></div>';
 
 					    } 
 					 ?>
