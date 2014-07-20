@@ -223,7 +223,7 @@ class GetJournalInfos {
    * @return \b STR Some html
    */
   public function ajax_query_toc($issn) {
-    $toc = $this->journaltoc_fetch_toc($issn, $this->jt->account);
+    $toc = ($this->jt->account) ? $this->journaltoc_fetch_toc($issn, $this->jt->account) : false;
 
     if (!$toc) {
       $toc = $this->crossref_fetch_toc($issn);
@@ -249,7 +249,7 @@ class GetJournalInfos {
    * @return \b STR Some html
    */
   private function ajax_response_toc($toc, $max_authors = 3) {
-    if (!$toc) {
+    if (count($toc['sort']) < 1) {
         /* write something we can read from our caller script */
         /* trigger error response from conduit.js; configure in index.php */
         return '<span id="noTOC"/>';
