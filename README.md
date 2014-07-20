@@ -25,7 +25,7 @@ already included:
 - timeago.js [https://github.com/rmm5t/jquery-timeago]
 - quicksearch.js [http://deuxhuithuit.github.io/quicksearch/]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
-
+- php-gettext [https://launchpad.net/php-gettext]
 
 # Live Demo
 
