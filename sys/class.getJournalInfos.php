@@ -361,6 +361,9 @@ class GetJournalInfos {
   /**
    * @brief   Fetches (current) issue infos from Journaltoc
    *
+   * @note    The publishing date of an article is not always in order. So we
+   *          fetch them all and check for the newest.
+   *
    * @todo    Check for dc:date too? But I think JournalToc "guarantess" a prism date
    *
    * @param $issn    \b STR  Journal ISSN
@@ -376,33 +379,38 @@ class GetJournalInfos {
 
     if (!is_object($xml)) return false;
 
+    $journal_dates = array();
     foreach ($xml->item as $item) {
-        $is_new = false;
         $journal_date = (string)$item->children('prism', TRUE)->publicationDate;
         $journal_date = $this->jt_clean_date($journal_date);
-
-        if ($journal_date !== false) {
-          $is_new = $this->get_datediff($journal_date, $max_age_days);
+        if ($journal_date) {
+          $journal_dates[] = $journal_date;
         }
-        else {
-          $this->log .= "<b>MESSY DATE for JT (recent)</b>: ".$this->journal_row['title']." ($this->issn) got a <a href=\"$jtURL\" target=\"_blank\">TOC</a> but no information about publishing date or I can't avaluate it<br>";
-        }
+    }
+    arsort($journal_dates);
 
-        // Usually all dates should be the same, but see https://github.com/bibliocoll/JournalTouch/issues/5#issuecomment-48341283
-        // Anyway, for now break if date was found
-        if ($journal_date) break(1);
+    $recent_date = (isset($journal_dates[0])) ? $journal_dates[0] : false;
+    if ($recent_date !== false) {
+      $is_new = $this->get_datediff($recent_date, $max_age_days);
+    }
+    else {
+      $is_new = false;
+      $this->hits_jt_badDate++;
+      $this->log .= "<b>MESSY DATE for JT (recent)</b>: ".$this->journal_row['title']." ($this->issn) got a <a href=\"$jtURL\" target=\"_blank\">TOC</a> but no information about publishing date or I can't evaluate it<br>";
     }
 
-    $this->journal_row['date'] = $journal_date;
+    $this->journal_row['date'] = $recent_date;
     if ($is_new) {
       $this->journal_row['new'] = 'JTnew';
       $this->hits_jt_new++;
       $this->log .= "<b>JT (recent)</b>: ".$this->journal_row['title']." ($issn) was updated <a href=\"$jtURL\" target=\"_blank\"> within the last $max_age_days days</a><br>";
       return true;
     }
-    else {
+    elseif (!$is_new && $recent_date) {
       $this->journal_row['new'] = '';
       $this->log .= "<b>JT (recent)</b>: ".$this->journal_row['title']." (<a href=\"$jtURL\" target=\"_blank\">$issn</a>) has no new update within the last $max_age_days days<br>";
+    }
+    else {
       return false;
     }
   }
@@ -924,7 +932,6 @@ class GetJournalInfos {
 
     // weird?
     if (!$journal_date) {
-      $this->hits_jt_badDate++;
       return false;
     }
     // whoa, even worse - the dates are not normalized
@@ -946,12 +953,11 @@ class GetJournalInfos {
       }
 
       if (!$pos && !$chk_date) {
-        $this->hits_jt_badDate++;
         return false;
       }
     }
 
-    return $date;
+    return $chk_date;
   }
 
 }
