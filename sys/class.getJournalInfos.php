@@ -870,12 +870,12 @@ class GetJournalInfos {
     $doi = '';
     $doi_string = strtolower($doi_string);
 
-    if ((substr ($doi_string, 4) == 'http')) {
+    if ((substr ($doi_string, 0, 4) == 'http')) {
       // anything like http://dx.doi.org/10.1002/adma.201400310
       preg_match('/.*\/(.*\/.*)\/*$/', $doi_string, $matches);
       if (isset($matches[1])) $doi = $matches[1];
     }
-    elseif ((substr ($doi_string, 3) == 'doi')) {
+    elseif ((substr ($doi_string, 0, 3) == 'doi')) {
       // "doi " or "doi:"
       $doi = substr ($doi_string, 4);
     }
