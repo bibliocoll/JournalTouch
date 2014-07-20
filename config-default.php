@@ -1,18 +1,28 @@
 <?php
-require_once('config-default.php');
+require_once 'sys/jt-gettext.php';
 /**
  * Configuration settings for JournalTouch
  *
- * This file won't be overwritten on updates, so you keep your setting. If a
- * setting is missing, the default value from config-default.php is taken.
+ * Don't edit this file since it might be overwritten on updates. Use config.php
+ * instead.
  *
- * So you safely can delete any line that you don't want to change. Make sure
- * to check for new settings on new releases of JournalTouch.
+ * Make sure to chmod this file to 644. See additional infos for each config
+ * "block".
  *
- *  And: chmod this file to 644 ;)
+ * @note  Using objects to set options may be unusual, but has advantages to
+ *        using arrays resp. an ini file. In regards to an ini file you can
+ *        make strings translatable. In regards to arrays, especially with
+ *        named keys, objects are easier to read in code (remember all those
+ *        'Bla '.$ary['important'].' and so on' ;)
+ *        Btw.: nice way to convert multi dimension arrays:
+ *          $obj = json_decode(json_encode($array));
+ *
+ * @todo  Maybe create a class JournalTouch with static properties?
  */
+$cfg = new stdClass();
 
 
+$cfg->prefs = new stdClass();
 /**
  * Preferences for your library. Look & Feel of JournalTouch
  *
@@ -34,6 +44,10 @@ $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed conte
 $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
 
 
+
+$cfg->api = new stdClass();
+$cfg->api->all = new stdClass();
+$cfg->api->jt = new stdClass();
 /**
  * API: Settings to fetch the table of contents
  *
@@ -54,6 +68,8 @@ $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_upda
 $cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularily
 
 
+
+$cfg->mail = new stdClass();
 /**
  * Mailer settings
  *
@@ -82,6 +98,8 @@ $cfg->mail->subjectToLib   = __('New order for the library from JournalTouch');
 $cfg->mail->bodyOrder      = __('New order from JournalTouch');
 
 
+
+$cfg->csv_file = new stdClass();
 /**
  * Which file with your journals information and what separator is used.
  * Usually you won't have to change anything here.
@@ -90,6 +108,8 @@ $cfg->csv_file->separator  = ';';
 $cfg->csv_file->path       = 'input/journals.csv';
 
 
+
+$cfg->csv_col = new stdClass();
 /**
  * Which column (separated by the separator specified above) holds which data?
  * Usuallly you most likely will just create an Excel file with those colums and
@@ -118,6 +138,8 @@ $cfg->csv_col->metaWebsite   = 15;  // Optional/Auto. The journal's website.
 $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing? Separate tags with commas :)
 
 
+
+$cfg->filter = array();
 /**
  * In the colum defined by $cfg->csv_col->filter you write a shorthand code for
  * the filter. Here you map that shorthand code to some human readable name.
@@ -137,6 +159,8 @@ $cfg->filter['pol'] = __('Politics');
 $cfg->filter['wir'] = __('Yet another filter');
 
 
+
+$cfg->covers = new stdClass();
 /**
  * Put covers into the img folder. The name must be the issn set the column
  * specified for $cfg->csv_col->issn. The extention might be jpg, gif or png.
@@ -153,6 +177,8 @@ $cfg->covers->placeholder = 'img/placeholder.gif';  // Just a placeholder
 $cfg->covers->api         = '';                     // You might input an url where an issn can be appended ("http://myservice.net/issn=") - and mail us if you got such a thing ;)
 
 
+
+$cfg->dbusers = new stdClass();
 /**
  * Preset list of users (for mailing)
  *
@@ -168,5 +194,14 @@ $cfg->covers->api         = '';                     // You might input an url wh
 $cfg->dbusers->userlist = false;
 $cfg->dbusers->dbuser   = '';
 $cfg->dbusers->dbpass   = '';
+
+
+$cfg->sys = new stdClass();
+/**
+ * Configuration settings for internal use; don't change
+ */
+$cfg->sys->abspath  = dirname(__FILE__).'/';    // absolute path to JournalTouch directory
+//echo "<pre>";
+//var_dump($cfg);
 
 ?>
