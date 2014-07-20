@@ -152,12 +152,12 @@ $journalUpdates = $lister->getJournalUpdates();
   <div class="simpleCart_items"></div>
   <div id="cartData" class="clearfix"></div>
   <div id="shelfIsEmpty" style="display:none">
-    <i class="fi-alert"></i><?php echo __('Your basket is empty.') ?>
+    <i class="fi-alert"></i> <?php echo __('Your basket is empty.') ?>
   </div>
   <div id="popoverButtons" class="clearfix">
-    <a id="checkOutButton" href="javascript:;" class="simpleCart_checkout radius small success button"><i class="fi-share"></i><?php echo __('Send/Save my articles') ?></a>
+    <a id="checkOutButton" href="javascript:;" class="simpleCart_checkout radius small success button"><i class="fi-share"></i> <?php echo __('Send/Save my articles') ?></a>
     <!--<a id="emptyCartButton" href="javascript:;" class="simpleCart_empty radius small alert button"><i class="fi-trash"></i> Empty my basket</a>-->
-    <a id="emptyConfirmButton" class="radius small alert button" data-reveal-id="emptyConfirm"><i class="fi-trash"></i><?php echo __('Empty my basket') ?></a>
+    <a id="emptyConfirmButton" class="radius small alert button" data-reveal-id="emptyConfirm"><i class="fi-trash"></i> <?php echo __('Empty my basket') ?></a>
     <a class="close-reveal-modal button radius">×</a>
   </div>
 </div>
@@ -167,8 +167,8 @@ $journalUpdates = $lister->getJournalUpdates();
 <!-- Security confirmation on delete -->
 <div id="emptyConfirm" class="reveal-modal" data-reveal="">
   <h3><?php echo __('Do you really want to empty your basket?') ?></h3>
-  <a id="emptyCartButton" href="javascript:;" class="simpleCart_empty radius small alert button close-reveal-modal"> <i class="fi-trash"></i><?php echo __('OK, empty my basket!') ?></a>
-  <a id="DoNotemptyCartButton" class="radius small success button close-reveal-modal"><i class="fi-trash"></i><?php echo __('No, keep basket!') ?></a>
+  <a id="emptyCartButton" href="javascript:;" class="simpleCart_empty radius small alert button close-reveal-modal"> <i class="fi-trash"></i> <?php echo __('OK, empty my basket!') ?></a>
+  <a id="DoNotemptyCartButton" class="radius small success button close-reveal-modal"><i class="fi-trash"></i> <?php echo __('No, keep basket!') ?></a>
 </div>
 
 
@@ -435,14 +435,34 @@ $journalUpdates = $lister->getJournalUpdates();
 <script src="js/vendor/jquery.timeago.js"></script>
 <script src="js/local/conduit.js"></script>
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
-<script>simpleCart({ checkout: { type: "SendForm", url: "checkout.php" }, cartColumns: [ {
-attr: "name" , label: "Name" } , { view: "remove" , text: "<?php echo __('remove') ?>
-<i class="\&quot;fi-trash\&quot;"></i>" , label: false } ] }); simpleCart.bind( 'beforeRemove'
-, function(){ if ($(".row-1").length == false) { $("#shelfIsEmpty").show(); $('#checkOutButton,
-#emptyCartButton, #emptyConfirmButton').hide(); } else { $('#checkOutButton, #emptyCartButton,
-#emptyConfirmButton').show(); } });</script>
-<script>$(document).foundation(); var doc = document.documentElement;
-doc.setAttribute('data-useragent', navigator.userAgent);</script>
+<script>
+simpleCart({
+	checkout: {
+		type: "SendForm",
+		url: "checkout.php"
+	},
+	cartColumns: [
+		{ attr: "name" , label: "Name" } ,
+		{ view: "remove" , text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" , label: false }
+	]
+});
+
+simpleCart.bind( 'beforeRemove' , function(){
+  if ($(".row-1").length == false) {
+	  $("#shelfIsEmpty").show();
+	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+  } else {
+	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
+	}
+});
+
+</script>
+<script>
+$(document).foundation();
+
+var doc = document.documentElement;
+doc.setAttribute('data-useragent', navigator.userAgent);
+</script>
 
 </body>
 </html>
