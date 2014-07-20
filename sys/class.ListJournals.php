@@ -15,9 +15,8 @@
  * @todo (Ideas)
  * - Maybe fetch more infos per http://amsl.technology/issn-resolver/
  * -- Maybe automatically fetch publish frequency and create "paging" for journals?
- * - Switch config.php > articleLink automatically if in network with fulltext
- *   access (ip_subnet)
- * - Use SFX to directly download article (or link to print)
+ * - Create some kind of (daily) cached version of the front page so it loads
+ *   faster (not having to generate everything everytime)
  */
 class ListJournals
 {
