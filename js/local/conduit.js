@@ -124,6 +124,9 @@ $(document).ready(function() {
 						timeout: 7000 /* set default timeout of 7 sec. (because on fail always crossref is queried too) */
 				}).done(function(returnData) {
 						$('.toc.preloader').fadeOut('slow');
+            if ($(returnData).filter('#noTOC').length > 0) {
+              $('#tocNotFoundBox').fadeIn('slow');
+            }
 						$('#fillTOC').append(returnData).fadeIn('slow');
 						/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
 						$('time.timeago').timeago();
