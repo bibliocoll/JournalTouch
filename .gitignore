@@ -6,3 +6,4 @@ doc/*.tmp
 input/*
 img/*
 export/*
+config.php

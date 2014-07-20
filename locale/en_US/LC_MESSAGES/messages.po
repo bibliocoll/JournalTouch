@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-15 19:03+0100\n"
-"PO-Revision-Date: 2014-07-15 19:04+0100\n"
+"POT-Creation-Date: 2014-07-20 18:19+0100\n"
+"PO-Revision-Date: 2014-07-20 18:19+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -123,76 +123,59 @@ msgstr ""
 msgid "Your message"
 msgstr ""
 
-#: config.php:82
+#: config-default.php:85
+#: config.php:69
 msgid "Feedback from JournalTouch"
 msgstr ""
 
-#: config.php:86
+#: config-default.php:89
+#: config.php:73
 msgid "Your Library JournalTouch"
 msgstr ""
 
-#: config.php:87
+#: config-default.php:90
+#: config.php:74
 msgid "Your saved articles from JournalTouch"
 msgstr ""
 
-#: config.php:88
+#: config-default.php:91
+#: config.php:75
 msgid "You sent the following message"
 msgstr ""
 
-#: config.php:89
+#: config-default.php:92
+#: config.php:76
 msgid "Here are your articles, enjoy!"
 msgstr ""
 
-#: config.php:90
+#: config-default.php:93
+#: config.php:77
 msgid "Best regards, your library team!"
 msgstr ""
 
-#: config.php:94
+#: config-default.php:97
+#: config.php:81
 msgid "New order for the library from JournalTouch"
 msgstr ""
 
-#: config.php:95
+#: config-default.php:98
+#: config.php:82
 msgid "New order from JournalTouch"
 msgstr ""
 
-#: config.php:154
-msgid "Bauingenieurwesen"
+#: config-default.php:157
+#: config.php:135
+msgid "Psychology"
 msgstr ""
 
-#: config.php:155
-msgid "Bibliothek"
+#: config-default.php:158
+#: config.php:136
+msgid "Politics"
 msgstr ""
 
-#: config.php:156
-msgid "Chemie"
-msgstr ""
-
-#: config.php:157
-msgid "Mathematik"
-msgstr ""
-
-#: config.php:158
-msgid "Maschinenbau"
-msgstr ""
-
-#: config.php:159
-msgid "Physik"
-msgstr ""
-
-#: config.php:160
-msgid "Technische Informatik"
-msgstr ""
-
-#: config.php:161
-msgid "Umweltwissenschaften"
-msgstr ""
-
-#: config.php:162
-msgid "Verfahrenstechnik"
-msgstr ""
-
-#: config.php:163
-msgid "Werkstoffwissenschaften"
+#: config-default.php:159
+#: config.php:137
+msgid "Yet another filter"
 msgstr ""
 
 #: index.php:31
@@ -369,11 +352,23 @@ msgstr ""
 msgid "Touch the screen to get started..."
 msgstr ""
 
-#: index.php:439
+#: index.php:446
 msgid "remove"
 msgstr ""
 
 #: services/getLatestJournals.php:112
 msgid "Most recent journal updates from the last PLACEHOLDER days"
+msgstr ""
+
+#: sys/class.getJournalInfos.php:258
+msgid "Sorry, I could not find any information about the publishing date"
+msgstr ""
+
+#: sys/class.getJournalInfos.php:265
+msgid "last update:"
+msgstr ""
+
+#: sys/class.getJournalInfos.php:293
+msgid "Abstract"
 msgstr ""
 
