@@ -6,4 +6,6 @@ doc/*.tmp
 input/*
 img/*
 export/*
+foundation-icons/*
 config.php
+
