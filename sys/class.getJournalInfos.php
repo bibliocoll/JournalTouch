@@ -35,7 +35,7 @@
  * - Switch config.php > articleLink automatically if in network with fulltext
  *   access (ip_subnet); also may use JTlegal
  * - Use SFX to directly download article (or link to print)
- * - Maybe always query CrossRef (for volume/issue and doi) 
+ * - Maybe always query CrossRef (for volume/issue and doi)
  *
  * @notes
  * 2014-07-18 Merged the followeing files into this class
@@ -264,7 +264,7 @@ class GetJournalInfos {
     $journal .= ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
     */
     $html  = '<h4>'.$toc['source'][0].'</h4>';
-    $html .= '<h6><i class="fi-asterisk"></i>'. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
+    $html .= '<h6><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
     // sort by date newest to oldest
     asort($toc['sort']);
@@ -522,7 +522,7 @@ class GetJournalInfos {
       $jt_sort = ($jt_date) ? $jt_date : date('Y-m-d', strtotime('-2 years'));
       $jt_sort = $jt_sort.$jt_page;
 
-  
+
       $toc['authors'][]  = $jt_authors;
       $toc['title'][]    = $jt_title;
       $toc['link'][]     = $jt_link;
@@ -669,7 +669,7 @@ class GetJournalInfos {
     for ($page = 1; $page <= 4; $page++) {
       $json = "http://search.crossref.org/dois?q=$issn&sort=year&page=$page";
       $file = file_get_contents($json);
-      array_merge_recursive($records, json_decode($file, true));
+      $records = array_merge_recursive($records, json_decode($file, true));
     }
 
     if (!$records) return false;
@@ -681,7 +681,7 @@ class GetJournalInfos {
       parse_str($coins, $pcoins);
 
       // Article infos
-      $cr_authors  = $pcoins['rft_au'];
+      $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft_au'] : array(0 => $pcoins['rft_au']);
     	$cr_title    = $item['title'];
     	$cr_link     = $item['doi'];
       $cr_doi      = $this->get_doi($item['doi']);
@@ -692,9 +692,9 @@ class GetJournalInfos {
         //$jtitle = $pcoins['rft_jtitle']; // why again?
       $cr_date    = ''; // CR does not provide a date (for free?); only year via $pcoins['rft_date'] that's equal to $item['year']
       $cr_year    = $item['year'];
-      $cr_vol     = $pcoins['rft_volume'];
-      $cr_issue   = $pcoins['rft_issue'];
-      $cr_page    = $pcoins['rft_spage'];
+      $cr_vol     = (isset($pcoins['rft_volume'])) ? $pcoins['rft_volume'] : '';
+      $cr_issue   = (isset($pcoins['rft_issue']))  ? $pcoins['rft_issue'] : '';
+      $cr_page    = (isset($pcoins['rft_spage']))  ? $pcoins['rft_spage'] : '';
 
       // sort string for toc output
       $cr_sort = $cr_year . '-' . $cr_vol . '-' . $cr_issue . '-' . $cr_page;
