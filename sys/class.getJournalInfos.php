@@ -35,6 +35,7 @@
  * - Switch config.php > articleLink automatically if in network with fulltext
  *   access (ip_subnet); also may use JTlegal
  * - Use SFX to directly download article (or link to print)
+ * - Maybe always query CrossRef (for volume/issue and doi) 
  *
  * @notes
  * 2014-07-18 Merged the followeing files into this class
@@ -256,11 +257,12 @@ class GetJournalInfos {
     }
 
     $timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : __('Sorry, I could not find any information about the publishing date');
+    /*
     $journal = $toc['source'][0];
-    $journal = ($toc['volume'][0])                    ? ', Vol. '.$toc['volume'][0] : '';
-    $journal = ($toc['issue'][0])                     ? ', Nr. '.$toc['issue'][0]   : '';
-    $journal = ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
-
+    $journal .= ($toc['volume'][0])                    ? ', Vol. '.$toc['volume'][0] : '';
+    $journal .= ($toc['issue'][0])                     ? ', Nr. '.$toc['issue'][0]   : '';
+    $journal .= ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
+    */
     $html  = '<h4>'.$toc['source'][0].'</h4>';
     $html .= '<h6><i class="fi-asterisk"></i>'. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
@@ -481,7 +483,7 @@ class GetJournalInfos {
       $jt_title     = preg_replace($tit_patterns, $tit_replacements, $article->title);
       $jt_abstract  = strip_tags(preg_replace($patterns, $replacements, $article->description));
       $jt_link      = (string)$article->link;
-      $jt_source    = preg_replace($patterns, $replacements, $article->children('dc', TRUE)->source);
+      $jt_source    = preg_replace($tit_patterns, $tit_replacements, $article->children('dc', TRUE)->source);
 
       // DOI
       $jt_doi       = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
@@ -495,8 +497,12 @@ class GetJournalInfos {
         }
       }
 
-      // Page, only sometimes provided (and a bit useless without vol+issue?)
-      $jt_page = '';
+      // Rarely provided vol/no/page
+      $jt_volume = '';
+      $jt_issue  = '';
+      $jt_page   = '';
+      $jt_volume  = preg_replace($patterns, $replacements, $article->children('prism', TRUE)->volume);
+      $jt_issue   = preg_replace($patterns, $replacements, $article->children('prism', TRUE)->number);
       $jt_page = strip_tags(preg_replace($patterns, $replacements, $article->children('prism', TRUE)->startingPage));
       $jt_page = ($jt_page) ? '-'.strip_tags(preg_replace($patterns, $replacements, $article->children('prism', TRUE)->endingPage)) : '';
 
@@ -527,8 +533,8 @@ class GetJournalInfos {
 
       $toc['source'][]   = $jt_source;
       $toc['year'][]     = date('Y', strtotime($jt_date));
-      $toc['volume'][]   = ''; // not provided (for free?)
-      $toc['issue'][]    = ''; // not provided (for free?)
+      $toc['volume'][]   = $jt_volume;
+      $toc['issue'][]    = $jt_issue;
 
       $toc['sort'][]     = $jt_sort;
     }
@@ -880,7 +886,7 @@ class GetJournalInfos {
 
     if ((substr ($doi_string, 0, 4) == 'http')) {
       // anything like http://dx.doi.org/10.1002/adma.201400310
-      preg_match('/.*\/(.*\/.*)\/*$/', $doi_string, $matches);
+      preg_match('/http.*\/\/.*\/{1}(.*\..*?\/.*?)($|\/*$|\?.*|\/\?*$)/', $doi_string, $matches);
       if (isset($matches[1])) $doi = $matches[1];
     }
     elseif ((substr ($doi_string, 0, 3) == 'doi')) {
@@ -941,14 +947,14 @@ class GetJournalInfos {
 
     // What a messy check...
     if (date('Y', strtotime($chk_date)) == 1970) {
-      // Check stuff like "Apr.-June  2014", "Apr.-June.  2014", "Jan.-Feb.  2015"
-      $pos = strpos($journal_date , '.-');
+      // Check stuff like "Apr.-June  2014", "Apr.-June.  2014", "Jan.-Feb.  2015", "March-April  2014"
+      $pos = strpos($journal_date , '-');
       if ($pos > 0) {
-        $fix_date = substr($journal_date , 0,  $pos);
-        $fix_date .= substr($journal_date , -4);
+        $fix_date = '1 '; // Day
+        $fix_date .= substr($journal_date, 0, $pos).' '; // Month
+        $fix_date .= substr($journal_date, -4, 0); // year
 
-        $chk_date = strtotime($fix_date);
-        $chk_date = date('Y-m-d', $chk_date);
+        $chk_date = date('Y-m-d', strtotime($fix_date));
         if (date('Y', strtotime($chk_date)) == 1970) $chk_date = false;
       }
 
