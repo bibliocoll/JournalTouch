@@ -10,5 +10,4 @@ img/*
 input/*
 config.php
 
-!input/tag-remap.txt
 !input/backup/.gitkeep
