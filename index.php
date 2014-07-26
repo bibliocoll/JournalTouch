@@ -1,4 +1,17 @@
 <?php
+/**
+ * @brief   Get journals and display everything nicely
+ *
+ * @todo
+ * - Handle the sticky stuff better; maybe this way
+ *    <div id="stickyleft" class="small-1 columns"></div>
+ *    <div id="journals" class="small-10 columns"></div>
+ *    <div id="stickyright" class="small-1 columns"></div>
+ * - add conditional parts to part.tpl files or something like that
+ *
+ * @author Daniel Zimmel <zimmel@coll.mpg.de>
+ * @author Tobias Zeumer <tzeumer@verweisungsform.de>
+ */
 ob_start();
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -75,14 +88,17 @@ $journalUpdates = $lister->getJournalUpdates();
 </div>
 <!-- End Navigation -->
 
+<!-- Left and right side elements -->
+<!--  Note
+      1. For letterbox see setLetterBox() in js/local/conduit.js
+      2. Most (re-)sizing is done via css/media.css               -->
 
-<!-- Make a sticky basket -->
-<a href="#" id="stickyBasket" class="button radius show-for-xlarge-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('Send articles') ?></a>
-<!-- Make a sticky GoUp -->
-<!-- for large screens -->
-<a href="#" id="stickyGoUpLarge" class="button round show-for-large-up"><i class="fi-arrow-up"></i></a>
-<!-- for small screens -->
-<a href="#" id="stickyGoUpSmall" class="button round hide-for-large-up"><i class="fi-arrow-up"></i></a>
+  <!-- Make a sticky basket -->
+  <a href="#" id="stickyBasket" class="button radius show-for-xlarge-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('Send articles') ?></a>
+
+  <!-- Make a sticky GoUp -->
+  <a href="#" id="stickyGoUp" class="button round"><i class="fi-arrow-up"></i></a>
+<!-- END Left and right side elements -->
 
 
 <!-- About page -->
@@ -307,7 +323,7 @@ $journalUpdates = $lister->getJournalUpdates();
       <h3><?php echo __('Browse all journals from A to Z (grid view):') ?></h3>
     </div>
   </div>
-  <div class="row">
+  <div class="row" id="journalList">
     <?php
       /* see Class setup */
       foreach ($journals as $j) {
