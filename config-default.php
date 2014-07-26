@@ -42,7 +42,8 @@ $cfg->prefs->lib_name      = 'MPI Collective Goods Library';
 $cfg->prefs->lib_initials  = 'MPI';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
 $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
-
+$cfg->prefs->show_dl_button = false;    // Tries to create a direct download link (pdf) for a toc entry
+$cfg->prefs->sfx           = '';        // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
 
 
 $cfg->api = new stdClass();

@@ -14,7 +14,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo __('MPI JournalTouch') ?></title>
-    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/media.css" />
     <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
@@ -31,7 +31,7 @@ $journalUpdates = $lister->getJournalUpdates();
       <li class="toggle-topbar menu-icon"><a href="#"><span><?php echo __('menu') ?></span></a></li>
     </ul>
     <section class="top-bar-section">
-      <ul class="left hide-for-small">
+      <ul class="hide-for-small">
         <li><a href="#" id="aboutLink" data-reveal-id="about" class="button radius"><i class="fi-info"></i> <?php echo __('about') ?></a></li>
       </ul>
 
@@ -77,7 +77,7 @@ $journalUpdates = $lister->getJournalUpdates();
 
 
 <!-- Make a sticky basket -->
-<a href="#" id="stickyBasket" class="button radius show-for-large-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('Send articles') ?></a>
+<a href="#" id="stickyBasket" class="button radius show-for-xlarge-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('Send articles') ?></a>
 <!-- Make a sticky GoUp -->
 <!-- for large screens -->
 <a href="#" id="stickyGoUpLarge" class="button round show-for-large-up"><i class="fi-arrow-up"></i></a>
@@ -336,12 +336,14 @@ $journalUpdates = $lister->getJournalUpdates();
 */
 
         $new_issues = ($j['new']) ? 'new-issue' : '';
+        $len_title = strlen($j['title']);
+        $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
         echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
         echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
         echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
         echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
         echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
-        echo '<h5 title="'.$j['title'].'">'.$j['title'].'</h5>';
+        echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
         echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
         echo '</div></div>';
       }
