@@ -53,7 +53,7 @@ $(document).ready(function() {
 		function setLetterBox() {
 				/* set up a letterbox with default letter 'A' */
 				$('#letterbox').remove();
-				$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
+				$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled show-for-xlarge-up">A</div>');
 				/* animate box */
 				if ($('#view-grid').is(':visible')) {
 						$('div.div-grid h5').waypoint(function(direction) {

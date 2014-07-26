@@ -61,7 +61,7 @@ class GetJournalInfos {
   /// \brief \b OBJ @see config.php
   protected $jt;
   /// \brief \b OBJ @see config.php
-  //public $prefs;
+  public $prefs;
 
   /// \brief \b STR The ISSN of the current journal. Maybe useful somewhere (currently only a warning if datediff is pretty high)
   protected $issn;
@@ -79,6 +79,27 @@ class GetJournalInfos {
   protected $jt_suggest_publisher = '';
   /// \brief \b ARY Saves all rows for jt journaltoc suggestion file
   protected $jt_suggest_buffer = array();
+
+  /// \brief \b ARY @see GetJournalInfos::set_clean_tags
+  protected $tag_replace;
+
+  /* Array with toc information */
+  protected $toc = array(
+                    'authors'  => array(),
+                    'title'    => array(),
+                    'link'     => array(),
+                    'doi'      => array(),
+                    'abstract' => array(),
+                    'date'     => array(),
+                    'page'     => array(),
+
+                    'source'   => array(),
+                    'year'     => array(),
+                    'volume'   => array(),
+                    'issue'    => array(),
+
+                    'sort'     => array()
+                  );
 
   // Vars to keep track of statistics
   private $hits_jt_meta = 0;
@@ -106,7 +127,7 @@ class GetJournalInfos {
     $this->csv_col  = $cfg->csv_col;
     $this->api_all  = $cfg->api->all;
     $this->jt       = $cfg->api->jt;
-    //$this->prefs    = $cfg->prefs;
+    $this->prefs    = $cfg->prefs;
   }
 
 
@@ -129,15 +150,19 @@ class GetJournalInfos {
    *              "metaGotToc". This is only (automatically) set if
    *              $fetch_meta = true
    *
-   * @todo    Make it better, e.g. writing false for metaGotToc isn't nice :)
+   * @todo    
+   * - add something like "force fetch meta"   
    *
-   * @param $fetch_meta \b STR  Fetch meta info from JournalToc (only if not
-   *                            already done before).
+   * @param $fetch_meta   \b BOL  Fetch meta info from JournalToc (anynway: 
+   *                              only if not already done before).
+   * @param $fetch_recent \b BOL  Fetches dates of most recen issue
+   * @param $clean_tags   \b BOL  Do some cleanup of the tags
+   *                               
    * @param $outfile    \b STR  Path and name of new file
    *
    * @return \b void
    */
-  public function update_journals_csv($fetch_meta = true) {
+  public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false) {
     ob_start();
     if (($handle = fopen('../'.$this->csv_file->path, "r")) !== FALSE) {
       while (($journal_rows = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
@@ -174,11 +199,18 @@ class GetJournalInfos {
         }
 
         // Fetch info if journal is listed by JournalToc or CrossRef
-        if ($this->journal_row['metaGotToc'] == 'JToc' && $this->jt->account) {
-          $new_issue = $this->journaltoc_fetch_recent($issn, $this->jt->account);
+        if ($fetch_recent) {
+          if ($this->journal_row['metaGotToc'] == 'JToc' && $this->jt->account) {
+            $new_issue = $this->journaltoc_fetch_recent($issn, $this->jt->account);
+          }
+          elseif ($this->journal_row['metaGotToc'] == 'CRtoc') {
+            $new_issue = $this->crossref_fetch_recent($issn);
+          }
         }
-        elseif ($this->journal_row['metaGotToc'] == 'CRtoc') {
-          $new_issue = $this->crossref_fetch_recent($issn);
+        
+        // Just an idea, clean/change tags automatically in some way
+        if ($clean_tags) {
+          $this->set_clean_tags();
         }
 
         // no matter if we got a hit or not - every line has to be written to the new csv...
@@ -224,6 +256,8 @@ class GetJournalInfos {
    * @return \b STR Some html
    */
   public function ajax_query_toc($issn) {
+    $this->issn = $issn;
+
     $toc = ($this->jt->account) ? $this->journaltoc_fetch_toc($issn, $this->jt->account) : false;
 
     if (!$toc) {
@@ -231,7 +265,7 @@ class GetJournalInfos {
     }
 
     // whatever we got, create html
-    return $this->ajax_response_toc($toc);
+    return $this->ajax_response_toc($this->toc);
   }
 
 
@@ -250,9 +284,12 @@ class GetJournalInfos {
    * @return \b STR Some html
    */
   private function ajax_response_toc($toc, $max_authors = 3) {
-    if (count($toc['sort']) < 1) {
+    if (!isset($toc['sort'])) {
         /* write something we can read from our caller script */
         /* trigger error response from conduit.js; configure in index.php */
+        return '<span id="noTOC"/>';
+    }
+    elseif (count($toc['sort']) < 1) {
         return '<span id="noTOC"/>';
     }
 
@@ -276,6 +313,8 @@ class GetJournalInfos {
         $authors = implode(' & ', $authors);
         $authors .= ($authors) ? ' : ' : '';
 
+        $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
+
         if ($this->api_all->articleLink == true) {
           $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'" class="item_name">'.$toc['title'][$id].'</a></span>';
         }
@@ -293,6 +332,7 @@ class GetJournalInfos {
                     <div class="small-6 medium-5 large-4 columns buttonbox">';
                       // abstract button: let us assume that strlen>300 == abstract
         $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
+        $html .=      $link_dl;
                       // add button (cart)
         $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i> </a>&nbsp;
                     </div>';
@@ -438,7 +478,6 @@ class GetJournalInfos {
    * @todo
    * - hmm, is explicit (string) casting pointless here or would it be cleaner
    *   to do it in other methods too?
-   * - make $toc class property?
    * - avoid RegEx - usually they are much slower than inbuild string replacement
    *   functions
    * - check if volume and issue are provided for premium; add check
@@ -540,7 +579,8 @@ class GetJournalInfos {
     }
 
     if (isset($toc)) {
-      return $toc;
+      $this->toc = $toc;
+      return true;
     }
     else {
       return false;
@@ -727,7 +767,8 @@ class GetJournalInfos {
     }
 
     if ($toc) {
-      return $toc;
+      $this->toc = $toc;
+      return true;
     }
     else {
       return false;
@@ -823,6 +864,47 @@ class GetJournalInfos {
     }
   }
 
+
+  /**
+   * @brief   Clean up tags
+   *
+   * Maybe you fetched the tags from JournalTocs/Journalseek or want to to some
+   * normalization. You just could copy everything from the tagcloud into a text
+   * file and change it the way you like.   
+   * 
+   * @todo    Maybe remove or move this. Not sure, anyone will get the idea.           
+   *
+   * @return \b BOL True if journal is found, else false
+   */
+  private function set_clean_tags() {
+    $tmp_tags = explode(',', $this->journal_row['tags']);
+
+    // Read csv with format oldTag;newTag to array (only once)
+    if (($handle = fopen('../input/tag-remap.txt', "r")) !== false && !$this->tag_replace) {
+      while (($tag_row = fgetcsv($handle, 1000, $this->csv_file->separator)) !== false) {
+        $key = trim($tag_row[0]);
+        if (isset($tag_row[1])) $this->tag_replace[$key] = trim($tag_row[1]);
+      }
+    }  
+
+    // use saved array for comparison
+    if ($this->tag_replace) {
+      foreach ($tmp_tags as $key => &$cur_tag) {
+        $cur_tag = trim($cur_tag);
+        
+        if ($cur_tag == '') unset($tmp_tags[$key]);
+        
+        if (isset($this->tag_replace[$cur_tag])) {
+          if ($this->tag_replace[$cur_tag] !== '') $cur_tag = $this->tag_replace[$cur_tag];
+        }
+      }
+    }
+
+    $tmp_tags = array_unique($tmp_tags);
+    sort($tmp_tags);
+    
+    $this->journal_row['tags'] = implode(', ', $tmp_tags);
+  }
 
   /**
    * @brief   Creates a csv if metaGotToc is not "JToc"
@@ -964,6 +1046,88 @@ class GetJournalInfos {
     }
 
     return $chk_date;
+  }
+
+
+  /**
+   * @brief   Try to get a direct download link
+   *
+   * Usually you are always taken to some landing page where you have to
+   * "search" for the download link. Wouldn't it be much cooler to just tap
+   * a button in JournalTouch and get the pdf?
+   *
+   * @note
+   * - Even direct links often take you away from JournalTouch (only Springer
+   *   is nice)
+   * - Check if some legal terms require the landing page
+   * - Elsevier also offers epub and mobi...
+   *
+   * @todo
+   * - Maybe change parameter $toc. Only $toc['doi'] and $toc['link'] needed
+   * - It would be nice to do more evaluation like
+   * -- Does the library have the journal as print only (col in input.csv)
+   * -- If a subscription, is the user in the right IP subnet for a download?
+   *
+   * @param $tocID    \b INT  ID of the GetJournalInfos::toc item to create a
+   *                          link for
+   * @return \b STR A link if possible
+   */
+  protected function get_download_link($tocID) {
+    $sfx_url = '';
+    if ($this->prefs->sfx) {
+      // see todo: print only should be "no"
+      $sfx_url = $this->prefs->sfx.'?svc.fulltext=yes';
+    }
+
+    $link_dl = '';
+    $icon = 'fi-page-export-pdf';
+    if ($this->toc['doi'][$tocID]) {
+      // Springer: http://link.springer.com/content/pdf/10.1007%2Fs10010-014-0174-x.pdf
+      if (strpos($this->toc['link'][$tocID], 'link.springer.com')) {
+        $link_dl = 'http://link.springer.com/content/pdf/'.rawurlencode($this->toc['doi'][$tocID]).'.pdf';
+      }
+      // OSA: https://www.opticsinfobase.org/boe/viewmedia.cfm?uri=boe-5-7-2023&seq=0 (DOI-SUFFIX)
+      elseif (strpos($this->toc['link'][$tocID], 'www.opticsinfobase.org')) {
+        $doi_split = explode('/', $this->toc['doi'][$tocID]);
+        $link_dl = 'https://www.opticsinfobase.org/boe/viewmedia.cfm?seq=0&uri='.$doi_split[1];
+      }
+      // SIAM: http://epubs.siam.org/doi/pdf/10.1137/130916515 (DOI)
+      elseif (strpos($this->toc['link'][$tocID], 'epubs.siam.org')) {
+        $link_dl = 'http://epubs.siam.org/doi/pdf/'.$this->toc['doi'][$tocID];
+      }
+      // AIP: http://scitation.aip.org/deliver/fulltext/aip/journal/adva/4/6/1.4881881.pdf ('deliver/fulltext[...].pdf' instead 'content')
+      //elseif (strpos($this->toc['link'][$tocID], 'scitation.aip.org')) {
+        //$doi_split = explode('/', $this->toc['doi'][$tocID]);
+        //$link_dl = str_replace('/content', '/deliver/fulltext', $this->toc['link'][$tocID]).'.pdf';
+        //$link_dl = str_replace($doi_split[0].'/', '', $link_dl);
+      //}
+      // Wiley: http://onlinelibrary.wiley.com/doi/10.1111/fwb.12352/pdf (DOI)
+      elseif (strpos($this->toc['link'][$tocID], 'onlinelibrary.wiley.com')) {
+        $link_dl = 'http://onlinelibrary.wiley.com/doi/'.$this->toc['doi'][$tocID].'/pdf';
+      }
+      // SFX with DOI
+      elseif ($sfx_url) {
+        $icon = 'fi-page-search';
+        $link_dl = $sfx_url.'&rft_id=info:doi/'.$this->toc['doi'][$tocID];
+      }
+    }
+    // IEEE: http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6787017 => http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6787017
+    elseif (strpos($this->toc['link'][$tocID], 'ieeexplore.ieee.org')) {
+      $link_dl = str_replace('xpl/articleDetails.jsp?arnumber=', 'stamp/stamp.jsp?tp=&arnumber=', $this->toc['link'][$tocID]);
+    }
+    // SFX with title, date, issn
+    elseif ($sfx_url) {
+      $icon = 'fi-page-search';
+      $link_dl  = $sfx_url;
+      $link_dl .= '&rft.atitle='.urlencode($this->toc['title'][$tocID]);
+      $link_dl .= '&rft.issn='.$this->issn;
+      $link_dl .= '&rft.date='.$this->toc['date'][$tocID];
+      //&rft.eissn=
+    }
+
+    if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>&nbsp;';
+
+    return $link_dl;
   }
 
 }
