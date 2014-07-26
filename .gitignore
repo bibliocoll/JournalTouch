@@ -1,11 +1,14 @@
 *~
 .project
+dev/*
 doc/html/*
 doc/def/*
 doc/*.tmp
-input/*
-img/*
 export/*
 foundation-icons/*
+img/*
+input/*
 config.php
 
+!input/tag-remap.txt
+!input/backup/.gitkeep
