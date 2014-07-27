@@ -8,7 +8,7 @@
 
 @media only screen and (min-width : 0em) {
   /* Grid: Dynamic Letter Box */
-  #letterbox { position:fixed; right:20px; width:6rem; font-size:3rem; padding:1.75rem; color:#007095; background-color:#efefef; }
+  #letterbox { position:fixed; top:10%; right:20px; width:6rem; font-size:3rem; padding:1.75rem; color:#007095; background-color:#efefef; }
 
   /* sticky GoUp */
   #stickyGoUp {position:fixed; z-index:99; bottom: 20px; right: 20px; font-size: 2em; }
@@ -24,7 +24,7 @@
   #actions { width: 60%; margin-left: auto; margin-right: auto; }
 
   /* Grid: Dynamic Letter Box */
-  #letterbox { position:fixed; right:30px; width:8rem; font-size:4rem; padding:2rem; color:#007095; background-color:#efefef; }
+  #letterbox { position:fixed; top:10%; right:30px; width:8rem; font-size:4rem; padding:2rem; color:#007095; background-color:#efefef; }
 
   /* sticky GoUp */
   #stickyGoUp {position:fixed; z-index:99; bottom: 20px; right: 20px; left: inherit; font-size: 2em; }

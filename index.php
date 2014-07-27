@@ -229,7 +229,7 @@ $journalUpdates = $lister->getJournalUpdates();
 
 <!-- Three-up Content Blocks -->
 <div class="row">
-  <div id="TOCbox" class="small-12 columns">
+  <div id="TOCbox" class="small-10 medium-10 large-12 columns">
     <!-- A-Z button bar -->
     <div class="button-bar alphabet">
       <ul class="button-group radius">
@@ -254,7 +254,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <!-- Search form -->
 <form id="search-form">
   <div class="row">
-    <div class="small-12 columns">
+    <div class="small-9 medium-10 large-12 columns">
       <fieldset>
         <label class="error">
           <input id="search" type="text" placeholder="<?php echo __('Search journal') ?>" />
@@ -319,7 +319,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <!-- Thumbnails -->
 <div id="view-grid">
   <div class="row">
-    <div class="small-12 columns">
+    <div class="small-10 columns">
       <h3><?php echo __('Browse all journals from A to Z (grid view):') ?></h3>
     </div>
   </div>
@@ -354,7 +354,7 @@ $journalUpdates = $lister->getJournalUpdates();
         $new_issues = ($j['new']) ? 'new-issue' : '';
         $len_title = strlen($j['title']);
         $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
-        echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
+        echo '<div class="search-filter large-4 medium-5 small-9 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
         echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
         echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
         echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
