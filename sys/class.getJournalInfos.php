@@ -300,8 +300,8 @@ class GetJournalInfos {
     $journal .= ($toc['issue'][0])                     ? ', Nr. '.$toc['issue'][0]   : '';
     $journal .= ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
     */
-    $html  = '<h4>'.$toc['source'][0].'</h4>';
-    $html .= '<h6><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
+    $html  = '<h4 class="small-10 columns">'.$toc['source'][0].'</h4>';
+    $html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
     // sort by date newest to oldest
     asort($toc['sort']);
@@ -323,16 +323,16 @@ class GetJournalInfos {
         }
 
         $html .= '<div class="simpleCart_shelfItem row">
-                    <div class="small-6 medium-7 large-8 columns textbox">
+                    <div class="small-6 medium-6 large-7 columns textbox">
                       <div class="toctitle">'.$entry.'</div>';
                       // get extra options, set class to invisible (change in css)
         $html .=      '<span class="item_link invisible">'.$toc['link'][$id].'</span>
                       <span class="item_source invisible">'.$toc['source'][$id].'</span>
-                    </div>
-                    <div class="small-6 medium-5 large-4 columns buttonbox">';
+                    </div>'.PHP_EOL.'
+                    <div class="small-6 medium-6 large-5 columns buttonbox">';
                       // abstract button: let us assume that strlen>300 == abstract
         $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
-        $html .=      $link_dl;
+        $html .=      $link_dl.PHP_EOL;
                       // add button (cart)
         $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i> </a>&nbsp;
                     </div>';
