@@ -164,3 +164,4 @@ see *platforms/android/res* and Cordova Docs.
 [Linux SDK setup](http://wiki.ubuntuusers.de/Android_SDK)
 
 [Cordova CLI Docs](http://cordova.apache.org/docs/en/3.4.0/guide_cli_index.md.html)
+

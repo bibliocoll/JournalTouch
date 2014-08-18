@@ -1,5 +1,4 @@
 <?php
-require_once 'sys/jt-gettext.php';
 $mylist = $_POST;
 /* do we have GET parameters? (currently only used for contact) */
 $myaction = $_GET;
@@ -154,7 +153,7 @@ $action = new CheckoutActions();
 <!-- Start Mailer Response -->
 		<?php
 
-    if($_POST && $_POST['mailer'])
+    if(isset($_POST['mailer']))
     {
     // if we have already sent an e-mail, read again from POST
     if (empty($file)) {$file = $_POST['file'];}
@@ -316,3 +315,4 @@ $action = new CheckoutActions();
     </script>
   </body>
 </html>
+
