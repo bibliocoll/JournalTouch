@@ -51,7 +51,7 @@ $(document).ready(function() {
 		function setLetterBox() {
 				/* set up a letterbox with default letter 'A' */
 				$('#letterbox').remove();
-				$('#view-grid').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
+				$('#journalList').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
 				/* animate box */
 				if ($('#view-grid').is(':visible')) {
 						$('div.div-grid h5').waypoint(function(direction) {
@@ -117,70 +117,41 @@ $(document).ready(function() {
 				/* get Journal TOC */
 
 				$.ajax({
-						url: 'ajax/getJournalTOC.php', /* first call */
+						url: 'sys/ajax_toc.php', /* first call */
 						data: {'issn' : issn},
-						timeout: 5000 /* set default timeout of 5 sec. */
+						timeout: 7000 /* set default timeout of 7 sec. (because on fail always crossref is queried too) */
 				}).done(function(returnData) {
-
-
-						/* fire a second call, if first call is empty */
-						/* uncomment, if you do not want a second call; see also below for network failure events ("ajax.fail")*/
-						if ($(returnData).filter('#noTOC').length > 0) {
-								$.ajax({
-										url: 'ajax/getCrossRefTOC.php', /* JournalTocs */
-										data: {'issn' : issn}
-								}).done(function(returnData) {
-										$('.toc.preloader').fadeOut('slow');
-										if ($(returnData).filter('#noTOC').length > 0) {
-												$('#tocNotFoundBox').fadeIn('slow');
-										}
-										$('#fillTOC').append(returnData).fadeIn('slow');
-										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
-										$('time.timeago').timeago();
-										if (accordion) {
-												$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
-										}	
-								}).fail(function() {
-										$('#tocModal .preloader').hide();
-										$('#tocAlertBox').fadeIn('slow');
-								});
-						} else {	
 						$('.toc.preloader').fadeOut('slow');
-						}
+            if ($(returnData).filter('#noTOC').length > 0) {
+              $('#tocNotFoundBox').fadeIn('slow');
+            }
 						$('#fillTOC').append(returnData).fadeIn('slow');
 						/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
 						$('time.timeago').timeago();
 						if (accordion) {
-						$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
-						}	
-
-						
-				}).fail(function(j,t,m) {
-						if(t==="timeout") {
-								$.ajax({
-										url: 'ajax/getCrossRefTOC.php', /* JournalTocs */
-										data: {'issn' : issn}
-								}).done(function(returnData) {
-										$('.toc.preloader').fadeOut('slow');
-										if ($(returnData).filter('#noTOC').length > 0) {
-												$('#tocNotFoundBox').fadeIn('slow');
-										}
-										$('#fillTOC').append(returnData).fadeIn('slow');
-										/* timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp */
-										$('time.timeago').timeago();
-										if (accordion) {
-												$("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');	
-										}	
-								}).fail(function() {
-										$('#tocModal .preloader').hide();
-										$('#tocAlertBox').fadeIn('slow');
-								});
-								
-						} else {
-								
-								$('#tocModal .preloader').hide();
-								$('#tocAlertBox').fadeIn('slow');
+						  $("html,body").animate({scrollTop: $('#fillTOC').offset().top},'slow');
 						}
+            /*  Instead of filling a div, the toc might tbe loaded into an iframe
+                Advantage 1: Scrolling on long tocs wouldn't scroll away from
+                             the journal position on the main page
+                Advantage 2: Following links wouldn't take you away from the
+                             JournalTouch site (much more comfortable to check
+                             multiple articles); add something like history.back()
+                Advantage 3: It might be easier to add meta info above
+                Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the content of the #fillTOC div
+            */
+            /*
+            var dHeight = $(window).height() -280;
+            $('#externalPopover').foundation('reveal', 'open');
+            $("#externalFrame").height(dHeight);
+            $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
+            setTimeout(function() {
+              $("#externalFrame").attr('srcdoc', returnData);
+            }, 100);
+            */
+				}).fail(function(j,t,m) {
+						$('#tocModal .preloader').hide();
+						$('#tocAlertBox').fadeIn('slow');
 				});
 
 				/* add a fancy paperclip as a reminder what the user has clicked in this session */ 

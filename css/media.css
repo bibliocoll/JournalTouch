@@ -1,104 +1,98 @@
 /* Define here styles for different media ********************************/
 /* Special definitions for screen sizes **********************************/
 
+@media only screen and (min-width : 321px) { /* Smartphones (landscape) */ }
+@media only screen and (max-width : 320px) { /* Smartphones (portrait) */ }
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) { /* iPads (landscape) */ }
+@media only screen and (min-device-width : 768px)and (max-device-width : 1024px) and (orientation : portrait)   { /* iPads (portrait) ----------- */ }
 
-/* STYLES FOR MEDIUM SCREENS *********************************************/
-@media only screen and (min-width: 45.063em)  {
-/**************** Checkout ***********************************************/
-#actions {
-width: 60%;
-margin-left: auto;
-margin-right: auto;
-}
-}
-/* END MEDIUM SCREENS *****************************************************/
+@media only screen and (min-width : 0em) {
+  /* Grid: Dynamic Letter Box */
+  #letterbox { position:fixed; top:10%; right:20px; width:6rem; font-size:3rem; padding:1.75rem; color:#007095; background-color:#efefef; }
 
-/* STYLES FOR LARGE SCREENS ***********************************************/
-/* make things a bit larger for higher touch sensitivity on large screens */
-@media only screen and (min-width: 85.063em) {
-/*************** Header **************************************************/
-
-.top-bar .name h1 {
-font-size:x-large;
+  /* sticky GoUp */
+  #stickyGoUp {position:fixed; z-index:99; bottom: 20px; right: 20px; font-size: 2em; }
 }
 
-.top-bar-section ul li > a#aboutLink {
-font-size:large;
+/* Small desktops/iPad landscape (1024 x 768) (here: ~980px) ----------- */
+@media only screen and (min-width : 61.250em) {
+  .top-bar .name h1                     { font-size: 1rem; }
+  .top-bar-section ul li > a#aboutLink  { font-size: 0.95rem; }
+  .top-bar-section ul li > a            { font-size: 0.95rem; }
+    
+  /**************** Checkout ***********************************************/
+  #actions { width: 60%; margin-left: auto; margin-right: auto; }
+
+  /* Grid: Dynamic Letter Box */
+  #letterbox { position:fixed; top:10%; right:30px; width:8rem; font-size:4rem; padding:2rem; color:#007095; background-color:#efefef; }
+
+  /* sticky GoUp */
+  #stickyGoUp {position:fixed; z-index:99; bottom: 20px; right: 20px; left: inherit; font-size: 2em; }
 }
 
-.top-bar-section ul li > a {
-font-size:x-large;
+
+/* Average desktops (1280 x 1024) (here: ~1320px) ----------- */
+@media only screen and (min-width : 82.500em) {
+  .top-bar .name h1                     { font-size: 1.2rem; }
+  .top-bar-section ul li > a#aboutLink  { font-size: 1rem; }
+  .top-bar-section ul li > a            { font-size: 1rem; }
+  .top-bar-section ul li > a.filter     { font-size: 1rem; }
+  .top-bar-section li:not(.has-form) a:not(.button) 
+    { padding-bottom: 14px; }
+
+  /* Grid: Dynamic Letter Box */
+  #letterbox { position:fixed; top:10%; left:30px; width:8rem; font-size:4rem; padding:2rem; color:#007095; background-color:#efefef; }
+
+  /* sticky GoUp */
+  #stickyGoUp {position:fixed; z-index:99; bottom: 50px; left: 50px; right: inherit; font-size: 3em; }
 }
 
-.top-bar-section ul li > a.filter {
-font-size:initial;
+
+/* Large screens (1920 x 1080) (here: ~1560px) ----------- */
+@media only screen and (min-width : 97.800em) {
+  /*************** Header **************************************************/
+  .top-bar .name h1 
+    { font-size:x-large; }
+  .top-bar-section ul li > a#aboutLink 
+    { font-size:large; }
+  .top-bar-section ul li > a 
+    { font-size:x-large; }
+  .top-bar-section ul li > a.filter 
+    { font-size:initial; }
+  .top-bar-section li:not(.has-form) a:not(.button) 
+    { padding-bottom: 14px; }
+
+
+  /**************** General ************************************************/
+  .close-reveal-modal, .reveal-modal .close-reveal-modal 
+    { font-size: 3.375rem!important; color:#fff; }
+
+  /* fancy screensaver for large (touch) screen */
+  #screensaver {
+    position: fixed;
+    /*background: url('../img/bgcoll-logo.png') no-repeat center bottom;*/
+    min-height:90%;
+    left: 50%;
+    z-index: 99;
+    height: auto;
+    margin-left: -40%;
+    width: 80%;
+    background-color: #F0F8FF;
+    padding: 1.25rem;
+    border: solid 1px #666;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    top: 3.25rem;
+  }
+  
+  /* filter position */
+  #filterPanel { position:fixed; z-index:99; top: 100px; right: 50px; }
+  
+  /* Grid: Dynamic Letter Box */
+  #letterbox { position:fixed; top:10%; left:40px; width:12rem; font-size:6rem; padding:2rem; color:#007095; background-color:#efefef; }
+  
+  /**************** Checkout ***********************************************/
+  #actions { width: 40%; margin-left: auto; margin-right: auto; }
+  div#popoverButtons a.radius   { font-size:larger; }
+  #emptyCartSuccess .alert-box  { font-size:larger; }
 }
-
-.top-bar-section li:not(.has-form) a:not(.button) {
-padding-bottom: 14px;
-}
-
-/**************** General ************************************************/
-
-.close-reveal-modal, .reveal-modal .close-reveal-modal {
-font-size: 3.375rem!important;
-color:#fff;
-}
-
-/* fancy screensaver for large (touch) screen */
-
-#screensaver {
-position: fixed;
-/*background: url('../img/bgcoll-logo.png') no-repeat center bottom;*/
-min-height:90%;
-left: 50%;
-z-index: 99;
-height: auto;
-margin-left: -40%;
-width: 80%;
-background-color: #F0F8FF;
-padding: 1.25rem;
-border: solid 1px #666;
--webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-top: 3.25rem;
-}
-
-/* filter position */
-#filterPanel {
-position:fixed;
-z-index:99;
-top: 100px;
-right: 50px;
-}
-
-/***************** Grid ***************************************************/
-
-/* Dynamic Letter Box */
-#letterbox {
-position:fixed;
-top:10%;
-left:4%;
-width:14rem;
-font-size:8rem;
-padding:2rem;
-background-color:#efefef;
-}
-
-/**************** Checkout ***********************************************/
-#actions {
-width: 40%;
-margin-left: auto;
-margin-right: auto;
-}
-
-div#popoverButtons a.radius {
-font-size:larger;
-}
-
-#emptyCartSuccess .alert-box {
-font-size:larger;
-}
-
-}
-/* END LARGE SCREENS *****************************************************/

@@ -31,6 +31,10 @@ background-color: #035773!important;
 background-color: #007095;
 }
 
+.top-bar-section ul li {
+    background: none;
+}
+
 .top-bar-section > ul > .divider {
 border-right: dotted 1px #FFFFFF;
 }
@@ -159,22 +163,6 @@ bottom: 50px;
 right: 50px;
 }
 
-/* sticky go up */
-#stickyGoUpLarge {
-position:fixed;
-z-index:99;
-bottom: 50px;
-left: 50px;
-font-size: 3em;
-}
-
-#stickyGoUpSmall {
-position:fixed;
-z-index:99;
-bottom: 20px;
-right: 20px;
-font-size: 2em;
-}
 
 /*************** Orbit image slider **************************************/
 
@@ -314,15 +302,6 @@ margin-top: -18px;
 color: #dbd417;
 }
 
-/* Dynamic Letter Box */
-#letterbox {
-position:fixed;
-top:15%;
-right:4%;
-font-size:4rem;
-color:#007095;
-background-color:#efefef;
-}
 
 /*************** Display TOC *********************************************/
 
@@ -453,26 +432,45 @@ font-size: larger;
 
 /*************** Metainfo ************************************************/
 
+.div-grid .fi-dislike {color: red;}
+.div-grid .fi-like {color: green;}
+
 .div-grid .metaInfo {
 color: #077dac;
 position: absolute;
 font-size: 14.5pt;
 margin-left: 10px;
-margin-top: -153px;
 }
 
 .div-grid .metaInfo div {
-margin-top: 153px;
-/* background: none repeat scroll 0 0 #f2f2f2; */
-/* border: 1px solid #d8d8d8; */
-/* border-bottom-style: dotted; */
-padding: 10px;
+margin-top: 163px;
+background: none repeat scroll 0 0 #f2f2f2;
+border: 1px solid #d8d8d8;
+border-bottom-style: dotted;
+padding: 5px;
+width: 123px;
+}
+
+/***
+/* bibliocoll's try for nicer display of meta info
+
+.div-grid .metaInfo {
+color: #077dac;
+position: absolute;
+font-size: 14.5pt;
+margin-left: 10px;
+margin-top: -145px;
+}
+
+.div-grid .metaInfo div {
+margin-top: 190px;
+padding: 5px;
 width: 123px;
 }
 
 .div-grid .metaInfo .button {
 background-color: #CFCFCF;
-width: 110px;
+width: 120px;
 }
 
 .div-grid .metaInfo .button:hover {
@@ -482,9 +480,7 @@ background-color: #949090!important;
 .div-grid .metaInfo .button a {
 color: #000;
 }
-
-.div-grid .fi-dislike {color: red;}
-.div-grid .fi-like {color: green;}
+*/
 
 /*************** Animations & Transitions ********************************/
 /* Glowing Basket */

@@ -1,16 +1,10 @@
 *~
-Thumbs.db
-<<<<<<< HEAD
-_stuff/*
-config/*
+.project
+dev/*
 doc/html/*
 doc/def/*
 doc/*.tmp
-input/*
-config/config.ini
-/.project
-img/*
 export/*
-=======
->>>>>>> parent of 5cb9773... Local Config
-doc/notes.txt
+config.php
+
+!input/backup/.gitkeep

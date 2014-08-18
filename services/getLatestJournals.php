@@ -13,14 +13,12 @@
 // do not show system errors, these should be handled in js or below
 //error_reporting(0);
 
-require_once dirname(__FILE__).'/../sys/class.ListJournals.php';
+require_once('../config.php');
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
+$updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
-$config = parse_ini_file('../config/config.ini', TRUE);
-$apiUserKey = $config['journaltocs']['apiUserKey'];
-$updatesURL = $config['updates']['url'];
 $issn = $_GET['issn'];
 
 $jsonFile = "../input/updates.json.txt";
@@ -111,7 +109,9 @@ if (empty($toc)) {
 	echo 'ERROR!';
 } else {
 
-	echo '<h5>Most recent journal updates from the last 2 weeks</h5>';
+  $heading = __('Most recent journal updates from the last PLACEHOLDER days');
+  $heading = str_replace('PLACEHOLDER', $cfg->api->all->is_new_days, $heading);
+	echo '<h5>'.$heading.'</h5>';
 
     foreach ( $toc as $item ) {
         
@@ -123,7 +123,7 @@ if (empty($toc)) {
                     $date = new DateTime($item['date']);
                     /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
                     $td = strtotime($item['date']);
-                    $cdate = date("Y-m-d", strtotime("+2 weeks", $td));
+            $cdate = date("Y-m-d", strtotime("+{$cfg->api->all->is_new_days} day", $td));
                     /* compare with current date */
                     $curDate = new DateTime(); // today
                     $myDate   = new DateTime($cdate);
@@ -140,6 +140,7 @@ if (empty($toc)) {
                     }
                  }
             }
+
         }
     }
 }

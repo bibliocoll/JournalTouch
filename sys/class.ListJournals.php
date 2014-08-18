@@ -15,65 +15,62 @@
  * @todo (Ideas)
  * - Maybe fetch more infos per http://amsl.technology/issn-resolver/
  * -- Maybe automatically fetch publish frequency and create "paging" for journals?
- * - Switch config.ini > alink automatically if in network with fulltext access
- * - Use SFX to directly download article (or link to print)
+ * - Create some kind of (daily) cached version of the front page so it loads
+ *   faster (not having to generate everything everytime)
  */
 class ListJournals
 {
-
+    /// \brief \b OBJ @see config.php
     protected $csv_file;
-    protected $csv_col_title;
-    protected $csv_col_issn;
-    protected $csv_col_issn_alt;
-    protected $csv_important;
-    protected $csv_filter;
-    protected $csv_date;
-    protected $csv_separator;
-    protected $updates_display;
-    protected $placeholder;
-    protected $coverAPI;
+    /// \brief \b OBJ @see config.php
+    protected $csv_col;
+    /// \brief \b OBJ @see config.php
+    protected $covers;
+    /// \brief \b OBJ @see config.php
+    protected $api_all;
+    /// \brief \b OBJ @see config.php
+    protected $jt;
+    /// \brief \b ARY @see config.php
+    public $filters;
+    /// \brief \b OBJ @see config.php
+    public $prefs;
 
-    /// \brief \b STR Keeps value of csv's column 10
-    protected $csv_tags;
     /// \brief \b ARY All tags, key = tagname, value = total count of tag usage
     public $tagcloud = array();
 
+
+
+  /**
+   * @brief   Load settings from config.php and set properties
+   *
+   * @note    The mapping is unecessary, but maybe improves readability above
+   *          just $this->cfg = $cfg.
+   *
+   * @return \b void
+   */
     public function __construct()
-    /* load some configuration */
     {
-        $config = parse_ini_file(dirname(__FILE__).'/../config/config.ini', TRUE);
-        $this->csv_file = $config['csv']['file'];
-        $this->csv_col_title = $config['csv']['title'];
-        $this->csv_col_issn = $config['csv']['issn'];
-        $this->csv_col_issn_alt = $config['csv']['issn_alt'];
-        $this->csv_separator = $config['csv']['separator'];
-        $this->csv_important = $config['csv']['important'];
-        $this->csv_filter = $config['csv']['filter'];
-        $this->csv_date = $config['csv']['date'];
-        if (!empty($this->csv_filter)) {
-        $this->filters = $config['filter'];
-        }
-        $this->placeholder = $config['img']['placeholder'];
-        $this->coverAPI = $config['img']['api'];
-        $this->updates_display = $config['updates']['display'];
-        $this->updates = $config['updates']['outfile'];
-
-
-        $this->prefs = $config['prefs'];
-        $this->csv_metaPrint = $config['csv']['metaPrint'];
-        $this->csv_metaOnline = $config['csv']['metaOnline'];
-        $this->csv_metaGotToc = $config['csv']['metaGotToc'];
-        $this->csv_metaShelfmark = $config['csv']['metaShelfmark'];
-        $this->csv_metaWebsite = $config['csv']['metaWebsite'];
-
-        $this->csv_tags = $config['csv']['tags'];
+        require_once('config.php');
+        $this->csv_file = $cfg->csv_file;
+        $this->csv_col  = $cfg->csv_col;
+        $this->covers   = $cfg->covers;
+        $this->api_all  = $cfg->api->all;
+        $this->jt       = $cfg->api->jt;
+        $this->prefs    = $cfg->prefs;
+        $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
     }
 
-    /* helper function for compare (TODO: put in helper class with other things) */
+
+  /**
+   * @brief   Helper function for compare
+   *
+   * @todo    Put in helper class with other things
+   *
+   * @return \b BOL True if needle is found
+   */
     function search_array($needle, $haystack) {
-        if(in_array($needle, $haystack)) {
-            return true;
-        }
+        if(in_array($needle, $haystack)) return true;
+
         foreach($haystack as $element) {
             if(is_array($element) && $this->search_array($needle, $element))
                 return true;
@@ -81,11 +78,17 @@ class ListJournals
         return false;
     }
 
-    /* date comparison; return a date, if it is defined as 'current', else return false */
+
+  /**
+   * @brief   Date comparison
+   *
+   * @return \b DAT A date, if it is defined as 'current'
+   * @return \b BOL Else return false
+   */
     function isCurrent($date,$issn) {
         /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
         $td = strtotime($date);
-        $cdate = date("Y-m-d", strtotime("+1 month", $td));
+        $cdate = date("Y-m-d", strtotime("+{$this->api_all->is_new_days} day", $td));
         /* if there is a $date (e.g. from csv), compare with current date */
         $curDate = new DateTime(); // today
         $myDate   = new DateTime($cdate);
@@ -93,10 +96,9 @@ class ListJournals
         if ($myDate >= $curDate) {
              return $date;
         /* if csv_date is empty, check with a json list of current journals */
-        } else {
-            if ($this->updates_display) {
-                if (file_exists($this->updates)) {
-                    $json = $this->updates;
+        }
+        elseif ($this->jt->upd_show && file_exists($this->jt->outfile)) {
+                    $json = $this->jt->outfile;
                     $arrCmp = json_decode(file_get_contents($json), true);
                     if ($this->search_array($issn, $arrCmp)) {
                         foreach ($arrCmp as $k1=>$v) {
@@ -111,19 +113,16 @@ class ListJournals
                     } else {
                         return false;
                     }
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
             }
-        }
+        else {
+          return false;
+            }
     }
 
     /* get updates from json list */
     function getJournalUpdates() {
-        if (file_exists($this->updates)) {
-            $json = $this->updates;
+        if (file_exists($this->jt->outfile)) {
+            $json = $this->jt->outfile;
             $journalUpdates = json_decode(file_get_contents($json), true);
             return $journalUpdates;
         } else {
@@ -131,40 +130,52 @@ class ListJournals
         } 
     }
 
+
+  /**
+   * @brief   Get cover file for specified issn
+   *
+   * @note    The api check is a stub. @see config.php
+   *
+   * @return \b STR Path to cover file
+   */
     function getCover($issn) {
-        if ($this->coverAPI) {
-            $img = ""; // fill in your API URL here or from config
+        if ($this->covers->api) {
+            $img = $this->covers->api.$issn;
         } else {
             $png = 'img/'.$issn.'.png';
             $jpg = 'img/'.$issn.'.jpg';
             $gif = 'img/'.$issn.'.gif';
-            //  $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->placeholder);
-            if (file_exists($png)) { $img = $png; } else if (file_exists($jpg)) {$img = $jpg;} else if (file_exists($gif)) {$img = $gif;} else {$img= $this->placeholder;};
+            //  $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
+            if (file_exists($jpg)) {$img = $jpg;}
+            else if (file_exists($gif)) {$img = $gif;}
+            else if (file_exists($png)) { $img = $png; }
+            else {$img= $this->covers->placeholder;};
         }
         return $img;
-    }
-
-    function getFilters() {
-        if (!empty($this->filters)) {
-            return $this->filters;
-        } else {
-            return false;
-        }
     }
 
 
     /**
      * @brief   Returns all tags as tagcloud (prepared HTML)
      *
+     * @todo    $cssClasses and especially $ignoreTag aren't good parameters.
+     *          And further: only $limit is configurable in config.php...
+     *
      * @param $limit      \b INT  Minimum count that a tag has to be used to
      *                            show in the cloud
      * @param $cssClasses \b INT  Number of font sizes to show
-     * @param $ignoreTag  \b INT  Tag that should not be count as maximum,
-     *                            usually NoTag that is set in
-     *                            ListJournals::getJournals()
+     * @param $ignoreTag  \b INT  Tag that should not be shown in the cloud.
+     *                            Usually NoTag that is set in
+     *                            ListJournals::getJournals(). If you really
+     *                            want to show it (or hide something else),
+     *                            change it. Showing NoTag is useful for
+     *                            "editorial" work :)
      * @return \b STR <p>aragraph with tagcloud
      */
     function getTagcloud($limit = 0, $cssClasses = 5, $ignoreTag = 'NoTag') {
+        // if called directly with a limit setting use it. Otherwise use setting from config.php
+        if ($limit == 0 && $this->prefs->min_tag_freq) $limit = $this->prefs->min_tag_freq;
+
         if (!empty($this->tagcloud)) {
             $countcloud = $this->tagcloud;
             if ($limit) {
@@ -181,13 +192,13 @@ class ListJournals
             foreach ($this->tagcloud AS $tag => $count) {
               if ($count >= $limit) {
                 if ($tag == $ignoreTag) {
-                  $multiplier = $cssClasses;
+                  unset($this->tagcloud[$tag]);
                 }
                 else {
                   $multiplier = $this->GetTagSizeLogarithmic($count, $tag_min, $tag_max, 1, $cssClasses+1);
+                  $css = 'tagcloud'.$multiplier;
+                  $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
                 }
-                $css = 'tagcloud'.$multiplier;
-                $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
               }
             }
             $cloud = "<p align=\"center\">$cloud</p>";
@@ -196,6 +207,7 @@ class ListJournals
             return '';
         }
     }
+
 
     /**
      * @brief   Gets a logarithmic value for given values.
@@ -221,6 +233,7 @@ class ListJournals
       return round($minsize+round($a)*$treshold);
     }
 
+
     /**
      * @brief   Reads all csv columns into an array.
      *
@@ -237,39 +250,39 @@ class ListJournals
         $row = 1;
         $journals = array();
 
-        if (($handle = fopen($this->csv_file, "r")) !== FALSE) {
+        if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
             $tagcloud = array();
-            while (($data = fgetcsv($handle, 1000, $this->csv_separator)) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
                 $num = count($data);
 
                 /* check for alternative ISSN if strlen is < 1 */
-                $myISSN = (strlen($data[$this->csv_col_issn] < 1) ? $data[$this->csv_col_issn_alt] : $data[$this->csv_col_issn]);
+                $myISSN = (strlen($data[$this->csv_col->p_issn] < 1) ? $data[$this->csv_col->e_issn] : $data[$this->csv_col->p_issn]);
 
                 $row++;
-                $date = $this->isCurrent($data[$this->csv_date],$myISSN);
-                $filter = (!empty($data[$this->csv_filter]) ? strtolower($data[$this->csv_filter]) : "any");
-                $topJ = (!empty($data[$this->csv_important]) ? "topJ" : "");
+                $date = $this->isCurrent($data[$this->csv_col->date],$myISSN);
+                $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
+                $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);
-                $new = ($this->isCurrent($data[$this->csv_date],$myISSN) ? true : false);
+                $new = ($this->isCurrent($data[$this->csv_col->date],$myISSN) ? true : false);
 
                 // Meta
                 $metaPrint = $metaOnline = $metaGotToc = $metaShelfmark = $metaWebsite = '';
-                if ($this->prefs['showMeta'] == true) {
-                  $metaPrint  = (!empty($data[$this->csv_metaPrint]) ? 'fi-page-copy' : '');
-                  $metaOnline = (!empty($data[$this->csv_metaOnline]) ? 'fi-download' : '');
-                  $metaGotToc = (!empty($data[$this->csv_metaGotToc]) && $data[$this->csv_metaGotToc] != 'false') ? true : false;
+                if ($this->prefs->show_metainfo == true) {
+                  $metaPrint  = (!empty($data[$this->csv_col->metaPrint]) ? 'fi-page-copy' : '');
+                  $metaOnline = (!empty($data[$this->csv_col->metaOnline]) ? 'fi-download' : '');
+                  $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] != 'Jseek') ? true : false;
                   $metaGotToc = ($metaGotToc) ? 'fi-like' : 'fi-dislike';
-                  $metaShelfmark = (!empty($data[$this->csv_metaShelfmark]) ? $data[$this->csv_metaShelfmark] : '');
-                  $metaWebsite = (!empty($data[$this->csv_metaWebsite]) ? $data[$this->csv_metaWebsite] : '');
+                  $metaShelfmark = (!empty($data[$this->csv_col->metaShelfmark]) ? $data[$this->csv_col->metaShelfmark] : '');
+                  $metaWebsite = (!empty($data[$this->csv_col->metaWebsite]) ? $data[$this->csv_col->metaWebsite] : '');
                 }
 
                 // Tagcloud
                 $tags = '';
-                if ($this->prefs['showTagcloud'] == true) {
+                if ($this->prefs->show_tagcloud == true) {
                   $tags_row = array();
-                  if (!empty($data[$this->csv_tags])) {
+                  if (!empty($data[$this->csv_col->tags])) {
                     // remove space between comma and tag; better readable but...
-                    $tags_row = str_replace(', ', ',', $data[$this->csv_tags]);
+                    $tags_row = str_replace(', ', ',', $data[$this->csv_col->tags]);
                     // ...multi word tags have to be "js ready"
                     $tags_row = str_replace(' ', '_', $tags_row);
                     $tags_row = explode(',', $tags_row);
@@ -284,7 +297,7 @@ class ListJournals
 
                 $journals[] = array(
                     'id' => $myISSN,
-                    'title' => $data[$this->csv_col_title],
+                    'title' => $data[$this->csv_col->title],
                     'filter' => $filter,
                     'topJ' => $topJ,
                     'date' => $date,
@@ -311,3 +324,4 @@ class ListJournals
     }
 }
 ?>
+
