@@ -1,4 +1,4 @@
-/*!
+ /*!
  * jQuery conduit.js 
  * Interface actions for JournalTouch
  *
@@ -114,6 +114,9 @@ $(document).ready(function() {
 						$('#fillTOC').append('<h4><span id="fi-x-orbit">&nbsp;(<i class="fi-x" style="margin-right:0px"></i>)</span></h4>');
 				}
 
+				/* fill in $meta information and toggle */
+				$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
+
 				/* get Journal TOC */
 
 				$.ajax({
@@ -175,7 +178,7 @@ $(document).ready(function() {
 
 /* check on each Ajax-Call (gettoc) if item is already in cart */
 		$(document).ajaxComplete(function(){
-				
+
 				$(".item_name").each(function() {
 						htmlLink = $(this).text();
 						curItem = $(this);
@@ -445,8 +448,9 @@ $(document).ready(function() {
 						$('.search-filter img').trigger('unveil');}
 		});
 
-/* Open web link in popup */
-    $('a.popup').click(function(event) {
+/* Open web link in popup ('on' works only from Reveal box!)*/
+		$(document).on("click","a.popup",function() {
+			//    $('a.popup').click(function(event) {
       var url = $(this).attr("href");
       var dHeight = $(window).height() -280;
 
@@ -457,6 +461,6 @@ $(document).ready(function() {
         $("#externalFrame").attr('src',url);
       }, 100);
       return false;
-    });
+			});
 
 });
