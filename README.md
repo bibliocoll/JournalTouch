@@ -7,6 +7,7 @@ JournalTouch provides a touch-optimized interface for browsing current journal t
 @copyright 2014 MPI for Research on Collective Goods, Library
 
 @author Daniel Zimmel <zimmel@coll.mpg.de>
+@author Tobias Zeumer <tzeumer@verweisungsform.de>
 
 License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 
@@ -40,21 +41,26 @@ It must at least contain the journal titles and a valid ISSN; configure optional
 
 ### Configure sources for the TOCs
 
-External (TOC) contents will be read from *index.php* with an AJAX call to *ajax/getCrossRefTOC.php* or *ajax/getJournalTOC.php*, respectively. This file outputs HTML to the caller which is ready to be inserted in *index.php* (Todo: make it more API-like). You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
-If you want to read from other sources, write a similar handler like *ajax/getJournalTOC.php*.
+External (TOC) contents will be read from *index.php* with an AJAX call to *sys/ajax_toc.php*. This file outputs HTML to the caller which is ready to be inserted in *index.php*. You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
+If you want to read from other sources, expand the handler.
 
-By default there are two queries; the first one queries the (experimental) CrossRef-API, and as a fallback option, there is a query to JournalTocs. To change this precedence and for more details refer to the corresponding ajax function in *js/local/conduit.js*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). By default, if the frist query fails after five seconds, the first query gets canceled and the second query gets fired (change in *js/local/conduit.js*). Any other errors should be captured in the callers directly (*ajax/*).
+By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.getJournalInfos.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
-For example: 
+Error handling example: 
 
-*getCrossRefTOC.php*:
+*sys/class.getJournalInfos.php*:
 
-    if (empty($toc)) {
-    /* write something we can read from our calling script */
-    echo '<span id="noTOC"/>';
-    } 
+  private function ajax_response_toc($toc, $max_authors = 3) {
+    if (!isset($toc['sort'])) {
+        /* write something we can read from our caller script */
+        /* trigger error response from conduit.js; configure in index.php */
+        return '<span id="noTOC"/>';
+    }
+    elseif (count($toc['sort']) < 1) {
+        return '<span id="noTOC"/>';
+    }
 
 handle in *conduit.js*:
 
@@ -327,8 +333,6 @@ There is no administration module.
 A comfortable way is using the Google Drive API for managing the Spreadsheet data; just publish it on the web and read the file directly from Google Drive. Set in *config.php*.
 
 # TODO
-
-Make *ajax/get...TOC.php* more flexible (rewrite as a single class)
 
 More reliable integration of hotness
 
