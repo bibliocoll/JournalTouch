@@ -331,37 +331,29 @@ $journalUpdates = $lister->getJournalUpdates();
         $timestring = date('c', strtotime($j['date'])); //
         $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
+        $meta = false;
 
         $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-        $meta = (($j['metaGotToc']) ? '<i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a><br />' : "");
+        $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button small radius popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : "");
         $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-        $meta .= (($j['metaOnline'] && $link) ? '<i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a><br />': "<br />");
-        $meta .= (($j['metaWebsite']) ? '<i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a><br />': "<br />");
-        $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-        $meta .= (($j['metaShelfmark']) ? ' <i '.$print_meta.'> '.$j['metaShelfmark'].'</i>' : "&nbsp;");
-/***
-/* bibliocoll's try for nicer display of meta info
-        $meta = false;
-        $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-        $meta = (($j['metaGotToc']) ? '<span class="button small radius"><i class="'.$j['metaGotToc'].'"> </i> <a href="'.$jtoc.'" class="popup">'.__('TOC').'</a></span>' : "");
-        $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-        $meta .= (($j['metaOnline'] && $link) ? '<span class="button small radius"><i class="'.$j['metaOnline'].'"> </i><a href="'.$link.'" class="popup">'.__('Library').'</a></span>': "<br />");
-        $meta .= (($j['metaWebsite']) ? '<span class="button small radius"><i class="fi-home"> </i><a href="'.$j['metaWebsite'].'" class="popup">'.__('Journal').'</a></span>': "<br />");
+        $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button small radius popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': "<br />");
+        $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button small radius popup"><i class="fi-home"></i> '.__('Journal').'</a>': "<br />");
         $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
         $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
-*/
-
         $new_issues = ($j['new']) ? 'new-issue' : '';
         $len_title = strlen($j['title']);
         $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
-        echo '<div class="search-filter large-4 medium-5 small-9 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
+
+        echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
         echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
         echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
-        echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
+        /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
+        echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo" style="display:none"><div>'.$meta.'</div></span>' : "");
         echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
         echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
         echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
         echo '</div></div>';
+
       }
     ?>
   </div>
@@ -469,9 +461,23 @@ simpleCart.bind( 'beforeRemove' , function(){
   if ($(".row-1").length == false) {
 	  $("#shelfIsEmpty").show();
 	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+      // remove class to button (for CSS formatting)
+      $('#myArticles').removeClass('full');
   } else {
 	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
 	}
+});
+
+simpleCart.bind( 'afterAdd' , function(){
+   // add class to button (for CSS formatting)
+      $('#myArticles').addClass('full');
+});
+
+simpleCart.bind( 'load' , function(){
+   if (simpleCart.quantity() > 0) { 
+      // add class to button (for CSS formatting)
+      $('#myArticles').addClass('full');
+   }
 });
 
 </script>

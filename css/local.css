@@ -432,55 +432,53 @@ font-size: larger;
 
 /*************** Metainfo ************************************************/
 
+#fillTOC .metaInfo {
+position: relative;
+}
+
+#fillTOC .metaInfo .button {
+background-color: #CFCFCF;
+width: 150px;
+margin-right:20px;
+}
+
 .div-grid .fi-dislike {color: red;}
 .div-grid .fi-like {color: green;}
 
 .div-grid .metaInfo {
-color: #077dac;
+/*color: #077dac;
 position: absolute;
 font-size: 14.5pt;
+margin-left: 10px;*/
+position: absolute;
 margin-left: 10px;
+margin-top: -153px;
 }
 
 .div-grid .metaInfo div {
-margin-top: 163px;
+/*margin-top: 163px;
 background: none repeat scroll 0 0 #f2f2f2;
 border: 1px solid #d8d8d8;
 border-bottom-style: dotted;
 padding: 5px;
-width: 123px;
-}
-
-/***
-/* bibliocoll's try for nicer display of meta info
-
-.div-grid .metaInfo {
-color: #077dac;
-position: absolute;
-font-size: 14.5pt;
-margin-left: 10px;
-margin-top: -145px;
-}
-
-.div-grid .metaInfo div {
-margin-top: 190px;
-padding: 5px;
+width: 123px;*/
+padding: 10px;
+margin-top: 153px;
 width: 123px;
 }
 
 .div-grid .metaInfo .button {
 background-color: #CFCFCF;
-width: 120px;
+width: 110px;
 }
 
-.div-grid .metaInfo .button:hover {
+.metaInfo .button:hover {
 background-color: #949090!important;
 }
 
 .div-grid .metaInfo .button a {
 color: #000;
 }
-*/
 
 /*************** Animations & Transitions ********************************/
 /* Glowing Basket */
@@ -527,3 +525,4 @@ color: #000;
 }
 
 /* End Glowing Basket */
+
