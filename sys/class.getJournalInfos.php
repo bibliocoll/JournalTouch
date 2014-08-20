@@ -316,7 +316,7 @@ class GetJournalInfos {
         $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
 
         if ($this->api_all->articleLink == true) {
-          $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'" class="item_name">'.$toc['title'][$id].'</a></span>';
+          $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
         }
         else {
           $entry = '<span class="item_name">'.$authors.$toc['title'][$id].'</a></span>';
