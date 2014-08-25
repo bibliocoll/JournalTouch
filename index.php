@@ -382,7 +382,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <div class="small-12 columns">
       <div class="large-6 columns">
         <p>
-        <em>JournalTouch</em>© 2014 MPI Collective Goods Library, Bonn</p>
+        <em>JournalTouch</em> © 2014 MPI Collective Goods Library, Bonn</p>
         <p><?php echo __('Tables of contents provided by <a href="http://www.crossref.org">CrossRef</a> and <a href="http://www.journaltocs.ac.uk/">JournalTocs</a>') ?></p>
       </div>
       <div class="large-6 columns">
