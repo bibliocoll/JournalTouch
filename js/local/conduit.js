@@ -1,4 +1,4 @@
-/*!
+ /*!
  * jQuery conduit.js 
  * Interface actions for JournalTouch
  *
@@ -12,10 +12,8 @@
 
 $(document).ready(function() {
 
-/* run unveil plugin */
-		
+/* run unveil plugin on page load */
 		$("img").unveil();
-
 
 /* Alphabet button bar */
 /* currently for grid view only */
@@ -116,6 +114,9 @@ $(document).ready(function() {
 						$('#fillTOC').append('<h4><span id="fi-x-orbit">&nbsp;(<i class="fi-x" style="margin-right:0px"></i>)</span></h4>');
 				}
 
+				/* fill in $meta information and toggle */
+				$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
+
 				/* get Journal TOC */
 
 				$.ajax({
@@ -177,7 +178,7 @@ $(document).ready(function() {
 
 /* check on each Ajax-Call (gettoc) if item is already in cart */
 		$(document).ajaxComplete(function(){
-				
+
 				$(".item_name").each(function() {
 						htmlLink = $(this).text();
 						curItem = $(this);
@@ -323,7 +324,7 @@ $(document).ready(function() {
 /* check if there are any items in cart on opening */
 
 		$('#myArticles').click(function(){
-				if ($(".row-0").length == false) {
+				if (simpleCart.quantity() == 0) {
 						$("#shelfIsEmpty").show();
 						$('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
 				} else {
@@ -372,13 +373,20 @@ $(document).ready(function() {
 				$('#actions .button:not(.reset)').fadeIn("slow");
 		});
 
+		/* empty cart in checkout.php */
 		$('#emptyCart').click(function() {
 				simpleCart.empty();
+        $('#myArticles').removeClass('full');
 				$('.alert-box').show();
 				$('#emptyCartSuccess').fadeIn("slow");
 				$('#actionsResultBox, #actions').fadeOut("fast");
 				/* fade out and redirect after short time */
 				setTimeout(function(){$('#emptyCartSuccess').fadeOut();window.location.replace("index.php")},3000);
+		});
+
+		/* empty cart in index.php */
+		$('#emptyCartButton').click(function() {
+        $('#myArticles').removeClass('full');
 		});
 
 		/* checkout: check form for valid entries */
@@ -432,16 +440,17 @@ $(document).ready(function() {
 				// 'hide': function () { $(this).removeClass('show'); }
 				'minValLength': 2,
 				'onValTooSmall': function (val) {
-						$('#filterPanel').fadeOut();
 						$('h3.view-heading').toggle();
+						$('#filterPanel').fadeOut();
 				},
 				'noResults': '#search-form #noresults',
 				'onAfter': function() {
 						$('.search-filter img').trigger('unveil');}
 		});
 
-/* Open web link in popup */
-    $('a.popup').click(function(event) {
+/* Open web link in popup ('on' works only from Reveal box!)*/
+		$(document).on("click","a.popup",function() {
+			//    $('a.popup').click(function(event) {
       var url = $(this).attr("href");
       var dHeight = $(window).height() -280;
 
@@ -452,6 +461,6 @@ $(document).ready(function() {
         $("#externalFrame").attr('src',url);
       }, 100);
       return false;
-    });
+			});
 
 });

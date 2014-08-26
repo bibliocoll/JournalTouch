@@ -38,7 +38,7 @@
  * - Maybe always query CrossRef (for volume/issue and doi)
  *
  * @notes
- * 2014-07-18 Merged the followeing files into this class
+ * 2014-07-18 Merged the following files into this class
  * - ajax/getCrossRefTOC.php
  * - ajax/getJournalTOC.php
  *
