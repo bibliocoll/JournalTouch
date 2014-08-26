@@ -5,7 +5,7 @@
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
  * 
- * Time-stamp: "2014-07-10 16:16:18 zimmel"
+ * Time-stamp: "2014-08-19 11:03:34 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
@@ -59,8 +59,6 @@ class ListJournals
         $this->prefs    = $cfg->prefs;
         $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
     }
-
-
   /**
    * @brief   Helper function for compare
    *

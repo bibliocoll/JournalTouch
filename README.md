@@ -8,6 +8,8 @@ JournalTouch provides a touch-optimized interface for browsing current journal t
 
 @author Daniel Zimmel <zimmel@coll.mpg.de>
 
+@author Tobias Zeumer <tzeumer@verweisungsform.de>
+
 License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 
 # Dependencies
@@ -40,21 +42,26 @@ It must at least contain the journal titles and a valid ISSN; configure optional
 
 ### Configure sources for the TOCs
 
-External (TOC) contents will be read from *index.php* with an AJAX call to *ajax/getCrossRefTOC.php* or *ajax/getJournalTOC.php*, respectively. This file outputs HTML to the caller which is ready to be inserted in *index.php* (Todo: make it more API-like). You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
-If you want to read from other sources, write a similar handler like *ajax/getJournalTOC.php*.
+External (TOC) contents will be read from *index.php* with an AJAX call to *sys/ajax_toc.php*. This file outputs HTML to the caller which is ready to be inserted in *index.php*. You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
+If you want to read from other sources, expand the handler.
 
-By default there are two queries; the first one queries the (experimental) CrossRef-API, and as a fallback option, there is a query to JournalTocs. To change this precedence and for more details refer to the corresponding ajax function in *js/local/conduit.js*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). By default, if the frist query fails after five seconds, the first query gets canceled and the second query gets fired (change in *js/local/conduit.js*). Any other errors should be captured in the callers directly (*ajax/*).
+By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.getJournalInfos.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
-For example: 
+Error handling example: 
 
-*getCrossRefTOC.php*:
+*sys/class.getJournalInfos.php*:
 
-    if (empty($toc)) {
-    /* write something we can read from our calling script */
-    echo '<span id="noTOC"/>';
-    } 
+  private function ajax_response_toc($toc, $max_authors = 3) {
+    if (!isset($toc['sort'])) {
+        /* write something we can read from our caller script */
+        /* trigger error response from conduit.js; configure in index.php */
+        return '<span id="noTOC"/>';
+    }
+    elseif (count($toc['sort']) < 1) {
+        return '<span id="noTOC"/>';
+    }
 
 handle in *conduit.js*:
 
@@ -201,6 +208,10 @@ Basic configuration is in *index.php*. The CSS classes and IDs for the
 articles (``item_*``) need to exist in the HTML snippet that includes the table of contents (*ajax/getJournalTOC.php*).
 Actions for adding/removing/displaying the basket are handled in *js/local/conduit.js*.
 
+# Additional metadata
+
+-- TODO -- see *config.ini* and *index.php* for details on how to provide extra metadata. By default it is not shown.
+
 # Checkout options 
 
 The default checkout main file is *checkout.php*. The click actions are configured in *js/local/conduit.js*.
@@ -306,6 +317,12 @@ function ``saveArticlesAsEndnote()``.
 
 Caveat: in the current implementation, mapping of the metadata is limited to the given *simpleCart* fields (``item_name``, ``item_link``, ``item_options_``), and will be re-read from the source string when exporting. This is by no means a clean implementation. It would be better to modify the *simpleCart* js for a cleaner mapping (it is not really a mapping right now). (TODO)
 
+## Localization
+
+-- TODO -- 
+
+JournalTouch has multilanguage support by default. For details and customization see *locale/*.
+
 # Android Hints
 
 To port it to a native mobile environment, you can use Apache Cordova / PhoneGap.
@@ -318,17 +335,11 @@ A comfortable way is using the Google Drive API for managing the Spreadsheet dat
 
 # TODO
 
-Make *ajax/get...TOC.php* more flexible (rewrite as a single class)
-
 More reliable integration of hotness
 
 Wrap in Cordova iOS
 
 Authentication/Personalization
-
-Cover API integration
-
-Admin Module for manipulating the CSV file if you do not want to use Google Drive or set a local solution (Excel including hassles).
 
 Cleanup/Rewrite Checkout (GET/POST handling is a bit chaotic)
 
