@@ -56,7 +56,7 @@ $cfg->api->jt = new stdClass();
  * setting requries are JournalToc (JT) premium account.
  *
  * Note: You can get quite a lot without a JT premium account running
- * services/getJournalInfos.php (preferrably on a daily basis). But you still need a
+ * services/getJournalInfos.php (preferably on a daily basis). But you still need a
  * standard account.
  */
 $cfg->api->all->articleLink = true; // Should articles in fetched toc's be clickable links? Set false if not.
@@ -66,7 +66,7 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
-$cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularily
+$cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
 
 
 
@@ -142,7 +142,7 @@ $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing?
 
 $cfg->filter = array();
 /**
- * In the colum defined by $cfg->csv_col->filter you write a shorthand code for
+ * In the column defined by $cfg->csv_col->filter you write a shorthand code for
  * the filter. Here you map that shorthand code to some human readable name.
  *
  * Just to clarify why the value of that column is not taken directly: The
@@ -164,7 +164,7 @@ $cfg->filter['wir'] = __('Yet another filter');
 $cfg->covers = new stdClass();
 /**
  * Put covers into the img folder. The name must be the issn set the column
- * specified for $cfg->csv_col->issn. The extention might be jpg, gif or png.
+ * specified for $cfg->csv_col->issn. The extension might be jpg, gif or png.
  *
  * There are rumours that cover api's for journals exist, but no free service
  * is known. So, it's up to you how you get the covers (ask vendor, journal
