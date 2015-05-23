@@ -469,7 +469,7 @@ class GetJournalInfos {
    *          "Volume 13, Issue 1, Page 518-536, January 2014" in some Description
    *
    * @todo
-   * - <content:encoded> provides a formated reference - maybe just split()?
+   * - <content:encoded> provides a formatted reference - maybe just split()?
    * - <dc:identifier> DOIs! ("DOI 10.1002/adma.201400310") - not always that
    *   nice. Also always/often in <item rdf:about="xxx">?
    * - ignore titles like "Masthead: (Adv. Mater. 24/2014)",
@@ -642,7 +642,7 @@ class GetJournalInfos {
    * @todo
    * - IMPORTANT: Umm, $this->journal_row['date'] = $current_date is a bad idea?
    *   Is this column used somewhere for checks?!?
-   * - Maybe add (guess) update frequency to prevent unecessary checks?
+   * - Maybe add (guess) update frequency to prevent unnecessary checks?
    * - Just comparing year/vol/issue should be sufficient, a closer look doesn't
    *   make sense?
    *
