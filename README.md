@@ -136,7 +136,7 @@ For date display, you can use the timeago jQuery plugin (display timespans inste
 If you have access to a cover service API, set the setting in *config.php* to ``true``, and configure your service in *sys/class.ListJournals.php* (``getCover()``).
 By default, cover images will be loaded from *img/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config.php*).
 
-All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwith), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
+All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwidth), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
 
 ## PHP Classes
 
@@ -308,7 +308,7 @@ Filters will show up in the heading section of *index.php*, and their behavior o
 ## Export options
 
 Export for citation management software currently is very basic. To be
-able to digest heterogenous data from different sources (CrossRef,
+able to digest heterogeneous data from different sources (CrossRef,
 JournalTOCs...), some essential metadata fields should be normalized already
  in the TOC snippet (*ajax/get...*). 
 
