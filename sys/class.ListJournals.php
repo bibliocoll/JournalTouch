@@ -16,7 +16,7 @@
  * - Maybe fetch more infos per http://amsl.technology/issn-resolver/
  * -- Maybe automatically fetch publish frequency and create "paging" for journals?
  * - Create some kind of (daily) cached version of the front page so it loads
- *   faster (not having to generate everything everytime)
+ *   faster (not having to generate everything every time)
  */
 class ListJournals
 {
@@ -43,7 +43,7 @@ class ListJournals
   /**
    * @brief   Load settings from config.php and set properties
    *
-   * @note    The mapping is unecessary, but maybe improves readability above
+   * @note    The mapping is unnecessary, but maybe improves readability above
    *          just $this->cfg = $cfg.
    *
    * @return \b void

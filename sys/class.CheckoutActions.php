@@ -178,7 +178,7 @@ class CheckoutActions
             while (($data = fgetcsv($handle, 1000, "#")) !== FALSE) {
             
                 /* strip our csv again - ugly-ugly but the alternative is adding functions to simpleCart.js (only limited fields available) */
-                /* BEWARE! This will not match all data (too heterogenous), but at least some of it */
+                /* BEWARE! This will not match all data (too heterogeneous), but at least some of it */
                 preg_match('/[^:]*/',$data[0],$au); /* author */
                 preg_match('/^.*?:\s(.*)/',$data[0],$ti); /* title */
                 preg_match('/source:\s([^,]*)/',$data[2],$jo); /* journal title */
