@@ -4,7 +4,8 @@ JournalTouch provides a touch-optimized interface for browsing current journal t
 
 # License
 
-@copyright 2015 MPI for Research on Collective Goods, Library (Contact: fruehauf@coll.mpg.de)
+@copyright 2015 MPI for Research on Collective Goods, Library 
+(Contact: fruehauf@coll.mpg.de and krug@coll.mpg.de)
 
 @author Daniel Zimmel <dnl@mailbox.org>
 
