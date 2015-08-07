@@ -4,9 +4,10 @@ JournalTouch provides a touch-optimized interface for browsing current journal t
 
 # License
 
-@copyright 2014 MPI for Research on Collective Goods, Library
+@copyright 2015 MPI for Research on Collective Goods, Library 
+(Contact: fruehauf@coll.mpg.de and krug@coll.mpg.de)
 
-@author Daniel Zimmel <zimmel@coll.mpg.de>
+@author Daniel Zimmel <dnl@mailbox.org>
 
 @author Tobias Zeumer <tzeumer@verweisungsform.de>
 
@@ -28,6 +29,7 @@ already included:
 - quicksearch.js [http://deuxhuithuit.github.io/quicksearch/]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
 - php-gettext [https://launchpad.net/php-gettext]
+- citeproc-js [https://bitbucket.org/fbennett/citeproc-js/wiki/Home]
 
 # Live Demo
 
@@ -49,25 +51,53 @@ By default the query goes to JournalTocs and as a fallback option, there is a qu
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
-Error handling example: 
+
+
+#### Error handling example
 
 *sys/class.getJournalInfos.php*:
-
-  private function ajax_response_toc($toc, $max_authors = 3) {
-    if (!isset($toc['sort'])) {
-        /* write something we can read from our caller script */
-        /* trigger error response from conduit.js; configure in index.php */
-        return '<span id="noTOC"/>';
+```
+    private function ajax_response_toc($toc, $max_authors = 3) {
+        if (!isset($toc['sort']) || count($toc['sort']) < 1) {
+            /* write something we can read from our caller script */
+            return false;
+        }
+    ... (prepare actual response)
     }
-    elseif (count($toc['sort']) < 1) {
-        return '<span id="noTOC"/>';
-    }
+```
 
-handle in *conduit.js*:
+that `return false` leads to...
 
-		if ($(returnData).filter('#noTOC').length > 0) {
-		// ... fire a second event or write an error message...
-		}
+*sys/ajax_toc_fullhtml.php*
+```
+  $response = $getInfos->ajax_query_toc($issn);
+  if (!$response) {
+      $response = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body>';
+  } else {
+      $response .= '<script src="../js/local/frame.js"></script></body>';
+  }
+  echo $response;
+```
+
+... the iframe sending a postMessage with `{"ready": false}` to the main window,
+which handles that in *conduit.js*:
+
+```
+    $(window).on("message", function(event){
+        var myloc = document.location.protocol +"//"+ document.location.host;
+        if (event.originalEvent.origin === myloc) {
+            var message = event.originalEvent.data;
+            //console.log(message)
+            if (message.hasOwnProperty('ready')) {
+                // ready: issn-number of the frame -> frame ready. ready: false -> some kind of failure
+                if (message.ready) {
+                    ...
+                } else {
+                    $('.toc.preloader').hide();
+                    $('#tocNotFoundBox').fadeIn('slow');
+                }
+            ...
+```
 
 ### Checkout options
 
@@ -76,7 +106,7 @@ Checkout options are handled in *checkout.php* and the imported classes.
 Be sure to set writing rights to *export/*.
 
 ### User interaction
-User interaction is handled in *js/local/conduit.js*.
+User interaction is handled in *js/local/conduit.js*. and *js/local/frame.js*
 
 ### Other notes
 Important note for Excel CSV exports: expect problems if your file is not UTF-8 encoded! Excel does not export to UTF-8 by default.
@@ -136,7 +166,7 @@ For date display, you can use the timeago jQuery plugin (display timespans inste
 If you have access to a cover service API, set the setting in *config.php* to ``true``, and configure your service in *sys/class.ListJournals.php* (``getCover()``).
 By default, cover images will be loaded from *img/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config.php*).
 
-All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwith), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
+All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwidth), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
 
 ## PHP Classes
 
@@ -308,7 +338,7 @@ Filters will show up in the heading section of *index.php*, and their behavior o
 ## Export options
 
 Export for citation management software currently is very basic. To be
-able to digest heterogenous data from different sources (CrossRef,
+able to digest heterogeneous data from different sources (CrossRef,
 JournalTOCs...), some essential metadata fields should be normalized already
  in the TOC snippet (*ajax/get...*). 
 

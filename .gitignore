@@ -9,5 +9,6 @@ foundation-icons/*
 img/*
 input/*
 config.php
+js/vendor/*
 
 !input/backup/.gitkeep

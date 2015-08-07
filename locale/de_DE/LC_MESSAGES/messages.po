@@ -35,6 +35,11 @@ msgstr "JournalTouch <em><strong>beta</strong></em> - ein Bibliothekservice"
 msgid "Back to journal selection"
 msgstr "Zurück zur Übersicht"
 
+#: index.php:67
+#: checkout.php:52
+msgid "Language"
+msgstr "Sprache"
+
 #: checkout.php:60
 msgid "Send your feedback to the library"
 msgstr "Feedback an die Bibliothek senden"
@@ -755,8 +760,7 @@ msgstr "Abstract"
 #~ msgstr "Schlagwörter"
 #~ msgid "Classification"
 #~ msgstr "Klassifikation"
-#~ msgid "Language"
-#~ msgstr "Sprache"
+
 #~ msgid "Image"
 #~ msgstr "Bild"
 #~ msgid "Add Attachment"
