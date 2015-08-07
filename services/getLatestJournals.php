@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Run a regular check against JournalTocs for updates and store it to a JSON file
  * this is read by sys/class.ListJournals.php (getJournalUpdates())
@@ -14,6 +14,7 @@
 //error_reporting(0);
 
 require_once('../config.php');
+require_once('../sys/class.ListJournals.php');
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
@@ -28,9 +29,9 @@ function myget ($query,$xpath) {
   $result=array();
 
   foreach ($xpath->query($query) as $item) {
-    if (!empty($item->nodeValue)) { $result[]=trim($item->nodeValue);} 
+    if (!empty($item->nodeValue)) { $result[]=trim($item->nodeValue);}
   }
-	
+
   switch (sizeof($result)) {
   case 0: return ""; break; // if empty
   case 1: return $result[0]; break; // single
@@ -64,10 +65,10 @@ $x = $updateURL;
 $neuDom = new DOMDocument;
 
 $neuDom->load($x);
-$xpath = new DOMXPath( $neuDom ); 
+$xpath = new DOMXPath( $neuDom );
 
-$rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI); 
-$xpath->registerNamespace('x', $rootNamespace); 
+$rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI);
+$xpath->registerNamespace('x', $rootNamespace);
 
 // get the title second option (incl. vol/no = snatch from first item & cut pages) (beware!)
 $journalTitle = myget("//x:item[1]/dc:source",$xpath);
@@ -75,14 +76,14 @@ $journalTitle = preg_replace('/pp\..+/','',$journalTitle);
 if (empty($journalTitle)) { $journalTitle = myget("//x:channel/x:title",$xpath); }  // more robust
 $records = $xpath->query("//x:item");
 $toc = array();
- 
+
 foreach ( $records as $item ) {
 	$newDom = new DOMDocument;
 	$newDom->appendChild($newDom->importNode($item,true));
- 
-	$xpath = new DOMXPath( $newDom ); 
-	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI); 
-	$xpath->registerNamespace('x', $rootNamespace); 
+
+	$xpath = new DOMXPath( $newDom );
+	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI);
+	$xpath->registerNamespace('x', $rootNamespace);
 	$xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/");
     $xpath->registerNamespace("prism","http://prismstandard.org/namespaces/1.2/basic/");
 
@@ -95,9 +96,9 @@ foreach ( $records as $item ) {
     $date = myget("//dc:date",$xpath);
 
     $abstract = myget("//x:description",$xpath);
-  
+
 	$toc[] = array(
-        'title' => $title, 
+        'title' => $title,
         'link' => $link,
         'issn' => $issn,
         //'eIssn' => $eIssn,
@@ -114,12 +115,12 @@ if (empty($toc)) {
 	echo '<h5>'.$heading.'</h5>';
 
     foreach ( $toc as $item ) {
-        
+
         if (!empty($item['title'])) {
 
             if (!empty($item['issn'])) {
                 if (search_array($item['issn'], $journals)) {
-                     
+
                     $date = new DateTime($item['date']);
                     /* unless we use PHP 5.3 (with DateTime::sub), we need to add a timespan for comparison */
                     $td = strtotime($item['date']);
@@ -127,15 +128,15 @@ if (empty($toc)) {
                     /* compare with current date */
                     $curDate = new DateTime(); // today
                     $myDate   = new DateTime($cdate);
-                    
+
                     /* only store current dates (not older than the given date in $cdate) */
                     if ($myDate >= $curDate) {
                         print $item['title'] . ", last update on ".$item['date']."<br/>";
                         // save to array
                         array_push($upd, array(
-                            'issn' => $item['issn'], 
+                            'issn' => $item['issn'],
                             'date' => $item['date'],
-                            'title' => $item['title'], 
+                            'title' => $item['title'],
                             'timestr' => date('c', strtotime($item['date']))));
                     }
                  }

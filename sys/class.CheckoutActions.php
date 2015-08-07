@@ -12,7 +12,7 @@
  */
 class CheckoutActions
 {
-    
+
     protected $mail;
 
     protected $html;
@@ -25,10 +25,11 @@ class CheckoutActions
     {
         require('config.php');
         $this->mail = $cfg->mail;
+        $this->deflang = $cfg->prefs->default_lang;
     }
 
     function getArticlesAsHTML($file) {
-        
+
 /* this is most likely to break, please rewrite (works only because $i++ is in the last if-item in array order) */
         $this->html = ''; // clear if we have called it before (e.g. from mailer)
         $this->html.='<div class="panel">';
@@ -43,7 +44,7 @@ class CheckoutActions
                 $this->html.=$data[2].'<br/><hr/>';
             }
             fclose($handle);
-        
+
         }
 
         $this->html.='</div>';
@@ -59,36 +60,36 @@ class CheckoutActions
         $i = 1;
 
         foreach ($mylist as $key => $value) {
-        
+
 /* this is most likely to break, please rewrite (works only because $i++ is in the last if-item in array order) */
-        
+
             if (strpos($key, 'item_name_'.$i) !== false) {
                 $this->contents .= $value."#";
             }
-        
+
             elseif (strpos($key, 'item_link_'.$i) !== false) {
                 $this->contents .= $value . "#";
-            
+
             }
-        
+
             elseif (strpos($key, 'item_options_'.$i) !== false) {
                 $this->contents .= $value;
                 $this->contents .= "\r\n";
                 $i++;
-            } 
-        
+            }
+
         }
 
 
       /* save cart in a hashed filename */
         $length = 12;
-        $timestamp = date("m.d.y h:i:s"); 
+        $timestamp = date("m.d.y h:i:s");
         $hash = substr(hash('md5', $timestamp), 0, $length); // Hash it
         $rand_no = rand(0,500); // add a random number to make sure we do not write to the same file (e.g. two page requests in the same second)
 
         global $file;
         $file = "export/".$hash."-".$rand_no.".csv";
-        file_put_contents($file, $this->contents, LOCK_EX) or die("could not write to file!"); 
+        file_put_contents($file, $this->contents, LOCK_EX) or die("could not write to file!");
 
     }
 
@@ -115,9 +116,9 @@ class CheckoutActions
                 $email->Body     = '<h2>'.$this->mail->bodySalutation.'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->mail->bodyClosing.'</p>';
                 $email->AddAddress($user.'@'.$this->mail->domain);
             }
-            
-            
-    
+
+
+
 	/* add attachment (export only) TODO */
        if (isset($_POST['attachFile'])) {
          if ($_POST['attachFile'] == "endnote") {
@@ -142,7 +143,7 @@ class CheckoutActions
         } catch (Exception $e) {
             return $e->getMessage(); //Boring error messages from anything else!
         }
-        
+
     }
 
     function sendFeedback($email) {
@@ -167,7 +168,7 @@ class CheckoutActions
         } catch (Exception $e) {
             return $e->getMessage(); //Boring error messages from anything else!
         }
-        
+
     }
 
     function saveArticlesAsEndnote($file) {
@@ -176,7 +177,7 @@ class CheckoutActions
 
         if (($handle = fopen($file, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, "#")) !== FALSE) {
-            
+
                 /* strip our csv again - ugly-ugly but the alternative is adding functions to simpleCart.js (only limited fields available) */
                 /* BEWARE! This will not match all data (too heterogeneous), but at least some of it */
                 preg_match('/[^:]*/',$data[0],$au); /* author */
@@ -199,7 +200,7 @@ class CheckoutActions
 
         $fileEndnote = $file.".ris";
 
-        file_put_contents($fileEndnote, $this->endnote, LOCK_EX) or die("could not write Endnote to file!"); 
+        file_put_contents($fileEndnote, $this->endnote, LOCK_EX) or die("could not write Endnote to file!");
 
     }
 
