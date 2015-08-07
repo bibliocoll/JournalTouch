@@ -54,23 +54,21 @@ Please note: while you could set up an alternative ISSN in the config.php, it is
 
 #### Error handling example
 
-```
 *sys/class.getJournalInfos.php*:
-
+```
     private function ajax_response_toc($toc, $max_authors = 3) {
         if (!isset($toc['sort']) || count($toc['sort']) < 1) {
             /* write something we can read from our caller script */
             return false;
         }
-    ... prepare actual response
+    ... (prepare actual response)
     }
 ```
 
-that `return false` leads to
+that `return false` leads to...
 
+*sys/ajax_toc_fullhtml.php*
 ```
-sys/ajax_toc_fullhtml.php
-
   $response = $getInfos->ajax_query_toc($issn);
   if (!$response) {
       $response = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body>';
@@ -79,7 +77,8 @@ sys/ajax_toc_fullhtml.php
   }
   echo $response;
 ```
-the iframe sending a postMessage with `{"ready": false}` to the main window,
+
+... the iframe sending a postMessage with `{"ready": false}` to the main window,
 which handles that in *conduit.js*:
 
 ```
