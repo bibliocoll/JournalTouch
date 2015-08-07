@@ -4,7 +4,7 @@
  *
  * Read data from a file and put it in an array
  * Default is CSV, add a function for other formats
- * 
+ *
  * Time-stamp: "2014-08-19 11:03:34 zimmel"
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -50,7 +50,7 @@ class ListJournals
    */
     public function __construct()
     {
-        require_once('config.php');
+        require('config.php');
         $this->csv_file = $cfg->csv_file;
         $this->csv_col  = $cfg->csv_col;
         $this->covers   = $cfg->covers;
@@ -127,7 +127,7 @@ class ListJournals
             return $journalUpdates;
         } else {
             return false;
-        } 
+        }
     }
 
 

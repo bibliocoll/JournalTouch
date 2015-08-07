@@ -204,6 +204,12 @@ height: 80px;
 top: 5%;
 }
 
+iframe {
+    border: 1px solid  #879cc6;
+    outline: 0;
+}
+
+
 /*************** Orbit image slider **************************************/
 
 .orbit-bullets { display: none; }
@@ -358,6 +364,19 @@ text-align:right;
 line-height:90px;
 }
 
+.tocItem .columns.textbox {
+min-height: 90px;
+}
+
+/* buttons */
+.tocItem .columns.buttonbox {
+min-height: 90px;
+text-align:right;
+}
+
+.tocItem .columns {
+line-height:90px;
+}
 .toctitle a, .toctitle span, .abstract span {
 display:inline-block;
 line-height:normal;

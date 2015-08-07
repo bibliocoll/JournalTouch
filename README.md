@@ -50,25 +50,54 @@ By default the query goes to JournalTocs and as a fallback option, there is a qu
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
-Error handling example: 
 
+
+#### Error handling example
+
+'''
 *sys/class.getJournalInfos.php*:
 
-  private function ajax_response_toc($toc, $max_authors = 3) {
-    if (!isset($toc['sort'])) {
-        /* write something we can read from our caller script */
-        /* trigger error response from conduit.js; configure in index.php */
-        return '<span id="noTOC"/>';
+    private function ajax_response_toc($toc, $max_authors = 3) {
+        if (!isset($toc['sort']) || count($toc['sort']) < 1) {
+            /* write something we can read from our caller script */
+            return false;
+        }
+    ... prepare actual response
     }
-    elseif (count($toc['sort']) < 1) {
-        return '<span id="noTOC"/>';
-    }
+'''
 
-handle in *conduit.js*:
+that `return false` leads to
 
-		if ($(returnData).filter('#noTOC').length > 0) {
-		// ... fire a second event or write an error message...
-		}
+'''
+sys/ajax_toc_fullhtml.php
+
+  $response = $getInfos->ajax_query_toc($issn);
+  if (!$response) {
+      $response = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body>';
+  } else {
+      $response .= '<script src="../js/local/frame.js"></script></body>';
+  }
+  echo $response;
+'''
+the iframe sending a postMessage with `{"ready": false}` to the main window,
+which handles that in *conduit.js*:
+
+'''
+    $(window).on("message", function(event){
+        var myloc = document.location.protocol +"//"+ document.location.host;
+        if (event.originalEvent.origin === myloc) {
+            var message = event.originalEvent.data;
+            //console.log(message)
+            if (message.hasOwnProperty('ready')) {
+                // ready: issn-number of the frame -> frame ready. ready: false -> some kind of failure
+                if (message.ready) {
+                    ...
+                } else {
+                    $('.toc.preloader').hide();
+                    $('#tocNotFoundBox').fadeIn('slow');
+                }
+            ...
+'''
 
 ### Checkout options
 
@@ -77,7 +106,7 @@ Checkout options are handled in *checkout.php* and the imported classes.
 Be sure to set writing rights to *export/*.
 
 ### User interaction
-User interaction is handled in *js/local/conduit.js*.
+User interaction is handled in *js/local/conduit.js*. and *js/local/frame.js*
 
 ### Other notes
 Important note for Excel CSV exports: expect problems if your file is not UTF-8 encoded! Excel does not export to UTF-8 by default.

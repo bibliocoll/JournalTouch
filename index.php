@@ -18,6 +18,7 @@ require 'sys/class.ListJournals.php';
 $lister = new ListJournals();
 $journals = $lister->getJournals();
 $journalUpdates = $lister->getJournalUpdates();
+$href_lang = (isset($_GET['lang']) ? $_GET['lang'] : $lister->prefs->default_lang);
 ?>
 
 <!DOCTYPE html>
@@ -60,28 +61,28 @@ $journalUpdates = $lister->getJournalUpdates();
             <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
             <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo __('MPI favorites') ?></a></li>
             <li><a class="filter" id="new-issue" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
-            <?php
-                /* read all filters from the config file */
-                  foreach ($lister->filters as $key=>$f) {
-                  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
-                }
-            ?>
+<?php
+/* read all filters from the config file */
+foreach ($lister->filters as $key=>$f) {
+    print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
+}
+?>
           </ul>
         </li>
         <?php } ?>
         <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
         <li class="divider"></li>
-        <?php
-          // Nasty and only works with two languages ;)
-          if (isset($_GET['lang'])) {
-            $href_lang = ($_GET['lang'] == 'de_DE') ?  'en_US' : 'de_DE';
-          }
-          else {
-            $href_lang = 'en_US';
-          }
-          echo "<li><a id=\"switch-language\" href=\"index.php?lang=$href_lang\"><img src=\"locale/$href_lang.gif\" /></a></li>";
-        ?>
+        <li class="has-dropdown switch-language">
+            <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;<?php echo __('Language')?></a>
+            <ul class="dropdown">
+<?php
+    foreach ($lister->prefs->languages as $set_lang) {
+        if ($set_lang != $href_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
+    }
+?>
+            </ul>
+        </li>
       </ul>
     </section>
   </nav>
@@ -107,21 +108,21 @@ $journalUpdates = $lister->getJournalUpdates();
     <div class="small-12 medium-12 large-12 columns left">
       <h2><?php echo __('About') ?></h2>
       <p>
-        <?php
-          $lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-          $lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
-          echo $lib_teaser;
-        ?>
+<?php
+$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
+$lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
+echo $lib_teaser;
+?>
       </p>
       <p>
-        <?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-                      available, it will be indicated with an extra button.
-                      When you are finished, click on your basket to check out.
-                      You can now send the article information to your e-mail address, send a
-                      request for the PDF files to the library, or view/save it as a
-                      list. Export for citation management systems like Endnote is also available. <br/>
-                      The list of journals is a selection of the journals licensed to the library.')
-        ?>
+<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
+available, it will be indicated with an extra button.
+When you are finished, click on your basket to check out.
+You can now send the article information to your e-mail address, send a
+request for the PDF files to the library, or view/save it as a
+list. Export for citation management systems like Endnote is also available. <br/>
+The list of journals is a selection of the journals licensed to the library.')
+?>
       </p>
     </div>
   </div>
@@ -134,7 +135,7 @@ $journalUpdates = $lister->getJournalUpdates();
     </div>
     <div class="small-4 medium-3 large-3 columns right">
       <ul class="inline-list right">
-        <li><a class="button radius" href="checkout.php?action=contact"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+        <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
       </ul>
     </div>
   </div>
@@ -203,17 +204,17 @@ $journalUpdates = $lister->getJournalUpdates();
     <div class="medium-5 large-7 small-11 columns slideshow-wrapper">
       <div class="preloader"></div>
       <ul id="myorbit" data-orbit="" data-options="animation_speed: 1000;timer_speed: 3000;bullets: false">
-        <?php
-          /* /\* see Class setup *\/ */
-          foreach ($journals as $j) {
-            if (!empty($j['topJ'])) {
-              echo '<li data-orbit-slide="headline">';
-              echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
-              echo '<div class="orbit-caption">'.$j['title'].'</div>';
-              echo '</li>';
-            }
-          }
-        ?>
+<?php
+/* /\* see Class setup *\/ */
+foreach ($journals as $j) {
+    if (!empty($j['topJ'])) {
+        echo '<li data-orbit-slide="headline">';
+        echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
+        echo '<div class="orbit-caption">'.$j['title'].'</div>';
+        echo '</li>';
+    }
+}
+?>
       </ul>
     </div>
     <div class="medium-4 large-3 columns">
@@ -233,12 +234,12 @@ $journalUpdates = $lister->getJournalUpdates();
     <!-- A-Z button bar -->
     <div class="button-bar alphabet">
       <ul class="button-group radius">
-        <?php
-          $alphas = range('A', 'Z');
-          foreach ($alphas as $letter) {
-            echo '<li><a href="#" class="tiny button secondary">'.$letter.'</a></li>';
-          }
-        ?>
+<?php
+$alphas = range('A', 'Z');
+foreach ($alphas as $letter) {
+    echo '<li><a href="#" class="tiny button secondary">'.$letter.'</a></li>';
+}
+?>
       </ul>
     </div>
   </div>
@@ -275,13 +276,13 @@ $journalUpdates = $lister->getJournalUpdates();
 <div class="row">
   <div id="updateBox" class="small-12 columns">
     <ul>
-      <?php
-        if (!empty($journalUpdates)) {
-          foreach ($journalUpdates as $j) {
-            print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
-          }
-        }
-      ?>
+<?php
+if (!empty($journalUpdates)) {
+    foreach ($journalUpdates as $j) {
+        print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
+    }
+}
+?>
     </ul>
   </div>
 </div>
@@ -292,24 +293,24 @@ $journalUpdates = $lister->getJournalUpdates();
   <div class="small-12 columns">
     <h3><?php echo __('Browse all journals from A to Z (list view):') ?></h3>
     <dl class="accordion" data-accordion="">
-      <?php
-        /* see Class setup */
-        foreach ($journals as $j) {
-          /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-          $timestring = date('c', strtotime($j['date'])); //
-          $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
-          $new_issues = ($j['new']) ? 'new-issue' : '';
+<?php
+/* see Class setup */
+foreach ($journals as $j) {
+    /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
+    $timestring = date('c', strtotime($j['date'])); //
+    $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
+    $new_issues = ($j['new']) ? 'new-issue' : '';
 
-          echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-          echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
-          echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
-          echo $j['title'];
-          echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
-          echo '</a>';
-          echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
-          echo '</dd>';
-        }
-      ?>
+    echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
+    echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
+    echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
+    echo $j['title'];
+    echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
+    echo '</a>';
+    echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
+    echo '</dd>';
+}
+?>
     </dl>
   </div>
 </div>
@@ -324,38 +325,38 @@ $journalUpdates = $lister->getJournalUpdates();
     </div>
   </div>
   <div class="row" id="journalList">
-    <?php
-      /* see Class setup */
-      foreach ($journals as $j) {
-        /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-        $timestring = date('c', strtotime($j['date'])); //
-        $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
+<?php
+/* see Class setup */
+foreach ($journals as $j) {
+    /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
+    $timestring = date('c', strtotime($j['date'])); //
+    $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
-        $meta = false;
+    $meta = false;
 
-        $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-        $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button small radius popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : "");
-        $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-        $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button small radius popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': "<br />");
-        $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button small radius popup"><i class="fi-home"></i> '.__('Journal').'</a>': "<br />");
-        $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-        $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
-        $new_issues = ($j['new']) ? 'new-issue' : '';
-        $len_title = strlen($j['title']);
-        $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
+    $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
+    $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button small radius popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : "");
+    $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
+    $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button small radius popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': "<br />");
+    $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button small radius popup"><i class="fi-home"></i> '.__('Journal').'</a>': "<br />");
+    $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
+    $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+    $new_issues = ($j['new']) ? 'new-issue' : '';
+    $len_title = strlen($j['title']);
+    $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
-        echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-        echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
-        echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
-        /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
-        echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo" style="display:none"><div>'.$meta.'</div></span>' : "");
-        echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
-        echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
-        echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
-        echo '</div></div>';
+    echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
+    echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+    echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
+    /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
+    echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo" style="display:none"><div>'.$meta.'</div></span>' : "");
+    echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
+    echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
+    echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
+    echo '</div></div>';
 
-      }
-    ?>
+}
+?>
   </div>
   <!-- End Thumbnails -->
 
@@ -365,12 +366,12 @@ $journalUpdates = $lister->getJournalUpdates();
     <!-- This alert box will be switched on if something goes wrong (see conduit.js) -->
     <div data-alert="" id="tocAlertBox" class="alert-box warning invisible">
       <span id="tocAlertText"><?php echo __('Something seems to be wrong with the network') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
     </div>
     <!-- This alert box will be switched on if no tocs are found (see conduit.js) -->
     <div data-alert="" id="tocNotFoundBox" class="alert-box info invisible">
       <span id="tocAlertText"><?php echo __('No table of contents found! Are you interested in this title?') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
     </div>
     <a class="close-reveal-modal button radius alert">×</a>
   </div>
@@ -387,7 +388,7 @@ $journalUpdates = $lister->getJournalUpdates();
       </div>
       <div class="large-6 columns">
         <ul class="inline-list right">
-          <li><a class="button radius" href="checkout.php?action=contact"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+          <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
         </ul>
       </div>
     </div>
@@ -403,20 +404,20 @@ $journalUpdates = $lister->getJournalUpdates();
       <h1><?php echo __('Touch me!') ?></h1>
       <h2><?php echo __('What is this?') ?></h2>
       <p>
-        <?php
-          $lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-          $lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
-          echo $lib_teaser;
-        ?>
+<?php
+$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
+$lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
+echo $lib_teaser;
+?>
       </p>
       <p>
-        <?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-                      available, it will be indicated with an extra button.
-                      When you are finished, click on your basket to check out.
-                      You can now send the article information to your e-mail address, send a
-                      request for the PDF files to the library, or view/save it as a
-                      list. Export for citation management systems like Endnote is also available. <br/>
-                      The list of journals is a selection of the journals licensed to the library.') ?>
+<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
+available, it will be indicated with an extra button.
+When you are finished, click on your basket to check out.
+You can now send the article information to your e-mail address, send a
+request for the PDF files to the library, or view/save it as a
+list. Export for citation management systems like Endnote is also available. <br/>
+The list of journals is a selection of the journals licensed to the library.') ?>
       </p>
     </div>
   </div>
@@ -447,36 +448,50 @@ $journalUpdates = $lister->getJournalUpdates();
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
 <script>
 simpleCart({
-	checkout: {
-		type: "SendForm",
-		url: "checkout.php"
-	},
-	cartColumns: [
-		{ attr: "name" , label: "Name" } ,
-		{ view: "remove" , text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" , label: false }
-	]
+    checkout: {
+        type: "SendForm",
+        url: "checkout.php",
+        extra_data: {
+            lang: "<?php echo $href_lang ?>"
+        }
+    },
+    cartColumns: [
+        {
+            attr: "name" ,
+            label: "Name"
+        },
+        {
+            attr: "source",
+            label: "Source"
+        },
+        {
+            view: "remove" ,
+            text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" ,
+            label: false
+        }
+    ]
 });
 
 simpleCart.bind( 'beforeRemove' , function(){
-  if ($(".row-1").length == false) {
-	  $("#shelfIsEmpty").show();
-	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
-      // remove class to button (for CSS formatting)
-      $('#myArticles').removeClass('full');
+    if ($(".row-1").length == false) {
+        $("#shelfIsEmpty").show();
+        $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+        // remove class to button (for CSS formatting)
+        $('#myArticles').removeClass('full');
   } else {
-	  $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
-	}
+      $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
+    }
 });
 
 simpleCart.bind( 'afterAdd' , function(){
-   // add class to button (for CSS formatting)
-      $('#myArticles').addClass('full');
+    // add class to button (for CSS formatting)
+    $('#myArticles').addClass('full');
 });
 
 simpleCart.bind( 'load' , function(){
-   if (simpleCart.quantity() > 0) { 
-      // add class to button (for CSS formatting)
-      $('#myArticles').addClass('full');
+    if (simpleCart.quantity() > 0) {
+        // add class to button (for CSS formatting)
+        $('#myArticles').addClass('full');
    }
 });
 
