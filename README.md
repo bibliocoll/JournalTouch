@@ -57,6 +57,7 @@ Please note: while you could set up an alternative ISSN in the config.php, it is
 
 *sys/class.getJournalInfos.php*:
 ```
+'''
     private function ajax_response_toc($toc, $max_authors = 3) {
         if (!isset($toc['sort']) || count($toc['sort']) < 1) {
             /* write something we can read from our caller script */
