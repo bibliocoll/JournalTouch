@@ -36,6 +36,11 @@ msgstr ""
 msgid "Back to journal selection"
 msgstr ""
 
+#: index.php:67
+#: checkout.php:52
+msgid "Language"
+msgstr ""
+
 #: checkout.php:60
 msgid "Send your feedback to the library"
 msgstr ""

@@ -2,7 +2,7 @@
 
 Hints for wrapping the webapp in an Android app.
 
-Daniel Zimmel <zimmel@coll.mpg.de> 2014.
+Daniel Zimmel <dnl@mailbox.org> 2015.
 
 # Apache Cordova: Setup
 
