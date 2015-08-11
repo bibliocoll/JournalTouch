@@ -13,16 +13,17 @@
 
 function updateCartItemWithCitation( item, cit, cart ) {
     item.set('cite', cit);
+    item.set('citestr', JSON.stringify(cit));
     var modified = false;
+
     if (cit.hasOwnProperty('author') && cit.author.length > 0) {
         var newtitle = '';
         newtitle = cit.author[0].family;
         newtitle += (cit.author.length > 1? ', et al.: ' : ': ')+ cit.title;
-        item.set('name', newtitle);
-        modified = true;
-    }
-    if (cit.hasOwnProperty('container-title')) {
-        item.set("source", '('+ cit['container-title'] +')');
+        if (cit.hasOwnProperty('container-title')) {
+            newtitle += ' ('+cit['container-title']+')';
+        }
+        item.set('title', newtitle);
         modified = true;
     }
     modified && cart.update();
@@ -480,14 +481,14 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
                 // ready: issn-number of the frame -> frame ready. ready: false -> some kind of failure
                 if (message.ready) {
                     //TODO: transfer info on cartItems and mark them in the TOC list
-                    var cartinfo = { "cartSize": 0, "items": [] };
+                    var cartinfo = { "tocItems": 0, "items": [] };
                     simpleCart.each(simpleCart.find({'issn': message.ready}), function(item){
                         var iteminfo = {};
                         iteminfo.name = item.get('name');
                         iteminfo.doi = item.get('doi');
                         cartinfo.items.push(iteminfo);
                     });
-                    cartinfo.cartSize = cartinfo.items.length;
+                    cartinfo.tocItems = cartinfo.items.length;
                     var eFrm = document.getElementById('externalFrame');
                     eFrm.contentWindow.postMessage(cartinfo, myloc);
                     $('.toc.preloader').hide();
@@ -498,8 +499,9 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
                 }
             } else if (message.hasOwnProperty('add')) {
                 var added_item = simpleCart.add(message.add);
+                added_item.set('title', '');
                 if (message.add.doi !== '') {
-                    console.log("doi: "+ message.add.doi);
+                    //console.log("doi: "+ message.add.doi);
                     $.ajax({
                         dataType: "json",
                         url: "sys/ajax_cite.php?doi=" + message.add.doi

@@ -28,7 +28,12 @@ $href_lang = ($_POST['lang'] ?: ($_GET['lang'] ?: $action->deflang));
     <script src="js/foundation.min.js"></script>
     <script src="js/local/simpleCart.custom.js"></script>
     <script src="js/vendor/jquery.unveil.min.js"></script>
+    <script src="js/vendor/jquery.timeago.js"></script>
+    <script src="js/vendor/jquery.quicksearch.min.js"></script>
+    <script src="js/vendor/citeproc-js/xmldom.js"></script>
+    <script src="js/vendor/citeproc-js/citeproc.js"></script>
     <script src="js/local/conduit.js"></script>
+    <script src="js/local/cite.js"></script>
   </head>
   <body>
 
@@ -205,8 +210,7 @@ if(isset($_POST['mailer']))
     /* Mailer: show Form */
 
     /* save selection by default */
-    //FIXME: this is broken by using the "lang" url parameter all the time --krug 23.07.2015
-    if (empty($_GET)) { // do not show with any GET parameters
+    if (empty($_GET) || (count($_GET) == 1 && isset($_GET['lang']))) { // do not show with any GET parameters
         $action->saveArticlesAsCSV($mylist);
     }
 }
@@ -244,7 +248,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" disabled id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX"><s>BibTeX</s></label>
+                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX">BibTeX</label>
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
@@ -287,7 +291,7 @@ if ($users == false) {
             <div class="row">
                 <div class="small-12 columns">
 
-<?php if (empty($_GET)) { // do not show with any GET parameters
+<?php if (empty($_GET) || (count($_GET) == 1 && isset($_GET['lang']))) { // do not show with any GET parameters
     // if we have already sent an e-mail, read again from POST
     if (empty($file)) {$file = $_POST['file'];}
         print $action->getArticlesAsHTML($file);
