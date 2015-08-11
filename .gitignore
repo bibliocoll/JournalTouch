@@ -5,6 +5,8 @@ doc/html/*
 doc/def/*
 doc/*.tmp
 export/*
+input/*
 config.php
+js/vendor/*
 
 !input/backup/.gitkeep

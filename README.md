@@ -29,6 +29,7 @@ already included:
 - quicksearch.js [http://deuxhuithuit.github.io/quicksearch/]
 - PHPMailer [https://github.com/PHPMailer/PHPMailer]
 - php-gettext [https://launchpad.net/php-gettext]
+- citeproc-js [https://bitbucket.org/fbennett/citeproc-js/wiki/Home]
 
 # Live Demo
 

@@ -29,32 +29,23 @@ class CheckoutActions
     }
 
     function getArticlesAsHTML($file) {
-
 /* this is most likely to break, please rewrite (works only because $i++ is in the last if-item in array order) */
         $this->html = ''; // clear if we have called it before (e.g. from mailer)
         $this->html.='<div class="panel">';
 
         if (($handle = fopen($file, "r")) !== FALSE) {
-            $row = 0;
-            while (($data = fgetcsv($handle, 1000, "#")) !== FALSE) {
-                $num = count($data);
-                $row++;
-
+            while (($data = fgetcsv($handle, 0, "#")) !== FALSE) {
+                $this->html.= "<div data-citeproc-json='".$data[2]."'>";
                 $this->html.= '<h5><a href="'.$data[1].'">'.$data[0].'</a></h5>';
-                $this->html.=$data[2].'<br/><hr/>';
+                $this->html .='</div><hr/>';
             }
             fclose($handle);
-
         }
-
-        $this->html.='</div>';
-
+        $this->html.='<div id="citation"></div></div>';
         return $this->html;
-
     }
 
     function saveArticlesAsCSV($mylist) {
-
         /* fputcsv does not really work, because the simpleCart js array is one huge array ($i=count) */
 
         $i = 1;
@@ -68,6 +59,11 @@ class CheckoutActions
             }
 
             elseif (strpos($key, 'item_link_'.$i) !== false) {
+                $this->contents .= $value . "#";
+
+            }
+
+            elseif (strpos($key, 'item_citestr_'.$i) !== false) {
                 $this->contents .= $value . "#";
 
             }
@@ -176,7 +172,7 @@ class CheckoutActions
         $this->endnote = ''; // clear if we have called it before (e.g. from mailer)
 
         if (($handle = fopen($file, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, "#")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, "#")) !== FALSE) {
 
                 /* strip our csv again - ugly-ugly but the alternative is adding functions to simpleCart.js (only limited fields available) */
                 /* BEWARE! This will not match all data (too heterogeneous), but at least some of it */
