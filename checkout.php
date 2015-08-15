@@ -9,7 +9,6 @@ require 'sys/PHPMailer/PHPMailerAutoload.php';
 /* setup methods & objects */
 $email = new PHPMailer(true);
 $action = new CheckoutActions();
-$href_lang = ($_POST['lang'] ?: ($_GET['lang'] ?: $action->deflang));
 ?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
@@ -45,14 +44,14 @@ $href_lang = ($_POST['lang'] ?: ($_GET['lang'] ?: $action->deflang));
                 <li class="name">
                     <h1><?php echo __('JournalTouch <em><strong>beta</strong></em> - a library service') ?></h1>
                 </li>
-                <li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php?lang=<?php echo $href_lang ?>">&nbsp;Back</a></li>
+                <li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php?lang=<?php echo $action->prefs->current_lang ?>">&nbsp;Back</a></li>
             </ul>
 
             <section class="top-bar-section">
                 <!-- Right Nav Section -->
                 <ul class="right">
                     <li class="divider"></li>
-                    <li><a class="i fi-arrow-left" href="index.php?lang=<?php echo $href_lang ?>">&nbsp;<?php echo __('Back to journal selection') ?></a></li>
+                    <li><a class="i fi-arrow-left" href="index.php?lang=<?php echo $action->prefs->current_lang ?>">&nbsp;<?php echo __('Back to journal selection') ?></a></li>
                 </ul>
             </section>
         </nav>
@@ -105,7 +104,7 @@ if ($users == false) {
                         <!-- flag for POST (first page view contains POST values from cart; BEWARE: sending the form overwrites the values -->
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="feedback" value="true"/>
-                        <input type="hidden" name="lang" value="<?php echo $href_lang ?>">
+                        <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>">
                         <input class="radius button large right submit" type="submit" value="Submit">
                     </div>
                 </div>
@@ -266,7 +265,7 @@ if ($users == false) {
                         <!-- flag for POST (first page view contains POST values from cart; BEWARE: sending the form overwrites the values -->
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="file" value="<?php print $file; ?>"/>
-                        <input type="hidden" name="lang" value="<?php echo $href_lang ?>"/>
+                        <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>"/>
                         <input type="hidden" name="action" value=""/><!-- this one is important and is set from conduit.js! -->
                         <input class="radius button large right submit" type="submit" value="Submit">
                     </div>

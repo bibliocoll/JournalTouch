@@ -24,8 +24,8 @@ class CheckoutActions
     /* load some configuration */
     {
         require('config.php');
-        $this->mail = $cfg->mail;
-        $this->deflang = $cfg->prefs->default_lang;
+        $this->mail  = $cfg->mail;
+        $this->prefs = $cfg->prefs;
     }
 
     function getArticlesAsHTML($file) {
