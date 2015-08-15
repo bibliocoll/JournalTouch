@@ -4,7 +4,7 @@ dev/*
 doc/html/*
 doc/def/*
 doc/*.tmp
-export/*
+export/*.csv
 foundation-icons/*
 img/*
 input/*
