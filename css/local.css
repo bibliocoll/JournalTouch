@@ -500,8 +500,8 @@ position: absolute;
 font-size: 14.5pt;
 margin-left: 10px;*/
 position: absolute;
+bottom: 130px;
 margin-left: 10px;
-margin-top: -153px;
 }
 
 .div-grid .metaInfo div {
@@ -511,15 +511,14 @@ border: 1px solid #d8d8d8;
 border-bottom-style: dotted;
 padding: 5px;
 width: 123px;*/
-padding: 10px;
-margin-top: 153px;
-width: 123px;
+padding: 0 0 0 10px;
 }
 
 .div-grid .metaInfo .button {
 background-color: #CFCFCF;
 width: 110px;
 padding: 10px;
+margin-bottom: 8px;
 }
 
 .metaInfo .button:hover {
