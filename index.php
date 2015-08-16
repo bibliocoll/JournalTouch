@@ -348,7 +348,7 @@ foreach ($journals as $j) {
     echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
     echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
     /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
-    echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo" style="display:none"><div>'.$meta.'</div></span>' : "");
+    echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
     echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
     echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
     echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";

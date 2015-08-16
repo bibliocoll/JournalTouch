@@ -519,10 +519,12 @@ width: 123px;
 .div-grid .metaInfo .button {
 background-color: #CFCFCF;
 width: 110px;
+padding: 10px;
 }
 
 .metaInfo .button:hover {
 background-color: #949090!important;
+padding-top: 15px;
 }
 
 .div-grid .metaInfo .button a {
