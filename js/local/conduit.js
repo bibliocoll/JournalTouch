@@ -32,7 +32,8 @@ function updateCartItemWithCitation( item, cit, cart ) {
 $(document).ready(function() {
 
     /* run unveil plugin on page load */
-    $("img").unveil();
+    setTimeout(function() {$("img.getTOC").unveil();}, 1);
+    //$("img").unveil();
 
     /* Alphabet button bar */
     /* currently for grid view only */
