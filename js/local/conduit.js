@@ -460,16 +460,16 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     });
 
     /* Open web link in popup ('on' works only from Reveal box!)*/
-    //$(document).on("click","a.popup",function() {
-        ////    $('a.popup').click(function(event) {
-        //var url = $(this).attr("href");
-        //var dHeight = $(window).height() -280;
+    $(document).on("click","a.popup",function() {
+        //    $('a.popup').click(function(event) {
+        var url = $(this).attr("href");
+        var dHeight = $(window).height() -280;
 
-        ////$('#externalPopover').foundation('reveal', 'open');
-        //$("#externalFrame").height(dHeight);
-        //$("#externalFrame").attr('src',url);
-        //return false;
-    //});
+        $('#externalPopover').foundation('reveal', 'open');
+        $("#externalFrame").height(dHeight);
+        $("#externalFrame").attr('src',url);
+        return false;
+    });
 
     //listen for messages from #externalFrame ~~krug 05.08.2015
     $(window).on("message", function(event){
