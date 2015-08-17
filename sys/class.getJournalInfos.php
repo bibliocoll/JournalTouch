@@ -354,7 +354,7 @@ class GetJournalInfos {
      * @param $issn    \b STR  Journal ISSN
      * @param $user    \b STR  JournalToc user
      * @return \b BOL True if journal is found, else false
-ÿ   ??/
+     */
     public function journaltoc_fetch_meta($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?user=$user";
         $xml = simplexml_load_file($jtURL);
