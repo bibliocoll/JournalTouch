@@ -354,7 +354,7 @@ class GetJournalInfos {
      * @param $issn    \b STR  Journal ISSN
      * @param $user    \b STR  JournalToc user
      * @return \b BOL True if journal is found, else false
-     */
+ÿ   ??/
     public function journaltoc_fetch_meta($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?user=$user";
         $xml = simplexml_load_file($jtURL);
@@ -1110,10 +1110,28 @@ class GetJournalInfos {
 
         $link_dl = '';
         $icon = 'fi-page-export-pdf';
-        if ($this->toc['doi'][$tocID]) {
-            // Springer: http://link.springer.com/content/pdf/10.1007%2Fs10010-014-0174-x.pdf
-            if (strpos($this->toc['link'][$tocID], 'link.springer.com')) {
-                $link_dl = 'http://link.springer.com/content/pdf/'.rawurlencode($this->toc['doi'][$tocID]).'.pdf';
+        // STUFF THAT NEEDS SPECIAL REFORMATTING (not only DOI)
+        // AIP src: http://scitation.aip.org/content/aip/journal/adva/5/8/10.1063/1.4928386?TRACK=RSS
+        // AIP to: http://scitation.aip.org/deliver/fulltext/aip/journal/adva/5/8/1.4928386.pdf ('deliver/fulltext[...].pdf' instead 'content')
+        if (strpos($this->toc['link'][$tocID], 'scitation.aip.org')) {
+            $doi_split = explode('/', $this->toc['doi'][$tocID]);
+            $link_dl = preg_replace('/\?.*/', '', $this->toc['link'][$tocID]);
+            $link_dl = str_replace($doi_split[0].'/', '', $link_dl);
+            $link_dl = str_replace('/content', '/deliver/fulltext', $link_dl.'.pdf');
+        }
+        // IEEE: http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6787017 => http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6787017
+        elseif (strpos($this->toc['link'][$tocID], 'ieeexplore.ieee.org')) {
+            $link_dl = str_replace('xpl/articleDetails.jsp?arnumber=', 'stamp/stamp.jsp?tp=&arnumber=', $this->toc['link'][$tocID]);
+        }
+        // STUFF THAT CAN BE HANDLED WITH DOI ONLY
+        elseif ($this->toc['doi'][$tocID]) {
+            // IOP: http://iopscience.iop.org/2043-6262/6/3/035008/pdf/2043-6262_6_3_035008.pdf
+            if (strpos($this->toc['link'][$tocID], 'iopscience.iop.org')) {
+                $doi_split = explode('/', $this->toc['doi'][$tocID]);
+                unset($doi_split[0]);
+                $doi_path = implode('/', $doi_split);
+                $doi_file = implode('_', $doi_split).'.pdf';
+                $link_dl = "http://iopscience.iop.org/$doi_path/pdf/$doi_file";
             }
             // OSA: https://www.opticsinfobase.org/boe/viewmedia.cfm?uri=boe-5-7-2023&seq=0 (DOI-SUFFIX)
             elseif (strpos($this->toc['link'][$tocID], 'www.opticsinfobase.org')) {
@@ -1124,12 +1142,10 @@ class GetJournalInfos {
             elseif (strpos($this->toc['link'][$tocID], 'epubs.siam.org')) {
                 $link_dl = 'http://epubs.siam.org/doi/pdf/'.$this->toc['doi'][$tocID];
             }
-            // AIP: http://scitation.aip.org/deliver/fulltext/aip/journal/adva/4/6/1.4881881.pdf ('deliver/fulltext[...].pdf' instead 'content')
-            //elseif (strpos($this->toc['link'][$tocID], 'scitation.aip.org')) {
-            //$doi_split = explode('/', $this->toc['doi'][$tocID]);
-            //$link_dl = str_replace('/content', '/deliver/fulltext', $this->toc['link'][$tocID]).'.pdf';
-            //$link_dl = str_replace($doi_split[0].'/', '', $link_dl);
-            //}
+            // Springer: http://link.springer.com/content/pdf/10.1007%2Fs10010-014-0174-x.pdf
+            elseif (strpos($this->toc['link'][$tocID], 'link.springer.com')) {
+                $link_dl = 'http://link.springer.com/content/pdf/'.rawurlencode($this->toc['doi'][$tocID]).'.pdf';
+            }
             // Wiley: http://onlinelibrary.wiley.com/doi/10.1111/fwb.12352/pdf (DOI)
             elseif (strpos($this->toc['link'][$tocID], 'onlinelibrary.wiley.com')) {
                 $link_dl = 'http://onlinelibrary.wiley.com/doi/'.$this->toc['doi'][$tocID].'/pdf';
@@ -1139,10 +1155,6 @@ class GetJournalInfos {
                 $icon = 'fi-page-search';
                 $link_dl = $sfx_url.'&rft_id=info:doi/'.$this->toc['doi'][$tocID];
             }
-        }
-        // IEEE: http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6787017 => http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6787017
-        elseif (strpos($this->toc['link'][$tocID], 'ieeexplore.ieee.org')) {
-            $link_dl = str_replace('xpl/articleDetails.jsp?arnumber=', 'stamp/stamp.jsp?tp=&arnumber=', $this->toc['link'][$tocID]);
         }
         // SFX with title, date, issn
         elseif ($sfx_url) {
