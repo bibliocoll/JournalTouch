@@ -148,7 +148,7 @@ The list of journals is a selection of the journals licensed to the library.')
 <div id="externalPopover" class="reveal-modal" data-reveal="">
   <h3><?php echo __('External Source') ?></h3>
   <a class="close-reveal-modal button radius">×</a>
-  <iframe src="" id="externalFrame" width="90%" height="100%" scrollbars="yes"></iframe>
+  <!-- For preventing browser history for the iframe "externalFrame" it is dynamically created in conduit.js -->
 </div>
 <!-- end external link -->
 
