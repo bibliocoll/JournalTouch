@@ -52,6 +52,11 @@ $(document).ready(function() {
         $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
         $("#externalFrame").attr('src',href);
         $("#externalFrame").height(dHeight);
+
+        // Save current history length in data attribute. This way the back button only works for the iframe
+        // Todo: Hide it initially and only display button if user follows some link in frame
+        $("#frameBack").data("history", history.length);
+        //$("#frameBack").hide();
     }
 
     // Anything that should be done on closing a modal
