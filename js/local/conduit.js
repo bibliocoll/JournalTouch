@@ -32,7 +32,8 @@ function updateCartItemWithCitation( item, cit, cart ) {
 $(document).ready(function() {
 
     /* run unveil plugin on page load */
-    $("img").unveil();
+    setTimeout(function() {$("img.getTOC").unveil();}, 1);
+    //$("img").unveil();
 
     /* Alphabet button bar */
     /* currently for grid view only */
@@ -137,7 +138,9 @@ $(document).ready(function() {
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
         /* get Journal TOC */
-        $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
+        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+        $('#externalFrame').remove();
+        $('#externalPopover').append('<iframe src="" id="externalFrame" width="100%" height="100%" scrollbars="yes"></iframe>');
         $("#externalFrame").attr('src','sys/ajax_toc_fullhtml.php?issn='+ issn);
         var dHeight = $(window).height() -280;
         $("#externalFrame").height(dHeight);
@@ -460,16 +463,18 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     });
 
     /* Open web link in popup ('on' works only from Reveal box!)*/
-    //$(document).on("click","a.popup",function() {
-        ////    $('a.popup').click(function(event) {
-        //var url = $(this).attr("href");
-        //var dHeight = $(window).height() -280;
+    $(document).on("click","a.popup",function() {
+        //    $('a.popup').click(function(event) {
+        var url = $(this).attr("href");
+        var dHeight = $(window).height() -280;
 
-        ////$('#externalPopover').foundation('reveal', 'open');
-        //$("#externalFrame").height(dHeight);
-        //$("#externalFrame").attr('src',url);
-        //return false;
-    //});
+        $('#externalFrame').remove();
+        $('#externalPopover').append('<iframe src="" id="externalFrame" width="100%" height="100%" scrollbars="yes"></iframe>');
+        $('#externalPopover').foundation('reveal', 'open');
+        $("#externalFrame").height(dHeight);
+        $("#externalFrame").attr('src',url);
+        return false;
+    });
 
     //listen for messages from #externalFrame ~~krug 05.08.2015
     $(window).on("message", function(event){
