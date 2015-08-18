@@ -29,6 +29,16 @@ function updateCartItemWithCitation( item, cit, cart ) {
     modified && cart.update();
 }
 
+function createModalFrame(href) {
+    var dHeight = $(window).height() -280;
+
+    // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+    $('#externalFrame').remove();
+    $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+    $("#externalFrame").attr('src',href);
+    $("#externalFrame").height(dHeight);
+}
+
 $(document).ready(function() {
 
     /* run unveil plugin on page load */
@@ -137,13 +147,8 @@ $(document).ready(function() {
         /* fill in $meta information and toggle */
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
-        /* get Journal TOC */
-        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
-        $('#externalFrame').remove();
-        $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
-        $("#externalFrame").attr('src','sys/ajax_toc_fullhtml.php?issn='+ issn);
-        var dHeight = $(window).height() -280;
-        $("#externalFrame").height(dHeight);
+        /* get Journal TOC in iframe */
+        createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn);
 
 
         //$.ajax({
@@ -466,13 +471,9 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     $(document).on("click","a.popup",function() {
         //    $('a.popup').click(function(event) {
         var url = $(this).attr("href");
-        var dHeight = $(window).height() -280;
 
-        $('#externalFrame').remove();
-        $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+        createModalFrame(url);
         $('#externalPopover').foundation('reveal', 'open');
-        $("#externalFrame").height(dHeight);
-        $("#externalFrame").attr('src',url);
         return false;
     });
 
