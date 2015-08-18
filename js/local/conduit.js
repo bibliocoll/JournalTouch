@@ -29,16 +29,6 @@ function updateCartItemWithCitation( item, cit, cart ) {
     modified && cart.update();
 }
 
-function createModalFrame(href) {
-    var dHeight = $(window).height() -280;
-
-    // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
-    $('#externalFrame').remove();
-    $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
-    $("#externalFrame").attr('src',href);
-    $("#externalFrame").height(dHeight);
-}
-
 $(document).ready(function() {
 
     /* run unveil plugin on page load */
@@ -52,6 +42,23 @@ $(document).ready(function() {
         var char = $(this).text();
         //	$('html,body').animate({scrollTop: $('.getTOC').find('h5[title^="'+char+'"]').offset().top},'slow');
         $('html,body').animate({scrollTop: $('#view-grid div.div-grid').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top},'slow');
+    });
+
+    /* dynamically create iframe for toc and links */
+    function createModalFrame(href) {
+        var dHeight = $(window).height() -280;
+
+        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+        $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+        $("#externalFrame").attr('src',href);
+        $("#externalFrame").height(dHeight);
+    }
+
+    // Anything that should be done on closing a modal
+    // Currently only removing iframe
+    $(document).on('close.fndtn.reveal', '[data-reveal]', function () {
+      // Remove iframe to remove its content from browsing history
+      $('#externalFrame').remove();
     });
 
     /* modify alphabet */
@@ -149,7 +156,6 @@ $(document).ready(function() {
 
         /* get Journal TOC in iframe */
         createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn);
-
 
         //$.ajax({
         //url: 'sys/ajax_toc.php', [> first call <]
