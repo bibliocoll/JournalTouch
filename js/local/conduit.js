@@ -138,7 +138,9 @@ $(document).ready(function() {
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
         /* get Journal TOC */
-        $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
+        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+        $('#externalFrame').remove();
+        $('#externalPopover').append('<iframe src="" id="externalFrame" width="100%" height="100%" scrollbars="yes"></iframe>');
         $("#externalFrame").attr('src','sys/ajax_toc_fullhtml.php?issn='+ issn);
         var dHeight = $(window).height() -280;
         $("#externalFrame").height(dHeight);
@@ -466,6 +468,8 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
         var url = $(this).attr("href");
         var dHeight = $(window).height() -280;
 
+        $('#externalFrame').remove();
+        $('#externalPopover').append('<iframe src="" id="externalFrame" width="100%" height="100%" scrollbars="yes"></iframe>');
         $('#externalPopover').foundation('reveal', 'open');
         $("#externalFrame").height(dHeight);
         $("#externalFrame").attr('src',url);
