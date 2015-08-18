@@ -397,6 +397,12 @@ background-color:#FFFFFF!important;
 display:inline;
 }
 
+/*************** iframe TOC & Links **************************************/
+#externalPopover h3 {margin-top: 1.5rem;}
+#externalPopover .close-reveal-modal
+                    {right: 1.6875rem}
+#externalFrame      {width: 100%; height: 100%;}
+
 
 /*************** Shopping Bag ********************************************/
 
