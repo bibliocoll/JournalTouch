@@ -1,5 +1,4 @@
 <?php
-require_once 'sys/jt-gettext.php';
 /**
  * Configuration settings for JournalTouch
  *
@@ -31,6 +30,12 @@ $cfg->prefs = new stdClass();
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
+// set available languages; to add a new language, update \locale accordingly
+$cfg->prefs->languages[0]   = 'de_DE';
+$cfg->prefs->languages[1]   = 'en_US';
+$cfg->prefs->current_lang   = (isset($_REQUEST['lang'])) ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
+require_once 'sys/jt-gettext.php';
+
 $cfg->prefs->show_metainfo = false;     // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
 $cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
 $cfg->prefs->min_tag_freq  = 1;         // How often must a tag be used at least to show up in the tagcloud?
