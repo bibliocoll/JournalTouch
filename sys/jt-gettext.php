@@ -2,14 +2,12 @@
 // define constants
 define('PROJECT_DIR', realpath('./'));
 define('LOCALE_DIR', PROJECT_DIR .'/locale');
-define('DEFAULT_LOCALE', 'de_DE');
 
 require_once('php-gettext/gettext.inc');
 
-$supported_locales = array('en_US', 'de_DE');
 $encoding = 'UTF-8';
 
-$locale = (isset($_GET['lang']))? $_GET['lang'] : DEFAULT_LOCALE;
+$locale = (isset($_REQUEST['lang']))? $_REQUEST['lang'] : $cfg->prefs->current_lang;
 
 // gettext setup
 T_setlocale(LC_MESSAGES, $locale);

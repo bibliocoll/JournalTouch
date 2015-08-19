@@ -18,7 +18,6 @@ require 'sys/class.ListJournals.php';
 $lister = new ListJournals();
 $journals = $lister->getJournals();
 $journalUpdates = $lister->getJournalUpdates();
-$href_lang = (isset($_GET['lang']) ? $_GET['lang'] : $lister->prefs->default_lang);
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +77,7 @@ foreach ($lister->filters as $key=>$f) {
             <ul class="dropdown">
 <?php
     foreach ($lister->prefs->languages as $set_lang) {
-        if ($set_lang != $href_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
+        if ($set_lang != $lister->prefs->current_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
     }
 ?>
             </ul>
@@ -135,7 +134,7 @@ The list of journals is a selection of the journals licensed to the library.')
     </div>
     <div class="small-4 medium-3 large-3 columns right">
       <ul class="inline-list right">
-        <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+        <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
       </ul>
     </div>
   </div>
@@ -366,12 +365,12 @@ foreach ($journals as $j) {
     <!-- This alert box will be switched on if something goes wrong (see conduit.js) -->
     <div data-alert="" id="tocAlertBox" class="alert-box warning invisible">
       <span id="tocAlertText"><?php echo __('Something seems to be wrong with the network') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
     </div>
     <!-- This alert box will be switched on if no tocs are found (see conduit.js) -->
     <div data-alert="" id="tocNotFoundBox" class="alert-box info invisible">
       <span id="tocAlertText"><?php echo __('No table of contents found! Are you interested in this title?') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
     </div>
     <a class="close-reveal-modal button radius alert">×</a>
   </div>
@@ -388,7 +387,7 @@ foreach ($journals as $j) {
       </div>
       <div class="large-6 columns">
         <ul class="inline-list right">
-          <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $href_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+          <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
         </ul>
       </div>
     </div>
@@ -452,7 +451,7 @@ simpleCart({
         type: "SendForm",
         url: "checkout.php",
         extra_data: {
-            lang: "<?php echo $href_lang ?>"
+            lang: "<?php echo $lister->prefs->current_lang ?>"
         }
     },
     cartColumns: [

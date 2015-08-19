@@ -59,8 +59,6 @@ class ListJournals
         $this->prefs    = $cfg->prefs;
         $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
     }
-
-
   /**
    * @brief   Helper function for compare
    *
@@ -324,3 +322,4 @@ class ListJournals
     }
 }
 ?>
+
