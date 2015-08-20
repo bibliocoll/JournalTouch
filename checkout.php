@@ -299,6 +299,14 @@ if ($users == false) {
                 </div>
             </div>
 
+<!-- start external link -->
+<div id="externalPopover" class="reveal-modal" data-reveal="">
+  <h3><?php echo __('External Source') ?></h3>
+  <a id="frameBack" class="button round" data-history="0" onclick="if ($(this).data('history') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a>
+  <a class="close-reveal-modal button radius">×</a>
+  <!-- For preventing browser history for the iframe "externalFrame" it is dynamically created in conduit.js -->
+</div>
+<!-- end external link -->
 <!-- End View -->
 
 <!-- Start Save/Export -->

@@ -29,6 +29,21 @@ function updateCartItemWithCitation( item, cit, cart ) {
     modified && cart.update();
 }
 
+/* dynamically create iframe for toc and links */
+function createModalFrame(href) {
+    var dHeight = $(window).height() -280;
+
+    // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+    $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+    $("#externalFrame").attr('src',href);
+    $("#externalFrame").height(dHeight);
+
+    // Save current history length in data attribute. This way the back button only works for the iframe
+    // Todo: Hide it initially and only display button if user follows some link in frame
+    $("#frameBack").data("history", history.length);
+    //$("#frameBack").hide();
+}
+
 $(document).ready(function() {
 
     /* run unveil plugin on page load */
@@ -43,21 +58,6 @@ $(document).ready(function() {
         //	$('html,body').animate({scrollTop: $('.getTOC').find('h5[title^="'+char+'"]').offset().top},'slow');
         $('html,body').animate({scrollTop: $('#view-grid div.div-grid').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top},'slow');
     });
-
-    /* dynamically create iframe for toc and links */
-    function createModalFrame(href) {
-        var dHeight = $(window).height() -280;
-
-        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
-        $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
-        $("#externalFrame").attr('src',href);
-        $("#externalFrame").height(dHeight);
-
-        // Save current history length in data attribute. This way the back button only works for the iframe
-        // Todo: Hide it initially and only display button if user follows some link in frame
-        $("#frameBack").data("history", history.length);
-        //$("#frameBack").hide();
-    }
 
     // Anything that should be done on closing a modal
     // Currently only removing iframe
