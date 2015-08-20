@@ -204,11 +204,6 @@ height: 80px;
 top: 5%;
 }
 
-iframe {
-    border: 1px solid  #879cc6;
-    outline: 0;
-}
-
 
 /*************** Orbit image slider **************************************/
 
@@ -396,6 +391,19 @@ background-color:#FFFFFF!important;
 #TOCbox h4, #TOCbox h5 {
 display:inline;
 }
+
+/*************** iframe TOC & Links **************************************/
+iframe {
+    border: 1px solid  #879cc6;
+    outline: 0;
+}
+
+#externalPopover h3 {margin-top: 1.5rem;}
+#externalPopover .close-reveal-modal
+                    {right: 1.6875rem}
+#externalPopover #frameBack
+                    {position: absolute; right: 9.5rem; top: 2.2rem;}
+#externalFrame      {width: 100%; height: 100%;}
 
 
 /*************** Shopping Bag ********************************************/
