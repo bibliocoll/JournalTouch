@@ -44,6 +44,28 @@ $(document).ready(function() {
         $('html,body').animate({scrollTop: $('#view-grid div.div-grid').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top},'slow');
     });
 
+    /* dynamically create iframe for toc and links */
+    function createModalFrame(href) {
+        var dHeight = $(window).height() -280;
+
+        // If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
+        $('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+        $("#externalFrame").attr('src',href);
+        $("#externalFrame").height(dHeight);
+
+        // Save current history length in data attribute. This way the back button only works for the iframe
+        // Todo: Hide it initially and only display button if user follows some link in frame
+        $("#frameBack").data("history", history.length);
+        //$("#frameBack").hide();
+    }
+
+    // Anything that should be done on closing a modal
+    // Currently only removing iframe
+    $(document).on('close.fndtn.reveal', '[data-reveal]', function () {
+      // Remove iframe to remove its content from browsing history
+      $('#externalFrame').remove();
+    });
+
     /* modify alphabet */
     /* currently limited to grid view */
     function showActiveLettersOnly() {
@@ -137,12 +159,8 @@ $(document).ready(function() {
         /* fill in $meta information and toggle */
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
-        /* get Journal TOC */
-        $("#externalFrame").attr('src','about:blank'); // clear previously loaded page;
-        $("#externalFrame").attr('src','sys/ajax_toc_fullhtml.php?issn='+ issn);
-        var dHeight = $(window).height() -280;
-        $("#externalFrame").height(dHeight);
-
+        /* get Journal TOC in iframe */
+        createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn);
 
         //$.ajax({
         //url: 'sys/ajax_toc.php', [> first call <]
@@ -461,16 +479,14 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     });
 
     /* Open web link in popup ('on' works only from Reveal box!)*/
-    //$(document).on("click","a.popup",function() {
-        ////    $('a.popup').click(function(event) {
-        //var url = $(this).attr("href");
-        //var dHeight = $(window).height() -280;
+    $(document).on("click","a.popup",function() {
+        //    $('a.popup').click(function(event) {
+        var url = $(this).attr("href");
 
-        ////$('#externalPopover').foundation('reveal', 'open');
-        //$("#externalFrame").height(dHeight);
-        //$("#externalFrame").attr('src',url);
-        //return false;
-    //});
+        createModalFrame(url);
+        $('#externalPopover').foundation('reveal', 'open');
+        return false;
+    });
 
     //listen for messages from #externalFrame ~~krug 05.08.2015
     $(window).on("message", function(event){
