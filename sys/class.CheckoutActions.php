@@ -36,7 +36,7 @@ class CheckoutActions
         if (($handle = fopen($file, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 0, "#")) !== FALSE) {
                 $this->html.= "<div data-citeproc-json='".$data[2]."'>";
-                $this->html.= '<h5><a href="'.$data[1].'">'.$data[0].'</a></h5>';
+                $this->html.= '<h5><a href="'.$data[1].'" class="popup">'.$data[0].'</a></h5>';
                 $this->html .='</div><hr/>';
             }
             fclose($handle);
