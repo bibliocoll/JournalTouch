@@ -80,6 +80,12 @@ class ListJournals
   /**
    * @brief   Date comparison
    *
+   * @todo    Hmm, checking just by date is pretty pointless, because it could
+   *          easily done via javascript in index.php by just returning the date
+   *          from input.csv.
+   *          This method should just override this date, if there is a json 
+   *          list - but I guess this won't be the usual case...
+   *
    * @return \b DAT A date, if it is defined as 'current'
    * @return \b BOL Else return false
    */
@@ -257,11 +263,11 @@ class ListJournals
                 $myISSN = (strlen($data[$this->csv_col->p_issn] < 1) ? $data[$this->csv_col->e_issn] : $data[$this->csv_col->p_issn]);
 
                 $row++;
-                $date = $this->isCurrent($data[$this->csv_col->date],$myISSN);
+                $date = $data[$this->csv_col->date];
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
                 $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);
-                $new = ($this->isCurrent($data[$this->csv_col->date],$myISSN) ? true : false);
+                $new = $this->isCurrent($data[$this->csv_col->date],$myISSN);
 
                 // Meta
                 $metaPrint = $metaOnline = $metaGotToc = $metaShelfmark = $metaWebsite = '';

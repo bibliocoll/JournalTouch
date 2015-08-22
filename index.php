@@ -297,7 +297,7 @@ if (!empty($journalUpdates)) {
 /* see Class setup */
 foreach ($journals as $j) {
     /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-    $timestring = date('c', strtotime($j['date'])); //
+    $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
     $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
     $new_issues = ($j['new']) ? 'new-issue' : '';
 
@@ -329,7 +329,7 @@ foreach ($journals as $j) {
 /* see Class setup */
 foreach ($journals as $j) {
     /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-    $timestring = date('c', strtotime($j['date'])); //
+    $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
     $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
     $meta = false;
