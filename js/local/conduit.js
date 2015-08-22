@@ -118,15 +118,19 @@ $(document).ready(function() {
 
         $('#fillTOC').remove(); // clean up
         $('#tocAlertBox, #tocNotFoundBox').hide(); // clean up
-        if ($(this).is('.panel')) { var issn = $(this).prevAll('img').attr('id').trim();
+        if ($(this).is('.panel')) { 
+            var issn = $(this).prevAll('img').attr('id').trim();
+            var age  = $(this).prevAll('img').attr('data-age');
         } else {
             var issn = $(this).attr('id').trim();
+            //TODO: GET AGE SOMEHOW TOO
         }
         // append current issn to error boxes by default
         $('#tocModal div.alert-box a').each(function() {
             var _href = $(this).attr('href');
             // cut any ISSN value from end of string (9 chars) and append new ISSN
             $(this).attr('href', _href.substring(0, _href.length - 9) + issn);
+            //TODO: GET AGE SOMEHOW TOO
         });
 
         cur = $(this);
@@ -160,7 +164,7 @@ $(document).ready(function() {
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
         /* get Journal TOC in iframe */
-        createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn);
+        createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn +'&age='+ age);
 
         //$.ajax({
         //url: 'sys/ajax_toc.php', [> first call <]
@@ -198,13 +202,13 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
         //});
         /* add a fancy paperclip as a reminder what the user has clicked in this session */
         // $('.'+issn).each(function() {
-        // 		if (($(this).hasClass('accordion'))) {
-        // 				$(this).children('.fi-paperclip').remove();
-        // 				$(this).prepend('<i class="fi-paperclip large"></i>');
-        // 		} else {
-        // 				$(this).prev('.fi-paperclip').remove();
-        // 				$(this).before('<i class="fi-paperclip large"></i>');
-        // 		}
+        //    if (($(this).hasClass('accordion'))) {
+        //        $(this).children('.fi-paperclip').remove();
+        //        $(this).prepend('<i class="fi-paperclip large"></i>');
+        //    } else {
+        //        $(this).prev('.fi-paperclip').remove();
+        //        $(this).before('<i class="fi-paperclip large"></i>');
+        //    }
         // });
     });
 
@@ -233,32 +237,32 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     /* click action for fulltext link from toc */
     /* open links in popup (handy when you have a touchscreen in fullscreen mode, but not imperative!) */
     // $(document).on("click","a.item_name",function() {
-    // 		event.preventDefault();
+    //    event.preventDefault();
     //     event.stopPropagation();
     //     window.open(this.href, 'targetWindow', 'left=20,top=20,width=800,height=600,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=0');
     // });
 
     /* try to find an abstract on the link (dirty screenscraping, HIGHLY EXPERIMENTAL) */
     // $(document).on("click","a.item_name",function() {
-    // 		event.preventDefault();
+    //    event.preventDefault();
     //     event.stopPropagation();
-    // 		var link = $(this).attr("href");alert(link);
-    // 		blob = $(this);
-    // 		$.ajax({
-    // 				url: 'ajax/getAbstract.php',
-    // 				data: {'link' : link }
-    // 		}).done(function(returnData) {
-    // 				$(blob).append('<p>'+returnData+'</p>');
-    // 				//
-    // 		}).fail(function() {
-    // 				//
-    // 		});
+    //    var link = $(this).attr("href");alert(link);
+    //    blob = $(this);
+    //    $.ajax({
+    //        url: 'ajax/getAbstract.php',
+    //        data: {'link' : link }
+    //    }).done(function(returnData) {
+    //        $(blob).append('<p>'+returnData+'</p>');
+    //        //
+    //    }).fail(function() {
+    //        //
+    //    });
     // });
 
 
     /* toggle abstracts - we need "on" to access the ajax loaded content, "element.click" will not work */
     //$(document).on("click","a.abstract",function() {
-    ////	$(this).parent().prev().children("div.abstract").toggle("easeOutCubic");
+    ////  $(this).parent().prev().children("div.abstract").toggle("easeOutCubic");
     //$(this).parent().next("div.abstract").fadeToggle();
     //});
 
@@ -379,7 +383,7 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
         /* show reset buttons */
         $('#resetActions, #emptyCart').show();
         /* hide everything inside our box without the class */;
-        //	$('div#actionsResultBox').find('div').show();
+        //  $('div#actionsResultBox').find('div').show();
         $('.'+clickedId).find("*").not(".error").show();
         $('div#actionsResultBox').show();
         /* show everything which has the clicked id as a class */
