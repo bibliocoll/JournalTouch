@@ -50,6 +50,8 @@ $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=adv
 $cfg->prefs->show_dl_button = false;    // Tries to create a direct download link (pdf) for a toc entry
 $cfg->prefs->sfx           = '';        // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
 
+$cfg->prefs->cache_enable  = true;      // Caches fetched tocs so they only are processed once there is a new issue
+
 
 $cfg->api = new stdClass();
 $cfg->api->all = new stdClass();
