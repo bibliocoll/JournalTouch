@@ -55,7 +55,7 @@ $(document).ready(function() {
 
     $('.alphabet a').click(function() {
         var char = $(this).text();
-        //	$('html,body').animate({scrollTop: $('.getTOC').find('h5[title^="'+char+'"]').offset().top},'slow');
+        //  $('html,body').animate({scrollTop: $('.getTOC').find('h5[title^="'+char+'"]').offset().top},'slow');
         $('html,body').animate({scrollTop: $('#view-grid div.div-grid').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top},'slow');
     });
 
@@ -118,13 +118,16 @@ $(document).ready(function() {
 
         $('#fillTOC').remove(); // clean up
         $('#tocAlertBox, #tocNotFoundBox').hide(); // clean up
-        if ($(this).is('.panel')) { 
-            var issn = $(this).prevAll('img').attr('id').trim();
-            var age  = $(this).prevAll('img').attr('data-age');
-        } else {
-            var issn = $(this).attr('id').trim();
-            //TODO: GET AGE SOMEHOW TOO
-        }
+
+        // Get data for specific journal
+        var issn    = $(this).prevAll('span').attr('data-issn').trim();
+        var pubdate = $(this).prevAll('span').attr('data-pubdate');
+
+        // Check if cache is enabled
+        var para_pubdate = '';
+        var cache = $('body').attr('data-caching');
+        if (cache == 1 && pubdate != '') { para_pubdate = '&pubdate='+ pubdate; }
+
         // append current issn to error boxes by default
         $('#tocModal div.alert-box a').each(function() {
             var _href = $(this).attr('href');
@@ -142,14 +145,14 @@ $(document).ready(function() {
         $('.toc.preloader').show();
 
         if (accordion) {
-            //	$('#fi-x').remove();
-            //	$(this).append('<span id="fi-x">&nbsp;(<i class="fi-x" style="margin-right:0px"></i>)</span');
+            //  $('#fi-x').remove();
+            //  $(this).append('<span id="fi-x">&nbsp;(<i class="fi-x" style="margin-right:0px"></i>)</span');
             /* add an unobtrusive marking for clicked items */
             $(this).css('font-style','italic');
             $(this).next('div.content').append('<div id="fillTOC" style="display:none"></div>');
             // if ($(this).parents('dd').hasClass('active')) {
-            // 		$(this).css('font-weight','normal');
-            // 		//	$('#fi-x').remove();
+            //    $(this).css('font-weight','normal');
+            //    //  $('#fi-x').remove();
             // }
         } else if (grid) {
             $('#tocModal').append('<div id="fillTOC" style="display:none"></div>');
@@ -164,11 +167,12 @@ $(document).ready(function() {
         //$(this).siblings('span.metaInfo').clone().appendTo('#fillTOC').toggle();
 
         /* get Journal TOC in iframe */
-        createModalFrame('sys/ajax_toc_fullhtml.php?issn='+ issn +'&age='+ age);
+        createModalFrame('sys/ajax_toc.php?issn='+ issn + para_pubdate);
 
+        // if you want to use this ever again, insert pubdate in data (if one is set)
         //$.ajax({
         //url: 'sys/ajax_toc.php', [> first call <]
-        //data: {'issn' : issn},
+        //data: {'issn' : issn, 'noframe': 1},
         //timeout: 7000 [> set default timeout of 7 sec. (because on fail always crossref is queried too) <]
         //}).done(function(returnData) {
         //$('.toc.preloader').fadeOut('slow');
@@ -195,7 +199,7 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
         //var dHeight = $(window).height() -280;
         //$('#externalPopover').foundation('reveal', 'open');
         //$("#externalFrame").height(dHeight);
-        //$("#externalFrame").attr('src','sys/ajax_toc_fullhtml.php?issn='+ issn); // clear previously loaded page;
+        //$("#externalFrame").attr('src','sys/ajax_toc.php?issn='+ issn + para_pubdate); // clear previously loaded page;
         //}).fail(function(j,t,m) {
         //$('#tocModal .preloader').hide();
         //$('#tocAlertBox').fadeIn('slow');

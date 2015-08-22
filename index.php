@@ -14,15 +14,22 @@
  */
 
 // Testing caching: Note: lacks check for Jtoc-Json file. It is nearly pointless if JT is only used in a local kiosk
-$dev_cache = true;
+$dev_cache = false;
 if ($dev_cache) {
   require 'config.php';
-  $query = rawurlencode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY));
+  $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
   $cachefile  = "cache/index_$query.cache.html";
   if (file_exists($cachefile) && file_exists('input/journals.csv') && $cfg->prefs->cache_enable && $dev_cache) {
     if (filemtime('input/journals.csv') < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
+    } 
+    // With JournalToc Premium enabled check for json file too
+    elseif ($cfg->api->jt->premium) {
+      if (filemtime($cfg->api->jt->outfile) < filemtime($cachefile)) {
+        echo file_get_contents($cachefile);
+        exit; 
+      }
     }
   }
 }
@@ -48,7 +55,8 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
-<body>
+<!-- tell scripts if caching of tocs is enabled -->  
+<body data-caching="<?php echo $lister->prefs->cache_enable ?>">
 
 <!-- Navigation -->
 <div class="fixed">
@@ -317,7 +325,8 @@ foreach ($journals as $j) {
     $new_issues = ($j['new']) ? 'new-issue' : '';
 
     echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
+    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+    echo '<a id="issn'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#">';
     echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
     echo $j['title'];
     echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
@@ -343,14 +352,6 @@ foreach ($journals as $j) {
 <?php
 /* see Class setup */
 foreach ($journals as $j) {
-    // Provide date to determine if a fetched toc should be cached. See option in config
-    if ($j['date'] && $lister->prefs->cache_enable) {
-        $now = new DateTime('now');
-        $age = DateTime::createFromFormat('Y-m-d', $j['date']);
-        $issue_age = $now->diff($age)->format('%a'); 
-    } else {
-      $issue_age = -1;
-    }
     /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
     $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
     $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
@@ -369,11 +370,12 @@ foreach ($journals as $j) {
     $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
     echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" data-age="'.$issue_age.'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+    echo '<img class="getTOC grid '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
     echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
     /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
     echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
-    echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
+    echo '<div class="getTOC grid panel content">';
     echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
     echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
     echo '</div></div>';
