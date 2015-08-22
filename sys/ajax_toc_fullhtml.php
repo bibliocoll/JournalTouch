@@ -3,7 +3,8 @@ $issn = (isset($_GET['issn'])) ? $_GET['issn'] : false;
 $age  = (isset($_GET['age']))  ? $_GET['age']  : -1;
 
 if ($issn) {
-  $cachefile = "../cache/toc-$issn.cache.html";
+  $query = rawurlencode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY));
+  $cachefile = "../cache/toc-$issn_$query.cache.html";
   
   // An age is available and cached file exists
   // (-1 is the same as disabled caching)
