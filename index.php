@@ -17,9 +17,11 @@
 $dev_cache = true;
 if ($dev_cache) {
   require 'config.php';
-  if (file_exists('cache/index.cache.html') && file_exists('input/journals.csv') && $cfg->prefs->cache_enable && $dev_cache) {
-    if (filemtime('input/journals.csv') < filemtime('cache/index.cache.html')) {
-      echo file_get_contents('cache/index.cache.html');
+  $query = rawurlencode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY));
+  $cachefile  = "cache/index_$query.cache.html";
+  if (file_exists($cachefile) && file_exists('input/journals.csv') && $cfg->prefs->cache_enable && $dev_cache) {
+    if (filemtime('input/journals.csv') < filemtime($cachefile)) {
+      echo file_get_contents($cachefile);
       exit;
     }
   }
@@ -533,7 +535,7 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 
 <?php 
 if ($lister->prefs->cache_enable && $dev_cache) {
-  file_put_contents('cache/index.cache.html', ob_get_contents());
+  file_put_contents($cachefile, ob_get_contents());
 }
 ob_end_flush(); 
 ?>
