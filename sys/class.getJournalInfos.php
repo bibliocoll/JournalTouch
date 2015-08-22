@@ -1041,6 +1041,8 @@ class GetJournalInfos {
      *          "Sun, 01 Jun 2014 00:00:00 GMT-" (hyphen at end)
      *          Stuff like "Apr.-June  2014" can be handled, the others ones...
      *
+     * @todo    Maybe always return a date?
+     *
      * @param $date    \b STR  A (prism) date
      * @return \b DAT Date if found, else \b BOL false
      */
