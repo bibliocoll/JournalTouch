@@ -9,6 +9,12 @@
  *    <div id="stickyright" class="small-1 columns"></div>
  * - add conditional parts to part.tpl files or something like that
  *
+ * @todo  2015-08-22
+ * -  Doing foreach ($journals as $j) for each view is really (!) bad
+ * -  It would make much more sense to make "new" rely on the publish date 
+ *    instead of the fixed value in input.csv (that only works if you update 
+ *    daily and has some quirks)
+ *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
@@ -232,8 +238,9 @@ The list of journals is a selection of the journals licensed to the library.')
 foreach ($journals as $j) {
     if (!empty($j['topJ'])) {
         echo '<li data-orbit-slide="headline">';
-        echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
-        echo '<div class="orbit-caption">'.$j['title'].'</div>';
+        echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+        echo '<img class="issn getTOC" src="'.$j['img'].'"/>';
+        echo '<div class="orbit-caption">'.$j['title'].' ('.$j['date'].')</div>';
         echo '</li>';
     }
 }
