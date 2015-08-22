@@ -12,6 +12,19 @@
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
+
+// Testing caching: Note: lacks check for Jtoc-Json file. It is nearly pointless if JT is only used in a local kiosk
+$dev_cache = true;
+if ($dev_cache) {
+  require 'config.php';
+  if (file_exists('cache/index.cache.html') && file_exists('input/journals.csv') && $cfg->prefs->cache_enable && $dev_cache) {
+    if (filemtime('input/journals.csv') < filemtime('cache/index.cache.html')) {
+      echo file_get_contents('cache/index.cache.html');
+      exit;
+    }
+  }
+}
+
 ob_start();
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -328,6 +341,14 @@ foreach ($journals as $j) {
 <?php
 /* see Class setup */
 foreach ($journals as $j) {
+    // Provide date to determine if a fetched toc should be cached. See option in config
+    if ($j['date'] && $lister->prefs->cache_enable) {
+        $now = new DateTime('now');
+        $age = DateTime::createFromFormat('Y-m-d', $j['date']);
+        $issue_age = $now->diff($age)->format('%a'); 
+    } else {
+      $issue_age = -1;
+    }
     /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
     $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
     $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
@@ -346,7 +367,7 @@ foreach ($journals as $j) {
     $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
     echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+    echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" data-age="'.$issue_age.'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
     echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
     /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
     echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
@@ -510,4 +531,9 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 </body>
 </html>
 
-<?php ob_end_flush(); ?>
+<?php 
+if ($lister->prefs->cache_enable && $dev_cache) {
+  file_put_contents('cache/index.cache.html', ob_get_contents());
+}
+ob_end_flush(); 
+?>
