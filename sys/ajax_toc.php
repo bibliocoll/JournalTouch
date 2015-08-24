@@ -9,35 +9,26 @@ if (!$issn) {
 
 
 // Handle the pubdate. If none is send, this means caching is disabled
-if (isset($_GET['pubdate'])) {
+if (!isset($_GET['pubdate'])) {
+  $age = -1; // Since the difference might be 0 days (today), we define false as -1
+} 
+// Todo: This is pretty pointless. Only future use _might_ be to use the age as additional info for the toc frame
+else {
   $now = new DateTime('now');
   $pubdate = DateTime::createFromFormat('Y-m-d', $_GET['pubdate']); 
   $age = $now->diff($pubdate)->format('%a');  
-} else {
-  $age = -1; // Since the difference might be 0 days (today), we define false as -1
 }
 
 
-// Prepare the cache file. Use url parameters to create unique id
-// ...but remove date. This might very well break if new parameters were 
-// introduced. Yet, for now it removes ambiguity
-if (isset($_GET['pubdate'])) unset($_GET['pubdate']);
-$query = implode('&', $_GET);
+// Prepare the cache file. Use url parameters to create unique id. Date identifies issue
+$query = implode('_', $_GET);
 $cachefile = "../cache/toc-$query.cache.html";
 
 
-// An age is available and cached file exists
-// (-1 is the same as disabled caching)
+// An age is available and cached file exists (-1 is the same as disabled caching)
+// Issue date is same as in cache file name - load cache
 if ($age > -1 && file_exists($cachefile)) {
-  // Issue age is greater than the age of the cached file - load cache
-  if ($age >= date('a', strtotime(filemtime($cachefile)))) {
-    $toc = file_get_contents($cachefile);
-  }
-  // Otherwise get fresh toc and save to file
-  else {
-    $toc = get_toc($issn);
-    file_put_contents($cachefile, $toc);
-  }
+  $toc = file_get_contents($cachefile);
 }
 // An age is available but no cached file exists
 elseif ($age > -1) {
