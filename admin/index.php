@@ -46,7 +46,7 @@ if ($btn_cache) {
       <!-- Quick & Dirty - Update input.csv -->
       <legend><b>Update options</b></legend>
       This updates your journals.csv with the dates for each journal issue. If you chose to update, also some infos about publishers, legal infos and tags are fetched, currently as tags for the tagcloud in JournalTouch.<hr />
-      <label for="optMeta"><input type="checkbox" name="optMeta"> Fetch metadata<br>
+      <label for="optMeta"><input type="checkbox" name="optMeta" checked="checked"> Fetch metadata<br>
       <label for="optRecent"><input type="checkbox" name="optRecent" checked="checked"> Fetch recent issues<br>
       <label for="optTags"><input type="checkbox" name="optTags"> Clean tags (experimental)<sup>1</sup><br>
       <button name="upd" value="true" type="submit">Start</button>
