@@ -19,13 +19,13 @@
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
 
-// Testing caching: Note: lacks check for Jtoc-Json file. It is nearly pointless if JT is only used in a local kiosk
-$dev_cache = false;
-if ($dev_cache) {
-  require 'config.php';
-  $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+// Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
+require 'config.php';
+if ($cfg->prefs->cache_main_enable) {
+  $query = (isset($_GET)) ? implode('&', $_GET) : '';
   $cachefile  = "cache/index_$query.cache.html";
-  if (file_exists($cachefile) && file_exists('input/journals.csv') && $cfg->prefs->cache_enable && $dev_cache) {
+
+  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
     if (filemtime('input/journals.csv') < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
@@ -62,7 +62,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->  
-<body data-caching="<?php echo $lister->prefs->cache_enable ?>">
+<body data-caching="<?php echo $lister->prefs->cache_toc_enable ?>">
 
 <!-- Navigation -->
 <div class="fixed">
@@ -543,7 +543,7 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 </html>
 
 <?php 
-if ($lister->prefs->cache_enable && $dev_cache) {
+if ($lister->prefs->cache_main_enable) {
   file_put_contents($cachefile, ob_get_contents());
 }
 ob_end_flush(); 
