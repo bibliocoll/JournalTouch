@@ -841,7 +841,7 @@
 
 				// special fields for items
 				reservedFields: function () {
-					return ['quantity', 'id', 'item_number', 'price', 'name', 'shipping', 'tax', 'taxRate', 'link']; /* modified MPG */
+					return ['quantity', 'id', 'item_number', 'price', 'name', 'shipping', 'tax', 'taxRate', 'link', 'citestr']; /* modified MPG */
 				},
 
 				// return values for all reserved fields if they exist
