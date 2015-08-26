@@ -460,7 +460,7 @@ simpleCart({
                 var itemname, itemtitle;
                 itemname = item.get('name');
                 itemtitle = item.get('title');
-                if (itemtitle !== '') {
+                if (typeof itemtitle !== 'undefined' && itemtitle !== '') {
                     return '<div class="item-name">'+itemtitle+' <i alt="we have citation data" class="fi-paperclip"></i></div>';
                 } else {
                     return '<div class="item-name">'+itemname+'</div>';
