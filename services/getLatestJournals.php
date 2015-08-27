@@ -51,6 +51,16 @@ function search_array($needle, $haystack) {
    return false;
 }
 
+function remove_ancient_cache_files() {
+    $files = glob('../cache/*.cache*'); // get all file names by pattern
+    $now = new DateTime(); //very OO
+    $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
+    $threshold = date_timestamp_get( $now->sub($age) ); //no longer very OO
+    foreach($files as $file) {
+        if (is_file($file) && (filemtime($file) < $threshold )) unlink($file);
+    }
+}
+
 // fresh array:
 $upd = array();
 
@@ -155,5 +165,7 @@ echo '<p><hr/></p>';
 //save updated data
 file_put_contents($jsonFile,json_encode($upd));
 
+//do some housekeeping
+remove_ancient_cache_files();
 ?>
 
