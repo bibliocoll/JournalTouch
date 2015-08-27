@@ -74,7 +74,7 @@ function get_toc($issn) {
   $getInfos = new GetJournalInfos();
   $result = new stdClass();
   $result->toc = $getInfos->ajax_query_toc($issn);
-  $result->error = ($result->toc != false);
+  $result->error = ($result->toc == false);
 
   // Hack for non-iframe version
   if (isset($_GET['noframe'])) return $result;

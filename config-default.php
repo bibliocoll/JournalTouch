@@ -33,7 +33,7 @@ $cfg->prefs = new stdClass();
 // set available languages; to add a new language, update \locale accordingly
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
-$cfg->prefs->current_lang   = (isset($_REQUEST['lang'])) ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
+$cfg->prefs->current_lang   = (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
 require_once 'sys/jt-gettext.php';
 
 $cfg->prefs->show_metainfo = false;     // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
