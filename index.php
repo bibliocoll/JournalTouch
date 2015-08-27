@@ -9,9 +9,37 @@
  *    <div id="stickyright" class="small-1 columns"></div>
  * - add conditional parts to part.tpl files or something like that
  *
+ * @todo  2015-08-22
+ * -  Doing foreach ($journals as $j) for each view is really (!) bad
+ * -  It would make much more sense to make "new" rely on the publish date 
+ *    instead of the fixed value in input.csv (that only works if you update 
+ *    daily and has some quirks)
+ *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
+
+// Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
+require 'config.php';
+if ($cfg->prefs->cache_main_enable) {
+  $query = (isset($_GET)) ? implode('&', $_GET) : '';
+  $cachefile  = "cache/index_$query.cache.html";
+
+  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
+    if (filemtime('input/journals.csv') < filemtime($cachefile)) {
+      echo file_get_contents($cachefile);
+      exit;
+    } 
+    // With JournalToc Premium enabled check for json file too
+    elseif ($cfg->api->jt->premium) {
+      if (filemtime($cfg->api->jt->outfile) < filemtime($cachefile)) {
+        echo file_get_contents($cachefile);
+        exit; 
+      }
+    }
+  }
+}
+
 ob_start();
 require 'sys/class.ListJournals.php';
 /* setup methods & objects */
@@ -33,7 +61,8 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
-<body>
+<!-- tell scripts if caching of tocs is enabled -->  
+<body data-caching="<?php echo $lister->prefs->cache_toc_enable ?>">
 
 <!-- Navigation -->
 <div class="fixed">
@@ -209,8 +238,9 @@ The list of journals is a selection of the journals licensed to the library.')
 foreach ($journals as $j) {
     if (!empty($j['topJ'])) {
         echo '<li data-orbit-slide="headline">';
-        echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
-        echo '<div class="orbit-caption">'.$j['title'].'</div>';
+        echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+        echo '<img class="issn getTOC" src="'.$j['img'].'"/>';
+        echo '<div class="orbit-caption">'.$j['title'].' ('.$j['date'].')</div>';
         echo '</li>';
     }
 }
@@ -302,7 +332,8 @@ foreach ($journals as $j) {
     $new_issues = ($j['new']) ? 'new-issue' : '';
 
     echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<a id="'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#issn'.$j['id'].'">';
+    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+    echo '<a id="issn'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#">';
     echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
     echo $j['title'];
     echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
@@ -346,11 +377,12 @@ foreach ($journals as $j) {
     $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
     echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<img class="getTOC grid '.$j['id'].'" id="'.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+    echo '<img class="getTOC grid '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
     echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
     /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
     echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
-    echo '<div id="issn'.$j['id'].'" class="getTOC grid panel content">';
+    echo '<div class="getTOC grid panel content">';
     echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
     echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
     echo '</div></div>';
@@ -510,4 +542,9 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 </body>
 </html>
 
-<?php ob_end_flush(); ?>
+<?php 
+if ($lister->prefs->cache_main_enable) {
+  file_put_contents($cachefile, ob_get_contents());
+}
+ob_end_flush(); 
+?>

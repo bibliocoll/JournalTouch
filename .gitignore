@@ -1,5 +1,6 @@
 *~
 .project
+cache/*.cache*
 dev/*
 doc/html/*
 doc/def/*
