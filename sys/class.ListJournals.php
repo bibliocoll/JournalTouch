@@ -256,7 +256,7 @@ class ListJournals
 
         if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
             $tagcloud = array();
-            $today = date("Y-m-d");
+            $today_lastyear = date("Y-m-d", time() - 31557600); // roughly one year in seconds
             while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
                 $num = count($data);
 
@@ -265,7 +265,7 @@ class ListJournals
 
                 $row++;
                 $date = $data[$this->csv_col->date];
-                $date = ($date)?: $today;
+                $date = ($date)?: $today_lastyear;
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
                 $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);
