@@ -11,8 +11,8 @@
  *
  * @todo  2015-08-22
  * -  Doing foreach ($journals as $j) for each view is really (!) bad
- * -  It would make much more sense to make "new" rely on the publish date 
- *    instead of the fixed value in input.csv (that only works if you update 
+ * -  It would make much more sense to make "new" rely on the publish date
+ *    instead of the fixed value in input.csv (that only works if you update
  *    daily and has some quirks)
  *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -22,19 +22,22 @@
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
 require 'config.php';
 if ($cfg->prefs->cache_main_enable) {
-  $query = (isset($_GET)) ? implode('&', $_GET) : '';
+  $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
   $cachefile  = "cache/index_$query.cache.html";
 
+  //NOTE: file_exists() result is cached. not an issue in this case, but
+  //clearstatcache() needs to be called in cases where the file might be
+  //deleted between tests in the same script. unlink() updates the cache
   if (file_exists($cachefile) && file_exists('input/journals.csv')) {
     if (filemtime('input/journals.csv') < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
-    } 
+    }
     // With JournalToc Premium enabled check for json file too
     elseif ($cfg->api->jt->premium) {
       if (filemtime($cfg->api->jt->outfile) < filemtime($cachefile)) {
         echo file_get_contents($cachefile);
-        exit; 
+        exit;
       }
     }
   }
@@ -61,7 +64,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
-<!-- tell scripts if caching of tocs is enabled -->  
+<!-- tell scripts if caching of tocs is enabled -->
 <body data-caching="<?php echo $lister->prefs->cache_toc_enable ?>">
 
 <!-- Navigation -->
@@ -542,9 +545,9 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 </body>
 </html>
 
-<?php 
+<?php
 if ($lister->prefs->cache_main_enable) {
   file_put_contents($cachefile, ob_get_contents());
 }
-ob_end_flush(); 
+ob_end_flush();
 ?>

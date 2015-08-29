@@ -33,7 +33,7 @@ $cfg->prefs = new stdClass();
 // set available languages; to add a new language, update \locale accordingly
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
-$cfg->prefs->current_lang   = (isset($_REQUEST['lang'])) ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
+$cfg->prefs->current_lang   = (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
 require_once 'sys/jt-gettext.php';
 
 $cfg->prefs->show_metainfo = false;     // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
@@ -54,7 +54,8 @@ $cfg->prefs->sfx           = '';        // If you got sfx, something like http:/
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true
 // b) if you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/services/getLatestJournals.php
 $cfg->prefs->cache_toc_enable  = true;      // Caches fetched tocs so they only are processed once there is a new issue
-$cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often 
+$cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often
+$cfg->prefs->cache_max_age = "33 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
 
 $cfg->api = new stdClass();
 $cfg->api->all = new stdClass();
