@@ -83,7 +83,7 @@ class ListJournals
    * @todo    Hmm, checking just by date is pretty pointless, because it could
    *          easily done via javascript in index.php by just returning the date
    *          from input.csv.
-   *          This method should just override this date, if there is a json 
+   *          This method should just override this date, if there is a json
    *          list - but I guess this won't be the usual case...
    *
    * @return \b DAT A date, if it is defined as 'current'
@@ -256,6 +256,7 @@ class ListJournals
 
         if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
             $tagcloud = array();
+            $today_lastyear = date("Y-m-d", time() - 31557600); // roughly one year in seconds
             while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
                 $num = count($data);
 
@@ -264,6 +265,7 @@ class ListJournals
 
                 $row++;
                 $date = $data[$this->csv_col->date];
+                $date = ($date)?: $today_lastyear;
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
                 $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);

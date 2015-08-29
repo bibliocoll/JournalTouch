@@ -7,21 +7,23 @@ if (!$issn) {
   exit;
 }
 
+//TODO: to output the html head section right away so the browser
+//can start loading css and js files while we work on the body
 
 // Handle the pubdate. If none is send, this means caching is disabled
 if (!isset($_GET['pubdate'])) {
   $age = -1; // Since the difference might be 0 days (today), we define false as -1
-} 
+}
 // Todo: This is pretty pointless. Only future use _might_ be to use the age as additional info for the toc frame
 else {
   $now = new DateTime('now');
-  $pubdate = DateTime::createFromFormat('Y-m-d', $_GET['pubdate']); 
-  $age = $now->diff($pubdate)->format('%a');  
+  $pubdate = DateTime::createFromFormat('Y-m-d', $_GET['pubdate']);
+  $age = $now->diff($pubdate)->format('%a');
 }
 
 
 // Prepare the cache file. Use url parameters to create unique id. Date identifies issue
-$query = implode('_', $_GET);
+$query = md5(implode('_', $_GET));
 $cachefile = "../cache/toc-$query.cache.html";
 
 
@@ -32,12 +34,14 @@ if ($age > -1 && file_exists($cachefile)) {
 }
 // An age is available but no cached file exists
 elseif ($age > -1) {
-  $toc = get_toc($issn);
-  file_put_contents($cachefile, $toc);
+  $toc_result = get_toc($issn);
+  if (!$toc_result->error) file_put_contents($cachefile, $toc_result->toc);
+  $toc = $toc_result->toc;
 }
 // Ok, we got no age or caching is disabled by setting it to -1. Get toc the old way
 else {
-  $toc = get_toc($issn);
+  $toc_result = get_toc($issn);
+  $toc = $toc_result->toc;
 }
 
 // And return it...
@@ -48,11 +52,11 @@ echo $toc;
  * @brief   Get toc, pad it with some html and put it into an iframe
  *
  * @todo    Maybe use CDN for scripts
- * @todo    2015-08-22: Remove hack for old non-iframe version if it finally 
+ * @todo    2015-08-22: Remove hack for old non-iframe version if it finally
  *          gets removed from conduit.js
  *
  * @param $issn    \b STR  Journal ISSN
- * @return \b STR Some html
+ * @return \b stdClass (->error \b bool remote error, ->toc \b STR some html)
  */
 function get_toc($issn) {
   $html_prefix = '<!DOCTYPE html>
@@ -68,17 +72,19 @@ function get_toc($issn) {
 
   require_once('class.getJournalInfos.php');
   $getInfos = new GetJournalInfos();
-  $response = $getInfos->ajax_query_toc($issn);
-  
+  $result = new stdClass();
+  $result->toc = $getInfos->ajax_query_toc($issn);
+  $result->error = ($result->toc == false);
+
   // Hack for non-iframe version
-  if (isset($_GET['noframe'])) return $response;
-  
-  if (!$response) {
-    $response = $html_prefix.$html_postfix_er;
+  if (isset($_GET['noframe'])) return $result;
+
+  if ($result->error) {
+    $result->toc = $html_prefix.$html_postfix_er;
   } else {
-    $response = $html_prefix.$response.$html_postfix_ok;
+    $result->toc = $html_prefix.$result->toc.$html_postfix_ok;
   }
-  
-  return $response;
+
+  return $result;
 }
 ?>
