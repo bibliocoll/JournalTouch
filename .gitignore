@@ -12,6 +12,6 @@ config.php
 !doc/jt-doxygen.conf
 
 # Two example files, so JournalTouch runs out-of-the-box
-# Hint: Exclude these files locally via .git/info/exclude for development
-!data/journals/journals.csv
-!data/journals/tag-remap.txt
+# If they are changed, remove the following two comments or include somehow else
+#!data/journals/journals.csv
+#!data/journals/tag-remap.txt

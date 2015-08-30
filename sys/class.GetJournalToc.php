@@ -19,7 +19,7 @@
  *
  *
  * @notes
- * 2015-08-30 Moved the part that updates input.csv to (services/class.UpdateInputCsv.php)
+ * 2015-08-30 Moved the part that updates input.csv to (admin/services/class.UpdateInputCsv.php)
  *
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -422,6 +422,8 @@ class GetJournalInfos {
     /**
      * @brief   Returns true if a given date and today are apart only by x days.
      *
+     * @todo    2015-08-30: This is a redundant versions of the same function in admin/services/class.UpdateInputCsv.php
+     *
      * @param $journal_date  \b STR  Date as string (format Y-m-d)
      * @param $maxdiff       \b INT  Max difference in days
      * @return \b STR Script execution time on second call
@@ -505,6 +507,8 @@ class GetJournalInfos {
      *          Stuff like "Apr.-June  2014" can be handled, the others ones...
      *
      * @todo    Maybe always return a date?
+     *
+     * @todo    2015-08-30: This is a redundant versions of the same function in admin/services/class.UpdateInputCsv.
      *
      * @param $date    \b STR  A (prism) date
      * @return \b DAT Date if found, else \b BOL false

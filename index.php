@@ -106,7 +106,7 @@ foreach ($lister->filters as $key=>$f) {
 <?php 
 $lng_options = '';
 foreach ($lister->prefs->languages as $set_lang) {
-  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
+  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"languages/$set_lang.gif\" /></a></li>";
 }
 
 // Show a drop down menu if more than two languages are available

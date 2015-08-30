@@ -140,7 +140,7 @@ The input file feeds the journal list. Be careful if you change the structure of
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
 There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config.php* (section updates).
-Run the service *admin/services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+Run the service *admin/services/getLatestJournalTocPremium.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *data/journals/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
 Additionally, you may want to include the JSON file to display a list of recently updated journals. The function ``getJournalUpdates()`` in *sys/class.ListJournals.php* will give you an array you can read from index.php. See the exemplary code there.
 
@@ -164,7 +164,7 @@ For date display, you can use the timeago jQuery plugin (display timespans inste
 ## Cover images
 
 If you have access to a cover service API, set the setting in *config.php* to ``true``, and configure your service in *sys/class.ListJournals.php* (``getCover()``).
-By default, cover images will be loaded from *img/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config.php*).
+By default, cover images will be loaded from *img/covers/*, if there exists an image file named after the ISSN (e.g. *0123-4567.png*). If not, a placeholder will be used (configure in *config.php*).
 
 All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwidth), the jQuery plugin unveil.js is loaded by default. The preload image is in the *img/*-directory and is called *lazyloader.gif*. The placeholder image must be set in the *src* attribute of the journal listing. The actual cover image must be placed in the attribute *data-src*. See the listing part in index.php.
 

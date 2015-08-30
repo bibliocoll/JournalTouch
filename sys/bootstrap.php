@@ -41,7 +41,7 @@ $cfg->prefs->cache_max_age = "365 days";     // files older than this are purged
 
 
 // Output files and paths - there is no point to bother a user with changing it
-$cfg->api->jt->outfile  = $cfg->sys->basepath.'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+$cfg->api->jt->outfile  = $cfg->sys->basepath.'data/journals/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run admin/services/getLatestJournalTocPremium.php regularly
 
 
 $cfg->csv_file = new stdClass();
@@ -50,6 +50,6 @@ $cfg->csv_file = new stdClass();
  * Usually you won't have to change anything here.
  */
 $cfg->csv_file->separator  = ';';
-$cfg->csv_file->path       = $cfg->sys->basepath.'input/journals.csv';
+$cfg->csv_file->path       = $cfg->sys->basepath.'data/journals/journals.csv';
 
 ?>

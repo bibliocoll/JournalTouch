@@ -626,7 +626,7 @@ class GetJournalInfos {
     /**
      * @brief   Returns true if a given date and today are apart only by x days.
      *
-     * @todo    2015-08-30: This is a redundant versions of the same function in sys/class.getJournalInfo.php
+     * @todo    2015-08-30: This is a redundant versions of the same function in sys/class.GetJournalToc.php
      *
      * @param $journal_date  \b STR  Date as string (format Y-m-d)
      * @param $maxdiff       \b INT  Max difference in days
@@ -684,7 +684,7 @@ class GetJournalInfos {
      *
      * @todo    Maybe always return a date?
      *
-     * @todo    2015-08-30: This is a redundant versions of the same function in sys/class.getJournalInfo.php
+     * @todo    2015-08-30: This is a redundant versions of the same function in sys/class.GetJournalToc.php
      *
      * @param $date    \b STR  A (prism) date
      * @return \b DAT Date if found, else \b BOL false

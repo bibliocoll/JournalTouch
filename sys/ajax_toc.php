@@ -8,6 +8,11 @@
  *    > BUT: For now only the issn is checked - imho in a sufficient way
  *           (pubdate is checked implicitly)
  *
+ * @todo
+ * -  Most of the logic in this file should move to class.GetJournalToc.php.
+ *    This also resolves any sanitizing problem, because there bootstrap.php is
+ *    loaded already
+ *
  * @note  2015-08-30: For now the only necessary information for deleting a file
  *        is the issn, because there only can be one toc. This would change if
  *        e.g. a (server side) language specific toc would be introduced. In this
@@ -99,7 +104,7 @@ function get_toc($issn, &$status) {
 
   require_once('class.GetJournalToc.php');
   $getInfos = new GetJournalInfos();
-  $result = $getInfos->ajax_query_toc($issn);
+  $result = $getInfos->ajax_query_toc($issn, true);
 
   // Hack for non-iframe version
   if (isset($_GET['noframe'])) return $result;
