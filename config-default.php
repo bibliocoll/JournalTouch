@@ -31,10 +31,10 @@ $cfg->prefs = new stdClass();
  *       disable.
  */
 // set available languages; to add a new language, update \locale accordingly
+// the first language ([0]) will be the default language
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
-$cfg->prefs->current_lang   = (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
-require_once 'sys/jt-gettext.php';
+
 
 $cfg->prefs->show_metainfo = false;     // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
 $cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
@@ -55,7 +55,6 @@ $cfg->prefs->sfx           = '';        // If you got sfx, something like http:/
 // b) if you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/services/getLatestJournals.php
 $cfg->prefs->cache_toc_enable  = true;      // Caches fetched tocs so they only are processed once there is a new issue
 $cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often
-$cfg->prefs->cache_max_age = "33 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
 
 $cfg->api = new stdClass();
 $cfg->api->all = new stdClass();
@@ -77,10 +76,9 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
-$cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
 
 
-
+require('sys/bootstrap.php');
 $cfg->mail = new stdClass();
 /**
  * Mailer settings
@@ -108,16 +106,6 @@ $cfg->mail->bodyClosing    = __('Best regards, your library team!');
 $cfg->mail->toAddress      = ''; // Your contact address (journaltouch@my-library.net)
 $cfg->mail->subjectToLib   = __('New order for the library from JournalTouch');
 $cfg->mail->bodyOrder      = __('New order from JournalTouch');
-
-
-
-$cfg->csv_file = new stdClass();
-/**
- * Which file with your journals information and what separator is used.
- * Usually you won't have to change anything here.
- */
-$cfg->csv_file->separator  = ';';
-$cfg->csv_file->path       = 'input/journals.csv';
 
 
 
@@ -213,7 +201,4 @@ $cfg->sys = new stdClass();
  * Configuration settings for internal use; don't change
  */
 $cfg->sys->abspath  = dirname(__FILE__).'/';    // absolute path to JournalTouch directory
-//echo "<pre>";
-//var_dump($cfg);
-
 ?>
