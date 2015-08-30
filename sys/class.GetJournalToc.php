@@ -19,7 +19,7 @@
  *
  *
  * @notes
- * 2015-08-30 Moved the part that updates input.csv to (services/class.updateInputCsv.php)
+ * 2015-08-30 Moved the part that updates input.csv to (services/class.UpdateInputCsv.php)
  *
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  * @author Daniel Zimmel <zimmel@coll.mpg.de>

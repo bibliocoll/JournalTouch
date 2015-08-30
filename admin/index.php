@@ -13,7 +13,7 @@ $optRecent  = (isset($_GET['optRecent'])) ? true : false;
 $optTags    = (isset($_GET['optTags'])) ? true : false;
 
 if ($btn_upd) {
-  require_once('../sys/class.getJournalInfos.php');
+  require_once('services/class.UpdateInputCsv.php');
   $getInfos = new GetJournalInfos();
   $getInfos->update_journals_csv($optMeta, $optRecent, $optTags);
 }
@@ -58,7 +58,7 @@ if ($btn_cache) {
       <!-- Quick & Dirty - Update input.csv -->
       <legend><b>JournalTOC Premium Update</b></legend>
       This updates your updates.json.txt with the dates for recent issue.<hr />
-      <a href="../services/getLatestJournals.php">Update Premium</a>
+      <a href="services/getLatestJournals.php">Update Premium</a>
     </fieldset>   
   </form>
 </div>
