@@ -1,4 +1,4 @@
-# Changes in these folder/files should never be reasonably be tracked/pushed
+# Changes in these folder/files should reasonably never be tracked/pushed
 data/*
 doc/*
 img/covers/*
