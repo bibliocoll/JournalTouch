@@ -52,7 +52,7 @@ $cfg->prefs->sfx           = '';        // If you got sfx, something like http:/
 
 // Caching: only activate it if you do
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true
-// b) if you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/services/getLatestJournals.php
+// b) if you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php
 $cfg->prefs->cache_toc_enable  = true;      // Caches fetched tocs so they only are processed once there is a new issue
 $cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often
 

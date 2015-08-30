@@ -97,7 +97,7 @@ function get_toc($issn, &$status) {
   $html_postfix_ok = '<script src="../js/local/frame.js"></script></body></html>';
   $html_postfix_er = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body></html>';
 
-  require_once('class.getJournalInfos.php');
+  require_once('class.GetJournalToc.php');
   $getInfos = new GetJournalInfos();
   $result = $getInfos->ajax_query_toc($issn);
 

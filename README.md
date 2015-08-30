@@ -47,7 +47,7 @@ It must at least contain the journal titles and a valid ISSN; configure optional
 External (TOC) contents will be read from *index.php* with an AJAX call to *sys/ajax_toc.php*. This file outputs HTML to the caller which is ready to be inserted in *index.php*. You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
 If you want to read from other sources, expand the handler.
 
-By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.getJournalInfos.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
+By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.GetJournalToc.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
@@ -55,7 +55,7 @@ Please note: while you could set up an alternative ISSN in the config.php, it is
 
 #### Error handling example
 
-*sys/class.getJournalInfos.php*:
+*sys/class.GetJournalToc.php*:
 ```
     private function ajax_response_toc($toc, $max_authors = 3) {
         if (!isset($toc['sort']) || count($toc['sort']) < 1) {
@@ -140,7 +140,7 @@ The input file feeds the journal list. Be careful if you change the structure of
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
 There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config.php* (section updates).
-Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *data/journals/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+Run the service *admin/services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
 Additionally, you may want to include the JSON file to display a list of recently updated journals. The function ``getJournalUpdates()`` in *sys/class.ListJournals.php* will give you an array you can read from index.php. See the exemplary code there.
 
