@@ -20,16 +20,16 @@
  */
 
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
-require 'config.php';
+require ('config.php');
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
-  $cachefile  = "cache/index_$query.cache.html";
+  $cachefile  = "data/cache/index_$query.cache.html";
 
   //NOTE: file_exists() result is cached. not an issue in this case, but
   //clearstatcache() needs to be called in cases where the file might be
   //deleted between tests in the same script. unlink() updates the cache
-  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
-    if (filemtime('input/journals.csv') < filemtime($cachefile)) {
+  if (file_exists($cachefile) && file_exists($cfg->csv_file->path)) {
+    if (filemtime($cfg->csv_file->path) < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
     }
@@ -44,7 +44,7 @@ if ($cfg->prefs->cache_main_enable) {
 }
 
 ob_start();
-require 'sys/class.ListJournals.php';
+require('sys/class.ListJournals.php');
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
@@ -61,7 +61,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/media.css" />
-    <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
@@ -103,18 +103,28 @@ foreach ($lister->filters as $key=>$f) {
         <?php } ?>
         <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
-        <li class="divider"></li>
+<?php 
+$lng_options = '';
+foreach ($lister->prefs->languages as $set_lang) {
+  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"languages/$set_lang.gif\" /></a></li>";
+}
+
+// Show a drop down menu if more than two languages are available
+if (count($lister->prefs->languages) > 2) {
+  echo '<li class="divider"></li>
         <li class="has-dropdown switch-language">
-            <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;<?php echo __('Language')?></a>
-            <ul class="dropdown">
-<?php
-    foreach ($lister->prefs->languages as $set_lang) {
-        if ($set_lang != $lister->prefs->current_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
-    }
-?>
+            <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;'. __('Language').'</a>
+            <ul class="dropdown">'.$lng_options.'
             </ul>
         </li>
-      </ul>
+      </ul>';
+}
+// Otherwise just show a simple toggle
+elseif (count($lister->prefs->languages) == 2) {
+  echo '<li class="divider"></li>'.$lng_options;
+}
+// And (implicit) nothing if onyl one language is available
+?>
     </section>
   </nav>
 </div>

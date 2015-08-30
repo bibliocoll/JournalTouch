@@ -13,14 +13,14 @@ $optRecent  = (isset($_GET['optRecent'])) ? true : false;
 $optTags    = (isset($_GET['optTags'])) ? true : false;
 
 if ($btn_upd) {
-  require_once('../sys/class.getJournalInfos.php');
+  require_once('services/class.UpdateInputCsv.php');
   $getInfos = new GetJournalInfos();
   $getInfos->update_journals_csv($optMeta, $optRecent, $optTags);
 }
 
 $del_message = '';
 if ($btn_cache) {
-  $files = glob('../cache/*.cache*'); // get all file names by pattern
+  $files = glob('../data/cache/*.cache*'); // get all file names by pattern
   $i = 0;
   foreach($files as $file) {
     if(is_file($file)) {
@@ -51,14 +51,14 @@ if ($btn_cache) {
       <label for="optTags"><input type="checkbox" name="optTags"> Clean tags (experimental)<sup>1</sup><br>
       <button name="upd" value="true" type="submit">Start</button>
       <br /><br />
-      <sup>1</sup>You have to edit input/tag-remap.txt. Format: "oldTag;newTag"
+      <sup>1</sup>You have to edit data/journals/tag-remap.txt. Format: "oldTag;newTag"
     </fieldset>
     <br />
     <fieldset>
       <!-- Quick & Dirty - Update input.csv -->
       <legend><b>JournalTOC Premium Update</b></legend>
       This updates your updates.json.txt with the dates for recent issue.<hr />
-      <a href="../services/getLatestJournals.php">Update Premium</a>
+      <a href="services/getLatestJournals.php">Update Premium</a>
     </fieldset>   
   </form>
 </div>

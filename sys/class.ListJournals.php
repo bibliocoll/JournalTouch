@@ -146,9 +146,9 @@ class ListJournals
         if ($this->covers->api) {
             $img = $this->covers->api.$issn;
         } else {
-            $png = 'img/'.$issn.'.png';
-            $jpg = 'img/'.$issn.'.jpg';
-            $gif = 'img/'.$issn.'.gif';
+            $png = 'img/covers/'.$issn.'.png';
+            $jpg = 'img/covers/'.$issn.'.jpg';
+            $gif = 'img/covers/'.$issn.'.gif';
             //  $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
             if (file_exists($jpg)) {$img = $jpg;}
             else if (file_exists($gif)) {$img = $gif;}
@@ -256,7 +256,7 @@ class ListJournals
 
         if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
             $tagcloud = array();
-            $today_lastyear = date("Y-m-d", time() - 31557600); // roughly one year in seconds
+            $no_date = '1970-01-01'; // Just use the first date from unixtime - makes it easy to check anywhere else for a "non-date", without breaking anything
             while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
                 $num = count($data);
 
@@ -264,8 +264,7 @@ class ListJournals
                 $myISSN = (strlen($data[$this->csv_col->p_issn] < 1) ? $data[$this->csv_col->e_issn] : $data[$this->csv_col->p_issn]);
 
                 $row++;
-                $date = $data[$this->csv_col->date];
-                $date = ($date)?: $today_lastyear;
+                $date = ($data[$this->csv_col->date]) ? $data[$this->csv_col->date] : $no_date;
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
                 $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);

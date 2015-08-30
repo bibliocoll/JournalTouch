@@ -21,7 +21,7 @@ $action = new CheckoutActions();
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
     <link rel="stylesheet" href="css/media.css" />
-    <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
@@ -81,7 +81,7 @@ if ($users == false) {
     foreach ($users as $name=>$pw) {
         print '<option>'.$name.'</option>';
     }
-    print'	</select>';
+    print'  </select>';
 }
 ?>
 
@@ -233,7 +233,7 @@ if ($users == false) {
     foreach ($users as $name=>$pw) {
         print '<option>'.$name.'</option>';
     }
-    print'	</select>';
+    print'  </select>';
 }
 ?>
 
