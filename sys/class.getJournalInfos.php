@@ -221,14 +221,14 @@ class GetJournalInfos {
             }
             fclose($handle);
             $file_date = date('Y-m-d_H\Hi');
-            rename('../'.$this->csv_file->path, "../input/backup/journals_$file_date.csv");
+            rename('../'.$this->csv_file->path, "../data/journals/backup/journals_$file_date.csv");
 
             $all_rows = implode("\n", $this->journals_buffer);
             file_put_contents ('../'.$this->csv_file->path, $all_rows);
 
             if ($this->jt_suggest_create && $this->jt_suggest_buffer) {
                 $all_rows = implode("\n", $this->jt_suggest_buffer);
-                file_put_contents ('../input/journaltoc-suggest_'.$file_date.'.csv', $all_rows);
+                file_put_contents ('../data/journals/journaltoc-suggest_'.$file_date.'.csv', $all_rows);
             }
         }
 
@@ -905,7 +905,7 @@ class GetJournalInfos {
         $tmp_tags = explode(',', $this->journal_row['tags']);
 
         // Read csv with format oldTag;newTag to array (only once)
-        if (($handle = fopen('../input/tag-remap.txt', "r")) !== false && !$this->tag_replace) {
+        if (($handle = fopen('../data/journals/tag-remap.txt', "r")) !== false && !$this->tag_replace) {
             while (($tag_row = fgetcsv($handle, 1000, $this->csv_file->separator)) !== false) {
                 $key = trim($tag_row[0]);
                 if (isset($tag_row[1])) $this->tag_replace[$key] = trim($tag_row[1]);

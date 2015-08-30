@@ -22,7 +22,7 @@ $updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
 $issn = $_GET['issn'];
 
-$jsonFile = "../input/updates.json.txt";
+$jsonFile = "../data/journals/updates.json.txt";
 
 
 function myget ($query,$xpath) {
@@ -52,7 +52,7 @@ function search_array($needle, $haystack) {
 }
 
 function remove_ancient_cache_files() {
-    $files = glob('../cache/*.cache*'); // get all file names by pattern
+    $files = glob('../data/cache/*.cache*'); // get all file names by pattern
     $now = new DateTime(); //very OO
     $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
     $threshold = date_timestamp_get( $now->sub($age) ); //no longer very OO
@@ -88,26 +88,26 @@ $records = $xpath->query("//x:item");
 $toc = array();
 
 foreach ( $records as $item ) {
-	$newDom = new DOMDocument;
-	$newDom->appendChild($newDom->importNode($item,true));
+  $newDom = new DOMDocument;
+  $newDom->appendChild($newDom->importNode($item,true));
 
-	$xpath = new DOMXPath( $newDom );
-	$rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI);
-	$xpath->registerNamespace('x', $rootNamespace);
-	$xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/");
+  $xpath = new DOMXPath( $newDom );
+  $rootNamespace = $newDom->lookupNamespaceUri($newDom->namespaceURI);
+  $xpath->registerNamespace('x', $rootNamespace);
+  $xpath->registerNamespace("dc","http://purl.org/dc/elements/1.1/");
     $xpath->registerNamespace("prism","http://prismstandard.org/namespaces/1.2/basic/");
 
-	$title = myget("//x:title",$xpath);
-	$link = myget("//x:link",$xpath);
-	$issn = myget("//prism:issn",$xpath);
-	$eIssn = myget("//prism:eIssn",$xpath);
+  $title = myget("//x:title",$xpath);
+  $link = myget("//x:link",$xpath);
+  $issn = myget("//prism:issn",$xpath);
+  $eIssn = myget("//prism:eIssn",$xpath);
     // write only one $issn
     $issn = !empty($issn) ? $issn : $eIssn;
     $date = myget("//dc:date",$xpath);
 
     $abstract = myget("//x:description",$xpath);
 
-	$toc[] = array(
+  $toc[] = array(
         'title' => $title,
         'link' => $link,
         'issn' => $issn,
@@ -117,12 +117,12 @@ foreach ( $records as $item ) {
 }
 
 if (empty($toc)) {
-	echo 'ERROR!';
+  echo 'ERROR!';
 } else {
 
   $heading = __('Most recent journal updates from the last PLACEHOLDER days');
   $heading = str_replace('PLACEHOLDER', $cfg->api->all->is_new_days, $heading);
-	echo '<h5>'.$heading.'</h5>';
+  echo '<h5>'.$heading.'</h5>';
 
     foreach ( $toc as $item ) {
 

@@ -30,7 +30,7 @@ $cfg->prefs = new stdClass();
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
-// set available languages; to add a new language, update \locale accordingly
+// set available languages; to add a new language, update \languages accordingly
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
 $cfg->prefs->current_lang   = (isset($_REQUEST['lang']) && $_REQUEST['lang'] != '') ? $_REQUEST['lang'] : $cfg->prefs->languages[0];
@@ -77,7 +77,7 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
-$cfg->api->jt->outfile  = 'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+$cfg->api->jt->outfile  = 'data/journals/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
 
 
 
@@ -213,7 +213,5 @@ $cfg->sys = new stdClass();
  * Configuration settings for internal use; don't change
  */
 $cfg->sys->abspath  = dirname(__FILE__).'/';    // absolute path to JournalTouch directory
-//echo "<pre>";
-//var_dump($cfg);
 
 ?>

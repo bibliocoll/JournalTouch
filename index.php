@@ -23,13 +23,13 @@
 require 'config.php';
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
-  $cachefile  = "cache/index_$query.cache.html";
+  $cachefile  = "data/cache/index_$query.cache.html";
 
   //NOTE: file_exists() result is cached. not an issue in this case, but
   //clearstatcache() needs to be called in cases where the file might be
   //deleted between tests in the same script. unlink() updates the cache
-  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
-    if (filemtime('input/journals.csv') < filemtime($cachefile)) {
+  if (file_exists($cachefile) && file_exists($cfg->csv_file->path)) {
+    if (filemtime($cfg->csv_file->path) < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
     }
@@ -61,7 +61,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/media.css" />
-    <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
@@ -109,7 +109,7 @@ foreach ($lister->filters as $key=>$f) {
             <ul class="dropdown">
 <?php
     foreach ($lister->prefs->languages as $set_lang) {
-        if ($set_lang != $lister->prefs->current_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
+        if ($set_lang != $lister->prefs->current_lang) echo "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"languages/$set_lang.gif\" /></a></li>";
     }
 ?>
             </ul>
