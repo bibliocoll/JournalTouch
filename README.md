@@ -47,7 +47,7 @@ It must at least contain the journal titles and a valid ISSN; configure optional
 External (TOC) contents will be read from *index.php* with an AJAX call to *sys/ajax_toc.php*. This file outputs HTML to the caller which is ready to be inserted in *index.php*. You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in *config.php*.
 If you want to read from other sources, expand the handler.
 
-By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.getJournalInfos.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
+By default the query goes to JournalTocs and as a fallback option, there is a query to the (experimental) CrossRef API. To change this precedence and for more details refer to the function *ajax_query_toc* in *sys/class.GetJournalToc.php*. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). 
 
 Please note: while you could set up an alternative ISSN in the config.php, it is ignored by now.
 
@@ -55,7 +55,7 @@ Please note: while you could set up an alternative ISSN in the config.php, it is
 
 #### Error handling example
 
-*sys/class.getJournalInfos.php*:
+*sys/class.GetJournalToc.php*:
 ```
     private function ajax_response_toc($toc, $max_authors = 3) {
         if (!isset($toc['sort']) || count($toc['sort']) < 1) {
@@ -140,7 +140,7 @@ The input file feeds the journal list. Be careful if you change the structure of
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
 There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config.php* (section updates).
-Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+Run the service *admin/services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
 Additionally, you may want to include the JSON file to display a list of recently updated journals. The function ``getJournalUpdates()`` in *sys/class.ListJournals.php* will give you an array you can read from index.php. See the exemplary code there.
 
@@ -159,7 +159,7 @@ You can configure a column (default: "important") to mark important journals (fi
 
 For date display, you can use the timeago jQuery plugin (display timespans instead of dates). For reference, see https://github.com/rmm5t/jquery-timeago. E.g., activation for all HTML5 'time' elements with attribute 'timeago' and date in ISO 8601 timestamp happens in *js/local/conduit.js*:
 
-          		$('time.timeago').timeago();
+                $('time.timeago').timeago();
 
 ## Cover images
 
@@ -184,43 +184,43 @@ Access the methods in these classes from *index.php* and *checkout.php*
 
 setup...
 
-				 require 'sys/class.ListJournals.php'; 
-				 $lister = new ListJournals();
-				 $journals = $lister->getJournals();
+                 require 'sys/class.ListJournals.php'; 
+                 $lister = new ListJournals();
+                 $journals = $lister->getJournals();
 
 ...and do something with it:
 
-		foreach ($journals as $j) {
-			   if (!empty($j['new'])) { 
-				     echo '<li data-orbit-slide="headline">';
-				     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
-				     echo '<div class="orbit-caption">'.$j['title'].'</div>';
-				     echo '</li>';
-			   }
-		}
+        foreach ($journals as $j) {
+               if (!empty($j['new'])) { 
+                     echo '<li data-orbit-slide="headline">';
+                     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
+                     echo '<div class="orbit-caption">'.$j['title'].'</div>';
+                     echo '</li>';
+               }
+        }
 
 ...this is handled in the method in *sys/class.ListJournals.php*
-			 
-			 function getJournals()
+             
+             function getJournals()
 
 **Example: set up the Mailer**
 
 setup...
 
-				require 'sys/PHPMailer/PHPMailerAutoload.php';
-				$email = new PHPMailer();
-				$action = new CheckoutActions();
+                require 'sys/PHPMailer/PHPMailerAutoload.php';
+                $email = new PHPMailer();
+                $action = new CheckoutActions();
 
 ...and send the mail...
 
-			 if($_POST && $_POST['mailer'])
+             if($_POST && $_POST['mailer'])
        {
-			 $action->sendArticlesAsMail($file, $email);
-			 }
+             $action->sendArticlesAsMail($file, $email);
+             }
 
 ...this is handled in the method in *sys/class.CheckoutActions.php*
-			 
-			 function sendArticlesAsMail($file, $email)
+             
+             function sendArticlesAsMail($file, $email)
 
 (do not forget to pass the ``PHPMailer()`` object, here ``$email``)
 
@@ -282,7 +282,7 @@ By default, there is a common stylesheet (*css/local.css*), and another one for 
 
 add the following media query to the stylesheet *media.css*:
 
-		@media only screen and (min-width: 85.063em) {	
+        @media only screen and (min-width: 85.063em) {  
      ...CSS goes here...
     }
 
@@ -324,7 +324,7 @@ Default for an unified look are the Foundation icons [Foundation-Icons](http://z
 
 **Example: insert a star icon**
 
-				<i class="fi-star"></i>
+                <i class="fi-star"></i>
 
 ## Filter
 
