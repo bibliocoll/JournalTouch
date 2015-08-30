@@ -22,7 +22,7 @@ $updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
 $issn = $_GET['issn'];
 
-$jsonFile = "../input/updates.json.txt";
+$jsonFile = "../data/journals/updates.json.txt";
 
 
 function myget ($query,$xpath) {
@@ -60,7 +60,7 @@ function search_array($needle, $haystack) {
  *              but in class.getJournalInfos.php as well              
  */
 function remove_ancient_cache_files() {
-    $files = glob('../cache/*.cache*'); // get all file names by pattern
+    $files = glob('../data/cache/*.cache*'); // get all file names by pattern
     $now = new DateTime(); //very OO
     $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
     $threshold = date_timestamp_get( $now->sub($age) ); //no longer very OO

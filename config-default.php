@@ -30,7 +30,7 @@ $cfg->prefs = new stdClass();
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
-// set available languages; to add a new language, update \locale accordingly
+// set available languages; to add a new language, update \languages accordingly
 // the first language ([0]) will be the default language
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';

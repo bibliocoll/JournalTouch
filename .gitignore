@@ -1,15 +1,17 @@
-*~
-.project
-cache/*.cache*
-dev/*
-doc/html/*
-doc/def/*
-doc/*.tmp
-export/*.csv
-foundation-icons/*
-img/*
-input/*
+# Changes in these folder/files should reasonably never be tracked/pushed
+data/*
+doc/*
+img/covers/*
 config.php
-js/vendor/*
 
-!input/backup/.gitkeep
+# Some exclusions, so the folders always are created, even if initally empty
+!data/cache/.gitkeep
+!data/export/.gitkeep
+!data/journals/backup/.gitkeep
+!doc/jt-documentation.chm
+!doc/jt-doxygen.conf
+
+# Two example files, so JournalTouch runs out-of-the-box
+# Hint: Exclude these files locally via .git/info/exclude for development
+!data/journals/journals.csv
+!data/journals/tag-remap.txt

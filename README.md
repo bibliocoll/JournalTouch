@@ -39,7 +39,7 @@ Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 
 ## General
 
-The main page is *index.php* and reads the relevant journals from *input/*. Put a CSV file in here. Alternatively, set up a Google Drive Spreadsheet and read it directly from the web.
+The main page is *index.php* and reads the relevant journals from *data/journals/*. Put a CSV file in here. Alternatively, set up a Google Drive Spreadsheet and read it directly from the web.
 It must at least contain the journal titles and a valid ISSN; configure optional columns in the *config.php* (e.g. for filters). You can add any columns you like (extend the PHP classes).
 
 ### Configure sources for the TOCs
@@ -103,7 +103,7 @@ which handles that in *conduit.js*:
 
 Checkout options are handled in *checkout.php* and the imported classes.
 
-Be sure to set writing rights to *export/*.
+Be sure to set writing rights to *data/export/*.
 
 ### User interaction
 User interaction is handled in *js/local/conduit.js*. and *js/local/frame.js*
@@ -140,7 +140,7 @@ The input file feeds the journal list. Be careful if you change the structure of
 
 One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
 There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. Put the RSS URLs in *config.php* (section updates).
-Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *input/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
+Run the service *services/getLatestJournals.php* (e.g. on a daily basis). It will output an array of ISSNs that are written to *data/journals/updates.json*. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the found ISSNs with the local holdings (= your CSV), and adds it to the file with the current date if the journal is in your CSV file. The output file will be read from *sys/class.ListJournals.php* in the function ``isCurrent()`` and add a 'new' marking to the journal array (which then you can read from index.php). 
 
 Additionally, you may want to include the JSON file to display a list of recently updated journals. The function ``getJournalUpdates()`` in *sys/class.ListJournals.php* will give you an array you can read from index.php. See the exemplary code there.
 
@@ -159,7 +159,7 @@ You can configure a column (default: "important") to mark important journals (fi
 
 For date display, you can use the timeago jQuery plugin (display timespans instead of dates). For reference, see https://github.com/rmm5t/jquery-timeago. E.g., activation for all HTML5 'time' elements with attribute 'timeago' and date in ISO 8601 timestamp happens in *js/local/conduit.js*:
 
-          		$('time.timeago').timeago();
+                $('time.timeago').timeago();
 
 ## Cover images
 
@@ -184,43 +184,43 @@ Access the methods in these classes from *index.php* and *checkout.php*
 
 setup...
 
-				 require 'sys/class.ListJournals.php'; 
-				 $lister = new ListJournals();
-				 $journals = $lister->getJournals();
+                 require 'sys/class.ListJournals.php'; 
+                 $lister = new ListJournals();
+                 $journals = $lister->getJournals();
 
 ...and do something with it:
 
-		foreach ($journals as $j) {
-			   if (!empty($j['new'])) { 
-				     echo '<li data-orbit-slide="headline">';
-				     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
-				     echo '<div class="orbit-caption">'.$j['title'].'</div>';
-				     echo '</li>';
-			   }
-		}
+        foreach ($journals as $j) {
+               if (!empty($j['new'])) { 
+                     echo '<li data-orbit-slide="headline">';
+                     echo '<img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/>';
+                     echo '<div class="orbit-caption">'.$j['title'].'</div>';
+                     echo '</li>';
+               }
+        }
 
 ...this is handled in the method in *sys/class.ListJournals.php*
-			 
-			 function getJournals()
+             
+             function getJournals()
 
 **Example: set up the Mailer**
 
 setup...
 
-				require 'sys/PHPMailer/PHPMailerAutoload.php';
-				$email = new PHPMailer();
-				$action = new CheckoutActions();
+                require 'sys/PHPMailer/PHPMailerAutoload.php';
+                $email = new PHPMailer();
+                $action = new CheckoutActions();
 
 ...and send the mail...
 
-			 if($_POST && $_POST['mailer'])
+             if($_POST && $_POST['mailer'])
        {
-			 $action->sendArticlesAsMail($file, $email);
-			 }
+             $action->sendArticlesAsMail($file, $email);
+             }
 
 ...this is handled in the method in *sys/class.CheckoutActions.php*
-			 
-			 function sendArticlesAsMail($file, $email)
+             
+             function sendArticlesAsMail($file, $email)
 
 (do not forget to pass the ``PHPMailer()`` object, here ``$email``)
 
@@ -252,7 +252,7 @@ Please note: the current mixing of GET/POST and jQuery bits is chaotic. Beware o
 
 ## Export directory
 
-By default, a time-hashed file will be written to *export/* on calling *checkout.php* (``$action->saveArticlesAsCSV($mylist);``). 
+By default, a time-hashed file will be written to *data/export/* on calling *checkout.php* (``$action->saveArticlesAsCSV($mylist);``). 
 **These files will not be deleted by default** (extend the given methods to achieve this).
 
 ## Mailer
@@ -282,7 +282,7 @@ By default, there is a common stylesheet (*css/local.css*), and another one for 
 
 add the following media query to the stylesheet *media.css*:
 
-		@media only screen and (min-width: 85.063em) {	
+        @media only screen and (min-width: 85.063em) {  
      ...CSS goes here...
     }
 
@@ -320,11 +320,11 @@ Please note: to make sure that you really have full text access, you might want 
 
 ## Icons
 
-Default for an unified look are the Foundation icons [Foundation-Icons](http://zurb.com/playground/foundation-icon-fonts-3). 
+Default for an unified look are the Foundation icons [covers/](http://zurb.com/playground/foundation-icon-fonts-3). 
 
 **Example: insert a star icon**
 
-				<i class="fi-star"></i>
+                <i class="fi-star"></i>
 
 ## Filter
 
@@ -342,7 +342,7 @@ able to digest heterogeneous data from different sources (CrossRef,
 JournalTOCs...), some essential metadata fields should be normalized already
  in the TOC snippet (*ajax/get...*). 
 
-When a user clicks on the basket checkout, a csv file will automatically be generated in *export/*. The function is in *sys/class.CheckoutActions.php*: ``saveArticlesAsCSV($mylist)``. When a user wants to export data, all fields will be read from this csv file. Write your mapping into an export function. For example, see the
+When a user clicks on the basket checkout, a csv file will automatically be generated in *data/export/*. The function is in *sys/class.CheckoutActions.php*: ``saveArticlesAsCSV($mylist)``. When a user wants to export data, all fields will be read from this csv file. Write your mapping into an export function. For example, see the
 function ``saveArticlesAsEndnote()``.
 
 Caveat: in the current implementation, mapping of the metadata is limited to the given *simpleCart* fields (``item_name``, ``item_link``, ``item_options_``), and will be re-read from the source string when exporting. This is by no means a clean implementation. It would be better to modify the *simpleCart* js for a cleaner mapping (it is not really a mapping right now). (TODO)
@@ -351,7 +351,7 @@ Caveat: in the current implementation, mapping of the metadata is limited to the
 
 -- TODO -- 
 
-JournalTouch has multilanguage support by default. For details and customization see *locale/*.
+JournalTouch has multilanguage support by default. For details and customization see *languages/*.
 
 # Android Hints
 

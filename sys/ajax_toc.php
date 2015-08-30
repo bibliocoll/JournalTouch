@@ -45,7 +45,7 @@ else {
 
 // Prepare the cache file. Use url parameters to create unique id. Date identifies issue
 $query          = md5(implode('', $_GET));
-$cachefile = "../cache/toc-$issn+$query.cache.html";
+$cachefile = "../data/cache/toc-$query.cache.html";
 
 
 // An age is available and cached file exists (-1 is the same as disabled caching)
@@ -89,7 +89,7 @@ function get_toc($issn, &$status) {
   $html_prefix = '<!DOCTYPE html>
       <html><head>
       <link href="../css/foundation.min.css" rel="stylesheet">
-      <link href="../foundation-icons/foundation-icons.css" rel="stylesheet">
+      <link href="../css/foundation-icons/foundation-icons.css" rel="stylesheet">
       <link href="../css/local.css" rel="stylesheet">
       <script src="../js/vendor/jquery.js"></script>
       <script src="../js/vendor/jquery.timeago.js"></script>

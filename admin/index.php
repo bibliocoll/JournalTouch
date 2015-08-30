@@ -20,7 +20,7 @@ if ($btn_upd) {
 
 $del_message = '';
 if ($btn_cache) {
-  $files = glob('../cache/*.cache*'); // get all file names by pattern
+  $files = glob('../data/cache/*.cache*'); // get all file names by pattern
   $i = 0;
   foreach($files as $file) {
     if(is_file($file)) {
@@ -51,7 +51,7 @@ if ($btn_cache) {
       <label for="optTags"><input type="checkbox" name="optTags"> Clean tags (experimental)<sup>1</sup><br>
       <button name="upd" value="true" type="submit">Start</button>
       <br /><br />
-      <sup>1</sup>You have to edit input/tag-remap.txt. Format: "oldTag;newTag"
+      <sup>1</sup>You have to edit data/journals/tag-remap.txt. Format: "oldTag;newTag"
     </fieldset>
     <br />
     <fieldset>
