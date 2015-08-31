@@ -83,7 +83,7 @@ background-color:#007095;
 min-height:150px;
 }
 footer > div {
-background: url('../img/bgcoll-logo-w.png') no-repeat left top;
+/*background: url('../img/bgcoll-logo-w.png') no-repeat left top;*/
 color:#efefef;
 padding: 24px 0 10px;
 width: 100%;
