@@ -2,6 +2,14 @@
 
 JournalTouch provides a touch-optimized interface for browsing current journal tables of contents in Responsive Design. Fun!
 
+# DEVELOPMENT BRANCH
+```
+this is the development branch. things here may be broken or badly documented or both.
+If you want to use JournalTouch, please get the latest release from the master branch.
+
+We're using the git-flow project structure, for more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
+```
+
 # License
 
 @copyright 2015 MPI for Research on Collective Goods, Library 
