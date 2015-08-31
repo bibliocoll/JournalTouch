@@ -1,6 +1,7 @@
 *~
 .project
 cache/*.cache*
+data/*
 dev/*
 doc/html/*
 doc/def/*
