@@ -20,7 +20,7 @@
  */
 
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
-require 'config.php';
+require ('config.php');
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
   $cachefile  = "cache/index_$query.cache.html";
@@ -44,7 +44,7 @@ if ($cfg->prefs->cache_main_enable) {
 }
 
 ob_start();
-require 'sys/class.ListJournals.php';
+require('sys/class.ListJournals.php');
 /* setup methods & objects */
 $lister = new ListJournals();
 $journals = $lister->getJournals();
