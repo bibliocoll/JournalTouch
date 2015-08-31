@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Bootstrap everything needed for running JournalTouch
  *
@@ -35,6 +35,9 @@ sanitize_request();
 // Set language
 $cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->languages[0];
 require_once($cfg->sys->basepath.'sys/jt-gettext.php');
+
+// @deprecated 2015-08-30: Currently there is no use to force deletion of cached files, since ajax_toc.php handles it well to make sure a cache is valid
+$cfg->prefs->cache_max_age = "365 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
 
 
 // Output files and paths - there is no point to bother a user with changing it
