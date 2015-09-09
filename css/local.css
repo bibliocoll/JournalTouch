@@ -252,79 +252,207 @@ background-color: aliceblue;
 }
 
 
-/*************** Journal (Cover) List : LIST (ACCORDION) *****************/
+/*************** old code: Journal (Cover) List : LIST (ACCORDION) *****************/
 
-dl.accordion dd.active a.item_name {
-background-color:#fff;
-}
-dl.accordion dd.active a.item_add {
-background-color:#007095;
-}
+/*dl.accordion dd.active a.item_name {*/
+/*background-color:#fff;*/
+/*}*/
+/*dl.accordion dd.active a.item_add {*/
+/*background-color:#007095;*/
+/*}*/
 
-dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {
-background: #43ac41!important;
-}
+/*dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {*/
+/*background: #43ac41!important;*/
+/*}*/
 
-.accordion dd {
-border-top: solid 1px #879CC6;
-}
+/*.accordion dd {*/
+/*border-top: solid 1px #879CC6;*/
+/*}*/
 
-/* E-Mail library notification button on errors */
-dl.accordion a.button {
-background-color: #008CBA!important;
-}
-dl.accordion a.button:hover {
-background-color: #007095!important;
-}
+/*[> E-Mail library notification button on errors <]*/
+/*dl.accordion a.button {*/
+/*background-color: #008CBA!important;*/
+/*}*/
+/*dl.accordion a.button:hover {*/
+/*background-color: #007095!important;*/
+/*}*/
 
-dl.accordion a.close {
-background:none;
-}
+/*dl.accordion a.close {*/
+/*background:none;*/
+/*}*/
 
-.accordion .fi-burst-new {
-color: #077dac;
-font-size:xx-large;
-position: absolute;
-font-size: 40pt;
-margin-left: 80%;
-margin-top: -25px;
-}
 
-/* click history: accordion */
-.accordion .fi-paperclip.large { 
-position: absolute;
-z-index:2;
-font-size: 40pt;
-margin-left: -38px;
-margin-top: -50px;
-color: #dbd417;
+/*************** Journal (Cover) List : GRID / LIST ****************************/
+
+/* ===== GRID VIEW ===== */
+
+div#journalList.gridview > div.listitem {
+  display: inline-block;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  float: left;
+  position: relative;
 }
 
-.accordion .toc.preloader {
-position: relative;
-margin-top: 1px;
-width: 80px;
-height: 80px;
+/*foundation small-12*/
+@media only screen {
+  div#journalList.gridview > div.listitem { width: 100%; }
 }
 
-/*************** Journal (Cover) List : GRID  ****************************/
-
-/* set min height so that titles on two lines won't break the layout (long titles (>2 lines) will still break! */
-div.panel.content {
-height: 110px;
+/*foundation medium-6*/
+@media only screen and (min-width: 40.063em) {
+  div#journalList.gridview > div.listitem { width: 50% }
 }
 
-.div-grid .fi-burst-new.large {
-color: #077dac;
-font-size:xx-large; 
-position: absolute;
-font-size: 40pt;
-margin-left: 20px;
-/*margin-top: -24px;*/
+/*foundation large-4*/
+@media only screen and (min-width: 64.063em) {
+  div#journalList.gridview > div.listitem { width: 33.33333%; }
 }
 
+div#journalList.gridview > div.listitem > div.metaInfo {
+  display: inline-block;
+  bottom: 130px;
+  padding-left: 10px;
+  padding-right: 0.9375rem;
+  position: absolute;
+}
+
+div#journalList.gridview > div.listitem > div.metaInfo > .button {
+  background-color: #CFCFCF;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  border-radius: 3px;
+}
+
+div#journalList.gridview > div.listitem > div.title {
+  height: 110px;
+  /*mixin panel*/
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d8d8d8;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: #f2f2f2;
+}
+
+/*this mimics foundations <i class="fi-burst-new"></i>*/
+/*and requires foundation-icons font to be defined elsewhere*/
+div#journalList.gridview > div.listitem.new::after {
+  content: "\f121";
+  font-family: "foundation-icons";
+  font-size: 50px;
+  color: #077dac;
+  display: inline-block;
+  position: absolute;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: inherit;
+  left: 200px;
+  top: 0px;
+  z-index: 100;
+}
+
+/* ===== LIST VIEW ===== */
+div#journalList.listview > div.listitem {
+  display: block;
+  width: 100%;
+  position: relative;
+
+  /*mixin panel*/
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d8d8d8;
+  margin-bottom: 0.25rem;
+  background: #f2f2f2;
+}
+
+div#journalList.listview > div.listitem > img {
+  display: none;
+}
+
+div#journalList.listview > div.listitem > div.metaInfo {
+  position: absolute;
+  right: 0.25rem;
+  bottom: 0.25rem;
+  z-index: 5;
+}
+
+div#journalList.listview > div.listitem > div.metaInfo > .button {
+  background-color: #CFCFCF;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  font-size: 0.8125rem;
+  border-radius: 3px;
+}
+
+div#journalList.listview > div.listitem > div.title {
+  display: inline-block;
+  padding: 0;
+}
+
+div#journalList.listview > div.listitem > div.title > h5 {
+  display: inline-block;
+  padding: 0 0 0 3rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+div#journalList.listview > div.listitem > div.title > span.subheader {
+  display: inline-block;
+  padding: 0 1rem;
+}
+
+/*invisible spacer to prevent the metaInfo buttons from moving over the subheader*/
+/*FIXME: the 20rem width is not adjusted to the buttons actually present...*/
+div#journalList.listview > div.listitem > div.metaInfo + div.title::after {
+  display: inline-block;
+  width: 20rem;
+  height: 2.5rem;
+  vertical-align: middle;
+  content: "";
+}
+
+/*this mimics foundations <i class="fi-burst-new"></i>*/
+/*and requires foundation-icons font to be defined elsewhere*/
+div#journalList.listview > div.listitem.new::after {
+  content: "\f121";
+  font-family: "foundation-icons";
+  color: #077dac;
+  display: inline-block;
+  position: absolute;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  text-decoration: inherit;
+  left: 0.25rem;
+  top: -0.25rem;
+  z-index: 100;
+}
+
+/*scale down the "new" icon on small screens*/
+/*foundation small*/
+@media only screen {
+  div#journalList.listview > div.listitem.new::after { font-size: 2.5rem; }
+}
+
+/*foundation medium and up*/
+@media only screen and (min-width: 40.063em) {
+  div#journalList.listview > div.listitem.new::after { font-size: 3rem; }
+}
+
+
+/*old code*/
 /* click history: grid */
-.div-grid .fi-paperclip.large { 
+#journalList .fi-paperclip.large {
 position: absolute;
 z-index:2;
 font-size: 40pt;
@@ -499,44 +627,9 @@ width: 150px;
 margin-right:20px;
 }
 
-.div-grid .fi-dislike {color: red;}
-.div-grid .fi-like {color: green;}
+.listitem .fi-dislike {color: red;}
+.listitem .fi-like {color: green;}
 
-.div-grid .metaInfo {
-/*color: #077dac;
-position: absolute;
-font-size: 14.5pt;
-margin-left: 10px;*/
-position: absolute;
-bottom: 130px;
-margin-left: 10px;
-}
-
-.div-grid .metaInfo div {
-/*margin-top: 163px;
-background: none repeat scroll 0 0 #f2f2f2;
-border: 1px solid #d8d8d8;
-border-bottom-style: dotted;
-padding: 5px;
-width: 123px;*/
-padding: 0 0 0 10px;
-}
-
-.div-grid .metaInfo .button {
-background-color: #CFCFCF;
-width: 110px;
-padding: 10px;
-margin-bottom: 8px;
-}
-
-.metaInfo .button:hover {
-background-color: #949090!important;
-padding-top: 15px;
-}
-
-.div-grid .metaInfo .button a {
-color: #000;
-}
 
 /*************** Animations & Transitions ********************************/
 /* Glowing Basket */
