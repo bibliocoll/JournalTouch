@@ -55,8 +55,7 @@ $(document).ready(function() {
 
     $('.alphabet a').click(function() {
         var char = $(this).text();
-        //  $('html,body').animate({scrollTop: $('.getTOC').find('h5[title^="'+char+'"]').offset().top},'slow');
-        $('html,body').animate({scrollTop: $('#view-grid div.div-grid').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top},'slow');
+        $('html,body').animate({scrollTop: $('.listitem').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top - 80},'slow');
     });
 
     // Anything that should be done on closing a modal
@@ -69,10 +68,10 @@ $(document).ready(function() {
     /* modify alphabet */
     /* currently limited to grid view */
     function showActiveLettersOnly() {
-        if ($('#view-grid').is(':visible')) {
+        if ($('#journalList.gridview').is(':visible')) {
             Letters = new Array();
-            $('dd:visible, div.div-grid:visible').each(function() {
-                var title = $(this).find('.getTOC h5').attr('title');
+            $('div.listitem .title h5').each(function() {
+                var title = $(this).attr('title');
                 /* push the first letters of all displayed journals into an array */
                 Letters.push(title.slice(0,1));
             });
@@ -94,8 +93,8 @@ $(document).ready(function() {
         $('#letterbox').remove();
         $('#journalList').append('<div id="letterbox" class="secondary radius button disabled">A</div>');
         /* animate box */
-        if ($('#view-grid').is(':visible')) {
-            $('div.div-grid h5').waypoint(function(direction) {
+        if ($('#journalList.gridview').is(':visible')) {
+            $('div.listitem h5').waypoint(function(direction) {
                 // get the first letter
                 var cL = $(this).attr('title').slice(0,1);
                 $('#letterbox').text(cL);
@@ -294,53 +293,63 @@ Prerequisites: Make $('a.popup') more generic and maybe add a toc.php with the c
     //$(this).children('i').removeClass("fi-check").addClass("fi-plus");
     //});
 
+
+
+//
+//  TEMP DISABLED
+//
+
     /* filter */
     $('a.filter').click(function(){
-        /* remove any open modal */
+        //[> remove any open modal <]
         $('.reveal-modal').foundation('reveal', 'close');
-        /* reset alphabet */
+        //[> reset alphabet <]
         $('.alphabet li a').show();
         var curFilter = $(this).attr('id');
-        /* highlight current filter */
+        //[> highlight current filter <]
         $(this).parent().siblings().children().removeClass('filterSelected');
         $(this).addClass('filterSelected');
         if (curFilter === "filter-reset") {
-            $('dd, div.div-grid').show(); /* show everything */
-            /* fix for unveil.js so all visible elements will get their appropriate image content
-             * (because lazy load works only on scroll, we will scroll a bit) */
+            $('dd, div.div-grid').show(); //[> show everything <]
+             //fix for unveil.js so all visible elements will get their appropriate image content
+             //(because lazy load works only on scroll, we will scroll a bit)
             $('html,body').animate({scrollTop: $('#switch-view').offset().top},'slow');
-            /* hide on panel */
+            //[> hide on panel <]
             $('#filterPanel').fadeOut();
         } else {
             $('dd, div.div-grid').not('.'+curFilter).hide();
             $('.'+curFilter).show();
-            /* special handling for some data (we should really do this in the data, not here) */
+            //[> special handling for some data (we should really do this in the data, not here) <]
             if (curFilter === "filter-wir") {$('.filter-fin').show();}
-            /* trigger for unveil.js: show all filtered images */
+            //[> trigger for unveil.js: show all filtered images <]
             $('.'+curFilter+ '> img').trigger('unveil');
-            /* show on panel */
+            //[> show on panel <]
             $('#filterPanel').fadeIn();
             $('#filterPanelFilter').text($(this).text());
         }
-        /* reload values */
+        //[> reload values <]
         showActiveLettersOnly();
         setLetterBox();
     });
 
-    /* filter: deactivate panel on click */
+    //[> filter: deactivate panel on click <]
     $('#filterPanel').click(function() {
         $('dd, div.div-grid').show();
-        $('.alphabet li a').show(); /* show everything */
+        $('.alphabet li a').show(); //[> show everything <]
         showActiveLettersOnly();
         setLetterBox();
-        /* hide on panel */
+        //[> hide on panel <]
         $('#filterPanel').fadeOut();
     });
+
+//
+//  END TEMP DISABLED
+//
 
     /* switch views */
     $('#switch-view').click(function(){
         $('.alert-box').hide(); // clean up
-        $('#view-accordion,#view-grid').fadeToggle('linear');
+        $('#journalList').toggleClass('listview gridview');
         if ($(this).children('i').hasClass('fi-list')) {
             $(this).children('i').removeClass('fi-list').addClass('fi-thumbnails');
             $(this).children('span').html('&nbsp;grid view');

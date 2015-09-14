@@ -95,7 +95,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <?php
 /* read all filters from the config file */
 foreach ($lister->filters as $key=>$f) {
-    print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
+  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
 }
 ?>
           </ul>
@@ -103,7 +103,7 @@ foreach ($lister->filters as $key=>$f) {
         <?php } ?>
         <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
-<?php 
+<?php
 $lng_options = '';
 foreach ($lister->prefs->languages as $set_lang) {
   if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
@@ -112,12 +112,12 @@ foreach ($lister->prefs->languages as $set_lang) {
 // Show a drop down menu if more than two languages are available
 if (count($lister->prefs->languages) > 2) {
   echo '<li class="divider"></li>
-        <li class="has-dropdown switch-language">
-            <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;'. __('Language').'</a>
-            <ul class="dropdown">'.$lng_options.'
-            </ul>
-        </li>
-      </ul>';
+    <li class="has-dropdown switch-language">
+    <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;'. __('Language').'</a>
+    <ul class="dropdown">'.$lng_options.'
+    </ul>
+    </li>
+    </ul>';
 }
 // Otherwise just show a simple toggle
 elseif (count($lister->prefs->languages) == 2) {
@@ -249,13 +249,13 @@ The list of journals is a selection of the journals licensed to the library.')
 <?php
 /* /\* see Class setup *\/ */
 foreach ($journals as $j) {
-    if (!empty($j['topJ'])) {
-        echo '<li data-orbit-slide="headline">';
-        echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
-        echo '<img class="issn getTOC" src="'.$j['img'].'"/>';
-        echo '<div class="orbit-caption">'.$j['title'].' ('.$j['date'].')</div>';
-        echo '</li>';
-    }
+  if (!empty($j['topJ'])) {
+    echo '<li data-orbit-slide="headline">';
+    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+    echo '<img class="issn getTOC" src="'.$j['img'].'"/>';
+    echo '<div class="orbit-caption">'.$j['title'].' ('.$j['date'].')</div>';
+    echo '</li>';
+  }
 }
 ?>
       </ul>
@@ -280,7 +280,7 @@ foreach ($journals as $j) {
 <?php
 $alphas = range('A', 'Z');
 foreach ($alphas as $letter) {
-    echo '<li><a href="#" class="tiny button secondary">'.$letter.'</a></li>';
+  echo '<li><a href="#" class="tiny button secondary">'.$letter.'</a></li>';
 }
 ?>
       </ul>
@@ -321,44 +321,15 @@ foreach ($alphas as $letter) {
     <ul>
 <?php
 if (!empty($journalUpdates)) {
-    foreach ($journalUpdates as $j) {
-        print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
-    }
+  foreach ($journalUpdates as $j) {
+    print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
+  }
 }
 ?>
     </ul>
   </div>
 </div>
 -->
-
-<!-- Version 2: List -->
-<div id="view-accordion" class="row invisible">
-  <div class="small-12 columns">
-    <h3><?php echo __('Browse all journals from A to Z (list view):') ?></h3>
-    <dl class="accordion" data-accordion="">
-<?php
-/* see Class setup */
-foreach ($journals as $j) {
-    /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-    $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
-    $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
-    $new_issues = ($j['new']) ? 'new-issue' : '';
-
-    echo '<dd class="search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
-    echo '<a id="issn'.$j['id'].'" class="getTOC accordion '.$j['id'].'" href="#">';
-    echo ($new_issues) ? ' <i class="fi-burst-new large"></i>' : "";
-    echo $j['title'];
-    echo ($new_issues) ? ' <span class="fresh">['.__("last update") .' '. $wF . ']</span>' : "";
-    echo '</a>';
-    echo '<div id="issn'.$j['id'].'" class="content"><div class="toc preloader"></div></div>';
-    echo '</dd>';
-}
-?>
-    </dl>
-  </div>
-</div>
-
 
 <!-- Version 3: Grid -->
 <!-- Thumbnails -->
@@ -368,37 +339,36 @@ foreach ($journals as $j) {
       <h3><?php echo __('Browse all journals from A to Z (grid view):') ?></h3>
     </div>
   </div>
-  <div class="row" id="journalList">
+  <div class="row gridview" id="journalList">
 <?php
 /* see Class setup */
 foreach ($journals as $j) {
-    /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
-    $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
-    $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
+  /* convert found date of last update in the data to a timestring (gets evaluated with jquery.timeago.js) */
+  $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
+  $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
-    $meta = false;
+  $meta = false;
 
-    $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-    $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button small radius popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : "");
-    $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-    $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button small radius popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': "<br />");
-    $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button small radius popup"><i class="fi-home"></i> '.__('Journal').'</a>': "<br />");
-    $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-    $meta .= (($j['metaShelfmark']) ? ' <span class="button small radius"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
-    $new_issues = ($j['new']) ? 'new-issue' : '';
-    $len_title = strlen($j['title']);
-    $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
+  $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
+  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : '');
+  $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
+  $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
+  $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
+  $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
+  $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+  $new_issues = ($j['new']) ? ' new' : '';
+  $len_title = strlen($j['title']);
+  $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
-    echo '<div class="search-filter large-4 medium-5 small-12 columns div-grid filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].' '.$new_issues.'">';
-    echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
-    echo '<img class="getTOC grid '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
-    echo ($new_issues) ? '<i class="fi-burst-new large"></i>' : "";
-    /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
-    echo (($meta && $lister->prefs->show_metainfo) ? '<span class="metaInfo"><div>'.$meta.'</div></span>' : "");
-    echo '<div class="getTOC grid panel content">';
-    echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
-    echo ($new_issues) ? '<h6 class="subheader"> <span class="fresh">['.__("last update") .' '. $wF . ']</span> </h6>' : "";
-    echo '</div></div>';
+  echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'">';
+  echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
+  echo '<img class="getTOC '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
+  /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
+  echo (($meta && $lister->prefs->show_metainfo) ? '<div class="metaInfo">'.$meta.'</div>' : "");
+  echo '<div class="getTOC title">';
+  echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
+  echo ($new_issues) ? '<span class="subheader fresh">['.__("last update") .' '. $wF . ']</span>' : "";
+  echo '</div></div>';
 
 }
 ?>
@@ -493,54 +463,54 @@ The list of journals is a selection of the journals licensed to the library.') ?
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
 <script>
 simpleCart({
-    checkout: {
-        type: "SendForm",
-        url: "checkout.php",
-        extra_data: {
-            lang: "<?php echo $lister->prefs->current_lang ?>"
+  checkout: {
+    type: "SendForm",
+      url: "checkout.php",
+      extra_data: {
+        lang: "<?php echo $lister->prefs->current_lang ?>"
         }
     },
-    cartColumns: [
-        { view: function( item, column ) {
-                var itemname, itemtitle;
-                itemname = item.get('name');
-                itemtitle = item.get('title');
-                if (typeof itemtitle !== 'undefined' && itemtitle !== '') {
-                    return '<div class="item-name">'+itemtitle+' <i alt="we have citation data" class="fi-paperclip"></i></div>';
+      cartColumns: [
+{ view: function( item, column ) {
+  var itemname, itemtitle;
+  itemname = item.get('name');
+  itemtitle = item.get('title');
+  if (typeof itemtitle !== 'undefined' && itemtitle !== '') {
+    return '<div class="item-name">'+itemtitle+' <i alt="we have citation data" class="fi-paperclip"></i></div>';
                 } else {
-                    return '<div class="item-name">'+itemname+'</div>';
+                  return '<div class="item-name">'+itemname+'</div>';
                 }
             },
-            label: false
+              label: false
         },
-        {
-            view: "remove" ,
-            text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" ,
-            label: false
+  {
+    view: "remove" ,
+      text: "<?php echo __('remove') ?> <i class=\"fi-trash\"></i>" ,
+      label: false
         }
     ]
 });
 
 simpleCart.bind( 'beforeRemove' , function(){
-    if ($(".row-1").length == false) {
-        $("#shelfIsEmpty").show();
-        $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
-        // remove class to button (for CSS formatting)
-        $('#myArticles').removeClass('full');
+  if ($(".row-1").length == false) {
+    $("#shelfIsEmpty").show();
+    $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').hide();
+    // remove class to button (for CSS formatting)
+    $('#myArticles').removeClass('full');
   } else {
-      $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
+    $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
     }
 });
 
 simpleCart.bind( 'afterAdd' , function(){
-    // add class to button (for CSS formatting)
-    $('#myArticles').addClass('full');
+  // add class to button (for CSS formatting)
+  $('#myArticles').addClass('full');
 });
 
 simpleCart.bind( 'load' , function(){
-    if (simpleCart.quantity() > 0) {
-        // add class to button (for CSS formatting)
-        $('#myArticles').addClass('full');
+  if (simpleCart.quantity() > 0) {
+    // add class to button (for CSS formatting)
+    $('#myArticles').addClass('full');
    }
 });
 
@@ -561,3 +531,4 @@ if ($lister->prefs->cache_main_enable) {
 }
 ob_end_flush();
 ?>
+<!-- vim: set sw=2 ts=2 et ft=php fdm=marker: -->
