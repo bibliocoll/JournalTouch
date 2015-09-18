@@ -101,6 +101,7 @@ foreach ($lister->filters as $key=>$f) {
           </ul>
         </li>
         <?php } ?>
+        <li><a id="switch-sort" href="#"><i class="switcher fi-shuffle azsorted"></i><span>&#160;switch sorting</span></a></li>
         <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
 <?php
@@ -285,6 +286,31 @@ foreach ($alphas as $letter) {
 ?>
       </ul>
     </div>
+    <!-- timestamp button bar-->
+    <div class="button-bar timewarps">
+      <ul class="button-group radius">
+<?php
+$timewarps = array(
+  '1d' => 86400,
+  '2d' => 2*86400,
+  '3d' => 3*86400,
+  '4d' => 4*86400,
+  '5d' => 5*86400,
+  '6d' => 6*86400,
+  '1w' => 7*86400,
+  '2w' => 14*86400,
+  '3w' => 21*86400,
+  '1m' => 31*86400,
+  '3m' => 92*86400,
+  '6m' => 183*86400,
+  '1y' => 365*86400
+);
+foreach ($timewarps as $label => $timestamp) {
+  echo '<li><a href="#" class="tiny button secondary" data-timestamp="'.( time() - $timestamp ).'">'.$label.'</a></li>';
+}
+?>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -333,12 +359,14 @@ if (!empty($journalUpdates)) {
 
 <!-- Version 3: Grid -->
 <!-- Thumbnails -->
+<!--
 <div id="view-grid">
   <div class="row">
     <div class="small-10 columns">
       <h3><?php echo __('Browse all journals from A to Z (grid view):') ?></h3>
     </div>
   </div>
+-->
   <div class="row gridview" id="journalList">
 <?php
 /* see Class setup */
@@ -352,22 +380,22 @@ foreach ($journals as $j) {
   $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
   $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : '');
   $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-  $meta .= (($j['metaOnline'] && $link) ? '<a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
-  $meta .= (($j['metaWebsite']) ? '<a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
+  $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
+  $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
   $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
   $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
   $new_issues = ($j['new']) ? ' new' : '';
   $len_title = strlen($j['title']);
   $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
 
-  echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'">';
+  echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'" data-title="'.$j['title'].'" data-issn="'.$j['id'].'" data-pubdate="'. strtotime($j['date']).'">';
   echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
   echo '<img class="getTOC '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
   /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
-  echo (($meta && $lister->prefs->show_metainfo) ? '<div class="metaInfo">'.$meta.'</div>' : "");
+  echo (($meta && $lister->prefs->show_metainfo) ? '<div class="metaInfo">'.$meta.'</div>' : '');
   echo '<div class="getTOC title">';
   echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
-  echo ($new_issues) ? '<span class="subheader fresh">['.__("last update") .' '. $wF . ']</span>' : "";
+  echo ($new_issues) ? '<span class="subheader fresh">['.__("last update") .' '. $wF . ']</span>' : '';
   echo '</div></div>';
 
 }
@@ -459,6 +487,7 @@ The list of journals is a selection of the journals licensed to the library.') ?
 <script src="js/vendor/jquery.unveil.min.js"></script>
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/vendor/jquery.timeago.js"></script>
+<script src="js/vendor/tinysort.min.js"></script>
 <script src="js/local/conduit.js"></script>
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
 <script>
