@@ -286,6 +286,31 @@ foreach ($alphas as $letter) {
 ?>
       </ul>
     </div>
+    <!-- timestamp button bar-->
+    <div class="button-bar timewarps">
+      <ul class="button-group radius">
+<?php
+$timewarps = array(
+  '1d' => 86400,
+  '2d' => 2*86400,
+  '3d' => 3*86400,
+  '4d' => 4*86400,
+  '5d' => 5*86400,
+  '6d' => 6*86400,
+  '1w' => 7*86400,
+  '2w' => 14*86400,
+  '3w' => 21*86400,
+  '1m' => 31*86400,
+  '3m' => 92*86400,
+  '6m' => 183*86400,
+  '1y' => 365*86400
+);
+foreach ($timewarps as $label => $timestamp) {
+  echo '<li><a href="#" class="tiny button secondary" data-timestamp="'.( time() - $timestamp ).'">'.$label.'</a></li>';
+}
+?>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -334,12 +359,14 @@ if (!empty($journalUpdates)) {
 
 <!-- Version 3: Grid -->
 <!-- Thumbnails -->
+<!--
 <div id="view-grid">
   <div class="row">
     <div class="small-10 columns">
       <h3><?php echo __('Browse all journals from A to Z (grid view):') ?></h3>
     </div>
   </div>
+-->
   <div class="row gridview" id="journalList">
 <?php
 /* see Class setup */

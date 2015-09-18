@@ -58,6 +58,11 @@ $(document).ready(function() {
     $('html,body').animate({scrollTop: $('.listitem').filter(':visible').find('h5[title^="'+char+'"]:first').parent().parent().offset().top - 80},'slow');
   });
 
+  $('.timewarps a').click(function() {
+    var timestamp = $(this).data('timestamp');
+    $('html,body').animate({scrollTop: $('.listitem').filter(':visible').filter( function(i,e){ return ($(e).data('pubdate') < timestamp)} ).first().offset().top - 80 },'slow');
+  });
+
   // Anything that should be done on closing a modal
   // Currently only removing iframe
   $(document).on('close.fndtn.reveal', '[data-reveal]', function () {
@@ -198,12 +203,14 @@ $(document).ready(function() {
       //$('.toc.preloader').show(); //tinysort seems quick enough to not need hiding
       if ($(this).hasClass('datesorted')) {
         $('.alphabet').hide();
+        $('.timewarps').show();
         $('#letterbox').hide();
         tinysort('div#journalList>div.listitem',{data:'pubdate', order:'desc', place:'start'});
       } else {
         tinysort('div#journalList>div.listitem',{data:'title', order:'asc', place:'start'});
         if ($('#journalList').hasClass('.gridview')) {
           $('.alphabet').show();
+          $('.timewarps').hide();
           $('#letterbox').show();
         }
       }
