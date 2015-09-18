@@ -7,7 +7,7 @@
  * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  */
- 
+
 /**
   * @brief   Sanitize user input. Currently only a basic check to prevent xss
   *
@@ -23,11 +23,36 @@
 function sanitize_request() {
   $_GET   = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
   $_POST  = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-  
+
   /* Not yet implemented: unset. Or replace by get + post
   $_REQUEST = filter_input_array(INPUT_REQUEST, FILTER_SANITIZE_NUMBER_INT);
   */
 }
 
-
+/**
+  * @brief  check whether a String is a valid ISSN number
+  * @see    https://en.wikipedia.org/wiki/International_Standard_Serial_Number#Code_format
+  * @return \b int TRUE = valid ISSN, FALSE = ISSN format, but invalid, -1 = bad input format
+  */
+function valid_issn($input, $validate = TRUE) {
+  $m = array();
+  if (!preg_match('/^(\d{4})-(\d{3})([\dxX])$/', $input, $m)) {
+    return -1; //'ERRORCODE: '. preg_last_error();
+  } elseif ($validate) {
+    $m1 = strval($m[1]);
+    $m2 = strval($m[2]);
+    $m3 = strval($m[3]);
+    $sum = intval($m1[0]) * 8 + intval($m1[1]) * 7 + intval($m1[2]) * 6 + intval($m1[3]) * 5;
+    $sum += intval($m2[0]) * 4 + intval($m2[1]) * 3 + intval($m2[2]) * 2;
+    if ($m3 === 'X' || $m3 === 'x') {
+      $sum += 10;
+    } else {
+      $sum += intval($m3);
+    }
+    return (($sum % 11) === 0);
+  }
+  // no validation and no preg fail
+  return TRUE;
+}
 ?>
+<!-- vim: set sw=2 ts=2 et ft=php fdm=marker: -->

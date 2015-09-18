@@ -355,7 +355,7 @@ div#journalList.gridview > div.listitem.new::after {
   text-decoration: inherit;
   left: 200px;
   top: 0px;
-  z-index: 100;
+  z-index: 10;
 }
 
 /* ===== LIST VIEW ===== */
