@@ -131,9 +131,8 @@ $(document).ready(function() {
     var pubdate = $(this).prevAll('span').attr('data-pubdate');
 
     // Check if cache is enabled
-    var para_pubdate = '';
-    var cache = $('body').attr('data-caching');
-    if (cache == 1 && pubdate != '') { para_pubdate = '&pubdate='+ pubdate; }
+    var para_caching = ($('body').attr('data-caching') === '1') ? '&cache=1' : '';
+    var para_pubdate = (pubdate !== '') ? '&pubdate='+ pubdate : '';
 
     // append current issn to error boxes by default
     $('#tocModal div.alert-box a').each(function() {
@@ -147,7 +146,7 @@ $(document).ready(function() {
     $('.toc.preloader').show();
 
     /* get Journal TOC in iframe */
-    createModalFrame('sys/ajax_toc.php?issn='+ issn + para_pubdate);
+    createModalFrame('sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate);
   });
 
   /* special click on close icon (Orbit Toc only) */

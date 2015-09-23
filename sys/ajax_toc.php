@@ -2,7 +2,7 @@
 /**
  * Get journal toc by issn. Use cache, if nothing changed since last call.
  *
- * @todo: 
+ * @todo:
  * -  Think about including config.php to use the GET sanitizing
  *    > BUT: This adds serious overhead
  *    > BUT: For now only the issn is checked - imho in a sufficient way
@@ -13,61 +13,51 @@
  *        e.g. a (server side) language specific toc would be introduced. In this
  *        case the filename check should be adjusted.
  */
- 
+
+require_once('./bootstrap.php'); // sanitize requests and all that
+
 // All hope is in vain without an issn
 $issn = (isset($_GET['issn'])) ? $_GET['issn'] : false;
-
-// Make sure it is an issn (it's pretty pointless, since this script should never be called from a place without already sanitized data (like index.php)
-if (strlen(preg_replace('/[\d-x]/i', '', $issn) > 0)) $issn = false;
-
-if (!$issn) {
-  echo "Oops, got no ISSN. this should never ever happen, you know :)";
+if (!$issn || !valid_issn($issn, TRUE)) {
+  echo 'Thats no ISSN, thats a ...battle station?';
   exit;
 }
 
-//TODO: to output the html head section right away so the browser
-//can start loading css and js files while we work on the body
+$caching = (isset($_GET['cache']) && $_GET['cache'] === '1');
 
-// Handle the pubdate. If none is send, this means caching is disabled
-if (!isset($_GET['pubdate'])) {
-  $age = -1; // Since the difference might be 0 days (today), we define false as -1
-}
-elseif ($_GET['pubdate'] == '1970-01-01') {
-  $age = -1; // never cache if we got no real date
-}
-// Todo: This is pretty pointless. Only future use: _might_ be useful to use the age as additional info for the toc frame
-else {
+$age = -1; // Since the difference might be 0 days (today), we define false as -1
+//TODO: handle pubdate in the future correctly
+if (isset($_GET['pubdate']) && $_GET['pubdate'] !== '' && $_GET['pubdate'] !== '1970-01-01') {
   $now = new DateTime('now');
   $pubdate = DateTime::createFromFormat('Y-m-d', $_GET['pubdate']);
-  $age = $now->diff($pubdate)->format('%a');
-}
-
-
-// Prepare the cache file. Use url parameters to create unique id. Date identifies issue
-$query          = md5(implode('', $_GET));
-$cachefile = "../cache/toc-$issn+$query.cache.html";
-
-
-// An age is available and cached file exists (-1 is the same as disabled caching)
-// Issue date is same as in cache file name - load cache
-if ($age > -1 && file_exists($cachefile)) {
-  $toc = file_get_contents($cachefile);
-}
-// An age is available but no cached file exists
-elseif ($age > -1) {
-  // clean up and delete old toc's
-  delete_expired($issn);
-  
-  $status = false;
-  $toc = get_toc($issn, $status);
-  // A toc was found, cache it
-  if ($status) {
-    file_put_contents($cachefile, $toc);
+  if ($pubdate && DateTime::getLastErrors()['error_count'] = 0) {
+    //%a creates a positive integer even for a pubdate in the future
+    //@see: http://php.net/manual/en/dateinterval.format.php
+    $age = $now->diff($pubdate)->format('%a');
   }
 }
-// Ok, we got no age or caching is disabled by setting it to -1. Get toc the old way
-else {
-  $toc = get_toc($issn);
+
+if ($caching) {
+  // Prepare the cache file. Use url parameters to create unique id. Date identifies issue
+  $query = md5(implode('', $_GET));
+  $cachefile = $cfg->sys->basepath."cache/toc-{$issn}+{$query}.cache.html";
+  if (file_exists($cachefile)) {
+    // Issue date is same as in cache file name - load cache
+    echo file_get_contents($cachefile);
+    exit(0); //end script before all the require statements
+  }
+}
+
+require_once($cfg->sys->basepath.'config.php');
+require_once($cfg->sys->basepath.'sys/class.GetJournalToc.php');
+$status = false;
+$toc = get_toc($issn, $status, $cfg);
+
+if ($status && $caching) {
+  // clean up and delete old tocs
+  delete_expired($issn, $cfg);
+  // A toc was found, cache it
+  file_put_contents($cachefile, $toc);
 }
 
 // And return it...
@@ -85,7 +75,7 @@ echo $toc;
  * @param $issn    \b STR  Journal ISSN
  * @return \b STR Result as HTML; you may pass some variable as reference to get the status too
  */
-function get_toc($issn, &$status) {
+function get_toc($issn, &$status, $cfg) {
   $html_prefix = '<!DOCTYPE html>
       <html><head>
       <link href="../css/foundation.min.css" rel="stylesheet">
@@ -97,8 +87,10 @@ function get_toc($issn, &$status) {
   $html_postfix_ok = '<script src="../js/local/frame.js"></script></body></html>';
   $html_postfix_er = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body></html>';
 
-  require_once('class.GetJournalToc.php');
-  $getInfos = new GetJournalInfos();
+  //GetJournalInfos class requires the config to be present
+  //so we only load it if we actually need to instantiate the class
+  //TODO: unsure about scoping, might make sense to move the imports to the main part of this script
+  $getInfos = new GetJournalInfos($cfg);
   $result = $getInfos->ajax_query_toc($issn);
 
   // Hack for non-iframe version
@@ -125,8 +117,8 @@ function get_toc($issn, &$status) {
  * @param $cache_id    \b STR  Should be the issn for now
  * @return \b void
  */
-function delete_expired($cache_id) {
-  $files = glob('../cache/*'.$cache_id.'*cache*'); // get all file names by pattern
+function delete_expired($cache_id, $cfg) {
+  $files = glob($cfg->sys->basepath.'cache/*'.$cache_id.'*cache*'); // get all file names by pattern
   foreach($files as $file) {
     if(is_file($file)) unlink($file);
   }
