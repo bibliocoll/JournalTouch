@@ -4,8 +4,10 @@ JournalTouch provides a touch-optimized interface for browsing current journal t
 
 # DEVELOPMENT BRANCH
 this is the main development branch. things here may be broken or badly documented or both.
-the next release will be *0.2*, features and issues related to them should reference the homonymous milestone.
-If you want to use JournalTouch, please check out the stable version from the master branch (at tag 0.1, if in doubt).
+
+the next release will be **0.2**, features and issues related to them should reference the homonymous milestone.
+
+If you want to use JournalTouch, please check out the stable version from the **master** branch (at tag 0.1, if in doubt).
 
 We're using the git-flow project structure, for more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
 
@@ -15,7 +17,9 @@ We're using the git-flow project structure, for more information, please refer t
 (Contact: fruehauf@coll.mpg.de and krug@coll.mpg.de)
 
 @author Alexander krug <mail@coll.mpg.de> (Maintainer)
+
 @author Daniel Zimmel <dnl@mailbox.org>
+
 @author Tobias Zeumer <tzeumer@verweisungsform.de>
 
 License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
