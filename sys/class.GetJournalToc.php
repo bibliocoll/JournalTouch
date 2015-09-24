@@ -64,12 +64,12 @@ class GetJournalInfos {
      *
      * @return \b void
      */
-    public function __construct() {
+    public function __construct($cfg) {
         header('Content-Type: text/html; charset=utf-8');
         set_time_limit($this->maxtime);
         $this->script_timer();
 
-        require_once('../config.php');
+        //require_once($cfg->sys->basepath.'config.php'); //should be superfluous now
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
@@ -125,8 +125,9 @@ class GetJournalInfos {
             /* write something we can read from our caller script */
             return false;
         }
-
-        $timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : __('Sorry, I could not find any information about the publishing date');
+        //FIXME: temporarily removed i18n from this class
+        //$timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : __('Sorry, I could not find any information about the publishing date');
+        $timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : ('Sorry, I could not find any information about the publishing date');
     /*
     $journal = $toc['source'][0];
     $journal .= ($toc['volume'][0])                    ? ', Vol. '.$toc['volume'][0] : '';
@@ -134,7 +135,9 @@ class GetJournalInfos {
     $journal .= ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
      */
         $html  = '<h4 class="small-10 columns">'.$toc['source'][0].'</h4>';
-        $html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
+        //FIXME: temporarily removed i18n from this class
+        //$html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
+        $html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. ('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
         // sort by date newest to oldest
         asort($toc['sort']);
@@ -166,7 +169,9 @@ class GetJournalInfos {
                 // get extra options, set class to invisible (change in css)
                 $html .= '<div class="small-6 medium-6 large-5 columns buttonbox">';
                 // abstract button: let us assume that strlen>300 == abstract
-                $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
+                //FIXME: temporarily removed i18n from this class
+                //$html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
+                $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.('Abstract').'</a>&nbsp;' : '';
                 $html .=      $link_dl.PHP_EOL;
                 // add button (cart)
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>

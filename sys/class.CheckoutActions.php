@@ -23,7 +23,7 @@ class CheckoutActions
     public function __construct()
     /* load some configuration */
     {
-        require('config.php');
+      //require('config.php'); //should be susuperfluous now
         $this->mail  = $cfg->mail;
         $this->prefs = $cfg->prefs;
     }
@@ -92,7 +92,7 @@ class CheckoutActions
     function sendArticlesAsMail($file, $email) {
 
         try {
-            $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.$this->mail->bodyMessage.': '.$_POST['message'].'</p>' : '');
+            $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.__($this->mail->bodyMessage).': '.$_POST['message'].'</p>' : '');
             $email->CharSet = 'utf-8';
             $email->Encoding = '8bit';
             $email->isHTML(true);
@@ -103,13 +103,13 @@ class CheckoutActions
                 $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
                 $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
                 $email->Subject   = $this->mail->subjectToLib . ' (from '.$user.')';
-                $email->Body     = '<h2>'.$this->mail->bodyOrder.'</h2><p>'.$message.'</p><hr/>'.$fileBody;
+                $email->Body     = '<h2>'.__($this->mail->bodyOrder).'</h2><p>'.$message.'</p><hr/>'.$fileBody;
                 $email->AddAddress($this->mail->toAddress);
             } else {
-                $email->FromName  = $this->mail->fromName;
+                $email->FromName  = __($this->mail->fromName);
                 $email->From      = $this->mail->fromAddress;
-                $email->Subject   = $this->mail->subjectToUser;
-                $email->Body     = '<h2>'.$this->mail->bodySalutation.'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->mail->bodyClosing.'</p>';
+                $email->Subject   = __($this->mail->subjectToUser);
+                $email->Body     = '<h2>'.__($this->mail->bodySalutation).'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.__($this->mail->bodyClosing).'</p>';
                 $email->AddAddress($user.'@'.$this->mail->domain);
             }
 
@@ -151,7 +151,7 @@ class CheckoutActions
             $email->isHTML(false);
             $email->Body     = $message;
             $user = isset($_POST['username']) ? $_POST['username'] : $this->mail->fromAddress;
-            $email->Subject   = $this->mail->subjectFB . ' (from '.$user.')';
+            $email->Subject   = __($this->mail->subjectFB) . ' (from '.$user.')';
             $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
             $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
             $email->AddAddress($this->mail->toAddress);

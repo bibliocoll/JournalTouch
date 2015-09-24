@@ -18,8 +18,9 @@
  *
  * @todo  Maybe create a class JournalTouch with static properties?
  */
-$cfg = new stdClass();
-
+if (!isset($cfg)) { $cfg = new stdClass(); }
+$cfg->sys = new stdClass();
+$cfg->sys->basepath  = realpath( __DIR__ ) .'/';    // absolute path to JournalTouch directory
 
 $cfg->prefs = new stdClass();
 /**
@@ -78,7 +79,6 @@ $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows p
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
 
 
-require('sys/bootstrap.php');
 $cfg->mail = new stdClass();
 /**
  * Mailer settings
@@ -92,20 +92,33 @@ $cfg->mail = new stdClass();
  * @todo  This domain thing seriously should be changed to optional.
  */
 $cfg->mail->domain         = ''; // Your mailer domain (my-library.net)
-$cfg->mail->subjectFB      = __('Feedback from JournalTouch'); // Feedback button caption
+$cfg->mail->subjectFB      = 'Feedback from JournalTouch'; // Feedback button caption
 
 // Sending article list to user
 $cfg->mail->fromAddress    = ''; // Your default address (service@my-library.net)
-$cfg->mail->fromName       = __('Your Library JournalTouch');
-$cfg->mail->subjectToUser  = __('Your saved articles from JournalTouch');
-$cfg->mail->bodyMessage    = __('You sent the following message');
-$cfg->mail->bodySalutation = __('Here are your articles, enjoy!');
-$cfg->mail->bodyClosing    = __('Best regards, your library team!');
+$cfg->mail->fromName       = 'Your Library JournalTouch';
+$cfg->mail->subjectToUser  = 'Your saved articles from JournalTouch';
+$cfg->mail->bodyMessage    = 'You sent the following message';
+$cfg->mail->bodySalutation = 'Here are your articles, enjoy!';
+$cfg->mail->bodyClosing    = 'Best regards, your library team!';
 
 // Sending order from user to library
 $cfg->mail->toAddress      = ''; // Your contact address (journaltouch@my-library.net)
-$cfg->mail->subjectToLib   = __('New order for the library from JournalTouch');
-$cfg->mail->bodyOrder      = __('New order from JournalTouch');
+$cfg->mail->subjectToLib   = 'New order for the library from JournalTouch';
+$cfg->mail->bodyOrder      = 'New order from JournalTouch';
+
+
+
+/**
+ * Which file with your journals information and what separator is used.
+ * Usually you won't have to change anything here.
+ */
+//uncomment these if you don't like the defaults. will be set in sys/bootstrap.php otherwise
+//FIXME: this hiding of "advanced" configuration options is not something i'm fond of
+//$cfg->csv_file = new stdClass();
+//$cfg->csv_file->separator  = ';';
+//$cfg->csv_file->path = "input/journals.csv";
+//$cfg->csv_file->fullpath = $cfg->sys->basepath . $cfg->csv_file->path; // change this if you want to store csv_file outside the JT directory structure
 
 
 
@@ -154,9 +167,9 @@ $cfg->filter = array();
  *
  * Note: the  __() isn't required, but makes it translatable.
  */
-$cfg->filter['psy'] = __('Psychology');
-$cfg->filter['pol'] = __('Politics');
-$cfg->filter['wir'] = __('Yet another filter');
+$cfg->filter['psy'] = 'Psychology';
+$cfg->filter['pol'] = 'Politics';
+$cfg->filter['wir'] = 'Yet another filter';
 
 
 
@@ -196,9 +209,8 @@ $cfg->dbusers->dbuser   = '';
 $cfg->dbusers->dbpass   = '';
 
 
-$cfg->sys = new stdClass();
 /**
  * Configuration settings for internal use; don't change
  */
-$cfg->sys->abspath  = dirname(__FILE__).'/';    // absolute path to JournalTouch directory
+require($cfg->sys->basepath.'/sys/bootstrap.php');
 ?>
