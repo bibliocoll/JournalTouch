@@ -20,7 +20,11 @@
  */
 
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
-require ('config.php');
+require_once('./config.php'); // './' makes sure we don't go looking for config.php in the include_path
+if (!isset($cfg)) {
+  echo 'something is very wrong with the configuration';
+  exit;
+}
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
   $cachefile  = "cache/index_$query.cache.html";
@@ -44,9 +48,9 @@ if ($cfg->prefs->cache_main_enable) {
 }
 
 ob_start();
-require('sys/class.ListJournals.php');
+require_once($cfg->sys->basepath.'sys/class.ListJournals.php');
 /* setup methods & objects */
-$lister = new ListJournals();
+$lister = new ListJournals($cfg);
 $journals = $lister->getJournals();
 $journalUpdates = $lister->getJournalUpdates();
 ?>
@@ -64,7 +68,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
-<body data-caching="<?php echo $lister->prefs->cache_toc_enable ?>">
+<body data-caching="<?php echo intval($lister->prefs->cache_toc_enable) ?>">
 
 <!-- Navigation -->
 <div class="fixed">
@@ -94,7 +98,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <?php
 /* read all filters from the config file */
 foreach ($lister->filters as $key=>$f) {
-  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
+  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.__($f).'</a></li>';
 }
 ?>
           </ul>
