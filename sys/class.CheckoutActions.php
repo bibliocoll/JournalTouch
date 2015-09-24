@@ -20,10 +20,9 @@ class CheckoutActions
     public $contents;
 
 
-    public function __construct()
+    public function __construct($cfg)
     /* load some configuration */
     {
-      //require('config.php'); //should be susuperfluous now
         $this->mail  = $cfg->mail;
         $this->prefs = $cfg->prefs;
     }
@@ -137,7 +136,7 @@ class CheckoutActions
         } catch (phpmailerException $e) {
             return $e->errorMessage(); //Pretty error messages from PHPMailer
         } catch (Exception $e) {
-            return $e->getMessage(); //Boring error messages from anything else!
+            return 'Error: '. $e->getMessage(); //Boring error messages from anything else!
         }
 
     }

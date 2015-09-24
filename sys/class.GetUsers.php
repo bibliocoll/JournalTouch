@@ -15,10 +15,9 @@ class GetUsers
     /// \brief \b OBJ @see config.php
     protected $dbusers;
 
-    public function __construct()
+    public function __construct($cfg)
     /* load some configuration */
     {
-        //require('config.php');
         $this->dbusers = $cfg->dbusers;
     }
 
