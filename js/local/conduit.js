@@ -169,7 +169,7 @@ $(document).ready(function() {
       $('.listitem').show(); //[> show everything <]
       //fix for unveil.js so all visible elements will get their appropriate image content
       //(because lazy load works only on scroll, we will scroll a bit)
-      $('html,body').animate({scrollTop: $('html,body').attr('scrollTop') +1},'slow');
+      $('html,body').animate({scrollTop: window.pageYOffset +1},'slow');
       //[> hide on panel <]
       $('#filterPanel').fadeOut();
     } else {
@@ -245,7 +245,7 @@ $(document).ready(function() {
     }
     /* fix for unveil.js so all visible elements will get their appropriate image content
      * (because lazy load works only on scroll, we will scroll a bit) */
-    $('html,body').animate({scrollTop: $('html,body').attr('scrollTop') +1},'slow');
+    $('html,body').animate({scrollTop: window.pageYOffset +1},'slow');
   });
 
   /* check if there are any items in cart on opening */
