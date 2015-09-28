@@ -248,7 +248,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX">BibTeX</label>
+                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label>
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
