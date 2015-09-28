@@ -1,16 +1,11 @@
 # About
 JournalTouch provides a touch-optimized, responsive interface for browsing current journal table-of-contents.
 
-# RELEASE BRANCH FOR 0.3
-this is the release branch for version 0.3.
-things here are hopefully not broken and close to release-ready
+# Version 0.3
+This is JournalTouch Version 0.3
 
-If you want to use JournalTouch, it might make sense to wait until
-this branch has been merged into master and tagged as a release,
-which will happen shortly.
-
-We're using the git-flow project structure, for more information,
-please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
+We're using the git-flow project structure, so the master branch always holds the latest stable released version of this project.
+Work towards the next release happens on the `develop` branch. For more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
 
 # License
 @copyright 2015 MPI for Research on Collective Goods, Library
