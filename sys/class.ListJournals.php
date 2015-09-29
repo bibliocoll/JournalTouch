@@ -41,16 +41,15 @@ class ListJournals
 
 
   /**
-   * @brief   Load settings from config.php and set properties
+   * @brief   set properties, be merry
    *
    * @note    The mapping is unnecessary, but maybe improves readability above
    *          just $this->cfg = $cfg.
    *
    * @return \b void
    */
-  public function __construct()
+  public function __construct($cfg)
   {
-    require(__DIR__."/../config.php");
     $this->csv_file = $cfg->csv_file;
     $this->csv_col  = $cfg->csv_col;
     $this->covers   = $cfg->covers;
@@ -251,11 +250,11 @@ class ListJournals
    * - \b ARY ListJournals::$tagcloud
    */
   function getJournals() {
-    //require_once('sys/bootstrap.functions.php');
+    //require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
     $row = 1;
     $journals = array();
 
-    if (($handle = fopen(__DIR__.'/../'.$this->csv_file->path, "r")) !== FALSE) {
+    if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
       $tagcloud = array();
       $no_date = '1970-01-01'; // Just use the first date from unixtime - makes it easy to check anywhere else for a "non-date", without breaking anything
       while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {

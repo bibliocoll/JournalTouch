@@ -1,12 +1,11 @@
 *~
 .project
 cache/*.cache*
-data/*
 dev/*
 doc/html/*
 doc/def/*
 doc/*.tmp
-export/*.csv
+export/*
 foundation-icons/*
 img/*
 input/*

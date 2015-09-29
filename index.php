@@ -20,7 +20,11 @@
  */
 
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
-require ('config.php');
+require_once('./config.php'); // './' makes sure we don't go looking for config.php in the include_path
+if (!isset($cfg)) {
+  echo 'something is very wrong with the configuration';
+  exit;
+}
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
   $cachefile  = "cache/index_$query.cache.html";
@@ -44,13 +48,12 @@ if ($cfg->prefs->cache_main_enable) {
 }
 
 ob_start();
-require('sys/class.ListJournals.php');
+require_once($cfg->sys->basepath.'sys/class.ListJournals.php');
 /* setup methods & objects */
-$lister = new ListJournals();
+$lister = new ListJournals($cfg);
 $journals = $lister->getJournals();
 $journalUpdates = $lister->getJournalUpdates();
 ?>
-
 <!DOCTYPE html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en" data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -65,7 +68,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
-<body data-caching="<?php echo $lister->prefs->cache_toc_enable ?>">
+<body data-caching="<?php echo intval($lister->prefs->cache_toc_enable) ?>">
 
 <!-- Navigation -->
 <div class="fixed">
@@ -91,17 +94,17 @@ $journalUpdates = $lister->getJournalUpdates();
           <ul class="dropdown">
             <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
             <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo __('MPI favorites') ?></a></li>
-            <li><a class="filter" id="new-issue" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
+            <li><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
 <?php
 /* read all filters from the config file */
 foreach ($lister->filters as $key=>$f) {
-  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$f.'</a></li>';
+  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.__($f).'</a></li>';
 }
 ?>
           </ul>
         </li>
         <?php } ?>
-        <li><a id="switch-sort" href="#"><i class="switcher fi-shuffle azsorted"></i><span>&#160;switch sorting</span></a></li>
+        <li><a id="switch-sort" class="azsorted" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
         <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
 <?php
@@ -276,7 +279,7 @@ foreach ($journals as $j) {
 <div class="row">
   <div id="TOCbox" class="small-10 medium-10 large-12 columns">
     <!-- A-Z button bar -->
-    <div class="button-bar alphabet">
+    <div id="alphabet" class="button-bar">
       <ul class="button-group radius">
 <?php
 $alphas = range('A', 'Z');
@@ -287,7 +290,7 @@ foreach ($alphas as $letter) {
       </ul>
     </div>
     <!-- timestamp button bar-->
-    <div class="button-bar timewarps">
+    <div id="timewarps" class="button-bar">
       <ul class="button-group radius">
 <?php
 $timewarps = array(
@@ -386,7 +389,7 @@ foreach ($journals as $j) {
   $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
   $new_issues = ($j['new']) ? ' new' : '';
   $len_title = strlen($j['title']);
-  $nbr_title = ($len_title < 100) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 100)).' ...';
+  $nbr_title = ($len_title < 50) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 50)).' ...';
 
   echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'" data-title="'.$j['title'].'" data-issn="'.$j['id'].'" data-pubdate="'. strtotime($j['date']).'">';
   echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
