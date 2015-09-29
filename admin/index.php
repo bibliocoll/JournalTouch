@@ -6,6 +6,7 @@
 
 
 <?php
+require_once(__DIR__.'/../config.php');
 $btn_cache  = (isset($_GET['clr_cache'])) ? true : false;
 $btn_upd    = (isset($_GET['upd'])) ? true : false;
 $optMeta    = (isset($_GET['optMeta'])) ? true : false;
@@ -13,14 +14,14 @@ $optRecent  = (isset($_GET['optRecent'])) ? true : false;
 $optTags    = (isset($_GET['optTags'])) ? true : false;
 
 if ($btn_upd) {
-  require_once('services/class.UpdateInputCsv.php');
-  $getInfos = new GetJournalInfos();
+  require_once($cfg->sys->basepath.'admin/services/class.UpdateInputCsv.php');
+  $getInfos = new GetJournalInfos($cfg);
   $getInfos->update_journals_csv($optMeta, $optRecent, $optTags);
 }
 
 $del_message = '';
 if ($btn_cache) {
-  $files = glob('../cache/*.cache*'); // get all file names by pattern
+  $files = glob($cfg->sys->basepath.'cache/*.cache*'); // get all file names by pattern
   $i = 0;
   foreach($files as $file) {
     if(is_file($file)) {
@@ -59,7 +60,7 @@ if ($btn_cache) {
       <legend><b>JournalTOC Premium Update</b></legend>
       This updates your updates.json.txt with the dates for recent issue.<hr />
       <a href="services/getLatestJournals.php">Update Premium</a>
-    </fieldset>   
+    </fieldset>
   </form>
 </div>
 

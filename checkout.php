@@ -3,12 +3,13 @@ $mylist = $_POST;
 /* do we have GET parameters? (currently only used for contact) */
 $myaction = $_GET;
 /* load classes */
-require 'sys/class.CheckoutActions.php';
-require 'sys/class.GetUsers.php';
-require 'sys/PHPMailer/PHPMailerAutoload.php';
+require 'config.php';
+require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
+require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
+require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
 /* setup methods & objects */
 $email = new PHPMailer(true);
-$action = new CheckoutActions();
+$action = new CheckoutActions($cfg);
 ?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
@@ -72,7 +73,7 @@ $action = new CheckoutActions();
                         <label><?php echo __('Your e-mail') ?>
 
 <?php
-$userHandle = new GetUsers();
+$userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
 if ($users == false) {
     print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
@@ -166,7 +167,7 @@ if(isset($_POST['mailer']))
 
         /* pass the PHPMailer object & save the return value (success or failure?) */
         /* is it feedback? */
-        if ($_POST['feedback']) {
+        if (isset($_POST['feedback'])) {
             $mailerResponse = $action->sendFeedback($email);
         } else {
             $mailerResponse = $action->sendArticlesAsMail($file, $email);
@@ -224,7 +225,7 @@ if(isset($_POST['mailer']))
                         <label><?php echo __('Your e-mail') ?>
 
 <?php
-$userHandle = new GetUsers();
+$userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
 if ($users == false) {
     print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
@@ -247,7 +248,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX">BibTeX</label>
+                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label>
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
