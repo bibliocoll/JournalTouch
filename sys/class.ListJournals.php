@@ -254,7 +254,7 @@ class ListJournals
     $row = 1;
     $journals = array();
 
-    if (($handle = fopen(__DIR__.'/../'.$this->csv_file->path, "r")) !== FALSE) {
+    if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
       $tagcloud = array();
       $no_date = '1970-01-01'; // Just use the first date from unixtime - makes it easy to check anywhere else for a "non-date", without breaking anything
       while (($data = fgetcsv($handle, 1000, $this->csv_file->separator)) !== FALSE) {
