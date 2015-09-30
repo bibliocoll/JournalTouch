@@ -8,6 +8,45 @@
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  */
 
+
+/**
+  * @brief   Check if a journal touch update is required
+  *
+  * Updating was introduced with version 0.4
+  *
+  * @todo Instead of just using empty files, the files could be the release notes
+  *
+  * @return \b bool True if update is needed, false otherwise
+  */
+function check_update_required($cfg) {
+    // The very first time, create an info, what is our initial JT version 
+    // (the "fresh" installation). It's easy - it's the first info in history
+    $upd_dir    = $cfg->sys->basepath.'admin/update/';
+
+    $historyDir     = glob($upd_dir.'history/ver_*');
+    $historyCount   = count($historyDir);
+  
+    // Write our initial version
+    if ($historyCount === 0) {
+        // Special case, coming from 0.3, which had no update mechanism
+        // Check for something that only existed in 0.3
+        if (file_exists($cfg->sys->basepath.'locale/de_DE.gif')) {
+            file_put_contents($upd_dir.'history/ver_0.3', '');
+        }
+        else {
+            file_put_contents($upd_dir.'history/ver_'.$cfg->sys->current_jt_version, '');
+        }
+    }
+    
+    // Now check if the current version differs from our last updated version
+    if (!file_exists($cfg->sys->basepath.'admin/update/history/'.$cfg->sys->current_jt_version)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 /**
   * @brief   Sanitize user input. Currently only a basic check to prevent xss
   *
@@ -28,6 +67,7 @@ function sanitize_request() {
   $_REQUEST = filter_input_array(INPUT_REQUEST, FILTER_SANITIZE_NUMBER_INT);
   */
 }
+
 
 /**
   * @brief  check whether a String is a valid ISSN number

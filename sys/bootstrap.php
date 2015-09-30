@@ -18,7 +18,7 @@
  *    the language definitions and before the first use of gettext. Maybe the
  *    very best option would be to create a real config page in admin/
  */
-// Define the basepath of JT
+// Define the basepath and current version of JT
 if (!isset($cfg)) {
   //looks like we're not being loaded from config.php
   //assume this is one of the sys/ajax_* scripts
@@ -27,11 +27,21 @@ if (!isset($cfg)) {
   $cfg->sys = new stdClass();
   $cfg->sys->basepath  = realpath( __DIR__ .'/../' ) .'/';    // absolute path to JournalTouch directory
 }
+$cfg->sys->current_jt_version = 0.4;
 
 require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
+
+// Check if update is required
+if (check_update_required($cfg) && !defined('UPDATE')) {
+    echo 'JournalTouch has to be updated. Please go to <a href="admin/update/index.php">Admin Updater</a>';
+    exit;
+}
+
+
 //Sanitize
 sanitize_request();
+
 
 if (isset($cfg->prefs)) {
   // it is likely we have been loaded from config.php. do all the things
