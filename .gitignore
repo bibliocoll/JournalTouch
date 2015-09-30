@@ -1,0 +1,22 @@
+# Changes in these folder/files should reasonably never be tracked/pushed
+admin/update/history/*
+data/*
+doc/*
+img/covers/*
+config.php
+
+# Some exclusions, so the folders always are created, even if initally empty
+!admin/update/history/.gitkeep
+!admin/update/versions/.gitkeep
+!data/cache/.gitkeep
+!data/export/.gitkeep
+!data/journals/backup/.gitkeep
+!doc/jt-documentation.chm
+!doc/jt-doxygen.conf
+!img/covers/.gitkeep
+
+# Three example files, so JournalTouch runs out-of-the-box
+# Hint: Exclude these files locally via .git/info/exclude for development
+!data/journals/journals.csv
+!data/journals/tag-remap.txt
+!data/journals/updates.json.txt
