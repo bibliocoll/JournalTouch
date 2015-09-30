@@ -49,7 +49,7 @@ if (isset($cfg->prefs)) {
 
 
   // Output files and paths - there is no point to bother a user with changing it
-  $cfg->api->jt->outfile  = $cfg->sys->basepath.'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+  $cfg->api->jt->outfile  = $cfg->sys->basepath.'data/journals/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
 
 if (!isset($cfg->csv_file)) {
   $cfg->csv_file = new stdClass();
@@ -58,7 +58,7 @@ if (!isset($cfg->csv_file)) {
    * Usually you won't have to change anything here.
    */
   $cfg->csv_file->separator  = ';';
-  $cfg->csv_file->path       = $cfg->sys->basepath.'input/journals.csv';
+  $cfg->csv_file->path       = $cfg->sys->basepath.'data/journals/journals.csv';
   $cfg->csv_file->fullpath = $cfg->sys->basepath . $cfg->csv_file->path; // change this if you want to store csv_file outside the JT directory structure
   }
 }

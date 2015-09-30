@@ -40,7 +40,7 @@ if (isset($_GET['pubdate']) && $_GET['pubdate'] !== '' && $_GET['pubdate'] !== '
 if ($caching) {
   // Prepare the cache file. Use url parameters to create unique id. Date identifies issue
   $query = md5(implode('', $_GET));
-  $cachefile = $cfg->sys->basepath."cache/toc-{$issn}+{$query}.cache.html";
+  $cachefile = $cfg->sys->basepath."data/cache/toc-{$issn}+{$query}.cache.html";
   if (file_exists($cachefile)) {
     // Issue date is same as in cache file name - load cache
     echo file_get_contents($cachefile);
@@ -79,7 +79,7 @@ function get_toc($issn, &$status, $cfg) {
   $html_prefix = '<!DOCTYPE html>
       <html><head>
       <link href="../css/foundation.min.css" rel="stylesheet">
-      <link href="../foundation-icons/foundation-icons.css" rel="stylesheet">
+      <link href="../css/foundation-icons/foundation-icons.css" rel="stylesheet">
       <link href="../css/local.css" rel="stylesheet">
       <script src="../js/vendor/jquery.js"></script>
       <script src="../js/vendor/jquery.timeago.js"></script>
@@ -118,7 +118,7 @@ function get_toc($issn, &$status, $cfg) {
  * @return \b void
  */
 function delete_expired($cache_id, $cfg) {
-  $files = glob($cfg->sys->basepath.'cache/*'.$cache_id.'*cache*'); // get all file names by pattern
+  $files = glob($cfg->sys->basepath.'data/cache/*'.$cache_id.'*cache*'); // get all file names by pattern
   foreach($files as $file) {
     if(is_file($file)) unlink($file);
   }
