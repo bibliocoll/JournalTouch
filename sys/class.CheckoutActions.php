@@ -83,7 +83,7 @@ class CheckoutActions
     $rand_no = rand(0,500); // add a random number to make sure we do not write to the same file (e.g. two page requests in the same second)
 
     global $file;
-    $file = "export/".$hash."-".$rand_no.".csv";
+    $file = "data/export/".$hash."-".$rand_no.".csv";
     file_put_contents($file, $this->contents, LOCK_EX) or die("could not write to file!");
 
   }

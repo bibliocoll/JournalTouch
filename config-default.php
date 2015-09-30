@@ -31,7 +31,7 @@ $cfg->prefs = new stdClass();
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
-// set available languages; to add a new language, update \locale accordingly
+// set available languages; to add a new language, update \languages accordingly
 // the first language ([0]) will be the default language
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
@@ -115,9 +115,11 @@ $cfg->mail->bodyOrder      = 'New order from JournalTouch';
  */
 //uncomment these if you don't like the defaults. will be set in sys/bootstrap.php otherwise
 //FIXME: this hiding of "advanced" configuration options is not something i'm fond of
+// Zeumer: What is advanced about this? If you have a use case that uses data from outside
+// JT, maybe this should be handled very different in JT, but as a "default advanced" option for all users?
 //$cfg->csv_file = new stdClass();
 //$cfg->csv_file->separator  = ';';
-//$cfg->csv_file->path = "input/journals.csv";
+//$cfg->csv_file->path = "data/journals/journals.csv";
 //$cfg->csv_file->fullpath = $cfg->sys->basepath . $cfg->csv_file->path; // change this if you want to store csv_file outside the JT directory structure
 
 
