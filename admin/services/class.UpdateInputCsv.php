@@ -164,8 +164,8 @@ class GetJournalInfos {
    * @return \b void
    */
   public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false) {
-    if (($handle = fopen($this->csv_file->fullpath, "r")) !== FALSE) {
-      echo '<p>opened ' .$this->csv_file->fullpath. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
+    if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
+      echo '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
       ob_start();
       while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== FALSE) {
 
@@ -177,7 +177,6 @@ class GetJournalInfos {
         }
         $issn = $this->issn;
         if ($issn !== '') {
-          echo $issn .', ';
           ob_flush();
           //if ($this->processed > 3) break(1);
           $this->processed++;
@@ -232,14 +231,14 @@ class GetJournalInfos {
       }
       fclose($handle);
       $file_date = date('Y-m-d_H\Hi');
-      rename($this->csv_file->fullpath, dirname($this->csv_file->fullpath) ."/backup/journals_$file_date.csv");
+      rename($this->csv_file->path, dirname($this->csv_file->path) ."/backup/journals_$file_date.csv");
 
       $all_rows = implode("\n", $this->journals_buffer);
-      file_put_contents ($this->csv_file->fullpath, $all_rows);
+      file_put_contents ($this->csv_file->path, $all_rows);
 
       if ($this->jt_suggest_create && $this->jt_suggest_buffer) {
         $all_rows = implode("\n", $this->jt_suggest_buffer);
-        file_put_contents (dirname($this->csv_file->fullpath). '/journaltoc-suggest_'.$file_date.'.csv', $all_rows);
+        file_put_contents (dirname($this->csv_file->path). '/journaltoc-suggest_'.$file_date.'.csv', $all_rows);
       }
     }
 
