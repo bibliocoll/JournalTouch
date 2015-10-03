@@ -145,9 +145,9 @@ class ListJournals
     if ($this->covers->api) {
       $img = $this->covers->api.$issn;
     } else {
-      $png = 'img/covers/'.$issn.'.png';
-      $jpg = 'img/covers/'.$issn.'.jpg';
-      $gif = 'img/covers/'.$issn.'.gif';
+      $png = 'data/covers/'.$issn.'.png';
+      $jpg = 'data/covers/'.$issn.'.jpg';
+      $gif = 'data/covers/'.$issn.'.gif';
       //  $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
       if (file_exists($jpg)) {$img = $jpg;}
       else if (file_exists($gif)) {$img = $gif;}
