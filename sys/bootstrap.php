@@ -34,7 +34,7 @@ require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
 // Check if update is required
 if (check_update_required($cfg) && !defined('UPDATE')) {
-    echo 'JournalTouch has to be updated. Please go to <a href="admin/update/index.php">Admin Updater</a>';
+    echo 'JournalTouch has to be updated. Please go to <a href="admin/update.php">Admin Updater</a>';
     exit;
 }
 
