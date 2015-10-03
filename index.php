@@ -27,7 +27,7 @@ if (!isset($cfg)) {
 }
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
-  $cachefile  = "data/cache/index_$query.cache.html";
+  $cachefile  = $cfg->sys->data_cache."index_$query.cache.html";
 
   //NOTE: file_exists() result is cached. not an issue in this case, but
   //clearstatcache() needs to be called in cases where the file might be

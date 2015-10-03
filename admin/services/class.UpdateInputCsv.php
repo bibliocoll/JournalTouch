@@ -164,8 +164,8 @@ class GetJournalInfos {
    * @return \b void
    */
   public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false) {
-    if (($handle = fopen($this->csv_file->fullpath, "r")) !== FALSE) {
-      echo '<p>opened ' .$this->csv_file->fullpath. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
+    if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
+      echo '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
       ob_start();
       while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== FALSE) {
 

@@ -57,6 +57,7 @@ class ListJournals
     $this->jt       = $cfg->api->jt;
     $this->prefs    = $cfg->prefs;
     $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
+    $this->sys      = $cfg->sys;
   }
   /**
    * @brief   Helper function for compare
@@ -145,9 +146,9 @@ class ListJournals
     if ($this->covers->api) {
       $img = $this->covers->api.$issn;
     } else {
-      $png = 'data/covers/'.$issn.'.png';
-      $jpg = 'data/covers/'.$issn.'.jpg';
-      $gif = 'data/covers/'.$issn.'.gif';
+      $png = $this->sys->data_covers.$issn.'.png';
+      $jpg = $this->sys->data_covers.$issn.'.jpg';
+      $gif = $this->sys->data_covers.$issn.'.gif';
       //  $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
       if (file_exists($jpg)) {$img = $jpg;}
       else if (file_exists($gif)) {$img = $gif;}
@@ -250,7 +251,6 @@ class ListJournals
    * - \b ARY ListJournals::$tagcloud
    */
   function getJournals() {
-    //require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
     $row = 1;
     $journals = array();
 
