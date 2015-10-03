@@ -21,7 +21,7 @@ if ($btn_upd) {
 
 $del_message = '';
 if ($btn_cache) {
-  $files = glob($cfg->sys->basepath.'data/cache/*.cache*'); // get all file names by pattern
+  $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
   $i = 0;
   foreach($files as $file) {
     if(is_file($file)) {

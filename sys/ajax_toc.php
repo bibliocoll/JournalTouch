@@ -14,7 +14,7 @@
  *        case the filename check should be adjusted.
  */
 
-require_once('./bootstrap.php'); // sanitize requests and all that
+require_once('./config.php'); // sanitize requests and all that
 
 // All hope is in vain without an issn
 $issn = (isset($_GET['issn'])) ? $_GET['issn'] : false;
@@ -40,7 +40,7 @@ if (isset($_GET['pubdate']) && $_GET['pubdate'] !== '' && $_GET['pubdate'] !== '
 if ($caching) {
   // Prepare the cache file. Use url parameters to create unique id. Date identifies issue
   $query = md5(implode('', $_GET));
-  $cachefile = $cfg->sys->basepath."data/cache/toc-{$issn}+{$query}.cache.html";
+  $cachefile = $cfg->sys->data_cache."toc-{$issn}+{$query}.cache.html";
   if (file_exists($cachefile)) {
     // Issue date is same as in cache file name - load cache
     echo file_get_contents($cachefile);
@@ -118,7 +118,7 @@ function get_toc($issn, &$status, $cfg) {
  * @return \b void
  */
 function delete_expired($cache_id, $cfg) {
-  $files = glob($cfg->sys->basepath.'data/cache/*'.$cache_id.'*cache*'); // get all file names by pattern
+  $files = glob($cfg->sys->data_cache.'*'.$cache_id.'*cache*'); // get all file names by pattern
   foreach($files as $file) {
     if(is_file($file)) unlink($file);
   }
