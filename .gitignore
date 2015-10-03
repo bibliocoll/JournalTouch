@@ -2,18 +2,18 @@
 admin/update/history/*
 data/*
 doc/*
-img/covers/*
 config.php
 
 # Some exclusions, so the folders always are created, even if initally empty
+!*.gitkeep
 !admin/update/history/.gitkeep
 !admin/update/versions/.gitkeep
 !data/cache/.gitkeep
+!data/covers/.gitkeep
 !data/export/.gitkeep
 !data/journals/backup/.gitkeep
 !doc/jt-documentation.chm
 !doc/jt-doxygen.conf
-!img/covers/.gitkeep
 
 # Three example files, so JournalTouch runs out-of-the-box
 # Hint: Exclude these files locally via .git/info/exclude for development
