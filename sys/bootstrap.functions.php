@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Use functions for overview. Use separate file to prevent redeclarations
  *
@@ -39,7 +39,7 @@ function check_update_required($cfg) {
     }
     
     // Now check if the current version differs from our last updated version
-    if (!file_exists($cfg->sys->basepath.'admin/update/history/'.$cfg->sys->current_jt_version)) {
+    if (!file_exists($cfg->sys->basepath.'admin/update/history/ver_'.$cfg->sys->current_jt_version)) {
         return true;
     } else {
         return false;
