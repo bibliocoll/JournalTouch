@@ -580,7 +580,7 @@ else {
     $tmp_tags = explode(',', $this->journal_row['tags']);
 
     // Read csv with format oldTag;newTag to array (only once)
-    if (($handle = fopen('../input/tag-remap.txt', "r")) !== false && !$this->tag_replace) {
+    if (($handle = fopen('../data/journals/tag-remap.txt', "r")) !== false && !$this->tag_replace) {
       while (($tag_row = fgetcsv($handle, 1000, $this->csv_file->separator)) !== false) {
         $key = trim($tag_row[0]);
         if (isset($tag_row[1])) $this->tag_replace[$key] = trim($tag_row[1]);
