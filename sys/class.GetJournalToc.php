@@ -76,6 +76,7 @@ class GetJournalInfos {
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
+        $this->sys      = $cfg->sys;
 
         // Check if caching should be used. Use if set and different from '1970-01-01'
         // $_GET['pubdate'] should be formatted 'Y-m-d' (checked vis sys/bootstrap.php)
@@ -107,7 +108,7 @@ class GetJournalInfos {
       // (cache is automatically disbaled if no valid date is give; see constructor)
       if ($this->prefs->cache_toc_enable) {
         $query     = md5(implode('', $_GET));
-        $cachefile = "../cache/toc-$issn+$query.cache.html";
+        $cachefile = $this->sys->data_cache."toc-$issn+$query.cache.html";
       }
 
       // Is caching enabled and cached file exists? Load it
@@ -391,6 +392,7 @@ class GetJournalInfos {
             }
             $itemcount++;
         }
+
         //we have dois to fetch
         if (count($missing_dois) > 0) {
             $jsondata = json_encode(array_keys($missing_dois));
@@ -410,6 +412,7 @@ class GetJournalInfos {
                 }
             }
         }
+
         if (isset($toc)) {
             $this->toc = $toc;
             return true;

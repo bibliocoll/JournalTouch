@@ -32,7 +32,7 @@ if ($cfg->prefs->cache_main_enable) {
   //NOTE: file_exists() result is cached. not an issue in this case, but
   //clearstatcache() needs to be called in cases where the file might be
   //deleted between tests in the same script. unlink() updates the cache
-  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
+  if (file_exists($cachefile) && file_exists($cfg->sys->data_journals.'journals.csv')) {
     if (filemtime('data/journals/journals.csv') < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
