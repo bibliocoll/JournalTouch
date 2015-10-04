@@ -503,9 +503,11 @@ The list of journals is a selection of the journals licensed to the library.') ?
 <script src="js/vendor/jquery.unveil.min.js"></script>
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/vendor/jquery.timeago.js"></script>
+<script src="locale/<?php echo $lister->prefs->current_lang ?>/jquery.timeago.<?php echo $lister->prefs->current_lang ?>.js"></script>
 <script src="js/vendor/tinysort.min.js"></script>
 <script src="js/local/conduit.js"></script>
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
+
 <script>
 simpleCart({
   checkout: {
