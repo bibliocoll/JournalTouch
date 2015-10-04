@@ -112,7 +112,7 @@ foreach ($lister->filters as $key=>$f) {
             <li><a id="switch-sort" "href="#"><i class="switcher fi-shuffle"></i>
             <span>&#160;
             <?php
-                echo __('Sort ').'<span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
+                echo __('Sort').' <span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
             ?>
             </span></a></li>
         <?php } ?>
