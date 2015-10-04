@@ -153,7 +153,7 @@ class GetJournalInfos {
       $html_prefix = '<!DOCTYPE html>
           <html><head>
           <link href="../css/foundation.min.css" rel="stylesheet">
-          <link href="../foundation-icons/foundation-icons.css" rel="stylesheet">
+          <link href="../css/foundation-icons/foundation-icons.css" rel="stylesheet">
           <link href="../css/local.css" rel="stylesheet">
           <script src="../js/vendor/jquery.js"></script>
           <script src="../js/vendor/jquery.timeago.js"></script>
