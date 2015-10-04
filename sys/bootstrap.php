@@ -20,10 +20,12 @@
  *    very best option would be to create a real config page in admin/
  * - Add this to a function? Make it better readable
  */
+// Define the basepath of JT
+$cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to JournalTouch directory; DONT' CHANGE
+
 $cfg->sys->current_jt_version = 0.4;
 
 require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
-
 
 // Check if update is required
 if (check_update_required($cfg) && !defined('UPDATE')) {
@@ -31,13 +33,8 @@ if (check_update_required($cfg) && !defined('UPDATE')) {
     exit;
 }
 
-
 //Sanitize
 sanitize_request();
-
-
-// Define the basepath of JT
-$cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to JournalTouch directory; DONT' CHANGE
 
 // Honor user choices for paths; else set default ones
 if (!$cfg->sys->data_cache)     $cfg->sys->data_cache    = $cfg->sys->basepath.'data/cache/';

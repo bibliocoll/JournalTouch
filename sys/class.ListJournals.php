@@ -295,7 +295,7 @@ class ListJournals
 
                 // Tagcloud
                 $tags = '';
-                if ($this->prefs->show_tagcloud == true) {
+                if ($this->prefs->menu_show_tagcloud == true) {
                     $tags_row = array();
                     if (!empty($data[$this->csv_col->tags])) {
                         // remove space between comma and tag; better readable but...

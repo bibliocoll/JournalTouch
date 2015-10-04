@@ -48,10 +48,9 @@ $cfg->prefs->menu_show_sort     = true; // Show the menu entry to switch between
 $cfg->prefs->menu_show_tagcloud = true; // Show the menu entry for the tagcloud?
 
 // Other display settings
-$cfg->prefs->default_sort_date  = true; // If set to true, default sort is by date. Otherwise alphabetical
+$cfg->prefs->default_sort_date  = false; // If set to true, default sort is by date. Otherwise alphabetical
 $cfg->prefs->show_metainfo      = false; // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
 $cfg->prefs->min_tag_freq       = 1;     // How often must a tag be used at least to show up in the tagcloud (if enabled)?
-
 
 $cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
