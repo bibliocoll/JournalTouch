@@ -202,6 +202,13 @@ $(document).ready(function() {
     // switch sorting
     $('#switch-sort').click(function(){
         $('.alert-box').hide(); // clean up
+
+        // Switch menu name (with multilanguage support)
+        old_lang = $('#sort-alt').text();
+        new_lang = $('#sort-alt').attr('data-lang');
+        $('#sort-alt').text(new_lang);
+        $('#sort-alt').attr('data-lang', old_lang);
+
         $('#journalList').toggleClass('datesorted azsorted');
         if ($('#journalList').hasClass('datesorted')) {
             tinysort('div#journalList>div.listitem',{data:'pubdate', order:'desc', place:'start'});

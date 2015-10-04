@@ -105,7 +105,16 @@ foreach ($lister->filters as $key=>$f) {
         </li>
         <?php } ?>
         <?php if ($lister->prefs->menu_show_sort) { ?>
-            <li><a id="switch-sort" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
+            <?php
+                $sort_current = ($lister->prefs->default_sort_date) ? __('A-Z') : __('Date');
+                $sort_alt     = ($lister->prefs->default_sort_date) ? __('Date') : __('A-Z');
+            ?>
+            <li><a id="switch-sort" "href="#"><i class="switcher fi-shuffle"></i>
+            <span>&#160;
+            <?php
+                echo __('Sort ').'<span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
+            ?>
+            </span></a></li>
         <?php } ?>
         <?php if ($lister->prefs->menu_show_listview) { ?>
             <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
