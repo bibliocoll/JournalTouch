@@ -308,32 +308,22 @@ class ListJournals
           $tagcloud = array_merge($tagcloud, $tags_row);
           $tags = implode(' tag-', $tags_row);
           $tags = 'tag-'.$tags;
+            if ($this->prefs->default_sort_date) {
+                usort($journals, array($this, "_sort_nested_array_by_date"));
+            }
         }
+    /**
+     * @brief   usort sorting method: by date
+     *
+     * @note:   We _could_ add another one to sort by alphabet, so it wouldn't
+     *          matter if journals.csv is sorted wrong initially...
+     *
+     * @return \b ARY Sorted by child node 'date'
+     */
+    private function _sort_nested_array_by_date($a, $b) {
+        $a = strtotime($a['date']); $b = strtotime($b['date']);
 
-        $journals[] = array(
-          'id' => $myISSN,
-          'title' => $data[$this->csv_col->title],
-          'filter' => $filter,
-          'topJ' => $topJ,
-          'date' => $date,
-          'img' => $img,
-          'new' => $new,
-          'metaPrint' => $metaPrint,
-          'metaOnline' => $metaOnline,
-          'metaGotToc' => $metaGotToc,
-          'metaShelfmark' => $metaShelfmark,
-          'metaWebsite' => $metaWebsite,
-          'issn' => $myISSN,
-          'tags' => $tags
-        );
-
-      }
-      fclose($handle);
-      // set our "big cloud" as class property (and sort alphabetically)
-      if (isset($tagcloud)) {
-        $this->tagcloud = array_count_values($tagcloud);
-        ksort($this->tagcloud);
-      }
+        return ($a == $b) ? 0 : ($a>$b ? - 1 : 1);
     }
     return $journals;
   }
