@@ -36,14 +36,7 @@ $cfg->prefs = new stdClass();
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
 
-
-$cfg->prefs->show_metainfo = false;     // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
-$cfg->prefs->show_tagcloud = true;      // Show the menu entry for the tagcloud?
-$cfg->prefs->min_tag_freq  = 1;         // How often must a tag be used at least to show up in the tagcloud?
-
-$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
-$cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
-
+// Institution settings
 $cfg->prefs->lib_name      = 'MPI Collective Goods Library';
 $cfg->prefs->lib_initials  = 'MPI';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
@@ -51,11 +44,26 @@ $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=adv
 $cfg->prefs->show_dl_button = false;    // Tries to create a direct download link (pdf) for a toc entry
 $cfg->prefs->sfx           = '';        // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
 
+// Menu display options
+$cfg->prefs->menu_show_listview = true; // Show option to switch to list view (otherwise it's always grid view)
+$cfg->prefs->menu_show_sort     = true; // Show the menu entry to switch between alphabetical and date sorting (otherwise it's the default sort below)
+$cfg->prefs->menu_show_tagcloud = true; // Show the menu entry for the tagcloud?
+
+// Other display settings
+$cfg->prefs->show_metainfo      = false; // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
+$cfg->prefs->min_tag_freq       = 1;     // How often must a tag be used at least to show up in the tagcloud (if enabled)?
+
+
+$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
+$cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
+
 // Caching: only activate it if you do
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true
 // b) if you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php
 $cfg->prefs->cache_toc_enable  = true;      // Caches fetched tocs so they only are processed once there is a new issue
 $cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often
+
+
 
 $cfg->api = new stdClass();
 $cfg->api->all = new stdClass();
@@ -77,6 +85,7 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
+
 
 
 $cfg->mail = new stdClass();

@@ -86,7 +86,7 @@ $journalUpdates = $lister->getJournalUpdates();
       <!-- Right Nav Section -->
       <ul class="right">
         <li class="divider"></li>
-        <?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
+        <?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
         <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&#160;<?php echo __('Tags') ?></a>
         </li><?php } ?><?php if ($lister->filters) { /* show filters only if set */?>
         <li class="has-dropdown">
@@ -104,8 +104,12 @@ foreach ($lister->filters as $key=>$f) {
           </ul>
         </li>
         <?php } ?>
-        <li><a id="switch-sort" class="azsorted" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
-        <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
+        <?php if ($lister->prefs->menu_show_sort) { ?>
+            <li><a id="switch-sort" class="azsorted" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
+        <?php } ?>
+        <?php if ($lister->prefs->menu_show_listview) { ?>
+            <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
+        <?php } ?>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
 <?php
 $lng_options = '';
@@ -200,7 +204,7 @@ The list of journals is a selection of the journals licensed to the library.')
 
 
 <!-- start Tagcloud -->
-<?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
+<?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
 <div id="tagsPopover" class="reveal-modal" data-reveal="">
   <h3><?php echo __('Tagcloud') ?></h3>
   <a class="close-reveal-modal button radius">×</a>
