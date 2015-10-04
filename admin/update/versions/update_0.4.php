@@ -7,7 +7,15 @@ $this->release_foldersDelete;
 
 $this->release_note =
 'Version 0.4
-Blabla or move these files yourself. And delete these folder yourself.';
+New
+- Introduced a new folder layout and options to set custom paths. Easier management of write rights and more flexibility
+- Introduced an update mechanism, so a switch from 0.3 to 0.4 leaves you JT folder cluttered with old files
+- Added option for default sort and made sorting menu entry multilanguage
+
+Fixes
+- timeago: now shows future dates correctly and support multilanguage
+- default config.php was missing (JT didn\'t run out of the box)
+- Some code refactoring';
 
 
 /**
