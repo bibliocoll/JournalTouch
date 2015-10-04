@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-20 18:19+0100\n"
-"PO-Revision-Date: 2014-07-25 14:00+0100\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2015-10-04 20:45+0100\n"
+"PO-Revision-Date: 2015-10-04 20:45+0100\n"
+"Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,365 +17,353 @@ msgstr ""
 "X-Poedit-Basepath: ../../../\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: checkout.php:19
-#: index.php:16
+#: checkout.php:20
+#: index.php:63
 msgid "MPI JournalTouch"
 msgstr "MPI JournalTouch"
 
-#: checkout.php:19
+#: checkout.php:20
 msgid "Checkout"
 msgstr "Merklistenaktion"
 
-#: checkout.php:40
-#: index.php:30
+#: checkout.php:46
+#: index.php:78
 msgid "JournalTouch <em><strong>beta</strong></em> - a library service"
 msgstr "JournalTouch <em><strong>beta</strong></em> - ein Bibliothekservice"
 
-#: checkout.php:49
+#: checkout.php:55
 msgid "Back to journal selection"
 msgstr "Zurück zur Übersicht"
 
-#: index.php:67
-#: checkout.php:52
-msgid "Language"
-msgstr "Sprache"
-
-#: checkout.php:60
+#: checkout.php:66
 msgid "Send your feedback to the library"
 msgstr "Feedback an die Bibliothek senden"
 
-#: checkout.php:67
-#: checkout.php:218
+#: checkout.php:73
+#: checkout.php:225
 msgid "Your e-mail"
 msgstr "Ihre E-Mail"
 
-#: checkout.php:73
-#: checkout.php:224
+#: checkout.php:79
+#: checkout.php:231
 msgid "your username"
 msgstr "Ihr Benutzername"
 
-#: checkout.php:84
-#: checkout.php:235
+#: checkout.php:90
+#: checkout.php:242
 msgid "please choose a name"
 msgstr "Bitte wählen Sie Ihren Namen"
 
-#: checkout.php:91
+#: checkout.php:97
 msgid "Your feedback message"
 msgstr "Ihre Meldung an uns"
 
-#: checkout.php:92
-#: checkout.php:252
+#: checkout.php:98
+#: checkout.php:259
 msgid "if you have any comments for us please put them here!"
 msgstr "Bitte tragen Sie Ihre Nachricht an uns hier ein"
 
-#: checkout.php:112
+#: checkout.php:119
 msgid "I want to..."
 msgstr "Ich möchte meine Artikelliste gerne..."
 
-#: checkout.php:120
+#: checkout.php:127
 msgid "View &amp; Print"
 msgstr "Ansehen &amp; Drucken"
 
-#: checkout.php:123
+#: checkout.php:130
 msgid "Send to my mailbox"
 msgstr "Per Mail senden"
 
-#: checkout.php:124
+#: checkout.php:131
 msgid "Send to library to get PDFs"
 msgstr "An die Bibliothek zur Abholung schicken"
 
-#: checkout.php:126
+#: checkout.php:133
 msgid "You already sent your files"
 msgstr "Die Liste wurde bereits gesendet"
 
-#: checkout.php:128
+#: checkout.php:135
 msgid "choose another option"
 msgstr "eine andere Option wählen"
 
-#: checkout.php:130
+#: checkout.php:137
 msgid "Clear Data and Logout"
 msgstr "Löschen und mich abmelden"
 
-#: checkout.php:136
-#: index.php:169
+#: checkout.php:143
+#: index.php:245
 msgid "Do you really want to empty your basket?"
 msgstr "Wolle Sie Ihre Merkliste wirklich löschen?"
 
-#: checkout.php:137
-#: index.php:170
+#: checkout.php:144
+#: index.php:246
 msgid "OK, empty my basket!"
 msgstr "Ok, meine Merkliste löschen!"
 
-#: checkout.php:138
-#: index.php:171
+#: checkout.php:145
+#: index.php:247
 msgid "No, keep basket!"
 msgstr "Nein, Merkliste behalten!"
 
-#: checkout.php:146
+#: checkout.php:153
 msgid "Your articles have been successfully deleted! You will automatically be taken to the start page."
 msgstr "Ihre Merkliste wurde gelöscht! Sie werden nun automatisch zur Startseite weitergeleitet."
 
-#: checkout.php:176
+#: checkout.php:183
 msgid "Your message has been successfully sent!"
 msgstr "Ihr Nachricht wurde erfolgreich versendet."
 
-#: checkout.php:242
+#: checkout.php:249
 msgid "Attach citations?"
 msgstr "Datei für Literaturverwaltung als Anhang?"
 
-#: checkout.php:251
+#: checkout.php:258
 msgid "Your message"
 msgstr "Ihre Nachricht"
 
-#: config-default.php:85
-#: config.php:69
-msgid "Feedback from JournalTouch"
-msgstr "Kontakt"
-
-#: config-default.php:89
-#: config.php:73
-msgid "Your Library JournalTouch"
-msgstr "Universitätsbibliothek"
-
-#: config-default.php:90
-#: config.php:74
-msgid "Your saved articles from JournalTouch"
-msgstr "JournalTouch: Ihre Artikel"
-
-#: config-default.php:91
-#: config.php:75
-msgid "You sent the following message"
-msgstr "Sie schrieben folgende Nachricht"
-
-#: config-default.php:92
-#: config.php:76
-msgid "Here are your articles, enjoy!"
-msgstr "Ihre aus JournalTouch versendeten Artikel."
-
-#: config-default.php:93
-#: config.php:77
-msgid "Best regards, your library team!"
-msgstr "Mit freundlichem Gruß<br>Ihre Bibliothek"
-
-#: config-default.php:97
-#: config.php:81
-msgid "New order for the library from JournalTouch"
-msgstr "Neue Bestellung für die Bibliothek aus JournalTouch"
-
-#: config-default.php:98
-#: config.php:82
-msgid "New order from JournalTouch"
-msgstr "Neue Bestellung aus JournalTouch"
-
-#: config-default.php:157
-#: config.php:135
-msgid "Psychology"
-msgstr "Psychologie"
-
-#: config-default.php:158
-#: config.php:136
-msgid "Politics"
-msgstr "Politik"
-
-#: config-default.php:159
-#: config.php:137
-msgid "Yet another filter"
-msgstr ""
-
-#: index.php:31
-msgid "menu"
-msgstr "menü"
-
-#: index.php:35
-msgid "about"
-msgstr "über"
-
-#: index.php:42
-msgid "Tags"
-msgstr "Tags"
-
-#: index.php:45
-msgid "filter"
-msgstr "Portfolios"
-
-#: index.php:47
-#: index.php:144
-msgid "show all"
-msgstr "alle anzeigen"
-
-#: index.php:48
-msgid "MPI favorites"
-msgstr "MPI-Empfehlungen"
-
-#: index.php:49
-msgid "new issues"
-msgstr "Neue Ausgaben"
-
-#: index.php:59
-msgid "list view"
-msgstr "Liste"
-
-#: index.php:60
-msgid "my basket"
-msgstr "Merkliste"
-
-#: index.php:80
-msgid "Send articles"
-msgstr "Artikelliste schicken"
-
-#: index.php:92
-msgid "About"
-msgstr "Über"
-
-#: index.php:95
-#: index.php:397
-msgid "<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues."
-msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>PLACEHOLDER</strong> für aktuelle Zeitschriftenausgaben."
-
-#: index.php:101
-#: index.php:403
-msgid ""
-"It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
-"                      available, it will be indicated with an extra button.\n"
-"                      When you are finished, click on your basket to check out.\n"
-"                      You can now send the article information to your e-mail address, send a\n"
-"                      request for the PDF files to the library, or view/save it as a\n"
-"                      list. Export for citation management systems like Endnote is also available. <br/>\n"
-"                      The list of journals is a selection of the journals licensed to the library."
-msgstr ""
-
-#: index.php:115
-msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
-msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu!<br/><br/> <strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
-
-#: index.php:116
-#: index.php:419
-msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
-msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>JournalTocs</strong> bezogen."
-
-#: index.php:121
-#: index.php:380
-msgid "Get in touch!"
-msgstr "Kontakt"
-
-#: index.php:132
+#: checkout.php:305
+#: index.php:207
 msgid "External Source"
 msgstr "Artikel zur Zeitschrift"
 
-#: index.php:142
+#: index.php:79
+msgid "menu"
+msgstr "menü"
+
+#: index.php:83
+msgid "about"
+msgstr "über"
+
+#: index.php:90
+msgid "Tags"
+msgstr "Tags"
+
+#: index.php:93
+msgid "filter"
+msgstr "Portfolios"
+
+#: index.php:95
+#: index.php:220
+msgid "show all"
+msgstr "alle anzeigen"
+
+#: index.php:96
+msgid "MPI favorites"
+msgstr "MPI-Empfehlungen"
+
+#: index.php:97
+msgid "new issues"
+msgstr "Neue Ausgaben"
+
+#: index.php:109
+#: index.php:110
+msgid "A-Z"
+msgstr "A-Z"
+
+#: index.php:109
+#: index.php:110
+msgid "Date"
+msgstr "Datum"
+
+#: index.php:115
+msgid "Sort"
+msgstr "Ordne"
+
+#: index.php:120
+msgid "list view"
+msgstr "Liste"
+
+#: index.php:122
+msgid "my basket"
+msgstr "Merkliste"
+
+#: index.php:133
+msgid "Language"
+msgstr "Sprache"
+
+#: index.php:156
+msgid "Send articles"
+msgstr "Artikelliste schicken"
+
+#: index.php:167
+msgid "About"
+msgstr "Über"
+
+#: index.php:170
+#: index.php:467
+msgid "<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues."
+msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>PLACEHOLDER</strong> für aktuelle Zeitschriftenausgaben."
+
+#: index.php:176
+#: index.php:473
+msgid ""
+"It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
+"available, it will be indicated with an extra button.\n"
+"When you are finished, click on your basket to check out.\n"
+"You can now send the article information to your e-mail address, send a\n"
+"request for the PDF files to the library, or view/save it as a\n"
+"list. Export for citation management systems like Endnote is also available. <br/>\n"
+"The list of journals is a selection of the journals licensed to the library."
+msgstr ""
+"Alles ganz einfach. Wählen Sie ein Journal, wählen Sie die Artikel, die Sie interessieren u fügen Sie diese der Merkliste hinzu.\n"
+"Sofern ein Abstract verfügabr ist, wird Ihnen das mit einem zusätzlichen Button angezeigt\n"
+"Wenn Sie fertig, klicken Sie auf die Merkliste um\n"
+"- sich die Artikelinformation an Ihre E-Mail schicken zu lassen\n"
+"- den Artikel bei der Bibliothek anzufordern\n"
+"- oder als bibliografische Liste zu exportieren, z.B. für Endote\n"
+"Die Liste ist eine Auswahl der von der bibliothek lizensierten Journals."
+
+#: index.php:190
+msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
+msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu!<br/><br/> <strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
+
+#: index.php:191
+#: index.php:489
+msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
+msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>JournalTocs</strong> bezogen."
+
+#: index.php:196
+#: index.php:450
+msgid "Get in touch!"
+msgstr "Kontakt"
+
+#: index.php:218
 msgid "Tagcloud"
 msgstr ""
 
-#: index.php:155
+#: index.php:231
 msgid "Your basket is empty."
 msgstr "Ihre Merkliste ist leer."
 
-#: index.php:158
+#: index.php:234
 msgid "Send/Save my articles"
 msgstr "Sende/Speichere meine Artikel"
 
-#: index.php:160
+#: index.php:236
 msgid "Empty my basket"
 msgstr "Merkliste löschen"
 
-#: index.php:180
+#: index.php:256
 msgid "The newest editions"
 msgstr "Die neuesten Ausgaben"
 
-#: index.php:234
+#: index.php:336
 msgid "Filter active:"
 msgstr "Aktive Filter:"
 
-#: index.php:244
+#: index.php:346
 msgid "Search journal"
 msgstr "Suche Journal"
 
-#: index.php:247
+#: index.php:349
 msgid "No journals found"
 msgstr "Keine Zeitschriften gefunden"
 
-#: index.php:277
-msgid "Browse all journals from A to Z (list view):"
-msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
-
-#: index.php:291
-#: index.php:345
-msgid "last update"
-msgstr "Letzte Aktualisierung"
-
-#: index.php:307
+#: index.php:382
 msgid "Browse all journals from A to Z (grid view):"
 msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
 
-#: index.php:320
+#: index.php:397
 msgid "TOC"
 msgstr ""
 
-#: index.php:322
+#: index.php:399
 msgid "Library"
 msgstr "Bibliothek"
 
-#: index.php:323
+#: index.php:400
 msgid "Journal"
 msgstr "Website"
 
-#: index.php:357
+#: index.php:414
+msgid "last update"
+msgstr "Letzte Aktualisierung"
+
+#: index.php:427
 msgid "Something seems to be wrong with the network"
 msgstr "Leider scheint es Probleme mit dem Netzzugang zu geben."
 
-#: index.php:358
-#: index.php:363
+#: index.php:428
+#: index.php:433
 msgid "Please notify us!"
 msgstr "Benachrichtigen Sie uns!"
 
-#: index.php:362
+#: index.php:432
 msgid "No table of contents found! Are you interested in this title?"
 msgstr "Kein Inhaltsverzeichnis gefunden! Sind Sie an dieser Zeitschrift interessiert?"
 
-#: index.php:376
+#: index.php:446
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr "Inhaltsverzeichnise werden von <a href=\"http://www.crossref.org\">CrossRef</a> und <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a> bezogen"
 
-#: index.php:393
+#: index.php:463
 msgid "Touch me!"
 msgstr "Berühr mich!"
 
-#: index.php:394
+#: index.php:464
 msgid "What is this?"
 msgstr "Was ist das?"
 
-#: index.php:416
+#: index.php:486
 msgid "If a journal is missing, please let us know and we will add it to the list."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu."
 
-#: index.php:418
+#: index.php:488
 msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
 msgstr "<strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:423
+#: index.php:493
 msgid "Touch the screen to get started..."
 msgstr "Berühren Sie den Bildschirm..."
 
-#: index.php:446
+#: index.php:535
 msgid "remove"
 msgstr "entfernen"
 
-#: services/getLatestJournals.php:112
+#: admin/update.php:14
+#: admin/update/index.php:10
+msgid "Journal Touch Upgrade"
+msgstr "Journal Touch Upgrade"
+
+#: admin/services/getLatestJournalTocPremium.php:134
 msgid "Most recent journal updates from the last PLACEHOLDER days"
 msgstr "Die neusten Updates der letzten PLACEHOLDER Tage"
 
-#: sys/class.getJournalInfos.php:258
+#: sys/class.GetJournalToc.php:208
 msgid "Sorry, I could not find any information about the publishing date"
 msgstr "Leider konnten keine Informationen zum Veröffentlichungsdatum gefunden werden"
 
-#: sys/class.getJournalInfos.php:265
+#: sys/class.GetJournalToc.php:216
 msgid "last update:"
 msgstr "Letzte Aktualisierung"
 
-#: sys/class.getJournalInfos.php:293
+#: sys/class.GetJournalToc.php:248
 msgid "Abstract"
 msgstr "Abstract"
 
+#~ msgid "Feedback from JournalTouch"
+#~ msgstr "Kontakt"
+#~ msgid "Your Library JournalTouch"
+#~ msgstr "Universitätsbibliothek"
+#~ msgid "Your saved articles from JournalTouch"
+#~ msgstr "JournalTouch: Ihre Artikel"
+#~ msgid "You sent the following message"
+#~ msgstr "Sie schrieben folgende Nachricht"
+#~ msgid "Here are your articles, enjoy!"
+#~ msgstr "Ihre aus JournalTouch versendeten Artikel."
+#~ msgid "Best regards, your library team!"
+#~ msgstr "Mit freundlichem Gruß<br>Ihre Bibliothek"
+#~ msgid "New order for the library from JournalTouch"
+#~ msgstr "Neue Bestellung für die Bibliothek aus JournalTouch"
+#~ msgid "New order from JournalTouch"
+#~ msgstr "Neue Bestellung aus JournalTouch"
+#~ msgid "Psychology"
+#~ msgstr "Psychologie"
+#~ msgid "Politics"
+#~ msgstr "Politik"
+#~ msgid "Browse all journals from A to Z (list view):"
+#~ msgstr "Alle Zeitschriften von A-Z (Listenansicht):"
 #~ msgid "Bibliothek"
 #~ msgstr "Bibliothek"
 
@@ -760,7 +748,6 @@ msgstr "Abstract"
 #~ msgstr "Schlagwörter"
 #~ msgid "Classification"
 #~ msgstr "Klassifikation"
-
 #~ msgid "Image"
 #~ msgstr "Bild"
 #~ msgid "Add Attachment"
@@ -2715,8 +2702,6 @@ msgstr "Abstract"
 #~ msgstr "Alle anwählen"
 #~ msgid "Uncheck All"
 #~ msgstr "Alle abwählen"
-#~ msgid "Date"
-#~ msgstr "Datum"
 #~ msgid "Delete Record"
 #~ msgstr "Datensatz löschen"
 #~ msgid "Cancel"
