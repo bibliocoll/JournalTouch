@@ -105,7 +105,7 @@ foreach ($lister->filters as $key=>$f) {
         </li>
         <?php } ?>
         <?php if ($lister->prefs->menu_show_sort) { ?>
-            <li><a id="switch-sort" class="azsorted" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
+            <li><a id="switch-sort" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
         <?php } ?>
         <?php if ($lister->prefs->menu_show_listview) { ?>
             <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
@@ -374,7 +374,7 @@ if (!empty($journalUpdates)) {
     </div>
   </div>
 -->
-  <div class="row gridview" id="journalList">
+  <div id="journalList" class="row gridview <?php $sortclass = ($lister->prefs->default_sort_date) ? 'datesorted' : 'azsorted'; echo $sortclass; ?>">
 <?php
 /* see Class setup */
 foreach ($journals as $j) {

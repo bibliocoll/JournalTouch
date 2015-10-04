@@ -104,7 +104,7 @@ $(document).ready(function() {
     });
 
     // Switching between alphabet and time frame buttons (whatever is the default view)
-    if ($('#switch-sort').hasClass('azsorted')) {
+    if ($('#journalList').hasClass('azsorted')) {
         $('#alphabet').toggle();
     } else {
         $('#timewarps').toggle();
@@ -202,8 +202,8 @@ $(document).ready(function() {
     // switch sorting
     $('#switch-sort').click(function(){
         $('.alert-box').hide(); // clean up
-        $(this).toggleClass('datesorted azsorted');
-        if ($(this).hasClass('datesorted')) {
+        $('#journalList').toggleClass('datesorted azsorted');
+        if ($('#journalList').hasClass('datesorted')) {
             tinysort('div#journalList>div.listitem',{data:'pubdate', order:'desc', place:'start'});
             $('#alphabet').hide();
             $('#letterbox').hide();
@@ -237,7 +237,7 @@ $(document).ready(function() {
         } else {
             $(this).children('span').html('&nbsp;list view');
             //show navigation stuff for grid view
-            if ($('#switch-sort').hasClass('datesorted')) {
+            if ($('#journalList').hasClass('datesorted')) {
                 $('#timewarps').show();
             } else {
                 $('#alphabet').show();
