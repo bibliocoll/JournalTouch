@@ -127,7 +127,7 @@ if (count($lister->prefs->languages) > 2) {
 elseif (count($lister->prefs->languages) == 2) {
   echo '<li class="divider"></li>'.$lng_options;
 }
-// And (implicit) nothing if onyl one language is available
+// And (implicit) nothing if only one language is available
 ?>
     </section>
   </nav>
