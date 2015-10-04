@@ -16,8 +16,8 @@ padding-top:15px;
 height:75px;
 }
 
-.top-bar, 
-.top-bar.expanded, 
+.top-bar,
+.top-bar.expanded,
 .top-bar.expanded .title-area,
 .top-bar-section li:not(.has-form) a:not(.button) {
 background-color: #007095;
@@ -45,7 +45,7 @@ height:254px; /* reserve space */
 }
 
 /* header: filter + filter on panel */
-.filterSelected, 
+.filterSelected,
 #filterPanel,
 .top-bar-section li:not(.has-form) a.filterSelected {
 color:#fff;
@@ -165,8 +165,8 @@ right: 50px;
 
 .preloader {
 margin-top: 120px;
-/* some stuff copied from old Foundation Version 
-   preloader moved to .slideshow-wrapper in official release 5.4, see https://github.com/zurb/foundation/commit/5d9cd17aa555437b8346b800f9cff12ae6fb782b 
+/* some stuff copied from old Foundation Version
+   preloader moved to .slideshow-wrapper in official release 5.4, see https://github.com/zurb/foundation/commit/5d9cd17aa555437b8346b800f9cff12ae6fb782b
    but we like generic */
 display: block;
 width: 40px;
@@ -195,7 +195,7 @@ border-radius: 1000px;
 animation-name: rotate;
 animation-duration: 1.5s;
 animation-iteration-count: infinite;
-animation-timing-function: linear; 
+animation-timing-function: linear;
 }
 
 .toc.preloader {
@@ -227,7 +227,7 @@ text-align: center;
 
 /*************** Journal (Cover) List : GENERAL **************************/
 
-.getTOC { 
+.getTOC {
 cursor: pointer;
 }
 
@@ -520,6 +520,16 @@ background-color:#FFFFFF!important;
 display:inline;
 }
 
+/* Alphabet and time navigation; hide one initially*/
+#alphabet {
+   display: none;
+}
+
+#timewarps {
+   display: none;
+}
+
+
 /*************** iframe TOC & Links **************************************/
 iframe {
     border: 1px solid  #879cc6;
@@ -638,40 +648,40 @@ margin-right:20px;
     display: inline;
     padding: 8px;
     color: white;
-    background-color: #749a02; 
+    background-color: #749a02;
     -webkit-border-radius:6px;
     -webkit-animation: glow 2s infinite;
-		border-radius:6px;
-		animation: glow 2s infinite;
+      border-radius:6px;
+      animation: glow 2s infinite;
 }
 
 @-webkit-keyframes glow {
-    0% { 
-        background-color: #749a02; 
-        -webkit-box-shadow: 0 0 9px #ccc; 
+    0% {
+        background-color: #749a02;
+        -webkit-box-shadow: 0 0 9px #ccc;
     }
-    50% { 
-        background-color: #91bd09; 
-        -webkit-box-shadow: 0 0 18px #91bd09; 
+    50% {
+        background-color: #91bd09;
+        -webkit-box-shadow: 0 0 18px #91bd09;
     }
-    100% { 
-        background-color: #749a02; 
-        -webkit-box-shadow: 0 0 9px #ccc; 
+    100% {
+        background-color: #749a02;
+        -webkit-box-shadow: 0 0 9px #ccc;
     }
 }
 
 @keyframes glow {
-    0% { 
-        background-color: #749a02; 
-        box-shadow: 0 0 9px #ccc; 
+    0% {
+        background-color: #749a02;
+        box-shadow: 0 0 9px #ccc;
     }
-    50% { 
-        background-color: #91bd09; 
-        box-shadow: 0 0 18px #91bd09; 
+    50% {
+        background-color: #91bd09;
+        box-shadow: 0 0 18px #91bd09;
     }
-    100% { 
-        background-color: #749a02; 
-        box-shadow: 0 0 9px #ccc; 
+    100% {
+        background-color: #749a02;
+        box-shadow: 0 0 9px #ccc;
     }
 }
 
