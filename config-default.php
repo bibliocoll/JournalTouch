@@ -19,8 +19,6 @@
  * @todo  Maybe create a class JournalTouch with static properties?
  */
 if (!isset($cfg)) { $cfg = new stdClass(); }
-$cfg->sys = new stdClass();
-$cfg->sys->basepath  = realpath( __DIR__ ) .'/';    // absolute path to JournalTouch directory
 
 $cfg->prefs = new stdClass();
 /**
@@ -31,7 +29,7 @@ $cfg->prefs = new stdClass();
  *       issn has to be appended. WorldCat is just an example. Set to '' to
  *       disable.
  */
-// set available languages; to add a new language, update \locale accordingly
+// set available languages; to add a new language, update \languages accordingly
 // the first language ([0]) will be the default language
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
@@ -119,19 +117,6 @@ $cfg->mail->bodyOrder      = 'New order from JournalTouch';
 
 
 
-/**
- * Which file with your journals information and what separator is used.
- * Usually you won't have to change anything here.
- */
-//uncomment these if you don't like the defaults. will be set in sys/bootstrap.php otherwise
-//FIXME: this hiding of "advanced" configuration options is not something i'm fond of
-//$cfg->csv_file = new stdClass();
-//$cfg->csv_file->separator  = ';';
-//$cfg->csv_file->path = "input/journals.csv";
-//$cfg->csv_file->fullpath = $cfg->sys->basepath . $cfg->csv_file->path; // change this if you want to store csv_file outside the JT directory structure
-
-
-
 $cfg->csv_col = new stdClass();
 /**
  * Which column (separated by the separator specified above) holds which data?
@@ -195,6 +180,8 @@ $cfg->covers = new stdClass();
  * clarified. So, for now there's little to set here.
  *
  * Note: If yout set anything for api no images from the folder will be loaded
+ *
+ * @todo: if there is an api, caching for covers might be a good idea
  */
 $cfg->covers->placeholder = 'img/placeholder.gif';  // Just a placeholder
 $cfg->covers->api         = '';                     // You might input an url where an issn can be appended ("http://myservice.net/issn=") - and mail us if you got such a thing ;)
@@ -219,8 +206,31 @@ $cfg->dbusers->dbuser   = '';
 $cfg->dbusers->dbpass   = '';
 
 
+
+$cfg->sys = new stdClass();
+/**
+ * System and path settings
+ *
+ * By default JT saves everything in the data folder and its subsolders (these
+ * folders must be writable).
+ *
+ * You might have a very special use case, where you want to save stuff outside
+ * of JT's root folder. One idea: you want to use multiple JT instances and share
+ * some covers between them. Here you can point to any folder you like for
+ * cache, covers, export and journals. (Well, essentially this is added to make
+ * an existing special case world usable ;))
+ *
+ * If you change anthying here you _must_ use absolute paths. Leave empty to use
+ * default paths.
+ */
+$cfg->sys->data_cache       = ''; // If empty it points to data/cache
+$cfg->sys->data_covers      = ''; // If empty it points to data/cover
+$cfg->sys->data_export      = ''; // If empty it points to data/export
+$cfg->sys->data_journals    = ''; // If empty it points to data/journals
+
+
 /**
  * Configuration settings for internal use; don't change
  */
-require($cfg->sys->basepath.'/sys/bootstrap.php');
+require('sys/bootstrap.php');
 ?>
