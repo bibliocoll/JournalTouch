@@ -20,6 +20,21 @@
  *    very best option would be to create a real config page in admin/
  * - Add this to a function? Make it better readable
  */
+$cfg->sys->current_jt_version = 0.4;
+
+require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
+
+
+// Check if update is required
+if (check_update_required($cfg) && !defined('UPDATE')) {
+    echo 'JournalTouch has to be updated. Please go to <a href="admin/update.php">Admin Updater</a>';
+    exit;
+}
+
+
+//Sanitize
+sanitize_request();
+
 
 // Define the basepath of JT
 $cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to JournalTouch directory; DONT' CHANGE
@@ -38,7 +53,7 @@ require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 $cfg->prefs->cache_max_age = "365 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
 
 // Output files and paths - there is no point to bother a user with changing it
-$cfg->api->jt->outfile  = $cfg->sys->basepath.'data/journals/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+$cfg->api->jt->outfile  = $cfg->sys->data_journals.'updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
 
 $cfg->csv_file = new stdClass();
 /**
