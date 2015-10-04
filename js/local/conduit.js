@@ -367,6 +367,7 @@ $(document).ready(function() {
     });
 
     // timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp
+    $.timeago.settings.allowFuture = true;
     $('time.timeago').timeago();
 
     // quicksearch setup
