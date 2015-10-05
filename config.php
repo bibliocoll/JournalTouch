@@ -1,4 +1,6 @@
 <?php
+require('config-default.php');
+
 /**
  * Configuration settings for JournalTouch
  *
@@ -18,9 +20,7 @@
  *
  * @todo  Maybe create a class JournalTouch with static properties?
  */
-if (!isset($cfg)) { $cfg = new stdClass(); }
 
-$cfg->prefs = new stdClass();
 /**
  * Preferences for your library. Look & Feel of JournalTouch
  *
@@ -63,9 +63,6 @@ $cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static
 
 
 
-$cfg->api = new stdClass();
-$cfg->api->all = new stdClass();
-$cfg->api->jt = new stdClass();
 /**
  * API: Settings to fetch the table of contents
  *
@@ -86,7 +83,6 @@ $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_upda
 
 
 
-$cfg->mail = new stdClass();
 /**
  * Mailer settings
  *
@@ -167,7 +163,6 @@ $cfg->filter['wir'] = 'Yet another filter';
 
 
 
-$cfg->covers = new stdClass();
 /**
  * Put covers into the img folder. The name must be the issn set the column
  * specified for $cfg->csv_col->issn. The extension might be jpg, gif or png.
@@ -187,7 +182,6 @@ $cfg->covers->api         = '';                     // You might input an url wh
 
 
 
-$cfg->dbusers = new stdClass();
 /**
  * Preset list of users (for mailing)
  *
@@ -206,7 +200,6 @@ $cfg->dbusers->dbpass   = '';
 
 
 
-$cfg->sys = new stdClass();
 /**
  * System and path settings
  *
@@ -226,10 +219,4 @@ $cfg->sys->data_cache       = ''; // If empty it points to data/cache
 $cfg->sys->data_covers      = ''; // If empty it points to data/cover
 $cfg->sys->data_export      = ''; // If empty it points to data/export
 $cfg->sys->data_journals    = ''; // If empty it points to data/journals
-
-
-/**
- * Configuration settings for internal use; don't change
- */
-require('sys/bootstrap.php');
 ?>

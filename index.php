@@ -27,13 +27,13 @@ if (!isset($cfg)) {
 }
 if ($cfg->prefs->cache_main_enable) {
   $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
-  $cachefile  = "cache/index_$query.cache.html";
+  $cachefile  = $cfg->sys->data_cache."index_$query.cache.html";
 
   //NOTE: file_exists() result is cached. not an issue in this case, but
   //clearstatcache() needs to be called in cases where the file might be
   //deleted between tests in the same script. unlink() updates the cache
-  if (file_exists($cachefile) && file_exists('input/journals.csv')) {
-    if (filemtime('input/journals.csv') < filemtime($cachefile)) {
+  if (file_exists($cachefile) && file_exists($cfg->sys->data_journals.'journals.csv')) {
+    if (filemtime('data/journals/journals.csv') < filemtime($cachefile)) {
       echo file_get_contents($cachefile);
       exit;
     }
@@ -64,7 +64,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/media.css" />
-    <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
@@ -86,7 +86,7 @@ $journalUpdates = $lister->getJournalUpdates();
       <!-- Right Nav Section -->
       <ul class="right">
         <li class="divider"></li>
-        <?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
+        <?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
         <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&#160;<?php echo __('Tags') ?></a>
         </li><?php } ?><?php if ($lister->filters) { /* show filters only if set */?>
         <li class="has-dropdown">
@@ -104,13 +104,26 @@ foreach ($lister->filters as $key=>$f) {
           </ul>
         </li>
         <?php } ?>
-        <li><a id="switch-sort" class="azsorted" href="#"><i class="switcher fi-shuffle"></i><span>&#160;switch sorting</span></a></li>
-        <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
+        <?php if ($lister->prefs->menu_show_sort) { ?>
+            <?php
+                $sort_current = ($lister->prefs->default_sort_date) ? __('A-Z') : __('Date');
+                $sort_alt     = ($lister->prefs->default_sort_date) ? __('Date') : __('A-Z');
+            ?>
+            <li><a id="switch-sort" "href="#"><i class="switcher fi-shuffle"></i>
+            <span>&#160;
+            <?php
+                echo __('Sort').' <span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
+            ?>
+            </span></a></li>
+        <?php } ?>
+        <?php if ($lister->prefs->menu_show_listview) { ?>
+            <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
+        <?php } ?>
         <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
 <?php
 $lng_options = '';
 foreach ($lister->prefs->languages as $set_lang) {
-  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"locale/$set_lang.gif\" /></a></li>";
+  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"languages/$set_lang.gif\" /></a></li>";
 }
 
 // Show a drop down menu if more than two languages are available
@@ -127,7 +140,7 @@ if (count($lister->prefs->languages) > 2) {
 elseif (count($lister->prefs->languages) == 2) {
   echo '<li class="divider"></li>'.$lng_options;
 }
-// And (implicit) nothing if onyl one language is available
+// And (implicit) nothing if only one language is available
 ?>
     </section>
   </nav>
@@ -200,7 +213,7 @@ The list of journals is a selection of the journals licensed to the library.')
 
 
 <!-- start Tagcloud -->
-<?php if (count($lister->tagcloud) > 1 && $lister->prefs->show_tagcloud) { ?>
+<?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
 <div id="tagsPopover" class="reveal-modal" data-reveal="">
   <h3><?php echo __('Tagcloud') ?></h3>
   <a class="close-reveal-modal button radius">×</a>
@@ -370,7 +383,7 @@ if (!empty($journalUpdates)) {
     </div>
   </div>
 -->
-  <div class="row gridview" id="journalList">
+  <div id="journalList" class="row gridview <?php $sortclass = ($lister->prefs->default_sort_date) ? 'datesorted' : 'azsorted'; echo $sortclass; ?>">
 <?php
 /* see Class setup */
 foreach ($journals as $j) {
@@ -490,9 +503,11 @@ The list of journals is a selection of the journals licensed to the library.') ?
 <script src="js/vendor/jquery.unveil.min.js"></script>
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/vendor/jquery.timeago.js"></script>
+<script src="languages/<?php echo $lister->prefs->current_lang ?>/jquery.timeago.<?php echo $lister->prefs->current_lang ?>.js"></script>
 <script src="js/vendor/tinysort.min.js"></script>
 <script src="js/local/conduit.js"></script>
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
+
 <script>
 simpleCart({
   checkout: {

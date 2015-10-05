@@ -3,7 +3,8 @@
  * Bootstrap everything needed for running JournalTouch
  *
  * A central place to do everything needed after including the config file and
- * before a distinct php page is
+ * before a distinct php page is loaded. Do stuff a user should not see in the
+ * config, but that is necessary before processing any script
  *
  * Time-stamp: "2015-08-30 2:25:00 zeumer"
  *
@@ -17,49 +18,53 @@
  * -  Include position in config-default.php sucks, but it has to be after the
  *    the language definitions and before the first use of gettext. Maybe the
  *    very best option would be to create a real config page in admin/
+ * - Add this to a function? Make it better readable
  */
 // Define the basepath of JT
-if (!isset($cfg)) {
-  //looks like we're not being loaded from config.php
-  //assume this is one of the sys/ajax_* scripts
-  //do the bare minimum and and try to play along
-  $cfg = new stdClass();
-  $cfg->sys = new stdClass();
-  $cfg->sys->basepath  = realpath( __DIR__ .'/../' ) .'/';    // absolute path to JournalTouch directory
-}
+$cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to JournalTouch directory; DONT' CHANGE
+
+$cfg->sys->current_jt_version = 0.4;
 
 require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
+
+// Check if update is required
+if (check_update_required($cfg) && !defined('UPDATE')) {
+    echo 'JournalTouch has to be updated. Please go to <a href="admin/update.php">Admin Updater</a>';
+    exit;
+}
 
 //Sanitize
 sanitize_request();
 
-if (isset($cfg->prefs)) {
-  // it is likely we have been loaded from config.php. do all the things
+// Honor user choices for paths; else set default ones
+if (!$cfg->sys->data_cache)     $cfg->sys->data_cache    = $cfg->sys->basepath.'data/cache/';
+if (!$cfg->sys->data_covers)    $cfg->sys->data_covers   = $cfg->sys->data_covers.'data/covers/';
+if (!$cfg->sys->data_export)    $cfg->sys->data_export   = $cfg->sys->basepath.'data/export/';
+if (!$cfg->sys->data_journals)  $cfg->sys->data_journals = $cfg->sys->basepath.'data/journals/';
 
-  # Do stuff a user should not see in the config, but that is necessary before
-  # processing any script
-  # @todo: Add this to a function? Make it better readable
+// Set language
+$cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->languages[0];
+require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 
-  // Set language
-  $cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->languages[0];
-  require_once($cfg->sys->basepath.'sys/jt-gettext.php');
+// @deprecated 2015-08-30: Currently there is no use to force deletion of cached files, since ajax_toc.php handles it well to make sure a cache is valid
+$cfg->prefs->cache_max_age = "365 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
 
-  // @deprecated 2015-08-30: Currently there is no use to force deletion of cached files, since ajax_toc.php handles it well to make sure a cache is valid
-  $cfg->prefs->cache_max_age = "365 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
+// Output files and paths - there is no point to bother a user with changing it
+$cfg->api->jt->outfile  = $cfg->sys->data_journals.'updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+
+$cfg->csv_file = new stdClass();
+/**
+* Which file with your journals information and what separator is used.
+* Usually you won't have to change anything here.
+*/
+$cfg->csv_file->separator  = ';';
+$cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
 
 
-  // Output files and paths - there is no point to bother a user with changing it
-  $cfg->api->jt->outfile  = $cfg->sys->basepath.'input/updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
+// Outsource processing beyond adjusting config variables
+require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
-if (!isset($cfg->csv_file)) {
-  $cfg->csv_file = new stdClass();
-  /**
-   * Which file with your journals information and what separator is used.
-   * Usually you won't have to change anything here.
-   */
-  $cfg->csv_file->separator  = ';';
-  $cfg->csv_file->path       = $cfg->sys->basepath.'input/journals.csv';
-  $cfg->csv_file->fullpath = $cfg->sys->basepath . $cfg->csv_file->path; // change this if you want to store csv_file outside the JT directory structure
-  }
-}
+// Sanitize GET and POST
+sanitize_request();
+
 ?>
