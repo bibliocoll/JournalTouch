@@ -38,7 +38,7 @@ sanitize_request();
 
 // Honor user choices for paths; else set default ones
 if (!$cfg->sys->data_cache)     $cfg->sys->data_cache    = $cfg->sys->basepath.'data/cache/';
-if (!$cfg->sys->data_covers)    $cfg->sys->data_covers   = $cfg->sys->data_covers.'data/covers/';
+if (!$cfg->sys->data_covers)    $cfg->sys->data_covers   = 'data/covers/';
 if (!$cfg->sys->data_export)    $cfg->sys->data_export   = $cfg->sys->basepath.'data/export/';
 if (!$cfg->sys->data_journals)  $cfg->sys->data_journals = $cfg->sys->basepath.'data/journals/';
 
