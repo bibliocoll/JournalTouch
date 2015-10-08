@@ -143,7 +143,8 @@ $(document).ready(function() {
             //TODO: GET AGE SOMEHOW TOO
         });
 
-        $('#TOCboxIntro').remove();
+				// Show loading animation
+				$('#tocModal').foundation('reveal', 'open');
         $('.toc.preloader').show();
 
         // get Journal TOC in iframe
@@ -427,6 +428,7 @@ $(document).ready(function() {
                     $('#externalPopover').foundation('reveal', 'open');
                 } else {
                     $('.toc.preloader').hide();
+                		$('#tocModal').foundation('reveal', 'open');
                     $('#tocNotFoundBox').fadeIn('slow');
                 }
             } else if (message.hasOwnProperty('add')) {
