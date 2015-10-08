@@ -171,7 +171,7 @@ $(document).ready(function() {
 			$('.listitem').show(); //[> show everything <]
 			//fix for unveil.js so all visible elements will get their appropriate image content
 			//(because lazy load works only on scroll, we will scroll a bit)
-			$('html,body').animate({scrollTop: window.pageYOffset +1},'slow');
+			setTimeout(function() {window.scrollBy(0,1);}, 500);
 			//[> hide on panel <]
 			$('#filterPanel').fadeOut();
 		} else {
@@ -228,6 +228,8 @@ $(document).ready(function() {
 				$('#letterbox').show();
 			}
 		}
+
+		setTimeout(function() {window.scrollBy(0,1);}, 500);
 	})
 
 	// switch views
@@ -257,7 +259,7 @@ $(document).ready(function() {
 		 * @todo: the initial view on page loading is scrolled down a little. I
 		 * just can't find where it is done. But that's why it does not work on switching.
 		 */
-		$('html,body').animate({scrollTop: window.pageYOffset +1},'slow');
+		setTimeout(function() {window.scrollBy(0,1);}, 500);
 	});
 
 	// check if there are any items in cart on opening
