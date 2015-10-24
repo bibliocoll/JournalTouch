@@ -110,7 +110,7 @@ class GetJournalInfos {
         $query     = md5(implode('', $_GET));
         $cachefile = $this->sys->data_cache."toc-$issn+$query.cache.html";
       }
-
+var_export($this->sys);
       // Is caching enabled and cached file exists? Load it
       // (Issue date is same as in cache file name)
       if ($this->prefs->cache_toc_enable && file_exists($cachefile)) {
@@ -450,20 +450,24 @@ class GetJournalInfos {
             parse_str($coins, $pcoins);
 
             // Article infos
-            $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            $cr_authors = array(0 => '');
+            if (isset($pcoins['rft_au'])) {
+                $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            }
             $cr_title    = $item['title'];
             $cr_link     = $item['doi'];
             $cr_doi      = $this->get_doi($item['doi']);
             $cr_abstract = '';
 
             // Source infos
-            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. " . $pcoins['rft.volume'] . ", No. " . $pcoins['rft.issue'] . " (" . $pcoins['rft_date'] . ")";
             //$jtitle = $pcoins['rft_jtitle']; // why again?
             $cr_date    = ''; // CR does not provide a date (for free?); only year via $pcoins['rft_date'] that's equal to $item['year']
             $cr_year    = $item['year'];
             $cr_vol     = (isset($pcoins['rft_volume'])) ? $pcoins['rft_volume'] : '';
             $cr_issue   = (isset($pcoins['rft_issue']))  ? $pcoins['rft_issue'] : '';
             $cr_page    = (isset($pcoins['rft_spage']))  ? $pcoins['rft_spage'] : '';
+            $cr_date    = (isset($pcoins['rft_date']))  ? $pcoins['rft_date'] : '';
+            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. $cr_vol, No. $cr_issue ($cr_date)";
 
             // sort string for toc output
             $cr_sort = $cr_year . '-' . $cr_vol . '-' . $cr_issue . '-' . $cr_page;
