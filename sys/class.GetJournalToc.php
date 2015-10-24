@@ -110,7 +110,7 @@ class GetJournalInfos {
         $query     = md5(implode('', $_GET));
         $cachefile = $this->sys->data_cache."toc-$issn+$query.cache.html";
       }
-var_export($this->sys);
+
       // Is caching enabled and cached file exists? Load it
       // (Issue date is same as in cache file name)
       if ($this->prefs->cache_toc_enable && file_exists($cachefile)) {
