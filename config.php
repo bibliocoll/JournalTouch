@@ -214,9 +214,11 @@ $cfg->dbusers->dbpass   = '';
  *
  * If you change anthying here you _must_ use absolute paths. Leave empty to use
  * default paths.
+ *
+ * ONLY uncomment if you DO set paths
  */
-$cfg->sys->data_cache       = ''; // If empty it points to data/cache
-$cfg->sys->data_covers      = ''; // If empty it points to data/cover
-$cfg->sys->data_export      = ''; // If empty it points to data/export
-$cfg->sys->data_journals    = ''; // If empty it points to data/journals
+//$cfg->sys->data_cache       = '';
+//$cfg->sys->data_covers      = '';
+//$cfg->sys->data_export      = '';
+//$cfg->sys->data_journals    = '';
 ?>
