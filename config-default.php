@@ -38,9 +38,12 @@ $cfg->prefs->languages[1]   = 'en_US';
 $cfg->prefs->lib_name      = 'MPI Collective Goods Library';
 $cfg->prefs->lib_initials  = 'MPI';
 $cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
-$cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
 $cfg->prefs->show_dl_button = false;    // Tries to create a direct download link (pdf) for a toc entry
-$cfg->prefs->sfx           = '';        // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
+
+// Institution settings - discovery and stuff
+$cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
+$cfg->prefs->proxy         = ''; // If you got a proxy (e.g. EZproxy) to allow patrons outside of you ip range access: set the base url Here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=)
+$cfg->prefs->sfx           = ''; // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
 
 // Menu display options
 $cfg->prefs->menu_show_listview = true; // Show option to switch to list view (otherwise it's always grid view)
