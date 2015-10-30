@@ -11,6 +11,11 @@ New
 - Introduced a new folder layout and options to set custom paths. Easier management of write rights and more flexibility
 - Introduced an update mechanism, so a switch from 0.3 to 0.4 leaves you JT folder cluttered with old files
 - Added option for default sort and made sorting menu entry multilanguage
+- Added option to hide the list view
+- Added option to use proxy (e.g. EZproxy) for article links
+
+Improvements
+- Use JournalTocs title if no title is set in journals.csv on metadata fetching. Thus only the ISSNs are required to get started (although using the "library\'s journal name" is recommended).
 
 Fixes
 - timeago: now shows future dates correctly and support multilanguage
