@@ -191,8 +191,8 @@ class GetJournalInfos {
      *
      * @todo
      * - Hmm, $toc should really be a class property?
-     * - This should be put into an iframe (like meta links), so the article list
-     *   can be scrolled, without scrolling the whole page
+     * - 2015-10-30: Added proxy option. It would be nice to add some guide if
+     *   there is no proxy (using $cfg->prefs->ip_subnet)...
      *
      * @author Daniel Zimmel <zimmel@coll.mpg.de>
      * @author Tobias Zeumer <tzeumer@verweisungsform.de>
@@ -229,7 +229,9 @@ class GetJournalInfos {
                 $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
 
                 if ($this->api_all->articleLink == true) {
-                    $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
+                    // Prepend the proxy url to the article link (if one is set in the config)
+                    $proxy = ($this->prefs->proxy) ? $this->prefs->proxy : '';
+                    $entry = '<span class="item_name">'.$authors.'<a href="'.$proxy.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
                 }
                 else {
                     $entry = '<span class="item_name">'.$authors.$toc['title'][$id].'</a></span>';
