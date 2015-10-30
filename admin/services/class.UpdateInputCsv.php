@@ -285,6 +285,9 @@ class GetJournalInfos {
       $jt_rights    = $xml->item->children('dc', TRUE)->rights;
       $this->log .= "<b>MATCH for JT (meta)</b>: <a href=\"$jt_link\" target=\"_blank\">$jt_title (=".$this->journal_row['title'].")</a> (p: $jt_pIssn /e: $jt_eIssn) von $jt_publisher ($jt_rights). Thema: $jt_subjects (<a href=\"$jtURL\" target=\"_blank\">JT</a>).<br>";
 
+      // Use jt_titel if no title given in original file
+	  if (!$this->journal_row['title']) $this->journal_row['title'] = $jt_title;
+
       $csv_tags = '';
       if ($jt_publisher) $newTags[] = 'JTpub-'.str_replace(',', ' ', $jt_publisher);
       if ($jt_subjects)  $newTags[] = 'JTtag-'.$jt_subjects;
