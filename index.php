@@ -391,15 +391,6 @@ foreach ($journals as $j) {
   $timestring = ($j['new']) ? date('c', strtotime($j['new'])) : '';
   $wF = '<time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time>';
 
-  $meta = false;
-
-  $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a>' : '');
-  $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-  $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
-  $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
-  $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-  $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
   $new_issues = ($j['new']) ? ' new' : '';
   $len_title = strlen($j['title']);
   $nbr_title = ($len_title < 50) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 50)).' ...';
@@ -407,8 +398,26 @@ foreach ($journals as $j) {
   echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'" data-title="'.$j['title'].'" data-issn="'.$j['id'].'" data-pubdate="'. strtotime($j['date']).'">';
   echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
   echo '<img class="getTOC '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
-  /* preload $meta here; toggle when the TOC is fired into the Reveal window (see js) */
-  echo (($meta && $lister->prefs->show_metainfo) ? '<div class="metaInfo">'.$meta.'</div>' : '');
+
+  /* Show meta info in the list */
+  $meta = false;
+
+  $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
+  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a> ' : '');
+  $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
+  $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
+  $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
+  $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
+  $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+
+  if ($meta && $lister->prefs->show_metainfo_list) {
+     echo '<div class="metaInfo">'.$meta.'</div>';
+  }
+  /* Hide meta info in list, only show above toc */
+  elseif ($meta && !$lister->prefs->show_metainfo_list && $lister->prefs->show_metainfo_toc) {
+     echo '<div class="metaInfo hidden">'.$meta.'</div>';
+  }
+
   echo '<div class="getTOC title">';
   echo '<h5 title="'.$j['title'].'">'.$nbr_title.'</h5>';
   echo ($new_issues) ? '<span class="subheader fresh">['.__("last update") .' '. $wF . ']</span>' : '';
