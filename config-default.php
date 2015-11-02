@@ -49,11 +49,12 @@ $cfg->prefs->sfx           = ''; // If you got sfx, something like http://sfx.gb
 $cfg->prefs->menu_show_listview = true; // Show option to switch to list view (otherwise it's always grid view)
 $cfg->prefs->menu_show_sort     = true; // Show the menu entry to switch between alphabetical and date sorting (otherwise it's the default sort below)
 $cfg->prefs->menu_show_tagcloud = true; // Show the menu entry for the tagcloud?
+$cfg->prefs->min_tag_freq       = 1;     // How often must a tag be used at least to show up in the tagcloud (if enabled)?
 
 // Other display settings
 $cfg->prefs->default_sort_date  = false; // If set to true, default sort is by date. Otherwise alphabetical
-$cfg->prefs->show_metainfo      = false; // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
-$cfg->prefs->min_tag_freq       = 1;     // How often must a tag be used at least to show up in the tagcloud (if enabled)?
+$cfg->prefs->show_metainfo_list = false; // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
+$cfg->prefs->show_metainfo_toc  = true;  // Show the block with the meta infos above the toc. Note: If show_metainfo_list is true, it will show above the toc, even if set to false here
 
 $cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?

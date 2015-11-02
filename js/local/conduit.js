@@ -35,7 +35,7 @@ function createModalFrame(href) {
 	var dHeight = $(window).height() -280;
 
 	// If the iframe is part of the html, browsers add any click to the browser history. Bad idea, so create it dynamically.
-	$('#externalPopover').append('<iframe src="" id="externalFrame" scrollbars="yes"></iframe>');
+	$('#externalPopover').append('<iframe src="" id="externalFrame" name="externalFrame" scrollbars="yes"></iframe>');
 	$("#externalFrame").attr('src',href);
 	$("#externalFrame").height(dHeight);
 
@@ -115,6 +115,7 @@ $(document).ready(function() {
 	$(document).on('close.fndtn.reveal', '[data-reveal]', function () {
 		// Remove iframe to remove its content from browsing history
 		$('#externalFrame').remove();
+        $('#externalPopover .metaInfo').remove();
 	});
 
 	// animate the GoUp button
@@ -146,6 +147,15 @@ $(document).ready(function() {
 				// Show loading animation
 				$('#tocModal').foundation('reveal', 'open');
 		$('.toc.preloader').show();
+
+        // Append meta (ugly hack, or maybe not that bad...?)
+        var custom_button = '<a onlick="window.history.go(-100)" class="button"><i class=""></i> Home</a> ';
+        $('#externalPopover h3').html($("div[data-issn='"+issn+"'] h5").clone()); // get title
+        $('#externalPopover h3').after($("div[data-issn='"+issn+"'] .metaInfo").clone()); // show button
+        $('#externalPopover .metaInfo').removeClass('hidden'); // remove the hidden class (if the buttons are not shown in the list)
+        $('#externalPopover .metaInfo a').removeClass('popup'); // remove popup class from buttons
+        $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
+        $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
 
 		// get Journal TOC in iframe
 		createModalFrame('sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate);

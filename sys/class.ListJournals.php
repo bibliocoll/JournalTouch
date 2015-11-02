@@ -284,7 +284,7 @@ class ListJournals
 
                 // Meta
                 $metaPrint = $metaOnline = $metaGotToc = $metaShelfmark = $metaWebsite = '';
-                if ($this->prefs->show_metainfo == true) {
+                if ($this->prefs->show_metainfo_list == true || $this->prefs->show_metainfo_toc) {
                     $metaPrint    = (!empty($data[$this->csv_col->metaPrint]) ? 'fi-page-copy' : '');
                     $metaOnline = (!empty($data[$this->csv_col->metaOnline]) ? 'fi-download' : '');
                     $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] !== 'Jseek' && $data[$this->csv_col->metaGotToc] !== '-' );

@@ -135,6 +135,10 @@ border-color: #879cc6;
 display:none
 }
 
+.hidden {
+display: none !important;
+}
+
 .itemRow {
 padding-bottom: 10px;
 }
@@ -325,6 +329,16 @@ div#journalList.gridview > div.listitem > div.metaInfo > .button {
   font-size: 0.8125rem;
   border-radius: 3px;
 }
+
+#externalPopover div.metaInfo > .button {
+  background-color: #CFCFCF;
+  width: 130px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  border-radius: 3px;
+}
+
 
 div#journalList.gridview > div.listitem > div.title {
   height: 110px;
