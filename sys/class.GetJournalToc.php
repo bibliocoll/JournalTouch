@@ -230,8 +230,8 @@ class GetJournalInfos {
 
                 if ($this->api_all->articleLink == true) {
                     // Prepend the proxy url to the article link (if one is set in the config)
-                    $proxy = ($this->prefs->proxy) ? $this->prefs->proxy : '';
-                    $entry = '<span class="item_name">'.$authors.'<a href="'.$proxy.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
+                    $url = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($toc['link'][$id]) : $toc['link'][$id];
+                    $entry = '<span class="item_name">'.$authors.'<a href="'.$url.'">'.$toc['title'][$id].'</a></span>';
                 }
                 else {
                     $entry = '<span class="item_name">'.$authors.$toc['title'][$id].'</a></span>';
