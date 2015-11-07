@@ -25,7 +25,7 @@ class ListJournals
     /// \brief \b OBJ @see config.php
     protected $csv_col;
     /// \brief \b OBJ @see config.php
-    protected $covers;
+    public $covers;
     /// \brief \b OBJ @see config.php
     protected $api_all;
     /// \brief \b OBJ @see config.php
@@ -160,8 +160,9 @@ class ListJournals
             if (file_exists($img)) return $img;
         }
 
-        // All failed, return the placeholder
-        return $this->covers->placeholder;
+        // All failed, return transparent.gif to cancel loading animation
+        // Placeholder is set via css - should be more efficient with loading
+        return 'img/transparent.gif';
     }
 
 
