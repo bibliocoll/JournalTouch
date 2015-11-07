@@ -116,7 +116,6 @@ $cfg->mail->bodyOrder      = 'New order from JournalTouch';
 
 
 
-$cfg->csv_col = new stdClass();
 /**
  * Which column (separated by the separator specified above) holds which data?
  * Usuallly you most likely will just create an Excel file with those colums and
@@ -146,7 +145,6 @@ $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing?
 
 
 
-$cfg->filter = array();
 /**
  * In the column defined by $cfg->csv_col->filter you write a shorthand code for
  * the filter. Here you map that shorthand code to some human readable name.
@@ -173,16 +171,45 @@ $cfg->filter['wir'] = 'Yet another filter';
  *
  * There are rumours that cover api's for journals exist, but no free service
  * is known. So, it's up to you how you get the covers (ask vendor, journal
- * publisher...). There might be ways to fetch covers from the big ones
- * (Springer, Wiley, Sage, IEEE, ACM), but legal terms would have to be
- * clarified. So, for now there's little to set here.
+ * publisher...). While not to be found on JournalTocs official website, the
+ * premium service seems to offer cover links via api (which in turn points to the
+ * publishers sites) - info as of 2015-10-30.
+ *
+ * As of version 0.4.0 JournalTouch provides a way to download covers. This
+ * divided into two sections: 1) Generic sources and 2) Publisher's websites.
+ * By default everything is deactivated. Set 1 in src_genric and src_publisher
+ * for whatever service you want to query for covers. Be aware that you should
+ * know perfectly well if you are legible to do so (e.g. by some kind of fair
+ * use law or special agreements with the specified service/publisher).
+ * Using STMcovers is most likely safe since the domain is registered to Elesevier
+ * and it offers cover downloads explicitly, yet again - it's your responsibility.
+ *
+ * As for the logic:
+ * 1. If a cover in data/covers exists none will ever be downloaded (e.g. useful if
+ *    covers never change anyway). This one will always be displayed.
+ * 2. If a cover exists in data/covers/api it will be displayed
+ * 3. If no cover exists in either folder, it will be downloaded using the
+ *    activated services.
+ * 3.1 above publisher is preferred to a generic source (you might want to
+ *     disable Elsevier since STMcovers provides real high quality ;))
+ * 3.2 If no publisher is provided (auto via updater) generic sources are checked
+ * 4. If a cover exists in data/covers/api, but a new issue is found by the
+ *    updater, it will be redownloaded.
  *
  * Note: If yout set anything for api no images from the folder will be loaded
- *
- * @todo: if there is an api, caching for covers might be a good idea
  */
 $cfg->covers->placeholder = 'img/placeholder.gif';  // Just a placeholder
 $cfg->covers->api         = '';                     // You might input an url where an issn can be appended ("http://myservice.net/issn=") - and mail us if you got such a thing ;)
+// These are sites where covers for many publishers can be fetched
+$cfg->covers->src_genric  = array('STMcovers'           => 0,
+                                'JournalTocs'           => 0,
+                                'Lehmanns'              => 0,
+                                'SubscribeToJournals'   => 0);
+// For these publishers JournalTouch provides a way for direct cover download
+$cfg->covers->src_publisher = array('DeGruyter' => 0,
+                                    'Elsevier'  => 0,
+                                    'Sage'      => 0,
+                                    'Springer'  => 0);
 
 
 
