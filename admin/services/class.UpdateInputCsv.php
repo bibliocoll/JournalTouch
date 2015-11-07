@@ -4,17 +4,19 @@
  *
  * Update metadata (once) and fetch recent issues (do it daily via cron)
  *
- * @notes   Initial time for 1000 titles (fetching metadata and recent issues)
- *          takes about 12 Minutes. Yeah, hard, but the meta data has to be
- *          fetches only once. Example stats in detail:
- * - Processed lines: 1071
- * - Hits JournalToc (meta): 637
- * - Hits JournalToc (new issues): 83
- * - Hits JournalToc (bad date): 35
- * - Hits CrossRef (meta): 29
- * - Hits CrossRef (new issues): 0
- * - Hits JournalSeek (meta only): 405
- * - This page was created in 713.84962916374 seconds.
+ * @notes   Initial time for 1050 titles (fetching metadata and recent issues)
+ *          takes about 12 Minutes. With covers fetching even 45 minutes (all
+ *          sources enabled). Yeah, hard, but the meta data has to be fetches
+ *          only once and covers will only be downloaded if new later on.
+ *          Example stats in detail:
+ * - Processed lines: 1056
+ * - Hits JournalToc (meta): 701
+ * - Hits JournalToc (new issues): 309
+ * - Hits JournalToc (bad date): 28
+ * - Hits CrossRef (meta): 8
+ * - Hits CrossRef (new issues): 4
+ * - Hits JournalSeek (meta only): 347
+ * - This page was created in 2756.0283031464 seconds
  *          Subsequent runs (checkingfor new issues) take about 3-4 minutes.
  *
  * @notes   Interesting stuff
@@ -153,6 +155,9 @@ class GetJournalInfos {
    *
    * @todo
    * - add something like "force fetch meta"
+   * - 2015-11-07:  Maybe save the cover url (fetch_covers) to a new column in
+   *                journals.csv. Would also allow for journal specific download
+   *                urls...
    *
    * @param $fetch_meta   \b BOL  Fetch meta info from JournalToc (anynway:
    *                              only if not already done before).
@@ -163,11 +168,18 @@ class GetJournalInfos {
    *
    * @return \b void
    */
-  public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false) {
+  public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false, $fetch_covers = false) {
     if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
+        // if fetch_covers enabled, create an instance
+        if ($fetch_covers) {
+            require('class.GetCover.php');
+            $getCover = new GetCover();
+        }
+
       echo '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
       ob_start();
       while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== FALSE) {
+        $this->log .= '<p>';
 
         $this->issn = '';
         if (valid_issn($journal_rows[$this->csv_col->p_issn], TRUE) === TRUE) {
@@ -180,10 +192,10 @@ class GetJournalInfos {
           ob_flush();
           //if ($this->processed > 3) break(1);
           $this->processed++;
-          //$this->log .= '<p>';
+
           // make row class property
           foreach ($this->csv_col AS $name => $rowid) {
-            $this->journal_row[$name] = $journal_rows[$rowid];
+            @$this->journal_row[$name] = $journal_rows[$rowid];
           }
 
           $already_checked = $this->journal_row['metaGotToc'];
@@ -220,6 +232,16 @@ class GetJournalInfos {
             $this->set_clean_tags();
           }
 
+          // Download cover if option is set
+          if ($fetch_covers) {
+            // force download if we found it is new
+            if ($this->journal_row['new']) $getCover->recheck_api_age = 0;
+
+            $getCover->get_cover($issn, $this->journal_row['publisher']);
+            $this->log .= $getCover->log;
+          }
+
+
           // no matter if we got a hit or not - every line has to be written to the new csv...
           $new_row = implode(';', $this->journal_row);
         } else {
@@ -227,7 +249,7 @@ class GetJournalInfos {
         }
         $this->journals_buffer[] = $new_row;
 
-        //$this->log .= '</p>';
+        $this->log .= '</p>';
       }
       fclose($handle);
       $file_date = date('Y-m-d_H\Hi');
@@ -286,7 +308,7 @@ class GetJournalInfos {
       $this->log .= "<b>MATCH for JT (meta)</b>: <a href=\"$jt_link\" target=\"_blank\">$jt_title (=".$this->journal_row['title'].")</a> (p: $jt_pIssn /e: $jt_eIssn) von $jt_publisher ($jt_rights). Thema: $jt_subjects (<a href=\"$jtURL\" target=\"_blank\">JT</a>).<br>";
 
       // Use jt_titel if no title given in original file
-	  if (!$this->journal_row['title']) $this->journal_row['title'] = $jt_title;
+      if (!$this->journal_row['title']) $this->journal_row['title'] = $jt_title;
 
       $csv_tags = '';
       if ($jt_publisher) $newTags[] = 'JTpub-'.str_replace(',', ' ', $jt_publisher);
@@ -297,6 +319,9 @@ class GetJournalInfos {
       $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
       if ($jt_link && !$this->journal_row['metaWebsite']) $this->journal_row['metaWebsite'] = $jt_link;
       $this->journal_row['metaGotToc'] = 'JToc';
+
+      // Add Publisher
+      $this->journal_row['publisher'] = $jt_publisher;
 
       // Add new issns, nothing to lose, since we search via issn and found something
       if ($this->amend_issn) {
@@ -465,7 +490,7 @@ else {
   // is it still new?
   $is_new = $this->get_datediff($this->journal_row['date'], $max_age_days);
 
-  $this->log .= "<b>CrossRef (recent)</b>: ".$this->journal_row['title']." ($issn) - found no new issue, but it is still new? $is_new";
+  $this->log .= "<b>CrossRef (recent)</b>: ".$this->journal_row['title']." ($issn) - found no new issue, but it is still new? $is_new<br />";
   return $is_new;
   }
   }
@@ -502,7 +527,7 @@ else {
 
     // Publisher
     $filtered = $domxpath->query("//p[contains(., 'Published/Hosted')]/a");
-    if (is_object($filtered->item(0))) $js_publisher = 'JSpub-'.$filtered->item(0)->nodeValue;
+    if (is_object($filtered->item(0))) $js_publisher = $filtered->item(0)->nodeValue;
 
     // Issn's
     $filtered = $domxpath->query("//p[contains(., 'Published/Hosted')]");
@@ -539,7 +564,8 @@ else {
   }
 
   // Update row
-  if (isset($js_publisher)) $newTags[] = $js_publisher;
+  if (isset($js_publisher)) $newTags[] = 'JSpub-'.$js_publisher;
+  if (isset($js_publisher)) $this->journal_row['publisher'] = $js_publisher;
   if (isset($js_subjects))  $newTags[] = $js_subjects;
   $csv_tags = (isset($newTags)) ? implode(', ', $newTags) : '';
   $this->journal_row['tags'] = ($this->journal_row['tags']) ? $this->journal_row['tags'].', '.$csv_tags : $csv_tags;
@@ -619,7 +645,7 @@ else {
    * @return \b BOL True if journal is found, else false
    */
   private function jt_suggest_csv() {
-    if ($this->journal_row['metaGotToc'] == 'JT') return false;
+    if ($this->journal_row['metaGotToc'] == 'JToc') return false;
 
     $this->jt_suggest_buffer[0] = 'Journal Title;Print ISSN;Electonic ISSN;Journal Homepage URL;Journal TOC RSS URL;Publisher;Comments';
     $row = $this->journal_row['title'].';';

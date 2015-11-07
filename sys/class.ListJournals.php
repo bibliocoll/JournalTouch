@@ -25,11 +25,11 @@ class ListJournals
     /// \brief \b OBJ @see config.php
     protected $csv_col;
     /// \brief \b OBJ @see config.php
-    protected $covers;
+    public $covers;
     /// \brief \b OBJ @see config.php
     protected $api_all;
     /// \brief \b OBJ @see config.php
-    protected $jt;
+    public $jt;
     /// \brief \b ARY @see config.php
     public $filters;
     /// \brief \b OBJ @see config.php
@@ -140,24 +140,29 @@ class ListJournals
     /**
      * @brief   Get cover file for specified issn
      *
-     * @note    The api check is a stub. @see config.php
+     * @note    As of version 0.4.0 covers are downloaded via the updater.
+     *          Therefore the api call is removed here
      *
      * @return \b STR Path to cover file
      */
     function getCover($issn) {
-        if ($this->covers->api) {
-            $img = $this->covers->api.$issn;
-        } else {
-      $png = $this->sys->data_covers.$issn.'.png';
-      $jpg = $this->sys->data_covers.$issn.'.jpg';
-      $gif = $this->sys->data_covers.$issn.'.gif';
-            //    $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
-            if (file_exists($jpg)) {$img = $jpg;}
-            else if (file_exists($gif)) {$img = $gif;}
-            else if (file_exists($png)) { $img = $png; }
-            else {$img= $this->covers->placeholder;};
+        $extensions = array('jpg', 'gif', 'png');
+
+        // First check folder with manually added covers
+        foreach ($extensions as $ext) {
+            $img = $this->sys->data_covers.$issn.'.'.$ext;
+            if (file_exists($img)) return $img;
         }
-        return $img;
+
+        // Second: check downloaded covers
+        foreach ($extensions as $ext) {
+            $img = $this->sys->data_covers.'/api/'.$issn.'.'.$ext;
+            if (file_exists($img)) return $img;
+        }
+
+        // All failed, return transparent.gif to cancel loading animation
+        // Placeholder is set via css - should be more efficient with loading
+        return 'img/transparent.gif';
     }
 
 
