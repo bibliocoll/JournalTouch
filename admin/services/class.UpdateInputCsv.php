@@ -5,9 +5,9 @@
  * Update metadata (once) and fetch recent issues (do it daily via cron)
  *
  * @notes   Initial time for 1050 titles (fetching metadata and recent issues)
- *          takes about 12 Minutes. With covers fetching even 45 minutes. Yeah,
- *          hard, but the meta data has to be fetches only once and covers
- *          will only be downloaded if new later on.
+ *          takes about 12 Minutes. With covers fetching even 45 minutes (all
+ *          sources enabled). Yeah, hard, but the meta data has to be fetches
+ *          only once and covers will only be downloaded if new later on.
  *          Example stats in detail:
  * - Processed lines: 1056
  * - Hits JournalToc (meta): 701
