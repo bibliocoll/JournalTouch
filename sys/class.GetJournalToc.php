@@ -226,7 +226,10 @@ class GetJournalInfos {
                 $authors = implode(' & ', $authors);
                 $authors .= ($authors) ? ' : ' : '';
 
-                $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
+                $link_dl = '';
+                if ($this->prefs->show_dl_button) {
+                    $link_dl = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($this->get_download_link($id)) : $this->get_download_link($id);
+                }
 
                 if ($this->api_all->articleLink == true) {
                     // Prepend the proxy url to the article link (if one is set in the config)
