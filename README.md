@@ -13,9 +13,10 @@ The [Journal Covers Database](http://www.stmcovers.com/) is a free source and th
 3. Extract to you apache webfolder. Make sure the data folder and its subfolders are writable by the webserver.
 4. Edit config.php. For the real quick test, just enter you JournalTocs mail for $cfg->api->jt->account
 5. Edit data/cover/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg->csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.
-6. Open you webbroser and go to http://yourserver.net/journaltouch/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
+6. Open you webbrowser and go to http://yourserver.net/journaltouch/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
 7. Go to http://yourserver.net/journaltouch and be happy
-8. IF you are happy, set a cronjob to call http://yourserver.net/admin/index.php?optRecent=on&upd=true daily
+8. IF you are happy, set a cronjob to call http://yourserver.net/admin/index.php?optRecent=on&upd=true daily or use http://yourserver.net/admin/index.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (see config.php or release infos for 0.4 for more infos)
+
 
 ## Translations
 If you want to change translations you can use [Poedit](https://poedit.net/) - it's free. We are going to look into a better way to translate the few language specific config option. Yet for now... :)

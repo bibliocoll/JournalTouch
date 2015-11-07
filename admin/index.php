@@ -6,17 +6,18 @@
 
 
 <?php
-require_once(__DIR__.'/../config.php');
+require(__DIR__.'/../config.php');
 $btn_cache  = (isset($_GET['clr_cache'])) ? true : false;
 $btn_upd    = (isset($_GET['upd'])) ? true : false;
 $optMeta    = (isset($_GET['optMeta'])) ? true : false;
 $optRecent  = (isset($_GET['optRecent'])) ? true : false;
 $optTags    = (isset($_GET['optTags'])) ? true : false;
+$optCovers  = (isset($_GET['optCovers'])) ? true : false;
 
 if ($btn_upd) {
   require_once($cfg->sys->basepath.'admin/services/class.UpdateInputCsv.php');
   $getInfos = new GetJournalInfos($cfg);
-  $getInfos->update_journals_csv($optMeta, $optRecent, $optTags);
+  $getInfos->update_journals_csv($optMeta, $optRecent, $optTags, $optCovers);
 }
 
 $del_message = '';
@@ -46,9 +47,10 @@ if ($btn_cache) {
     <fieldset>
       <!-- Quick & Dirty - Update input.csv -->
       <legend><b>Update options</b></legend>
-      This updates your journals.csv with the dates for each journal issue. If you chose to update, also some infos about publishers, legal infos and tags are fetched, currently as tags for the tagcloud in JournalTouch.<hr />
+      This updates your journals.csv with the dates for each journal issue. If you chose to fetch metadata, also some infos about publishers, legal infos and tags are fetched, mostly as tags for the tagcloud in JournalTouch. Be aware: metadata is only fetched the very first time. If you really want to redo it, you have to delete everything in column 14 ("JToc", "Jseek", "CRtoc").<hr />
       <label for="optMeta"><input type="checkbox" name="optMeta" checked="checked"> Fetch metadata<br>
       <label for="optRecent"><input type="checkbox" name="optRecent" checked="checked"> Fetch recent issues<br>
+      <label for="optCovers"><input type="checkbox" name="optCovers" checked="checked"> Download/update covers<br>
       <label for="optTags"><input type="checkbox" name="optTags"> Clean tags (experimental)<sup>1</sup><br>
       <button name="upd" value="true" type="submit">Start</button>
       <br /><br />

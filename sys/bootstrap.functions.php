@@ -19,13 +19,13 @@
   * @return \b bool True if update is needed, false otherwise
   */
 function check_update_required($cfg) {
-    // The very first time, create an info, what is our initial JT version 
+    // The very first time, create an info, what is our initial JT version
     // (the "fresh" installation). It's easy - it's the first info in history
     $upd_dir    = $cfg->sys->basepath.'admin/update/';
 
     $historyDir     = glob($upd_dir.'history/ver_*');
     $historyCount   = count($historyDir);
-  
+
     // Write our initial version
     if ($historyCount === 0) {
         // Special case, coming from 0.3, which had no update mechanism
@@ -37,7 +37,7 @@ function check_update_required($cfg) {
             file_put_contents($upd_dir.'history/ver_'.$cfg->sys->current_jt_version, '');
         }
     }
-    
+
     // Now check if the current version differs from our last updated version
     if (!file_exists($cfg->sys->basepath.'admin/update/history/ver_'.$cfg->sys->current_jt_version)) {
         return true;
@@ -95,4 +95,3 @@ function valid_issn($input, $validate = TRUE) {
   return TRUE;
 }
 ?>
-<!-- vim: set sw=2 ts=2 et ft=php fdm=marker: -->
