@@ -66,6 +66,9 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/media.css" />
     <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
+    <style type="text/css" rel="stylesheet">
+        img.getTOC {background-image: url("<?php echo $lister->covers->placeholder; ?>");
+    </style>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
 <body data-caching="<?php echo intval($lister->prefs->cache_toc_enable) ?>">
