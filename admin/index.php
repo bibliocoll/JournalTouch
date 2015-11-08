@@ -1,9 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head><title>JournalTouch Admin (Stub)</title></head>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>JournalTouch Settings</title>
+        <link rel="stylesheet" href="../css/foundation.min.css" />
+        <link rel="stylesheet" href="../css/foundation-icons/foundation-icons.css" />
+        <script src="../js/vendor/jquery.js"></script>
+        <script src="../js/foundation.min.js"></script>
+    </head>
 <body>
-
-<h1>Update Journal Infos</h1>
-
+    <?php include('menu.inc') ?>
+    <h2>Update Journal Infos</h2>
 
 <?php
 require(__DIR__.'/../config.php');
