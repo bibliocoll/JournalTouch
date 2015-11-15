@@ -1,26 +1,26 @@
 <?php
 /**
- * Manage Update of JournalTouch (well, the class might be used for anything else ;))
+ * Manage Upgrade of JournalTouch (well, the class might be used for anything else ;))
  *
- * Basically updates should work similar to e.g. Wordpress. A user just downloads
+ * Basically upgrades should work similar to e.g. Wordpress. A user just downloads
  * the newest version, extracts it and overwrites old files. Subsequently an
- * updater does the remaining house keeping tasks.
+ * upgrader does the remaining house keeping tasks.
  *
  * How it works
- * 1.   If an update was completed successfully, the version number is written in
- *      admin/update/history (as filename).
- * 2.   For each version an update file with specific actions reflecting the
+ * 1.   If an upgrade was completed successfully, the version number is written in
+ *      admin/upgrade/history (as filename).
+ * 2.   For each version an upgrade file with specific actions reflecting the
  *      necessary changes since the last version can exist (must not).
- *      Location: admin\update\version ; Format "update_%versionnumber%.php"
+ *      Location: admin\upgrade\version ; Format "upgrade_%versionnumber%.php"
  *
- * This way updates can be done from any version to the newest one. (Even though
+ * This way upgrades can be done from any version to the newest one. (Even though
  * it seems unlikely that JT will have a lot of these - but this is the reason
  * I'm not looking for a full-blown existing solution).
  *
- * @note:   This probably is flexible enough to handle more possible update
+ * @note:   This probably is flexible enough to handle more possible upgrade
  *          changes. Currently there is no method for deleting files, but it
  *          would be easy to add without breaking anything. Same goes for e.g.
- *          database updates.
+ *          database upgrade.
  *
  *
  * Time-stamp: "2015-09-29 00:00:00 Zeumer"
@@ -28,14 +28,14 @@
  * @author Tobias Zeumer <tobias.zeumer@tuhh.de>
  * @license http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
  */
-class JtUpdater {
+class JtUpgrader {
     /// \brief \b STR @see sys/bootstrap.php
     protected $basepath;
-    /// \brief \b STR Convenience - update directory path
-    protected $updatedir;
+    /// \brief \b STR Convenience - upgrade directory path
+    protected $upgradedir;
 
-    /// \brief \b ARY List of updates that are not yet applied
-    protected $missing_updates;
+    /// \brief \b ARY List of upgrades that are not yet applied
+    protected $missing_upgrades;
 
     // @note:   Create: files and folder are created by extracting a new version
     //          above the old installation. So this should be all we need.
@@ -54,30 +54,30 @@ class JtUpdater {
 
 
     /**
-     * @brief   This updater nearly can autorun
+     * @brief   This upgrader nearly can autorun
      *
      * @return \b void
      */
     public function __construct($cfg) {
         $this->basepath  = $cfg->sys->basepath;
-        $this->updatedir = $this->basepath.'admin/update/';
+        $this->upgradedir = $this->basepath.'admin/upgrade/';
     }
 
 
     /**
-     * @brief   This is our controller for the whole update procedure
+     * @brief   This is our controller for the whole upgrade procedure
      *
      * @return \b BOL true on success, false on fail
      */
-    public function start_update() {
+    public function start_upgrade() {
         $status = true;
 
-        // Get versions with outstanding local updates
-        $this->missing_updates = $this->_check_unapplied_updates();
+        // Get versions with outstanding local upgrades
+        $this->missing_upgrades = $this->_check_unapplied_upgrades();
 
-        // Iterate through the updates (if any)
-        if ($this->missing_updates) {
-            $status = $this->_apply_updates();
+        // Iterate through the upgrades (if any)
+        if ($this->missing_upgrades) {
+            $status = $this->_apply_upgrades();
         } else {
             $this->status_message .= 'Everything already up to date.';
         }
@@ -87,41 +87,41 @@ class JtUpdater {
 
 
     /**
-     * @brief   Check which updates are already done, check which still need to
+     * @brief   Check which upgrades are already done, check which still need to
      *          be done
      *
-     * @return \b ARY with all necessary updates, or false if empty
+     * @return \b ARY with all necessary upgrades, or false if empty
      */
-    private function _check_unapplied_updates() {
-        // Find all possible updates
-        $update_files = glob($this->updatedir.'versions/update_*');
+    private function _check_unapplied_upgrades() {
+        // Find all possible upgrades
+        $upgrade_files = glob($this->upgradedir.'versions/upgrade_*');
         // Remove everything but version number (only needed for pattern search and because of .gitkeep)
-        $update_files = preg_replace('/.*versions\/update_(.*)\.php/', '\1', $update_files);
+        $upgrade_files = preg_replace('/.*versions\/upgrade_(.*)\.php/', '\1', $upgrade_files);
 
-        // Find all already completed updates
-        $completed = glob($this->updatedir.'history/ver_*');
+        // Find all already completed upgrades
+        $completed = glob($this->upgradedir.'history/ver_*');
         // Remove everything but version number (only needed for pattern search and because of .gitkeep)
         $completed = preg_replace('/.*history\/ver_/', '', $completed);
 
-        // Finally only keep the update_files in memory that have not been run yet
-        $update_todo = array_diff($update_files, $completed);
+        // Finally only keep the upgrade_files in memory that have not been run yet
+        $upgrade_todo = array_diff($upgrade_files, $completed);
 
-        if (count($update_todo) == 0) $update_todo = false;
+        if (count($upgrade_todo) == 0) $upgrade_todo = false;
 
-        return $update_todo;
+        return $upgrade_todo;
     }
 
 
     /**
-     * @brief   Check which updates are already done, check which still need to
+     * @brief   Check which upgrades are already done, check which still need to
      *          be done
      *
-     * @return \b ARY with all necessary updates, or false if empty
+     * @return \b ARY with all necessary upgrades, or false if empty
      */
-    private function _apply_updates() {
-        foreach ($this->missing_updates AS $version) {
+    private function _apply_upgrades() {
+        foreach ($this->missing_upgrades AS $version) {
             $status = true;
-            require($this->updatedir.'versions/update_'.$version.'.php');
+            require($this->upgradedir.'versions/upgrade_'.$version.'.php');
 
             $this->status_message .= '<h2>Updating to version '.$version.'</h2>';
 
@@ -134,12 +134,12 @@ class JtUpdater {
             // Go on with deleting folder, on fail break
             if (!$status = $this->_folders_delete()) break;
 
-            // Everything went great? Ok, finish the update
+            // Everything went great? Ok, finish the upgrade
             if ($status) {
-                file_put_contents($this->updatedir.'history/ver_'.$version, $this->release_note);
+                file_put_contents($this->upgradedir.'history/ver_'.$version, $this->release_note);
             }
 
-            $this->status_message .= 'Successfully updated to: <strong>'.$version.'</strong><br>';
+            $this->status_message .= 'Successfully upgraded to: <strong>'.$version.'</strong><br>';
         }
 
         return $status;
@@ -147,7 +147,7 @@ class JtUpdater {
 
 
     /**
-     * @brief   Make sure all folders for an update are writable before doing
+     * @brief   Make sure all folders for an upgrade are writable before doing
      *          anything. All new folder are are part of the release, so we don't
      *          have to check if those exist.
      *
@@ -294,7 +294,7 @@ class JtUpdater {
                 if ($status) {
                     $status_log .=  "<p>Sucessfully copied $src_filepath to $dest_filepath<br>";
                 } else {
-                    $status_log .=  "FAILED copying $src_filepath to $dest_filepath<br><strong>UPDATE STOPPED</strong><br>";
+                    $status_log .=  "FAILED copying $src_filepath to $dest_filepath<br><strong>UPGRADE STOPPED</strong><br>";
                     break;
                 }
 
@@ -307,7 +307,7 @@ class JtUpdater {
                 }
                 // Otherwise break loop
                 else {
-                    $status_log .=  "FAILED deleting $src_filepath<br><strong>UPDATE STOPPED</strong><br>";
+                    $status_log .=  "FAILED deleting $src_filepath<br><strong>UPGRADE STOPPED</strong><br>";
                     break;
                 }
 
@@ -362,7 +362,7 @@ class JtUpdater {
             }
             // Otherwise break loop
             else {
-                $status_log .=  "FAILED deleting $folder_path<p><strong>UPDATE STOPPED</strong></p>";
+                $status_log .=  "FAILED deleting $folder_path<p><strong>UPGRADE STOPPED</strong></p>";
                 break;
             }
 

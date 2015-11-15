@@ -13,7 +13,7 @@
 // do not show system errors, these should be handled in js or below
 //error_reporting(0);
 
-require_once(__DIR__.'/../../config.php');
+require_once(__DIR__.'/../../sys/bootstrap.php');
 require_once(__DIR__.'/../../sys/class.ListJournals.php');
 /* setup methods & objects */
 $lister = new ListJournals();

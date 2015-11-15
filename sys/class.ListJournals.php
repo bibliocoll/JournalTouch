@@ -56,8 +56,8 @@ class ListJournals
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
-        $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
-    $this->sys      = $cfg->sys;
+        $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filters : false;
+        $this->sys      = $cfg->sys;
     }
 
 

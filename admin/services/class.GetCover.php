@@ -81,7 +81,7 @@ class GetCover {
         $this->standalone = $standalone;
 
         if ($this->standalone == false) {
-            require(__DIR__.'/../../config.php');
+            require(__DIR__.'/../sys/bootstrap.php');
             // Check for the super special MPI case with folders being elsewhere
             if ($cfg->sys->data_covers == 'data/covers/') {
                 $this->folder_fixed = __DIR__.'/../../data/covers/';
