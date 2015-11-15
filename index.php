@@ -70,18 +70,18 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
     <style type="text/css" rel="stylesheet">
-        img.getTOC {background-image: url("<?php echo $lister->covers->placeholder; ?>");
+        img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");
     </style>
   </head>
 <!-- tell scripts if caching of tocs is enabled -->
-<body data-caching="<?php echo intval($lister->prefs->cache_toc_enable) ?>">
+<body data-caching="<?php echo intval($cfg->prefs->cache_toc_enable) ?>">
 
 <!-- Navigation -->
 <div class="fixed">
   <nav class="top-bar" data-topbar="" data-options="is_hover: false">
     <ul class="title-area">
       <!-- Title Area -->
-      <li class="name"><h1><?php echo __('JournalTouch <em><strong>beta</strong></em> - a library service') ?></h1></li>
+      <li class="name"><h1><?php echo $cfg->translations['main_tagline'][$lang]  ?></h1></li>
       <li class="toggle-topbar menu-icon"><a href="#"><span><?php echo __('menu') ?></span></a></li>
     </ul>
     <section class="top-bar-section">
@@ -92,62 +92,58 @@ $journalUpdates = $lister->getJournalUpdates();
       <!-- Right Nav Section -->
       <ul class="right">
         <li class="divider"></li>
-        <?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
-        <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&#160;<?php echo __('Tags') ?></a>
-        </li><?php } ?><?php if ($lister->filters) { /* show filters only if set */?>
+        <?php if (count($lister->tagcloud) > 1 && $cfg->prefs->menu_show_tagcloud) { ?>
+        <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&#160;<?php echo $cfg->translations['menu_tag'][$lang] ?></a>
+        </li>
+        <?php } ?>
+        <?php if ($cfg->filters) { /* show filters only if set */?>
         <li class="has-dropdown">
-          <a id="filter-view" href="#"><i class="fi-filter"></i>&#160;<?php echo __('filter') ?></a>
+          <a id="filter-view" href="#"><i class="fi-filter"></i>&#160;<?php echo $cfg->translations['menu_filter'][$lang] ?></a>
           <ul class="dropdown">
             <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
-            <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo __('MPI favorites') ?></a></li>
+            <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></li>
             <li><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
 <?php
 /* read all filters from the config file */
-foreach ($lister->filters as $key=>$f) {
-  print '<li><a class="filter" id="filter-'.$key.'" href="#">'.__($f).'</a></li>';
+foreach ($cfg->filters as $key => $filter_languages) {
+    //sort($filter_language);
+    foreach ($filter_languages AS $filter_language => $translation) {
+        if ($filter_language == $lang) {
+            print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$translation.'</a></li>';
+        }
+    }
 }
 ?>
           </ul>
         </li>
         <?php } ?>
-        <?php if ($lister->prefs->menu_show_sort) { ?>
+        <?php if ($cfg->prefs->menu_show_sort) { ?>
             <?php
-                $sort_current = ($lister->prefs->default_sort_date) ? __('A-Z') : __('Date');
-                $sort_alt     = ($lister->prefs->default_sort_date) ? __('Date') : __('A-Z');
+                $sort_current = ($cfg->prefs->default_sort_date) ? $cfg->translations['menu_sort_az'][$lang] : $cfg->translations['menu_sort_date'][$lang];
+                $sort_alt     = ($cfg->prefs->default_sort_date) ? $cfg->translations['menu_sort_date'][$lang] : $cfg->translations['menu_sort_az'][$lang];
             ?>
             <li><a id="switch-sort" "href="#"><i class="switcher fi-shuffle"></i>
             <span>&#160;
             <?php
-                echo __('Sort').' <span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
+                echo '<span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
             ?>
             </span></a></li>
         <?php } ?>
-        <?php if ($lister->prefs->menu_show_listview) { ?>
-            <li><a id="switch-view" href="#"><i class="switcher fi-list"></i><span>&#160;<?php echo __('list view') ?></span></a></li>
+        <?php if ($cfg->prefs->menu_show_listview) { ?>
+            <?php
+                $list_current = $cfg->translations['menu_list'][$lang];
+                $list_alt     = $cfg->translations['menu_grid'][$lang];
+            ?>
+            <li><a id="switch-view" href="#"><i class="switcher fi-list"></i>
+            <span>&#160;
+            <?php
+                echo '<span id="list-alt" data-lang="'.$list_alt.'">'.$list_current.'</span>';
+            ?>
+            </span></a></li>
         <?php } ?>
-        <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('my basket') ?>(<span class="simpleCart_quantity"></span>)</a></li>
-<?php
-$lng_options = '';
-foreach ($lister->prefs->languages as $set_lang) {
-  if ($set_lang != $lister->prefs->current_lang) $lng_options .= "<li><a id=\"switch-language\" href=\"index.php?lang=$set_lang\"><img src=\"languages/$set_lang.gif\" /></a></li>";
-}
-
-// Show a drop down menu if more than two languages are available
-if (count($lister->prefs->languages) > 2) {
-  echo '<li class="divider"></li>
-    <li class="has-dropdown switch-language">
-    <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;'. __('Language').'</a>
-    <ul class="dropdown">'.$lng_options.'
-    </ul>
-    </li>
-    </ul>';
-}
-// Otherwise just show a simple toggle
-elseif (count($lister->prefs->languages) == 2) {
-  echo '<li class="divider"></li>'.$lng_options;
-}
-// And (implicit) nothing if only one language is available
-?>
+        <li><a href="#" id="myArticles" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo $cfg->translations['menu_basket'][$lang] ?>(<span class="simpleCart_quantity"></span>)</a></li>
+        <?php echo language_switch($cfg); ?>
+        </ul>
     </section>
   </nav>
 </div>
@@ -159,7 +155,7 @@ elseif (count($lister->prefs->languages) == 2) {
       2. Most (re-)sizing is done via css/media.css               -->
 
   <!-- Make a sticky basket -->
-  <a href="#" id="stickyBasket" class="button radius show-for-xlarge-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo __('Send articles') ?></a>
+  <a href="#" id="stickyBasket" class="button radius show-for-xlarge-up" data-reveal-id="cartPopover"><i class="fi-shopping-bag"></i>&#160;<?php echo $cfg->translations['main_float_sendArticle'][$lang] ?></a>
 
   <!-- Make a sticky GoUp -->
   <a href="#" id="stickyGoUp" class="button round"><i class="fi-arrow-up"></i></a>
@@ -174,7 +170,7 @@ elseif (count($lister->prefs->languages) == 2) {
       <p>
 <?php
 $lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
+$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
 echo $lib_teaser;
 ?>
       </p>
@@ -199,7 +195,7 @@ The list of journals is a selection of the journals licensed to the library.')
     </div>
     <div class="small-4 medium-3 large-3 columns right">
       <ul class="inline-list right">
-        <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+        <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
       </ul>
     </div>
   </div>
@@ -219,7 +215,7 @@ The list of journals is a selection of the journals licensed to the library.')
 
 
 <!-- start Tagcloud -->
-<?php if (count($lister->tagcloud) > 1 && $lister->prefs->menu_show_tagcloud) { ?>
+<?php if (count($lister->tagcloud) > 1 && $cfg->prefs->menu_show_tagcloud) { ?>
 <div id="tagsPopover" class="reveal-modal" data-reveal="">
   <h3><?php echo __('Tagcloud') ?></h3>
   <a class="close-reveal-modal button radius">×</a>
@@ -255,7 +251,7 @@ The list of journals is a selection of the journals licensed to the library.')
 
 
 <!-- First Band (Slider) -->
-<?php if ($lister->prefs->show_orbit) { ?>
+<?php if ($cfg->prefs->show_orbit) { ?>
 <div id="view-orbit">
   <div class="row">
     <div class="large-12 columns" style="padding-top:20px">
@@ -389,7 +385,7 @@ if (!empty($journalUpdates)) {
     </div>
   </div>
 -->
-  <div id="journalList" class="row gridview <?php $sortclass = ($lister->prefs->default_sort_date) ? 'datesorted' : 'azsorted'; echo $sortclass; ?>">
+  <div id="journalList" class="row gridview <?php $sortclass = ($cfg->prefs->default_sort_date) ? 'datesorted' : 'azsorted'; echo $sortclass; ?>">
 <?php
 /* see Class setup */
 foreach ($journals as $j) {
@@ -409,18 +405,20 @@ foreach ($journals as $j) {
   $meta = false;
 
   $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.__('TOC').'</a> ' : '');
-  $link = ($lister->prefs->inst_service) ? $lister->prefs->inst_service.$j['issn'] : '';
-  $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.__('Library').'</a>': '');
-  $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.__('Journal').'</a>': '');
+  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ' : '');
+  $rss = 'http://www.journaltocs.ac.uk/api/journals/'.$j['issn'].'?output=articles&user='.$cfg->api->jt->account;
+  $meta .= (($j['metaGotToc']) ? '<a href="'.$rss.'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ' : '');
+  $link = ($cfg->prefs->inst_service) ? $cfg->prefs->inst_service.$j['issn'] : '';
+  $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
+  $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
   $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
   $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 
-  if ($meta && $lister->prefs->show_metainfo_list) {
+  if ($meta && $cfg->prefs->show_metainfo_list) {
      echo '<div class="metaInfo">'.$meta.'</div>';
   }
   /* Hide meta info in list, only show above toc */
-  elseif ($meta && !$lister->prefs->show_metainfo_list && $lister->prefs->show_metainfo_toc) {
+  elseif ($meta && !$cfg->prefs->show_metainfo_list && $cfg->prefs->show_metainfo_toc) {
      echo '<div class="metaInfo hidden">'.$meta.'</div>';
   }
 
@@ -440,12 +438,12 @@ foreach ($journals as $j) {
     <!-- This alert box will be switched on if something goes wrong (see conduit.js) -->
     <div data-alert="" id="tocAlertBox" class="alert-box warning invisible">
       <span id="tocAlertText"><?php echo __('Something seems to be wrong with the network') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>&amp;message=Feed%20error%20report&amp;body=Error%20report%20from%20JournalTouch%20for%20ISSN:%200000-0000"><i class="fi-mail"></i>&#160;<?php echo __('Please notify us!') ?></a>
     </div>
     <!-- This alert box will be switched on if no tocs are found (see conduit.js) -->
     <div data-alert="" id="tocNotFoundBox" class="alert-box info invisible">
       <span id="tocAlertText"><?php echo __('No table of contents found! Are you interested in this title?') ?></span>
-      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
+      <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>&amp;message=The%20table%20of%20contents%20for%20this%20journal%20seems%20to%20be%20missing%20for%20ISSN:%200000-0000"><i class="fi-comment"></i> <?php echo __('Please notify us!') ?></a>
     </div>
     <a class="close-reveal-modal button radius alert">×</a>
   </div>
@@ -462,7 +460,7 @@ foreach ($journals as $j) {
       </div>
       <div class="large-6 columns">
         <ul class="inline-list right">
-          <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lister->prefs->current_lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
+          <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
         </ul>
       </div>
     </div>
@@ -471,7 +469,7 @@ foreach ($journals as $j) {
 
 
 <!-- a fancy screensaver when screen is idle (see css for switching) -->
-<?php if ($lister->prefs->show_screensaver) { ?>
+<?php if ($cfg->prefs->show_screensaver) { ?>
 <div id="screensaver" style="display:none">
   <div class="row">
     <div class="small-12 medium-12 large-12 columns left">
@@ -480,7 +478,7 @@ foreach ($journals as $j) {
       <p>
 <?php
 $lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$lister->prefs->lib_name, $lib_teaser);
+$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
 echo $lib_teaser;
 ?>
       </p>
@@ -518,7 +516,7 @@ The list of journals is a selection of the journals licensed to the library.') ?
 <script src="js/vendor/jquery.unveil.min.js"></script>
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/vendor/jquery.timeago.js"></script>
-<script src="languages/<?php echo $lister->prefs->current_lang ?>/jquery.timeago.<?php echo $lister->prefs->current_lang ?>.js"></script>
+<script src="languages/<?php echo $lang ?>/jquery.timeago.<?php echo $lang ?>.js"></script>
 <script src="js/vendor/tinysort.min.js"></script>
 <script src="js/local/conduit.js"></script>
 <script src="js/vendor/jquery.quicksearch.min.js"></script>
@@ -529,7 +527,7 @@ simpleCart({
     type: "SendForm",
       url: "checkout.php",
       extra_data: {
-        lang: "<?php echo $lister->prefs->current_lang ?>"
+        lang: "<?php echo $lang ?>"
         }
     },
       cartColumns: [
@@ -588,9 +586,8 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 </html>
 
 <?php
-if ($lister->prefs->cache_main_enable) {
+if ($cfg->prefs->cache_main_enable) {
   file_put_contents($cachefile, ob_get_contents());
 }
 ob_end_flush();
 ?>
-<!-- vim: set sw=2 ts=2 et ft=php fdm=marker: -->
