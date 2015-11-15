@@ -11,24 +11,27 @@
 
 /**
   * @brief   Check if a journal touch update is required
+
+/**
+  * @brief   Check if a journal touch upgrade is required
   *
   * Updating was introduced with version 0.4
   *
   * @todo Instead of just using empty files, the files could be the release notes
   *
-  * @return \b bool True if update is needed, false otherwise
+  * @return \b bool True if upgrade is needed, false otherwise
   */
-function check_update_required($cfg) {
+function check_upgrade_required($cfg) {
     // The very first time, create an info, what is our initial JT version
     // (the "fresh" installation). It's easy - it's the first info in history
-    $upd_dir    = $cfg->sys->basepath.'admin/update/';
+    $upd_dir    = $cfg->sys->basepath.'admin/upgrade/';
 
     $historyDir     = glob($upd_dir.'history/ver_*');
     $historyCount   = count($historyDir);
 
     // Write our initial version
     if ($historyCount === 0) {
-        // Special case, coming from 0.3, which had no update mechanism
+        // Special case, coming from 0.3, which had no upgrade mechanism
         // Check for something that only existed in 0.3
         if (file_exists($cfg->sys->basepath.'locale/de_DE.gif')) {
             file_put_contents($upd_dir.'history/ver_0.3', '');
@@ -38,8 +41,8 @@ function check_update_required($cfg) {
         }
     }
 
-    // Now check if the current version differs from our last updated version
-    if (!file_exists($cfg->sys->basepath.'admin/update/history/ver_'.$cfg->sys->current_jt_version)) {
+    // Now check if the current version differs from our last upgraded version
+    if (!file_exists($cfg->sys->basepath.'admin/upgrade/history/ver_'.$cfg->sys->current_jt_version)) {
         return true;
     } else {
         return false;

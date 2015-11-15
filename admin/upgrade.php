@@ -1,10 +1,10 @@
 <?php
-define("UPDATE", true);
-require('../config.php');
-require('update/class.JtUpdater.php');
+define("UPGRADE", true);
+require('../sys/bootstrap.php');
+require('upgrade/class.JtUpgrader.php');
 
-$jtUpdater = new JtUpdater($cfg);
-$status = $jtUpdater->start_update();
+$jtUpgrader = new JtUpgrader($cfg);
+$status = $jtUpgrader->start_upgrade();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -21,11 +21,11 @@ $status = $jtUpdater->start_update();
     <h2>Updating JournalTouch</h2>
     <?php
         if ($status) {
-            echo $jtUpdater->status_message;
-            //echo $jtUpdater->status_log; //just for debugging
+            echo $jtUpgrader->status_message;
+            //echo $jtUpgrader->status_log; //just for debugging
         } else {
-            echo $jtUpdater->status_message;
-            echo $jtUpdater->status_log;
+            echo $jtUpgrader->status_message;
+            echo $jtUpgrader->status_log;
         }
     ?>
 </body>

@@ -7,13 +7,16 @@ $this->release_foldersDelete;
 
 $this->release_note =
 'Version 0.4
+New: Shiny admin menu
+The config.php (and config-default.php) became quite hard to understand. So now you can configure JournalTouch via web menu. Just go to http://mysite.net/admin. You also can now easily translate most of the settings.
+The drawback is: you old config.php won\'t be converted (in fact no such file is used anymore). But it should hardly take more than a few minutes to enter you old infos via the config website. For reference you\'ll find you old config here: data/config/config.php
+
+
 New: Cover download
 As of this version JournalTouch provides a way to download covers. This is divided into two source categories:
  1) Generic sources and
  2) Publisher\'s websites.
-By default everything is deactivated in the config.php. So go there and set "1" for whatever service you want to query for covers in
- $cfg->covers->src_genric and
- $cfg->covers->src_publisher
+By default everything is deactivated in the config. So go there and enable each service you want to query for covers.
 But be aware that you should know perfectly well if you are legible to do so (e.g. by some kind of fair use law or special agreements with the specified service/publisher).
 Using STMcovers is most likely safe since the domain is registered to Elesevier and it offers cover downloads explicitly, yet again - it\'s completely your responsibility.
 
@@ -54,7 +57,7 @@ Fixes
 - Some code refactoring
 - The journaltoc-suggest.csv file created on metadata update included all journals, not only the ones not listed at JournalTocs
 - GetText files started outputting empty lines for header. Removed redundant lines
-
+- List view toggle wasn\'t multilanguage
 
 Known Issues
 - The cover update does not work if you use the JournalTocs Premium update. JournalTocs now provides covers via api. Since I got no premium account, I can\'t modify admin/services/getLatestJournalTocPremium.php accordingly.
@@ -94,6 +97,9 @@ $this->release_foldersDelete = array (
  *
  *          If you want to copy a single file, spell it out in 'from' and 'to'
 */
+$this->release_filesMove['from'][]  = 'config.php';
+$this->release_filesMove['to'][]    = 'data/config/config.php';
+
 $this->release_filesMove['from'][]  = 'cache/*.*';
 $this->release_filesMove['to'][]    = 'data/cache/*';
 
