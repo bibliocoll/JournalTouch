@@ -18,9 +18,12 @@
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
+require('sys/bootstrap.php');
+
+$lang = $cfg->prefs->current_lang; //Shorthand for current language
 
 // Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
-require_once('./config.php'); // './' makes sure we don't go looking for config.php in the include_path
+//require_once('./config.php'); // './' makes sure we don't go looking for config.php in the include_path
 if (!isset($cfg)) {
   echo 'something is very wrong with the configuration';
   exit;
