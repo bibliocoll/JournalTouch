@@ -220,15 +220,26 @@ if(isset($_POST['mailer']))
     <div id="mailForm" style="display:none">
             <form name="Request" method="post" action="checkout.php">
 
-                <div class="row sendArticlesToLib sendArticlesToUser">
-                    <div class="small-12 columns">
-                        <label><?php echo __('Your e-mail') ?>
-
+                <div class="row sendArticlesToLib sendArticlesToUser collapse">
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
 if ($users == false) {
-    print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
+    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
+    $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
+    $coladd      = ($cfg->mail->domain) ? 3 : 0;
+
+    echo'
+        <label>'.__('Your e-mail').'</label>
+        <div class="small-'.(12 - $coladd).' columns">
+          <input name="username" placeholder="'.$placeholder.'" type="text"/>
+        </div>';
+    // Add the allowed user mailing domain at the end ("employees only")
+    if ($coladd) {
+        echo '  <div class="small-'.$coladd.' columns">
+                    <span class="postfix">'.$postfix.'</span>
+                </div>';
+    }
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {

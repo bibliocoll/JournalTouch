@@ -23,9 +23,10 @@ class CheckoutActions
   public function __construct($cfg)
     /* load some configuration */
   {
-    $this->sys   = $cfg->sys;
-    $this->mail  = $cfg->mail;
-    $this->prefs = $cfg->prefs;
+    $this->sys          = $cfg->sys;
+    $this->mail         = $cfg->mail;
+    $this->prefs        = $cfg->prefs;
+    $this->translations = $cfg->translations;
   }
 
   function getArticlesAsHTML($file) {
@@ -102,14 +103,14 @@ class CheckoutActions
       if (isset($_POST['action']) && $_POST['action'] == "sendArticlesToLib") {
         $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
         $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
-        $email->Subject   = $this->mail->subjectToLib . ' (from '.$user.')';
-        $email->Body     = '<h2>'.__($this->mail->bodyOrder).'</h2><p>'.$message.'</p><hr/>'.$fileBody;
+        $email->Subject   = $this->translations['mail_subjectToLib'][$this->prefs->current_lang] . ' ('.__('from').' '.$user.')';
+        $email->Body     = '<h2>'.$this->translations['mail_bodyOrder'][$this->prefs->current_lang].'</h2><p>'.$message.'</p><hr/>'.$fileBody;
         $email->AddAddress($this->mail->toAddress);
       } else {
         $email->FromName  = __($this->mail->fromName);
-        $email->From      = $this->mail->fromAddress;
-        $email->Subject   = __($this->mail->subjectToUser);
-        $email->Body     = '<h2>'.__($this->mail->bodySalutation).'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.__($this->mail->bodyClosing).'</p>';
+        $email->From      = $this->translations['mail_fromName'][$this->prefs->current_lang];
+        $email->Subject   = $this->translations['mail_subjectToUser'][$this->prefs->current_lang];
+        $email->Body     = '<h2>'.$this->translations['mail_bodySalutation'][$this->prefs->current_lang].'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->translations['mail_bodyClosing'][$this->prefs->current_lang].'</p>';
         $email->AddAddress($user.'@'.$this->mail->domain);
       }
 
