@@ -72,7 +72,7 @@ class GetJournalInfos {
         set_time_limit($this->maxtime);
         $this->script_timer();
 
-        require_once('../config.php');
+        require('bootstrap.php');
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;

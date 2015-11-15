@@ -1,9 +1,9 @@
 <?php
+require('sys/bootstrap.php');
 $mylist = $_POST;
 /* do we have GET parameters? (currently only used for contact) */
 $myaction = $_GET;
 /* load classes */
-require 'config.php';
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
 require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
 require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
