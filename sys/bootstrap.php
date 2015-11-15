@@ -27,9 +27,9 @@ $cfg->sys->current_jt_version = 0.4;
 
 require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
-// Check if update is required
-if (check_update_required($cfg) && !defined('UPDATE')) {
-    echo 'JournalTouch has to be updated. Please go to <a href="admin/update.php">Admin Updater</a>';
+// Check if upgrade is required
+if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
+    echo 'JournalTouch has to be upgraded. Please go to <a href="admin/upgrade.php">Admin Upgrader</a>';
     exit;
 }
 
