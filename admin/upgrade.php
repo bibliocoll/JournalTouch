@@ -1,5 +1,10 @@
 <?php
+define("UPGRADE", true);
 require('../sys/bootstrap.php');
+require('upgrade/class.JtUpgrader.php');
+
+$jtUpgrader = new JtUpgrader($cfg);
+$status = $jtUpgrader->start_upgrade();
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -13,7 +18,15 @@ require('../sys/bootstrap.php');
     </head>
 <body>
     <?php include('menu.inc') ?>
-    <h2>Welcome to JournalTouch Admin</h2>
-    <p>This page is intended to provide you with more infos and help. Yet, for now just use the menues above ;)</p>
+    <h2>Updating JournalTouch</h2>
+    <?php
+        if ($status) {
+            echo $jtUpgrader->status_message;
+            //echo $jtUpgrader->status_log; //just for debugging
+        } else {
+            echo $jtUpgrader->status_message;
+            echo $jtUpgrader->status_log;
+        }
+    ?>
 </body>
 </html>

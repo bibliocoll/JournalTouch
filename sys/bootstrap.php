@@ -1,6 +1,6 @@
 <?php
 /**
- * Bootstrap everything needed for running JournalTouch
+ * Bootstrap everything needed for running JournalTouch. Always include it!
  *
  * A central place to do everything needed after including the config file and
  * before a distinct php page is loaded. Do stuff a user should not see in the
@@ -20,31 +20,34 @@
  *    very best option would be to create a real config page in admin/
  * - Add this to a function? Make it better readable
  */
+// All important basic functions in a separate file - keep the overview
+require_once('bootstrap.functions.php');
+// IF you really put the config somewhere else, you may provide the full path as parameter
+$cfg = cfg_load();
+
 // Define the basepath of JT
 $cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to JournalTouch directory; DONT' CHANGE
 
+// Set language
+$cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->language_default;
+require_once($cfg->sys->basepath.'sys/jt-gettext.php');
+
 $cfg->sys->current_jt_version = 0.4;
 
-require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
-// Check if update is required
-if (check_update_required($cfg) && !defined('UPDATE')) {
-    echo 'JournalTouch has to be updated. Please go to <a href="admin/update.php">Admin Updater</a>';
+// Check if upgrade is required
+if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
+    echo 'JournalTouch has to be upgraded. Please go to <a href="admin/upgrade.php">Admin Upgrader</a>';
     exit;
 }
 
-//Sanitize
-sanitize_request();
 
 // Honor user choices for paths; else set default ones
-if (!$cfg->sys->data_cache)     $cfg->sys->data_cache    = $cfg->sys->basepath.'data/cache/';
-if (!$cfg->sys->data_covers)    $cfg->sys->data_covers   = 'data/covers/';
-if (!$cfg->sys->data_export)    $cfg->sys->data_export   = $cfg->sys->basepath.'data/export/';
-if (!$cfg->sys->data_journals)  $cfg->sys->data_journals = $cfg->sys->basepath.'data/journals/';
+$cfg->sys->data_cache    = ($cfg->sys->data_cache_usr)     ? $cfg->sys->data_cache_usr      : $cfg->sys->basepath.'data/cache/';
+$cfg->sys->data_covers   = ($cfg->sys->data_covers_usr)    ? $cfg->sys->data_covers_usr     : 'data/covers/';
+$cfg->sys->data_export   = ($cfg->sys->data_export_usr)    ? $cfg->sys->data_export_usr     : $cfg->sys->basepath.'data/export/';
+$cfg->sys->data_journals = ($cfg->sys->data_journals_usr)  ? $cfg->sys->data_journals_usr   : $cfg->sys->basepath.'data/journals/';
 
-// Set language
-$cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->languages[0];
-require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 
 // @deprecated 2015-08-30: Currently there is no use to force deletion of cached files, since ajax_toc.php handles it well to make sure a cache is valid
 $cfg->prefs->cache_max_age = "365 days";     // files older than this are purged when getLatestJournals is run. format: http://php.net/manual/en/dateinterval.createfromdatestring.php
@@ -59,10 +62,6 @@ $cfg->csv_file = new stdClass();
 */
 $cfg->csv_file->separator  = ';';
 $cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
-
-
-// Outsource processing beyond adjusting config variables
-require_once($cfg->sys->basepath.'sys/bootstrap.functions.php');
 
 // Sanitize GET and POST
 sanitize_request();

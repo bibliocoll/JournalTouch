@@ -244,18 +244,24 @@ $(document).ready(function() {
 
 	// switch views
 	$('#switch-view').click(function(){
+		// Switch menu name (with multilanguage support)
+		old_lang = $('#list-alt').text();
+		new_lang = $('#list-alt').attr('data-lang');
+		$('#list-alt').text(new_lang);
+		$('#list-alt').attr('data-lang', old_lang);
+
 		$('.alert-box').hide(); // clean up
 		$('#journalList').toggleClass('listview gridview');
 		$(this).children('i').toggleClass('fi-list fi-thumbnails');
 		if ($(this).children('i').hasClass('fi-thumbnails')) {
 			//we are in list view
-			$(this).children('span').html('&nbsp;grid view');
+//			$(this).children('span').html('&nbsp;grid view');
 			//hide navigation stuff for list view
 			$('#timewarps').hide();
 			$('#alphabet').hide();
 			$('#letterbox').hide();
 		} else {
-			$(this).children('span').html('&nbsp;list view');
+//			$(this).children('span').html('&nbsp;list view');
 			//show navigation stuff for grid view
 			if ($('#journalList').hasClass('datesorted')) {
 				$('#timewarps').show();

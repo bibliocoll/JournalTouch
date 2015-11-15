@@ -1,6 +1,4 @@
 <?php
-require('config-default.php');
-
 /**
  * Configuration settings for JournalTouch
  *
@@ -20,7 +18,46 @@ require('config-default.php');
  *
  * @todo  Maybe create a class JournalTouch with static properties?
  */
+if (!isset($cfg)) { $cfg = new stdClass(); }
 
+/**
+ * Translate site elements
+ */
+$cfg->translations['main_tagline']['en_US'] = 'JournalTouch <em><strong>beta</strong></em> - a library service';
+$cfg->translations['main_tagline']['de_DE'] = 'JournalTouch <em><strong>beta</strong></em> - ein Bibliothekservice';
+$cfg->translations['main_float_sendArticle']['en_US'] = 'Send articles';
+$cfg->translations['main_float_sendArticle']['de_DE'] = 'Artikelliste schicken';
+
+//general menues
+$cfg->translations['menu_tag']['en_US'] = 'tags';
+$cfg->translations['menu_tag']['de_DE'] = 'Tags';
+$cfg->translations['menu_filter']['en_US'] = 'filter';
+$cfg->translations['menu_filter']['de_DE'] = 'Portfolio';
+$cfg->translations['menu_filter_special']['en_US'] = 'MPI favorites';
+$cfg->translations['menu_filter_special']['de_DE'] = 'MPI Favoriten';
+$cfg->translations['menu_basket']['en_US'] = 'my basket';
+$cfg->translations['menu_basket']['de_DE'] = 'Merkliste';
+
+// Toggle menues
+$cfg->translations['menu_sort_date']['en_US'] = 'sort date';
+$cfg->translations['menu_sort_date']['de_DE'] = 'Ordne Datum';
+$cfg->translations['menu_sort_az']['en_US'] = 'sort a-z';
+$cfg->translations['menu_sort_az']['de_DE'] = 'Ordne A-Z';
+$cfg->translations['menu_list']['en_US'] = 'list view';
+$cfg->translations['menu_list']['de_DE'] = 'Liste';
+$cfg->translations['menu_grid']['en_US'] = 'grid view';
+$cfg->translations['menu_grid']['de_DE'] = 'Raster';
+
+$cfg->translations['meta_toc']['en_US'] = 'TOC';
+$cfg->translations['meta_toc']['de_DE'] = 'TOC';
+$cfg->translations['meta_inst_service']['en_US'] = 'Library';
+$cfg->translations['meta_inst_service']['de_DE'] = 'Bibliothek';
+$cfg->translations['meta_journalHP']['en_US'] = 'Journal';
+$cfg->translations['meta_journalHP']['de_DE'] = 'Journal';
+
+
+
+$cfg->prefs = new stdClass();
 /**
  * Preferences for your library. Look & Feel of JournalTouch
  *
@@ -30,19 +67,20 @@ require('config-default.php');
  *       disable.
  */
 // set available languages; to add a new language, update \languages accordingly
-// the first language ([0]) will be the default language
+// Also set default to the same name as one of the available languages
+$cfg->prefs->language_default = 'de_DE';
 $cfg->prefs->languages[0]   = 'de_DE';
 $cfg->prefs->languages[1]   = 'en_US';
 
 // Institution settings
-$cfg->prefs->lib_name      = 'MPI Collective Goods Library';
-$cfg->prefs->lib_initials  = 'MPI';
-$cfg->prefs->ip_subnet     = '134.28.'; // Which IPs can access subscribed content? Use only masked IP (without subnet) NOT YET used
-$cfg->prefs->show_dl_button = false;    // Tries to create a direct download link (pdf) for a toc entry
+$cfg->translations['prefs_lib_name']['en_US'] = 'MPI Collective Goods Library';
+$cfg->translations['prefs_lib_name']['de_DE'] = 'MPI für Gemeinschaftsgüter Bibliothek';
+
+$cfg->prefs->show_dl_button     = false;    // Tries to create a direct download link (pdf) for a toc entry
 
 // Institution settings - discovery and stuff
 $cfg->prefs->inst_service  = 'http://www.worldcat.org/search?fq=x0%3Ajrnl&qt=advanced&dblist=638&q=n2%3A';  // See note im comment block
-$cfg->prefs->proxy         = ''; // If you got a proxy (e.g. EZproxy) to allow patrons outside of you ip range access: set the base url Here (e.g. http://www.my-institute.net/ezproxy/login.auth?url=)
+$cfg->prefs->proxy         = ''; // If you got a proxy (e.g. EZproxy) to allow patrons outside of you ip range access: set the base url Here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=)
 $cfg->prefs->sfx           = ''; // If you got sfx, something like http://sfx.gbv.de/sfx_tuhh ; currently used as alternative for show_dl_button
 
 // Menu display options
@@ -67,6 +105,9 @@ $cfg->prefs->cache_main_enable = false;     // Basically JT only serves a static
 
 
 
+$cfg->api = new stdClass();
+$cfg->api->all = new stdClass();
+$cfg->api->jt = new stdClass();
 /**
  * API: Settings to fetch the table of contents
  *
@@ -87,6 +128,7 @@ $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_upda
 
 
 
+$cfg->mail = new stdClass();
 /**
  * Mailer settings
  *
@@ -99,52 +141,31 @@ $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_upda
  * @todo  This domain thing seriously should be changed to optional.
  */
 $cfg->mail->domain         = ''; // Your mailer domain (my-library.net)
-$cfg->mail->subjectFB      = 'Feedback from JournalTouch'; // Feedback button caption
+$cfg->mail->subjectFB->en_US      = 'Feedback from JournalTouch'; // Feedback button caption
 
 // Sending article list to user
 $cfg->mail->fromAddress    = ''; // Your default address (service@my-library.net)
-$cfg->mail->fromName       = 'Your Library JournalTouch';
-$cfg->mail->subjectToUser  = 'Your saved articles from JournalTouch';
-$cfg->mail->bodyMessage    = 'You sent the following message';
-$cfg->mail->bodySalutation = 'Here are your articles, enjoy!';
-$cfg->mail->bodyClosing    = 'Best regards, your library team!';
+$cfg->translations['mail_fromName']['en_US'] = 'MPI JournalTouch';
+$cfg->translations['mail_fromName']['de_DE'] = 'MPI JournalTouch';
+$cfg->translations['mail_subjectToUser']['en_US'] = 'Your saved articles from JournalTouch';
+$cfg->translations['mail_subjectToUser']['de_DE'] = 'Ihre gespeicherten Artikel von Journaltouch';
+$cfg->translations['mail_bodyMessage']['en_US'] = 'You sent the following message';
+$cfg->translations['mail_bodyMessage']['de_DE'] = 'Ihre Nachricht an uns war';
+$cfg->translations['mail_bodySalutation']['en_US'] = 'Here are your articles, enjoy!';
+$cfg->translations['mail_bodySalutation']['de_DE'] = 'Ihre Artikel, viel Freude!';
+$cfg->translations['mail_bodyClosing']['en_US'] = 'Best regards, your library team!';
+$cfg->translations['mail_bodyClosing']['de_DE'] = 'Viele Grüße Ihr Bibliotheksteam!';
 
 // Sending order from user to library
 $cfg->mail->toAddress      = ''; // Your contact address (journaltouch@my-library.net)
-$cfg->mail->subjectToLib   = 'New order for the library from JournalTouch';
-$cfg->mail->bodyOrder      = 'New order from JournalTouch';
+$cfg->translations['mail_subjectToLib']['en_US'] = 'New order for the library from JournalTouch';
+$cfg->translations['mail_subjectToLib']['de_DE'] = 'Neue JournalTouch-Bestellung von Nutzer';
+$cfg->translations['mail_bodyOrder']['en_US'] = 'New order from JournalTouch';
+$cfg->translations['mail_bodyOrder']['de_DE'] = 'Neue JournalTouch-Bestellung';
 
 
 
-/**
- * Which column (separated by the separator specified above) holds which data?
- * Usuallly you most likely will just create an Excel file with those colums and
- * export it as csv to the path specified above.
- * See the comments at the end of the line, if the column can be empty (=optional).
- * "Auto" means, there is a mechanism to automatically get that info.
- *
- * @todo  new and date are logically redundant?
- */
-$cfg->csv_col->title         = 0;   // Required. The title of the journal
-$cfg->csv_col->filter        = 1;   // Optional. Show value in menu to filter by "category". Also see next configuration block.
-$cfg->csv_col->col2          = 2;   // Optional. Don't know, just add empty column
-$cfg->csv_col->important     = 3;   // Optional. Shows up as "special" filter in filter menu, if col isn't empty (anything is ok)
-$cfg->csv_col->col4          = 4;   // Optional. Don't know, just add empty column
-$cfg->csv_col->p_issn        = 5;   // Required. Without issn's this'd be pointless :)
-$cfg->csv_col->e_issn        = 6;   // Optional. An e-issn to try if issn fails to get toc.
-$cfg->csv_col->publisher     = 7;   // Optional/Auto. Publisher. Used for cover download (currently: "DeGruyter", "Elsevier", "Sage" and "Springer" will work)
-$cfg->csv_col->new           = 8;   // Optional/Auto. Marks journal (issue) as new if not empty
-$cfg->csv_col->date          = 9;   // Optional/Auto. Date of last issue
-$cfg->csv_col->lastIssue     = 10;  // Optional/Auto. Format "year/vol/issue". Used for Crossref check
-$cfg->csv_col->metaPrint     = 11;  // Optional. Are you subscribed for the print edition?
-$cfg->csv_col->metaOnline    = 12;  // Optional. Are you subscribed for the online edition?
-$cfg->csv_col->metaGotToc    = 13;  // Optional/Auto. You might want to show journals you are subscribed to, even though no toc can be fetched. Leave empty to spare user the check.
-$cfg->csv_col->metaShelfmark = 14;  // Optional. Where is your print edition located?
-$cfg->csv_col->metaWebsite   = 15;  // Optional/Auto. The journal's website.
-$cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing? Separate tags with commas :)
-
-
-
+$cfg->filters = array();
 /**
  * In the column defined by $cfg->csv_col->filter you write a shorthand code for
  * the filter. Here you map that shorthand code to some human readable name.
@@ -159,12 +180,16 @@ $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing?
  *
  * Note: the  __() isn't required, but makes it translatable.
  */
-$cfg->filter['psy'] = 'Psychology';
-$cfg->filter['pol'] = 'Politics';
-$cfg->filter['wir'] = 'Yet another filter';
+$cfg->filters['psy']['en_US'] = 'Psychology';
+$cfg->filters['psy']['de_DE'] = 'Psychologie';
+$cfg->filters['pol']['en_US'] = 'Politics';
+$cfg->filters['pol']['de_DE'] = 'Politik';
+$cfg->filters['wir']['en_US'] = 'Yet another filter';
+$cfg->filters['wir']['de_DE'] = 'Weiterer Filter';
 
 
 
+$cfg->covers = new stdClass();
 /**
  * Put covers into the img folder. The name must be the issn set the column
  * specified for $cfg->csv_col->issn. The extension might be jpg, gif or png.
@@ -213,6 +238,7 @@ $cfg->covers->src_publisher = array('DeGruyter' => 0,
 
 
 
+$cfg->dbusers = new stdClass();
 /**
  * Preset list of users (for mailing)
  *
@@ -231,6 +257,7 @@ $cfg->dbusers->dbpass   = '';
 
 
 
+$cfg->sys = new stdClass();
 /**
  * System and path settings
  *
@@ -245,11 +272,39 @@ $cfg->dbusers->dbpass   = '';
  *
  * If you change anthying here you _must_ use absolute paths. Leave empty to use
  * default paths.
- *
- * ONLY uncomment if you DO set paths
  */
-//$cfg->sys->data_cache       = '';
-//$cfg->sys->data_covers      = '';
-//$cfg->sys->data_export      = '';
-//$cfg->sys->data_journals    = '';
+$cfg->sys->data_cache_usr       = ''; // If empty it points to data/cache
+$cfg->sys->data_covers_usr      = ''; // If empty it points to data/cover
+$cfg->sys->data_export_usr      = ''; // If empty it points to data/export
+$cfg->sys->data_journals_usr    = ''; // If empty it points to data/journals
+
+
+
+$cfg->csv_col = new stdClass();
+/**
+ * Which column (separated by the separator specified above) holds which data?
+ * Usuallly you most likely will just create an Excel file with those colums and
+ * export it as csv to the path specified above.
+ * See the comments at the end of the line, if the column can be empty (=optional).
+ * "Auto" means, there is a mechanism to automatically get that info.
+ *
+ * @todo  new and date are logically redundant?
+ */
+$cfg->csv_col->title         = 0;   // Required. The title of the journal
+$cfg->csv_col->filter        = 1;   // Optional. Show value in menu to filter by "category". Also see next configuration block.
+$cfg->csv_col->col2          = 2;   // Optional. Don't know, just add empty column
+$cfg->csv_col->important     = 3;   // Optional. Shows up as "special" filter in filter menu, if col isn't empty (anything is ok)
+$cfg->csv_col->col4          = 4;   // Optional. Don't know, just add empty column
+$cfg->csv_col->p_issn        = 5;   // Required. Without issn's this'd be pointless :)
+$cfg->csv_col->e_issn        = 6;   // Optional. An e-issn to try if issn fails to get toc.
+$cfg->csv_col->publisher     = 7;   // Optional/Auto. Publisher. Used for cover download (currently: "De Gruyter", "Elsevier", "Sage" and "Springer-Verlag" will work)
+$cfg->csv_col->new           = 8;   // Optional/Auto. Marks journal (issue) as new if not empty
+$cfg->csv_col->date          = 9;   // Optional/Auto. Date of last issue
+$cfg->csv_col->lastIssue     = 10;  // Optional/Auto. Format "year/vol/issue". Used for Crossref check
+$cfg->csv_col->metaPrint     = 11;  // Optional. Are you subscribed for the print edition?
+$cfg->csv_col->metaOnline    = 12;  // Optional. Are you subscribed for the online edition?
+$cfg->csv_col->metaGotToc    = 13;  // Optional/Auto. You might want to show journals you are subscribed to, even though no toc can be fetched. Leave empty to spare user the check.
+$cfg->csv_col->metaShelfmark = 14;  // Optional. Where is your print edition located?
+$cfg->csv_col->metaWebsite   = 15;  // Optional/Auto. The journal's website.
+$cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing? Separate tags with commas :)
 ?>
