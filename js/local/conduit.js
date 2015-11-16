@@ -83,6 +83,20 @@ function setLetterBox() {
 }
 
 
+function fetch_metabuttons_toc(issn) {
+    // Append meta (ugly hack, or maybe not that bad...?)
+    var custom_button = '<a onlick="window.history.go(-100)" class="button"><i class=""></i> Home</a> ';
+    $('#externalPopover h3').html($("div[data-issn='"+issn+"'] h5").clone()); // get title
+    $('#externalPopover h3').after($("div[data-issn='"+issn+"'] .metaInfo").clone()); // show button
+    $('#externalPopover .metaInfo').removeClass('hidden'); // remove the hidden class (if the buttons are not shown in the list)
+    $('#externalPopover .metaInfo a').removeClass('popup'); // remove popup class from buttons
+    $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
+    $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
+
+    return true;
+}
+
+
 $(document).ready(function() {
 	// run unveil plugin on page load
 	setTimeout(function() {$("img.getTOC").unveil();}, 1);
@@ -144,18 +158,12 @@ $(document).ready(function() {
 			//TODO: GET AGE SOMEHOW TOO
 		});
 
-				// Show loading animation
-				$('#tocModal').foundation('reveal', 'open');
+		// Show loading animation
+        $('#tocModal').foundation('reveal', 'open');
 		$('.toc.preloader').show();
 
-        // Append meta (ugly hack, or maybe not that bad...?)
-        var custom_button = '<a onlick="window.history.go(-100)" class="button"><i class=""></i> Home</a> ';
-        $('#externalPopover h3').html($("div[data-issn='"+issn+"'] h5").clone()); // get title
-        $('#externalPopover h3').after($("div[data-issn='"+issn+"'] .metaInfo").clone()); // show button
-        $('#externalPopover .metaInfo').removeClass('hidden'); // remove the hidden class (if the buttons are not shown in the list)
-        $('#externalPopover .metaInfo a').removeClass('popup'); // remove popup class from buttons
-        $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
-        $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
+        // Load meta buttons above toc (if visible)
+        fetch_metabuttons_toc(issn);
 
 		// get Journal TOC in iframe
 		createModalFrame('sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate);
@@ -413,9 +421,14 @@ $(document).ready(function() {
 	});
 
 	// Open web link in popup ('on' works only from Reveal box!)
-	$(document).on("click","a.popup",function() {
+	$(document).on("click","a.popup",function(event) {
+        event.preventDefault();
 		//		$('a.popup').click(function(event) {
 		var url = $(this).attr("href");
+
+        // Load meta buttons above toc (if visible)
+		issn = $(this).parents('.listitem').attr('data-issn').trim();
+        fetch_metabuttons_toc(issn);
 
 		createModalFrame(url);
 		$('#externalPopover').foundation('reveal', 'open');
