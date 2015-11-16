@@ -91,6 +91,7 @@ $cfg->prefs->min_tag_freq       = 1;     // How often must a tag be used at leas
 $cfg->prefs->default_sort_date  = false; // If set to true, default sort is by date. Otherwise alphabetical
 $cfg->prefs->show_metainfo_list = false; // Show the block with the meta infos rightside from the covers (Toc, Web, Shelfmark etc.)?
 $cfg->prefs->show_metainfo_toc  = true;  // Show the block with the meta infos above the toc. Note: If show_metainfo_list is true, it will show above the toc, even if set to false here
+$cfg->prefs->rss                = true;  // Show an RSS-Feed link. Be aware that this uses and displays the E-Mail you registered with at JournalTocs
 
 $cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
