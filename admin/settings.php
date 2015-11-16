@@ -205,9 +205,14 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     alert('Enter a key name');
                     return;
                 }
+                // Check that key does not already exist
+                else if ($('#key_'+newKey).length) {
+                    alert(newKey+' already exists. Delete it first.');
+                    return;
+                }
 
                 // Else clone the DUMMY entry
-                var cloneEntry = $( ".cloneable_dummy" ).clone().html();
+                var cloneEntry = $( ".cloneable_dummy" ).clone(true).html();
 
                 // Replace dummy with the new key
                 cloneEntry = cloneEntry.replace(/DUMMY/g, newKey);
@@ -226,9 +231,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 // Foundations: Tabs - Hmm, bit buggy? Set via jquery
                 //$(".tabs-content").css("margin-left", "220px");
 
-
-                // Delete filter elements on click
-                $("a.del_filter_entry").click(function(event) {
+                // Delete (dynamically added) filter elements on click
+                $('#filter_entries').on('click', 'a.del_filter_entry', function(event) {
                     event.preventDefault();
                     $(this).parents('.filter_entry').remove();
                 });
@@ -611,6 +615,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 <fieldset id="filter_entries">
                     <legend><?php echo __('Filters for filter menu') ?></legend>
                     <?php
+                        // Sort by filter key first
+                        ksort($cfg->filters);
                         foreach ($cfg->filters AS $f_key => $translations) {
                             // Don't show the dummy
                             if ($f_key == 'DUMMY') continue;
@@ -619,7 +625,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                             echo '  <div class="row collapse filter_entry">
                                         <label for="'.$f_key.'">Filtername '.$f_key.'</label>
                                         <div class="small-9 columns">
-                                            <input type="text" name="'.$f_key.'" value="'.$f_key.'" aria-describedby="help_filter_entry_key" readonly />
+                                            <input type="text" id="key_'.$f_key.'" name="'.$f_key.'" value="'.$f_key.'" aria-describedby="help_filter_entry_key" readonly />
                                         </div>
                                         <div class="small-3 columns">
                                             <span class="postfix"><a href="#" class="del_filter_entry">'.__('Delete').'</a></span>
@@ -634,7 +640,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                                 <div class="row collapse filter_entry">
                                     <label for="DUMMY">Filtername DUMMY</label>
                                     <div class="small-9 columns">
-                                        <input type="text" name="DUMMY" value="DUMMY" aria-describedby="help_filter_entry_key" readonly />
+                                        <input type="text" id="key_DUMMY" name="DUMMY" value="DUMMY" aria-describedby="help_filter_entry_key" readonly />
                                     </div>
                                     <div class="small-3 columns">
                                         <span class="postfix"><a href="#" class="del_filter_entry">'.__('Delete').'</a></span>
