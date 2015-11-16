@@ -233,6 +233,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
                 // Add entry
                 $('#filter_entries').append(cloneEntry);
+
+                // Empty input field
+                $('#new_filter_entry').val('');
             };
 
 
