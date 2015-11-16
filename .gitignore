@@ -9,6 +9,7 @@ config.php
 !admin/upgrade/history/.gitkeep
 !admin/upgrade/versions/.gitkeep
 !data/cache/.gitkeep
+!data/cache/config-default.php
 !data/covers/.gitkeep
 !data/export/.gitkeep
 !data/journals/backup/.gitkeep
