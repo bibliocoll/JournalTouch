@@ -41,7 +41,7 @@ New
 - Added option to hide the list view
 - Added option to use proxy (e.g. EZproxy) for article links
 - Added option to display metainfo (and the journal title) above the toc, not only in list. Activate via config.
-
+- Added option to show meatinfo rss button (use with care and read the help in the config page)
 
 Changes
 - config option "$cfg->csv_col->col7 = 7" became "$cfg->csv_col->publisher = 7" - publisher is used for cover Download. The publisher is now automatically added on the (first) metadata update (at least if found at JournalTocs or JournalSeek).
@@ -71,7 +71,7 @@ Added 3rd party ressources
 
 Credits
 Last but not least. Thanks for suggestions and help from:
-- Andreas Bohne-Lang (Medizinische Fakultät Mannheim der Ruprecht-Karls-Universität Heidelberg) - EZproxy, Cover download, RSS (not yet ;))
+- Andreas Bohne-Lang (Medizinische Fakultät Mannheim der Ruprecht-Karls-Universität Heidelberg) - EZproxy, Cover download, RSS
 - Oliver Löwe (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
 ';
 
