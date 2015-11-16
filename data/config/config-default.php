@@ -1,12 +1,10 @@
 <?php
 /**
- * Configuration settings for JournalTouch
+ * Default configuration settings for JournalTouch
  *
- * Don't edit this file since it might be overwritten on updates. Use config.php
- * instead.
- *
- * Make sure to chmod this file to 644. See additional infos for each config
- * "block".
+ * Don't edit this file since it
+ * a) will be overwritten on updates
+ * b) You create your own config via mydomain.net/admin
  *
  * @note  Using objects to set options may be unusual, but has advantages to
  *        using arrays resp. an ini file. In regards to an ini file you can
@@ -18,7 +16,7 @@
  *
  * @todo  Maybe create a class JournalTouch with static properties?
  */
-if (!isset($cfg)) { $cfg = new stdClass(); }
+$cfg = new stdClass();
 
 /**
  * Translate site elements
@@ -307,4 +305,10 @@ $cfg->csv_col->metaGotToc    = 13;  // Optional/Auto. You might want to show jou
 $cfg->csv_col->metaShelfmark = 14;  // Optional. Where is your print edition located?
 $cfg->csv_col->metaWebsite   = 15;  // Optional/Auto. The journal's website.
 $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing? Separate tags with commas :)
+
+
+/**
+ * Variables that are not set in the user config - only used for vanilla installation
+ */
+$cfg->sys->newInstallation = true;  // If this is set, show a hint to user that he should create his config
 ?>

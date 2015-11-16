@@ -146,6 +146,12 @@ foreach ($cfg->filters as $key => $filter_languages) {
         </ul>
     </section>
   </nav>
+  <?php if (isset($cfg->sys->newInstallation)) { ?>
+  <div id="dataUnsaved" data-alert class="alert-box warning radius">
+    <?php echo __('You are using JournalTouch with demo settings. Head over to <a href="admin/settings.php">Settings</a> to set up you own configuration.') ?>
+    <a href="#" class="close">&times;</a>
+  </div>
+  <?php } ?>
 </div>
 <!-- End Navigation -->
 
