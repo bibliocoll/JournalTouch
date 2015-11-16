@@ -27,20 +27,22 @@ if (is_ajax()) {
 }
 
 
-//Function to check if the request is an AJAX request
+/**
+ * @brief   Helper function to check if the request is an AJAX request
+ */
 function is_ajax() {
 	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
 // END Ajax Save
 
 
-// Save config variables as Subobject of cfg (as done until ver. 0.3
-// Prevent a complete rewrite
-// @Todo
-//  - The new REAL array must become arrays again
-//  - On second thought - is the extra trouble to keep arrays worth it?
-//
-// Load function is in bootstrap.functions.php
+/**
+ * @brief   Saves user configuration to file
+ *
+ * Save config variables as Subobject of cfg (as done until ver. 0.3
+ *
+ * @note    Load function is in bootstrap.functions.php
+ */
 function cfg_save($user_cfg = '../data/config/user_config.php') {
     $status = false;
     if (isset($_GET['cfg'])) {
@@ -81,7 +83,9 @@ function cfg_save($user_cfg = '../data/config/user_config.php') {
 }
 
 
-// Idea to easily add new languages
+/**
+ * @brief   Get available languages from languages folder
+ */
 function get_languages($path = '../languages/') {
     $dirs = glob($path.'*', GLOB_ONLYDIR); // get all directories within language directory
     foreach ($dirs as &$dir) $dir = str_replace($path, '', $dir); //remove path
@@ -92,7 +96,9 @@ function get_languages($path = '../languages/') {
 }
 
 
-// Just to make it short withing the html for checkboxes
+/**
+ * @brief   Helper to quickly create checkboxes
+ */
 function frm_checked($value) {
     $status = '';
     if ($value) {
@@ -102,7 +108,9 @@ function frm_checked($value) {
 }
 
 
-// Just to make it short withing the html for multiselect
+/**
+ * @brief   Helper to quickly create multiselect options
+ */
 function frm_selected($value) {
     $status = '';
     if ($value) {
@@ -112,9 +120,12 @@ function frm_selected($value) {
 }
 
 
-// Create the option for the select to enable/disable languages
-// Important to do it before frm_input_translatable() is used,
-// because we remember the $langs_available status for later use.
+/**
+ * @brief   Creates the options for the select menu with enabled/disabled languages
+ *
+ * @note    Important to do it before frm_input_translatable() is used,
+ *          because we remember the $langs_available status for later use.
+ */
 function frm_languages() {
     global $cfg, $langs_available; // gosh, classes are just cleaner. Well...
 
@@ -138,8 +149,9 @@ function frm_languages() {
 }
 
 
-// Return input for each available language
-// $value is the cfg "base" (without the language array)
+/**
+ * @brief   Helper that returns an input field for each available language
+ */
 function frm_input_translatable($name, $value, $label = '', $aria = '') {
     global $cfg, $langs_available; // @see frm_languages()
 
@@ -195,10 +207,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <script src="../js/vendor/modernizr.js"></script>
 
 
-<!-- Hmm, nice but complex https://github.com/vicb/bsmSelect-->
-
         <script type="text/javascript">
-            // Function to add new filter entry - either click or on enter
+            /**
+             * @brief   Function to add new filter entry - either click or on enter
+             */
             function add_new_entry() {
                 var newKey = $('#new_filter_entry').val();
 
@@ -224,14 +236,15 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             };
 
 
-            // Everything is ready to go
+            /**
+             * @brief   Jquery: Everything is ready to go
+             */
             $(document).ready(function(){
                 // https://github.com/roymckenzie/foundation-select
                 $('select').foundationSelect()
-                // Foundations: Tabs - Hmm, otherwise foundation is not loaded...
+                // Load foundation
                 $(document).foundation();
-                // Foundations: Tabs - Hmm, bit buggy? Set via jquery
-                //$(".tabs-content").css("margin-left", "220px");
+
 
                 /**
                  * @brief   Monitor form changes and warn
@@ -249,13 +262,18 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     $('.submit_btn').removeClass('alert');
                     $('#dataUnsaved').addClass('hidden');
                 });
+
+
+                /**
+                 * @brief   Methods to add and delete filter entries
+                 */
                 // Delete (dynamically added) filter elements on click
                 $('#filter_entries').on('click', 'a.del_filter_entry', function(event) {
                     event.preventDefault();
                     $(this).parents('.filter_entry').remove();
                 });
                 // Add filter element on click
-                $("a.add_filter_entry").click(function(event) {
+                $('a.add_filter_entry').click(function(event) {
                     event.preventDefault();
                     add_new_entry();
                 });
@@ -268,11 +286,15 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     }
                 });
 
-                // Show help per field
-                // Howto:
-                // Add aria-describedby="help_VALUE_NAME" to input
-                // Add a div like
-                // <div id="help_VALUE_NAME" class="tooltip" role="tooltip" aria-hidden="true"><span>Blabla</span></div>
+
+                /**
+                 * @brief   Show help per field
+                 *
+                 * Howto
+                 * - Add aria-describedby="help_VALUE_NAME" to input
+                 * - Add a div like
+                 *   <div id="help_VALUE_NAME" class="tooltip" role="tooltip" aria-hidden="true"><span>Blabla</span></div>
+                 */
                 $('[aria-describedby]').on('focus hover mouseenter', function() {
                     id = $(this).attr('aria-describedby');
                     $('#help').html(
@@ -288,7 +310,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     })
                 });
 
-                // Form submit button is clicked
+
+                /**
+                 * @brief   Ajax on form submit button being clicked
+                 */
                 $( "form" ).on( "submit", function( event ) {
                     event.preventDefault();
 
@@ -319,7 +344,12 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
             });
 
-            // Jquery-ui: Sortable
+
+            /**
+             * @brief   Make a list sortable (Covers generic for now only
+             *
+             * @note    Hmm, nice alternative but complex https://github.com/vicb/bsmSelect
+             */
             $(function() {
                 $( "#sortableCoverGeneric" ).sortable();
                 $( "#sortableCoverGeneric" ).disableSelection();
