@@ -6,6 +6,13 @@
  *
  * @todo
  * - Add option for screensaver and basket timeout!
+ * - IMPORTANT: Adding new variables to config-default.php and adding a form
+ *   field here will raise a php notice, since the variable is not in the (after
+ *   saving only used user-config). The clean way were to always use the
+ *   default-config as default value. But this readds the overhead I intended to
+ *   prevent.
+ *   Maybe a between way - check mod date of config-default and force admin to save
+ *   once to prevent the notice.
  *
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
@@ -473,6 +480,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         <input type="checkbox" name="cfg[prefs][show_metainfo_toc]" <?php echo frm_checked($cfg->prefs->show_metainfo_toc) ?> aria-describedby="help_show_metainfo_toc" />
                             <label for="cfg[prefs][show_metainfo_toc]"><?php echo __('Show meta menu above toc') ?></label><br />
                             <div id="help_show_metainfo_toc" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Show the block with the meta menu buttons above the toc. <strong>Note</strong>: If show_metainfo_list is true, it will show above the toc, even if set to false here. Sorry for now if you happen to exactly not wanting this...') ?></span></div>
+                        <input type="checkbox" name="cfg[prefs][rss]" <?php echo frm_checked($cfg->prefs->rss) ?> aria-describedby="help_rss" />
+                            <label for="cfg[prefs][rss]"><?php echo __('Enable RSS Meta Button (read help carefully)') ?></label><br />
+                            <div id="help_rss" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('This enabled a link to the JournalTocs RSS feed. Since the feed is only usable with an account, YOUR email must be used and is visible in the url. Two aspects make this charming. First and before all: if you use a proxy (see Your Institution), the links in the rss feed are "proxified". Second: it\'s easier to provide the user with a link than explaining how to create an account themselves at JournalTocs.') ?></span></div>
                         <input type="checkbox" name="cfg[prefs][show_screensaver]" <?php echo frm_checked($cfg->prefs->show_screensaver) ?> aria-describedby="help_show_screensaver" />
                             <label for="cfg[prefs][show_screensaver]"><?php echo __('Enable Screensaver') ?></label><br />
                             <div id="help_show_screensaver" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Show a screensaver after idle time. <strong>The time is currently is fixed at 5 minutes</strong>') ?></span></div>
