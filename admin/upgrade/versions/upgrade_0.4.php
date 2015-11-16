@@ -53,20 +53,26 @@ Improvements
 
 Fixes
 - timeago: now shows future dates correctly and support multilanguage
-- default config.php was missing (JT didn\'t run out of the box)
 - Some code refactoring
 - The journaltoc-suggest.csv file created on metadata update included all journals, not only the ones not listed at JournalTocs
 - GetText files started outputting empty lines for header. Removed redundant lines
 - List view toggle wasn\'t multilanguage
 
+
 Known Issues
 - The cover update does not work if you use the JournalTocs Premium update. JournalTocs now provides covers via api. Since I got no premium account, I can\'t modify admin/services/getLatestJournalTocPremium.php accordingly.
 
 
+Added 3rd party ressources
+- Jquery UI: https://jqueryui.com/
+- foundation-select: https://github.com/roymckenzie/foundation-select
+- jquery.AreYouSure: https://github.com/codedance/jquery.AreYouSure
+- JQuerySerializeCheckbox.js: https://gist.github.com/TaoK/1572512
+
 Credits
 Last but not least. Thanks for suggestions and help from:
-- Andreas Bohne-Lang (Medizinische Fakultät Mannheim) - EZproxy, Cover download, RSS (not yet ;))
-- Oliver Löwe (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
+- Andreas Bohne-Lang (Medizinische FakultÃ¤t Mannheim der Ruprecht-Karls-UniversitÃ¤t Heidelberg) - EZproxy, Cover download, RSS (not yet ;))
+- Oliver LÃ¶we (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
 ';
 
 
