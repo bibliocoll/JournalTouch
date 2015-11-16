@@ -406,6 +406,8 @@ else {
    *
    * @todo
    * - Keep parameters and add $row so this method can be used "alone"?
+   * - Maybe better (also publisher and many more infos): https://api.crossref.org/journals/issn
+   * @see https://github.com/CrossRef/rest-api-doc/blob/master/rest_api.md
    *
    * @param $issn    \b STR  Journal ISSN
    * @return \b BOL True if journal is found, else false

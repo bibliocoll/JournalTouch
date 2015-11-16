@@ -14,7 +14,7 @@
                 <a href="#">JT Version <?php echo $cfg->sys->current_jt_version ?></a></li>
             </li>
             <li class="has-dropdown">
-                <a href="#">Help</a>
+                <a href="#"><?php echo __('Help') ?></a>
                 <ul class="dropdown">
                     <li><a href="#">Not yet</a></li>
                     <li class="active"><a href="#">Not yet too</a></li>
@@ -25,10 +25,11 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li class=""><a href="index.php">Home</a></li>
-            <li class=""><a href="settings.php">Settings</a></li>
-            <li class=""><a href="updateTocs.php">Update Journals</a></li>
-            <li class=""><a href="upgrade.php">Upgrade JournalTouch</a></li>
+            <li class=""><a href="index.php"><?php echo __('Home') ?></a></li>
+            <li class=""><a href="settings.php"><?php echo __('Settings') ?></a></li>
+            <li class=""><a href="updateTocs.php"><?php echo __('Update Journals') ?></a></li>
+            <li class=""><a href="upgrade.php"><?php echo __('Upgrade JournalTouch') ?></a></li>
+            <li class=""><a href="../index.php"><?php echo __('View Site') ?></a></li>
         </ul>
     </section>
 </nav>

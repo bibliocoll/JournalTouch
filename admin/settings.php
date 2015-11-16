@@ -27,20 +27,22 @@ if (is_ajax()) {
 }
 
 
-//Function to check if the request is an AJAX request
+/**
+ * @brief   Helper function to check if the request is an AJAX request
+ */
 function is_ajax() {
 	return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 }
 // END Ajax Save
 
 
-// Save config variables as Subobject of cfg (as done until ver. 0.3
-// Prevent a complete rewrite
-// @Todo
-//  - The new REAL array must become arrays again
-//  - On second thought - is the extra trouble to keep arrays worth it?
-//
-// Load function is in bootstrap.functions.php
+/**
+ * @brief   Saves user configuration to file
+ *
+ * Save config variables as Subobject of cfg (as done until ver. 0.3
+ *
+ * @note    Load function is in bootstrap.functions.php
+ */
 function cfg_save($user_cfg = '../data/config/user_config.php') {
     $status = false;
     if (isset($_GET['cfg'])) {
@@ -81,7 +83,9 @@ function cfg_save($user_cfg = '../data/config/user_config.php') {
 }
 
 
-// Idea to easily add new languages
+/**
+ * @brief   Get available languages from languages folder
+ */
 function get_languages($path = '../languages/') {
     $dirs = glob($path.'*', GLOB_ONLYDIR); // get all directories within language directory
     foreach ($dirs as &$dir) $dir = str_replace($path, '', $dir); //remove path
@@ -92,7 +96,9 @@ function get_languages($path = '../languages/') {
 }
 
 
-// Just to make it short withing the html for checkboxes
+/**
+ * @brief   Helper to quickly create checkboxes
+ */
 function frm_checked($value) {
     $status = '';
     if ($value) {
@@ -102,7 +108,9 @@ function frm_checked($value) {
 }
 
 
-// Just to make it short withing the html for multiselect
+/**
+ * @brief   Helper to quickly create multiselect options
+ */
 function frm_selected($value) {
     $status = '';
     if ($value) {
@@ -112,9 +120,12 @@ function frm_selected($value) {
 }
 
 
-// Create the option for the select to enable/disable languages
-// Important to do it before frm_input_translatable() is used,
-// because we remember the $langs_available status for later use.
+/**
+ * @brief   Creates the options for the select menu with enabled/disabled languages
+ *
+ * @note    Important to do it before frm_input_translatable() is used,
+ *          because we remember the $langs_available status for later use.
+ */
 function frm_languages() {
     global $cfg, $langs_available; // gosh, classes are just cleaner. Well...
 
@@ -138,8 +149,9 @@ function frm_languages() {
 }
 
 
-// Return input for each available language
-// $value is the cfg "base" (without the language array)
+/**
+ * @brief   Helper that returns an input field for each available language
+ */
 function frm_input_translatable($name, $value, $label = '', $aria = '') {
     global $cfg, $langs_available; // @see frm_languages()
 
@@ -183,6 +195,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <link rel="stylesheet" href="../css/foundation-icons/foundation-icons.css" />
 
         <script src="../js/vendor/jquery.js"></script>
+        <script src="../js/vendor/jquery.are-you-sure.js"></script>
         <script src="../js/vendor/jquery.serialize_checkbox.js"></script>
         <script src="../js/vendor/jquery-ui/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="../js/vendor/jquery-ui/jquery-ui.css">
@@ -191,12 +204,13 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <!-- Better select for foundation: https://github.com/roymckenzie/foundation-select -->
         <script src="../js/foundation/foundation-select/foundation-select.js"></script>
         <link rel="stylesheet" href="../js/foundation/foundation-select/foundation-select.css" />
+        <script src="../js/vendor/modernizr.js"></script>
 
-
-<!-- Hmm, nice but complex https://github.com/vicb/bsmSelect-->
 
         <script type="text/javascript">
-            // Function to add new filter entry - either click or on enter
+            /**
+             * @brief   Function to add new filter entry - either click or on enter
+             */
             function add_new_entry() {
                 var newKey = $('#new_filter_entry').val();
 
@@ -205,35 +219,64 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     alert('Enter a key name');
                     return;
                 }
+                // Check that key does not already exist
+                else if ($('#key_'+newKey).length) {
+                    alert(newKey+' already exists. Delete it first.');
+                    return;
+                }
 
                 // Else clone the DUMMY entry
-                var cloneEntry = $( ".cloneable_dummy" ).clone().html();
+                var cloneEntry = $( ".cloneable_dummy" ).clone(true).html();
 
                 // Replace dummy with the new key
                 cloneEntry = cloneEntry.replace(/DUMMY/g, newKey);
 
                 // Add entry
                 $('#filter_entries').append(cloneEntry);
+
+                // Empty input field
+                $('#new_filter_entry').val('');
             };
 
 
-            // Everything is ready to go
+            /**
+             * @brief   Jquery: Everything is ready to go
+             */
             $(document).ready(function(){
                 // https://github.com/roymckenzie/foundation-select
                 $('select').foundationSelect()
-                // Foundations: Tabs - Hmm, otherwise foundation is not loaded...
+                // Load foundation
                 $(document).foundation();
-                // Foundations: Tabs - Hmm, bit buggy? Set via jquery
-                //$(".tabs-content").css("margin-left", "220px");
 
 
-                // Delete filter elements on click
-                $("a.del_filter_entry").click(function(event) {
+                /**
+                 * @brief   Monitor form changes and warn
+                 */
+                // Warn user if form content was changed, but not saved
+                $('form').areYouSure( {'message':'You changed something. Are you sure you don\'t want to save first?'} );
+                // Enable save button only as the form is dirty.
+                $('form').on('dirty.areYouSure', function() {
+                    $('.submit_btn').addClass('alert');
+                    $('#dataUnsaved').removeClass('hidden');
+                    $('#dataSaved').addClass('hidden');
+                });
+                // Form is clean so nothing to save - disable the save button.
+                $('form').on('clean.areYouSure', function() {
+                    $('.submit_btn').removeClass('alert');
+                    $('#dataUnsaved').addClass('hidden');
+                });
+
+
+                /**
+                 * @brief   Methods to add and delete filter entries
+                 */
+                // Delete (dynamically added) filter elements on click
+                $('#filter_entries').on('click', 'a.del_filter_entry', function(event) {
                     event.preventDefault();
                     $(this).parents('.filter_entry').remove();
                 });
                 // Add filter element on click
-                $("a.add_filter_entry").click(function(event) {
+                $('a.add_filter_entry').click(function(event) {
                     event.preventDefault();
                     add_new_entry();
                 });
@@ -246,11 +289,15 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     }
                 });
 
-                // Show help per field
-                // Howto:
-                // Add aria-describedby="help_VALUE_NAME" to input
-                // Add a div like
-                // <div id="help_VALUE_NAME" class="tooltip" role="tooltip" aria-hidden="true"><span>Blabla</span></div>
+
+                /**
+                 * @brief   Show help per field
+                 *
+                 * Howto
+                 * - Add aria-describedby="help_VALUE_NAME" to input
+                 * - Add a div like
+                 *   <div id="help_VALUE_NAME" class="tooltip" role="tooltip" aria-hidden="true"><span>Blabla</span></div>
+                 */
                 $('[aria-describedby]').on('focus hover mouseenter', function() {
                     id = $(this).attr('aria-describedby');
                     $('#help').html(
@@ -266,7 +313,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                     })
                 });
 
-                // Form submit button is clicked
+
+                /**
+                 * @brief   Ajax on form submit button being clicked
+                 */
                 $( "form" ).on( "submit", function( event ) {
                     event.preventDefault();
 
@@ -286,7 +336,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 //                         settings.data += '&moreinfo=MoreData';
 //                         },
                         success:function(data){
-                            alert("Success! " + data['response']);
+                            $('#dataUnsaved').addClass('hidden');
+                            $('#dataSaved').removeClass('hidden');
                         },
                         error: function(data) {
                             alert("Failure!");
@@ -296,7 +347,12 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
             });
 
-            // Jquery-ui: Sortable
+
+            /**
+             * @brief   Make a list sortable (Covers generic for now only
+             *
+             * @note    Hmm, nice alternative but complex https://github.com/vicb/bsmSelect
+             */
             $(function() {
                 $( "#sortableCoverGeneric" ).sortable();
                 $( "#sortableCoverGeneric" ).disableSelection();
@@ -330,17 +386,26 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 <body>
 <?php include('menu.inc') ?>
 <div class="row fullWidth">
-    <div class="small-12 medium-12 large-12 columns">
-        <h2>JournalTouch Settings for Admins</h2>
+    <div class="small-10 medium-10 large-10 columns">
+        <h2><?php echo __('JournalTouch Settings for Admins') ?></h2>
+        <div id="dataUnsaved" data-alert class="alert-box warning radius hidden">
+            <?php echo __('Beware, you have unsaved settings') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
+        <div id="dataSaved" data-alert class="alert-box success radius hidden">
+            <?php echo __('Configuration successfully saved!') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
     </div>
 </div>
 <div class="row fullWidth">
+    <form>
     <!-- Main structure 1: Menu column -->
     <div class="small-2 columns">
         <!--  action="settings.php" method="get" -->
         <!-- define Tabs -->
         <ul class="tabs vertical" data-tab="">
-            <li class="tab-title"><button type="submit" name="save"><?php echo __('Save') ?></button></li>
+            <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
             <li class="tab-title active"><a href="#formTab1"><?php echo __('Your Institution') ?></a></li>
             <li class="tab-title"><a href="#formTab2"><?php echo __('Preferences') ?></a></li>
             <li class="tab-title"><a href="#formTab3"><?php echo __('Translations') ?></a></li>
@@ -350,12 +415,11 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             <li class="tab-title"><a href="#formTab7"><?php echo __('Mailing') ?></a></li>
             <li class="tab-title"><a href="#formTab8"><?php echo __('Paths') ?></a></li>
             <li class="tab-title"><a href="#formTab9"><?php echo __('Journal List') ?></a></li>
-            <li class="tab-title"><button type="submit" name="save"><?php echo __('Save') ?></button></li>
+            <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
         </ul>
     </div>
     <!-- Main structure 2: Body column -->
     <div class="small-8 columns">
-        <form>
             <!-- start Tabs -->
             <div class="tabs-content">
             <div class="content active" id="formTab1">
@@ -611,6 +675,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 <fieldset id="filter_entries">
                     <legend><?php echo __('Filters for filter menu') ?></legend>
                     <?php
+                        // Sort by filter key first
+                        ksort($cfg->filters);
                         foreach ($cfg->filters AS $f_key => $translations) {
                             // Don't show the dummy
                             if ($f_key == 'DUMMY') continue;
@@ -619,7 +685,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                             echo '  <div class="row collapse filter_entry">
                                         <label for="'.$f_key.'">Filtername '.$f_key.'</label>
                                         <div class="small-9 columns">
-                                            <input type="text" name="'.$f_key.'" value="'.$f_key.'" aria-describedby="help_filter_entry_key" readonly />
+                                            <input type="text" id="key_'.$f_key.'" name="'.$f_key.'" value="'.$f_key.'" aria-describedby="help_filter_entry_key" readonly />
                                         </div>
                                         <div class="small-3 columns">
                                             <span class="postfix"><a href="#" class="del_filter_entry">'.__('Delete').'</a></span>
@@ -634,7 +700,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                                 <div class="row collapse filter_entry">
                                     <label for="DUMMY">Filtername DUMMY</label>
                                     <div class="small-9 columns">
-                                        <input type="text" name="DUMMY" value="DUMMY" aria-describedby="help_filter_entry_key" readonly />
+                                        <input type="text" id="key_DUMMY" name="DUMMY" value="DUMMY" aria-describedby="help_filter_entry_key" readonly />
                                     </div>
                                     <div class="small-3 columns">
                                         <span class="postfix"><a href="#" class="del_filter_entry">'.__('Delete').'</a></span>
@@ -829,18 +895,19 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                                 <input type="text" name="dummy[csv_col][tags]" value="<?php echo $cfg->csv_col->tags+1  ?>" disabled="disabled" />
                                 <input type="hidden" name="cfg[csv_col][tags]" value="<?php echo $cfg->csv_col->tags  ?>"/>
                                 <div id="help_csv_col_16" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Optional/Auto. Got some subject indexing? Separate tags with commas :)') ?></span></div>
+                        </div>
                     </div>
                     <!-- End row 5 -->
                 </fieldset>
-            <!-- end Tabs -->
             </div>
-            </div>
-        </form>
+        <!-- end Tabs -->
+        </div>
     </div>
     <!-- Main structure 3: Info column -->
     <div class="small-2 columns">
         <div id="help"></div>
     </div>
+    </form>    
 </div>
 <pre>
 <?php
