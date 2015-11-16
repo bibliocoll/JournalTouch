@@ -183,6 +183,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <link rel="stylesheet" href="../css/foundation-icons/foundation-icons.css" />
 
         <script src="../js/vendor/jquery.js"></script>
+        <script src="../js/vendor/jquery.are-you-sure.js"></script>
         <script src="../js/vendor/jquery.serialize_checkbox.js"></script>
         <script src="../js/vendor/jquery-ui/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="../js/vendor/jquery-ui/jquery-ui.css">
@@ -191,6 +192,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <!-- Better select for foundation: https://github.com/roymckenzie/foundation-select -->
         <script src="../js/foundation/foundation-select/foundation-select.js"></script>
         <link rel="stylesheet" href="../js/foundation/foundation-select/foundation-select.css" />
+        <script src="../js/vendor/modernizr.js"></script>
 
 
 <!-- Hmm, nice but complex https://github.com/vicb/bsmSelect-->
@@ -231,6 +233,22 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 // Foundations: Tabs - Hmm, bit buggy? Set via jquery
                 //$(".tabs-content").css("margin-left", "220px");
 
+                /**
+                 * @brief   Monitor form changes and warn
+                 */
+                // Warn user if form content was changed, but not saved
+                $('form').areYouSure( {'message':'You changed something. Are you sure you don\'t want to save first?'} );
+                // Enable save button only as the form is dirty.
+                $('form').on('dirty.areYouSure', function() {
+                    $('.submit_btn').addClass('alert');
+                    $('#dataUnsaved').removeClass('hidden');
+                    $('#dataSaved').addClass('hidden');
+                });
+                // Form is clean so nothing to save - disable the save button.
+                $('form').on('clean.areYouSure', function() {
+                    $('.submit_btn').removeClass('alert');
+                    $('#dataUnsaved').addClass('hidden');
+                });
                 // Delete (dynamically added) filter elements on click
                 $('#filter_entries').on('click', 'a.del_filter_entry', function(event) {
                     event.preventDefault();
@@ -290,7 +308,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 //                         settings.data += '&moreinfo=MoreData';
 //                         },
                         success:function(data){
-                            alert("Success! " + data['response']);
+                            $('#dataUnsaved').addClass('hidden');
+                            $('#dataSaved').removeClass('hidden');
                         },
                         error: function(data) {
                             alert("Failure!");
@@ -334,8 +353,16 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 <body>
 <?php include('menu.inc') ?>
 <div class="row fullWidth">
-    <div class="small-12 medium-12 large-12 columns">
-        <h2>JournalTouch Settings for Admins</h2>
+    <div class="small-10 medium-10 large-10 columns">
+        <h2><?php echo __('JournalTouch Settings for Admins') ?></h2>
+        <div id="dataUnsaved" data-alert class="alert-box warning radius hidden">
+            <?php echo __('Beware, you have unsaved settings') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
+        <div id="dataSaved" data-alert class="alert-box success radius hidden">
+            <?php echo __('Configuration successfully saved!') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
     </div>
 </div>
 <div class="row fullWidth">
@@ -345,7 +372,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         <!--  action="settings.php" method="get" -->
         <!-- define Tabs -->
         <ul class="tabs vertical" data-tab="">
-            <li class="tab-title"><button type="submit" name="save"><?php echo __('Save') ?></button></li>
+            <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
             <li class="tab-title active"><a href="#formTab1"><?php echo __('Your Institution') ?></a></li>
             <li class="tab-title"><a href="#formTab2"><?php echo __('Preferences') ?></a></li>
             <li class="tab-title"><a href="#formTab3"><?php echo __('Translations') ?></a></li>
@@ -355,7 +382,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             <li class="tab-title"><a href="#formTab7"><?php echo __('Mailing') ?></a></li>
             <li class="tab-title"><a href="#formTab8"><?php echo __('Paths') ?></a></li>
             <li class="tab-title"><a href="#formTab9"><?php echo __('Journal List') ?></a></li>
-            <li class="tab-title"><button type="submit" name="save"><?php echo __('Save') ?></button></li>
+            <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
         </ul>
     </div>
     <!-- Main structure 2: Body column -->
