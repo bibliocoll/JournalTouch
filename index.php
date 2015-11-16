@@ -412,8 +412,7 @@ foreach ($journals as $j) {
 
   $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
   $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ' : '');
-  $rss = 'http://www.journaltocs.ac.uk/api/journals/'.$j['issn'].'?output=articles&user='.$cfg->api->jt->account;
-  $meta .= (($j['metaGotToc']) ? '<a href="'.$rss.'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ' : '');
+  $meta .= ($cfg->prefs->rss && $j['metaGotToc']) ? '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ' : '';
   $link = ($cfg->prefs->inst_service) ? $cfg->prefs->inst_service.$j['issn'] : '';
   $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
   $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
