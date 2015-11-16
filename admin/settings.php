@@ -335,6 +335,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
     </div>
 </div>
 <div class="row fullWidth">
+    <form>
     <!-- Main structure 1: Menu column -->
     <div class="small-2 columns">
         <!--  action="settings.php" method="get" -->
@@ -355,7 +356,6 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
     </div>
     <!-- Main structure 2: Body column -->
     <div class="small-8 columns">
-        <form>
             <!-- start Tabs -->
             <div class="tabs-content">
             <div class="content active" id="formTab1">
@@ -829,18 +829,19 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                                 <input type="text" name="dummy[csv_col][tags]" value="<?php echo $cfg->csv_col->tags+1  ?>" disabled="disabled" />
                                 <input type="hidden" name="cfg[csv_col][tags]" value="<?php echo $cfg->csv_col->tags  ?>"/>
                                 <div id="help_csv_col_16" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Optional/Auto. Got some subject indexing? Separate tags with commas :)') ?></span></div>
+                        </div>
                     </div>
                     <!-- End row 5 -->
                 </fieldset>
-            <!-- end Tabs -->
             </div>
-            </div>
-        </form>
+        <!-- end Tabs -->
+        </div>
     </div>
     <!-- Main structure 3: Info column -->
     <div class="small-2 columns">
         <div id="help"></div>
     </div>
+    </form>    
 </div>
 <pre>
 <?php
