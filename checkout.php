@@ -75,8 +75,13 @@ $action = new CheckoutActions($cfg);
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
+
+// If domain is empty, allow full emails; see also conduit.js
+$allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
+
 if ($users == false) {
-    print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
+    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
+    print '<input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>';
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
@@ -229,10 +234,13 @@ if ($users == false) {
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
     $coladd      = ($cfg->mail->domain) ? 3 : 0;
 
+    // If domain is empty, allow full emails; see also conduit.js
+    $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
+
     echo'
         <label>'.__('Your e-mail').'</label>
         <div class="small-'.(12 - $coladd).' columns">
-          <input name="username" placeholder="'.$placeholder.'" type="text"/>
+          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
         </div>';
     // Add the allowed user mailing domain at the end ("employees only")
     if ($coladd) {
