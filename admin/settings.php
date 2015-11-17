@@ -263,13 +263,17 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 $('form').areYouSure( {'message':'You changed something. Are you sure you don\'t want to save first?'} );
                 // Enable save button only as the form is dirty.
                 $('form').on('dirty.areYouSure', function() {
-                    $('.submit_btn').addClass('alert');
+                    $('.submit_btn').each(function() {
+                        $(this).addClass('alert');
+                    });
                     $('#dataUnsaved').removeClass('hidden');
                     $('#dataSaved').addClass('hidden');
                 });
                 // Form is clean so nothing to save - disable the save button.
                 $('form').on('clean.areYouSure', function() {
-                    $('.submit_btn').removeClass('alert');
+                    $('.submit_btn').each(function() {
+                        $(this).removeClass('alert');
+                    });
                     $('#dataUnsaved').addClass('hidden');
                 });
 
@@ -345,6 +349,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         success:function(data){
                             $('#dataUnsaved').addClass('hidden');
                             $('#dataSaved').removeClass('hidden');
+                            $('.submit_btn').each(function() {
+                                $(this).removeClass('alert');
+                            });
                         },
                         error: function(data) {
                             alert("Failure!");
