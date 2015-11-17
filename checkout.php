@@ -43,7 +43,7 @@ $action = new CheckoutActions($cfg);
             <ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
                 <!-- Title Area -->
                 <li class="name">
-                    <h1><?php echo __('JournalTouch <em><strong>beta</strong></em> - a library service') ?></h1>
+                    <h1><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?></h1>
                 </li>
                 <li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php?lang=<?php echo $action->prefs->current_lang ?>">&nbsp;Back</a></li>
             </ul>
