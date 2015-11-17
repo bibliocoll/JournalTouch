@@ -372,7 +372,7 @@ $(document).ready(function() {
 		}
 
 		// Check if full domain is given (default: domain gets added by system)
-		if(name.indexOf('@') > -1) {
+		if(name.indexOf('@') > -1 && $('#mail_domain').length > 0) {
 			$('#errorUsername').prev('label').addClass('error');
 			$('#errorUsername').text('please enter your account name only (without the @domain)').toggle();
 			return false;
