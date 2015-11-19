@@ -307,7 +307,7 @@ $(document).ready(function() {
 
 		// fill in a hidden field with the chosen action for POST
 		$('#cartAction').val(clickedId);
-alert($('#cartAction').val);
+
 		// display chosen action as a heading
 		$('#actionGreeter h1').text(thisText);
 

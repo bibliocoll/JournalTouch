@@ -112,7 +112,7 @@ class CheckoutActions
       else {
         $user = $this->mail->fromAddress;
       }
-print_r($_POST); /* CHEC ERROR HERE TOBI */
+
       if (isset($_POST['action']) && $_POST['action'] == "sendArticlesToLib") {
         $email->FromName  = $usermail;
         $email->From      = $usermail;
