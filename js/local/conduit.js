@@ -306,8 +306,8 @@ $(document).ready(function() {
 		var aGrChop = aGr.substring(0, aGr.length - 3);
 
 		// fill in a hidden field with the chosen action for POST
-		$('form[name="Request"] input[name="action"]').val(clickedId);
-
+		$('#cartAction').val(clickedId);
+alert($('#cartAction').val);
 		// display chosen action as a heading
 		$('#actionGreeter h1').text(thisText);
 

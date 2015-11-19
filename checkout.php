@@ -17,7 +17,7 @@ $action = new CheckoutActions($cfg);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo __('MPI JournalTouch') ?> - <?php echo __('Checkout') ?></title>
+    <title><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?> - <?php echo __('Checkout') ?></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
@@ -165,10 +165,11 @@ if ($users == false) {
 <!-- Start Mailer Response -->
 <?php
 
+$file = '';
 if(isset($_POST['mailer']))
 {
     // if we have already sent an e-mail, read again from POST
-    if (empty($file)) {$file = $_POST['file'];}
+    $file = (empty($file) && isset($_POST['file'])) ? $file = $_POST['file'] : '';
 
         /* pass the PHPMailer object & save the return value (success or failure?) */
         /* is it feedback? */
@@ -286,7 +287,7 @@ if ($users == false) {
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="file" value="<?php print $file; ?>"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>"/>
-                        <input type="hidden" name="action" value=""/><!-- this one is important and is set from conduit.js! -->
+                        <input type="hidden" name="action" id="cartAction" value=""/><!-- this one is important and is set from conduit.js! -->
                         <input class="radius button large right submit" type="submit" value="Submit">
                     </div>
                 </div>

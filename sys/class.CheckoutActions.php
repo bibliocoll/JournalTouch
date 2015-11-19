@@ -112,7 +112,7 @@ class CheckoutActions
       else {
         $user = $this->mail->fromAddress;
       }
-      
+print_r($_POST); /* CHEC ERROR HERE TOBI */
       if (isset($_POST['action']) && $_POST['action'] == "sendArticlesToLib") {
         $email->FromName  = $usermail;
         $email->From      = $usermail;
@@ -178,7 +178,7 @@ class CheckoutActions
         $user = $this->mail->fromAddress;
       }
 
-      $email->Subject   = $this->translations['mail_bodyOrder'][$this->prefs->current_lang] . ' (from '.$user.')';
+      $email->Subject   = __('JournalTouch Feedback') . ' ('.__('from').' '.$user.')';
       $email->From      = $user;
       $email->FromName  = $user;
       $email->AddAddress($this->mail->toAddress);
