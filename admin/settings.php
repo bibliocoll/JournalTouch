@@ -352,6 +352,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                             $('.submit_btn').each(function() {
                                 $(this).removeClass('alert');
                             });
+                            // reset areYouSure
+                             $('form').trigger('reinitialize.areYouSure');
                         },
                         error: function(data) {
                             alert("Failure!");
@@ -379,12 +381,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             label           {margin-right: 10px;}
 
             /* make rows use the full screen size */
-            .fullWidth {
-               width: 80%;
-               margin-left: auto;
-               margin-right: auto;
-               max-width: initial;
-            }
+            .fullWidth {width: 80%; margin-left: auto; margin-right: auto; max-width: initial;}
+
+            /* Sticky alert boxes */
+            .alert-box {position: fixed; top: 50; right: 10; width: 150px; z-index: 999;}
 
             .tab-title button {width: 100%; margin: 0;}
 
@@ -402,14 +402,6 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 <div class="row fullWidth">
     <div class="small-10 medium-10 large-10 columns">
         <h2><?php echo __('JournalTouch Settings for Admins') ?></h2>
-        <div id="dataUnsaved" data-alert class="alert-box warning radius hidden">
-            <?php echo __('Beware, you have unsaved settings') ?>
-            <!-- <a href="#" class="close">&times;</a> -->
-        </div>
-        <div id="dataSaved" data-alert class="alert-box success radius hidden">
-            <?php echo __('Configuration successfully saved!') ?>
-            <!-- <a href="#" class="close">&times;</a> -->
-        </div>
     </div>
 </div>
 <div class="row fullWidth">
@@ -450,7 +442,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                             <div id="help_inst_service" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Adds a link with the journal\'s issn to your catalogue or discovery. The link shows as a meta button next to the journal in the list and/or above the toc. Leave empty to disable.') ?></span></div>
                         <label for="cfg[prefs][proxy]"><?php echo __('Proxy') ?></label>
                             <input type="text" name="cfg[prefs][proxy]" value="<?php echo $cfg->prefs->proxy ?>" aria-describedby="help_proxy" />
-                            <div id="help_proxy" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you got a proxy (e.g. EZproxy) to allow patrons outside of you ip range access then set the base url here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=).') ?></span></div>
+                            <div id="help_proxy" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you got a proxy (e.g. EZproxy) to allow patrons outside of your ip range access then set the base url here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=).') ?></span></div>
                         <input type="checkbox" name="cfg[prefs][show_dl_button]" <?php echo frm_checked($cfg->prefs->show_dl_button) ?> aria-describedby="help_show_dl_button">
                             <label for="cfg[prefs][show_dl_button]"><?php echo __('Enable button for direct download?') ?></label><br />
                             <div id="help_show_dl_button" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you enable this a button for directly downloading a article\'s pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page.') ?></span></div>
@@ -922,6 +914,16 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
     </div>
     <!-- Main structure 3: Info column -->
     <div class="small-2 columns">
+        <div id="dataUnsaved" data-alert class="alert-box warning radius hidden">
+            <?php echo __('Beware, you have unsaved settings') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
+
+        <div id="dataSaved" data-alert class="alert-box success radius hidden">
+            <?php echo __('Configuration successfully saved!') ?>
+            <!-- <a href="#" class="close">&times;</a> -->
+        </div>
+
         <div id="help"></div>
     </div>
     </form>    
