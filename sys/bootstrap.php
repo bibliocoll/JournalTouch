@@ -22,7 +22,8 @@
  */
 // All important basic functions in a separate file - keep the overview
 require_once('bootstrap.functions.php');
-// IF you really put the config somewhere else, you may provide the full path as parameter
+
+// Load THE config
 $cfg = cfg_load();
 
 // Define the basepath of JT
@@ -32,8 +33,8 @@ $cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to Journ
 $cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->language_default;
 require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 
+// Set current version
 $cfg->sys->current_jt_version = 0.4;
-
 
 // Check if upgrade is required
 if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
