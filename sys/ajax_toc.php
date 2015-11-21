@@ -10,15 +10,15 @@ $issn = (isset($_GET['issn'])) ? $_GET['issn'] : false;
 if (strlen(preg_replace('/[\d-x]/i', '', $issn) > 0)) $issn = false;
 
 if (!$issn) {
-  echo "Oops, got no ISSN. this should never ever happen, you know :)";
-  exit;
+    echo "Oops, got no ISSN. this should never ever happen, you know :)";
+    exit;
 } else {
-  require_once('class.GetJournalToc.php');
-  $getInfos = new GetJournalInfos();
-  $toc = $getInfos->ajax_query_toc($issn);
+    require_once('class.GetJournalToc.php');
+    $getInfos = new GetJournalInfos();
+    $toc = $getInfos->ajax_query_toc($issn);
 
-  // And return it...
-  echo $toc;
+    // And return it...
+    echo $toc;
 }
 
 ?>
