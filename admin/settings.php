@@ -426,8 +426,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
     </div>
     <!-- Main structure 2: Body column -->
     <div class="small-8 columns">
-            <!-- start Tabs -->
-            <div class="tabs-content">
+        <!-- start Tabs -->
+        <div class="tabs-content">
             <div class="content active" id="formTab1">
                 <h3><?php echo __('Settings for your institution') ?></h3>
                 <fieldset>
