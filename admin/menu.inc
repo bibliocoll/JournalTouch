@@ -27,6 +27,7 @@
         <ul class="left">
             <li class=""><a href="index.php"><?php echo __('Home') ?></a></li>
             <li class=""><a href="settings.php"><?php echo __('Settings') ?></a></li>
+            <li class=""><a href="covers.php"><?php echo __('Covers') ?></a></li>
             <li class=""><a href="updateTocs.php"><?php echo __('Update Journals') ?></a></li>
             <li class=""><a href="upgrade.php"><?php echo __('Upgrade JournalTouch') ?></a></li>
             <li class=""><a href="../index.php"><?php echo __('View Site') ?></a></li>
