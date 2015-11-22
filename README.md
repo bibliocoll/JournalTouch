@@ -4,25 +4,25 @@ JournalTouch provides a touch-optimized, responsive interface for browsing curre
 # Quickstart
 ## Prerequisites
 1. Make sure you have Apache and PHP available. Nothing else is needed
-2. Be aware that much of the fun is with showing covers. But there we don't (really) know freely available sources, so you have to get them yourself. JournalTocs offers covers via api, but only for premium accounts (as of 2015-10-28). Keep in mind, journal covers could also be a cool thin for discovery system ;)
-The [Journal Covers Database](http://www.stmcovers.com/) is a free source and the domain is registered to Elsevier. Yet, the site itself makes no statement about rights or licensing. Anyway, it _might_ be a fair use thing (which in turn isn't heard of outside of the US?). Your choice... Put the covers into data/covers and use the journal's issn as name (e.g. 1234-5678.jpg).
+2. Be aware that much of the fun is with showing covers. But there we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily donwload cover. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
 
 ## Quick Start
 1. Create a free [JournalTocs account](http://www.journaltocs.ac.uk/index.php?action=register). While not strictly required, it is highly recommended.
 2. Download JournalToc one the right side ("Download zip")
 3. Extract to you apache webfolder. Make sure the data folder and its subfolders are writable by the webserver.
-4. Edit config.php. For the real quick test, just enter you JournalTocs mail for $cfg->api->jt->account
+4. Go to http://myinstallation.net/admin and set enter your JournalTocs mail there (you also should make sure this folder is secured, e.g. by using a htaccess).
 5. Edit data/cover/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg->csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.
-6. Open you webbrowser and go to http://yourserver.net/journaltouch/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
-7. Go to http://yourserver.net/journaltouch and be happy
-8. IF you are happy, set a cronjob to call http://yourserver.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://yourserver.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (see config.php or release infos for 0.4 for more infos)
+6. Go again to http://myinstallation.net/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
+7. Go to http://myinstallation.net/ and be happy
+8. IF you are happy, set a cronjob to call http://myinstallation.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
 
 
 ## Translations
-If you want to change translations you can use [Poedit](https://poedit.net/) - it's free. We are going to look into a better way to translate the few language specific config option. Yet for now... :)
+- If you want to change translations you can use [Poedit](https://poedit.net/) - it's free.
+- As of version 0.4 many thing can be translated in the Settings menu in the admin panel :)
 
-# Current version: 0.3
-This is JournalTouch Version 0.3
+# Current version: 0.4 (alpha-beta-gamma)
+This is JournalTouch Version 0.4 (the current official version is 0.3)
 
 We're using the git-flow project structure, so the master branch always holds the latest stable released version of this project.
 Work towards the next release happens on the `develop` branch. For more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
