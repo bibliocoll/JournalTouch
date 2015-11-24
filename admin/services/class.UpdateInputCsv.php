@@ -113,7 +113,7 @@ class GetJournalInfos {
     private $hits_cr_new = 0;
     private $hits_cs_meta = 0;
     private $processed = 0;
-    private $log = '';
+    public $log = '';
 
 
     /**
@@ -176,15 +176,14 @@ class GetJournalInfos {
                 $getCover = new GetCover();
             }
 
-            echo '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
-            ob_start();
+            $this->log .= '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
             while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== FALSE) {
                 $this->log .= '<p>';
 
                 $this->issn = '';
-                if (valid_issn($journal_rows[$this->csv_col->p_issn], TRUE) === TRUE) {
+                if (!empty($journal_rows[$this->csv_col->p_issn])) {
                     $this->issn = $journal_rows[$this->csv_col->p_issn];
-                } elseif (valid_issn($journal_rows[$this->csv_col->e_issn], TRUE) === TRUE) {
+                } elseif (!empty($journal_rows[$this->csv_col->e_issn])) {
                     $this->issn = $journal_rows[$this->csv_col->e_issn];
                 }
 
@@ -203,7 +202,7 @@ class GetJournalInfos {
                     $already_checked = ($already_checked == 'JToc' || $already_checked == 'CRtoc' || $already_checked == 'Jseek' || $already_checked == 'None') ? true : false;
 
                     // !!! Journaltoc: Update meta data if wanted AND if not done before (so JToc/CRtoc is an important information ;) !!!)
-                    if ($fetch_meta && !$already_checked && (valid_issn($issn) === TRUE)) {
+                    if ($fetch_meta && !$already_checked) {
                         if ($this->jt->account) {
                             $already_checked = $this->journaltoc_fetch_meta($issn, $this->jt->account);
                         }
@@ -219,7 +218,7 @@ class GetJournalInfos {
                     }
 
                     // Fetch info if journal is listed by JournalToc or CrossRef
-                    if ($fetch_recent && (valid_issn($issn) === TRUE)) {
+                    if ($fetch_recent) {
                         if ($this->journal_row['metaGotToc'] == 'JToc' && $this->jt->account) {
                             $new_issue = $this->journaltoc_fetch_recent($issn, $this->jt->account);
                         }
@@ -265,18 +264,23 @@ class GetJournalInfos {
             }
         }
 
-        echo $this->log;
-        echo '</p>'.PHP_EOL.'<p>';
-        echo 'Processed lines: '.$this->processed;
-        echo '<br>Hits JournalToc (meta): '.$this->hits_jt_meta;
-        echo '<br>Hits JournalToc (new issues): '.$this->hits_jt_new;
-        echo '<br>Hits JournalToc (bad date): '.$this->hits_jt_badDate;
-        echo '<br>Hits CrossRef (meta): '.$this->hits_cr_meta;
-        echo '<br>Hits CrossRef (new issues): '.$this->hits_cr_new;
-        echo '<br>Hits JournalSeek (meta only): '.$this->hits_cs_meta;
-        echo '<br>This page was created in ' . $this->script_timer() . ' seconds.';
-        echo '</p>'.PHP_EOL;
-        ob_end_flush();
+        // Append statistics to runtime loge from while loop
+        $this->log .= '</p>'.PHP_EOL.'<p>';
+        $this->log .= 'Processed lines: '.$this->processed;
+        $this->log .= '<br>Hits JournalToc (meta): '.$this->hits_jt_meta;
+        $this->log .= '<br>Hits JournalToc (new issues): '.$this->hits_jt_new;
+        $this->log .= '<br>Hits JournalToc (bad date): '.$this->hits_jt_badDate;
+        $this->log .= '<br>Hits CrossRef (meta): '.$this->hits_cr_meta;
+        $this->log .= '<br>Hits CrossRef (new issues): '.$this->hits_cr_new;
+        $this->log .= '<br>Hits JournalSeek (meta only): '.$this->hits_cs_meta;
+        $this->log .= '<br>This page was created in ' . $this->script_timer() . ' seconds.';
+        $this->log .= '</p>'.PHP_EOL;
+
+        // Save last log to file
+        file_put_contents (dirname($this->csv_file->path). '/LastUpdate.log', $this->log);
+
+        // Alway return true...
+        return true;
     }
 
 
