@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require(__DIR__.'/../sys/bootstrap.php');
 $btn_cache  = (isset($_GET['clr_cache'])) ? true : false;
 $btn_upd    = (isset($_GET['upd'])) ? true : false;
@@ -22,25 +23,18 @@ $optCovers  = (isset($_GET['optCovers'])) ? true : false;
     <h2>Update Journal Infos</h2>
 
 <?php
-if ($btn_upd) {
-  require_once($cfg->sys->basepath.'admin/services/class.UpdateInputCsv.php');
-  $getInfos = new GetJournalInfos($cfg);
-  $getInfos->update_journals_csv($optMeta, $optRecent, $optTags, $optCovers);
-}
-
 $del_message = '';
 if ($btn_cache) {
-  $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
-  $i = 0;
-  foreach($files as $file) {
-    if(is_file($file)) {
-      unlink($file);
-      $i++;
+    $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
+    $i = 0;
+    foreach($files as $file) {
+        if(is_file($file)) {
+            unlink($file);
+            $i++;
+        }
     }
-  }
-  $del_message = "<strong>Sucess: $i files deleted</strong>";
+    $del_message = "<strong>Sucess: $i files deleted</strong>";
 }
-
 ?>
 
     <form method="get" action="updateTocs.php">
@@ -74,5 +68,19 @@ if ($btn_cache) {
             </fieldset>
     </div>
     </form>
+
+<?php
+if ($btn_upd) {
+
+    echo '<div style="clear:both"><h2>Log</h2>';
+    require_once($cfg->sys->basepath.'admin/services/class.UpdateInputCsv.php');
+    $getInfos = new GetJournalInfos($cfg);
+    $getInfos->update_journals_csv($optMeta, $optRecent, $optTags, $optCovers);
+    echo $getInfos->log;
+    echo '</div>';
+}
+ob_end_flush();
+?>
+
 <body>
 </html>
