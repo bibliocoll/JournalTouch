@@ -43,7 +43,7 @@ if ($btn_cache) {
 
 ?>
 
-    <form method="get" action="index.php">
+    <form method="get" action="updateTocs.php">
     <div class="row">
         <div class="large-6 columns left">
             <fieldset>
