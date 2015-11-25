@@ -292,8 +292,7 @@ class ListJournals
                 if ($this->prefs->show_metainfo_list == true || $this->prefs->show_metainfo_toc) {
                     $metaPrint    = (!empty($data[$this->csv_col->metaPrint]) ? 'fi-page-copy' : '');
                     $metaOnline = (!empty($data[$this->csv_col->metaOnline]) ? 'fi-download' : '');
-                    $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] !== 'Jseek' && $data[$this->csv_col->metaGotToc] !== '-' );
-                    $metaGotToc = ($metaGotToc) ? 'fi-like' : 'fi-dislike';
+                    $metaGotToc = $data[$this->csv_col->metaGotToc];
                     $metaShelfmark = (!empty($data[$this->csv_col->metaShelfmark]) ? $data[$this->csv_col->metaShelfmark] : '');
                     $metaWebsite = (!empty($data[$this->csv_col->metaWebsite]) ? $data[$this->csv_col->metaWebsite] : '');
                 }
