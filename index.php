@@ -70,17 +70,6 @@ $journalUpdates = $lister->getJournalUpdates();
     <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
     <style type="text/css" rel="stylesheet">
-/* Magamenu test: http://codepen.io/winghouchan/pen/esuGI */
-h3 {
-    color: #fff !important;
-}
-@media only screen and (min-width: 641px) {
-    .dropdown-wrapper {
-        background-color: #333333 !important;
-        width: 540px !important;
-        padding: 10px 0;
-    }
-}
         img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");
     </style>
   </head>
@@ -108,22 +97,12 @@ h3 {
         </li>
         <?php } ?>
         <?php if ($cfg->filters) { /* show filters only if set */?>
-        <li class="has-dropdown not-click">
+        <li class="has-dropdown">
           <a id="filter-view" href="#"><i class="fi-filter"></i>&#160;<?php echo $cfg->translations['menu_filter'][$lang] ?></a>
-<ul class="dropdown dropdown-wrapper">
-  <li>
-    <div>
-      <div class="small-4 columns">
-        <ul>
-          <li><h3>Heading 1</h3></li>
+          <ul class="dropdown">
             <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
             <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></li>
             <li><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
-        </ul>
-      </div>
-      <div class="small-4 columns">
-        <ul>
-          <li><h3>Heading 2</h3></li>
 <?php
 /* read all filters from the config file */
 foreach ($cfg->filters as $key => $filter_languages) {
@@ -135,20 +114,7 @@ foreach ($cfg->filters as $key => $filter_languages) {
     }
 }
 ?>
-        </ul>
-      </div>
-      <div class="small-4 columns">
-        <ul>
-          <li><h3>Heading 1</h3></li>
-            <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
-            <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></li>
-            <li><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
-        </ul>
-      </div>
-
-    </div>
-  </li>
-</ul>
+          </ul>
         </li>
         <?php } ?>
         <?php if ($cfg->prefs->menu_show_sort) { ?>
@@ -441,12 +407,27 @@ foreach ($journals as $j) {
   echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
   echo '<img class="getTOC '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 
-  /* Show meta info in the list */
-  $meta = false;
+  // Set correct toc link
+  // @todo: seriously; make this better/cleaner
+  $toclink = $rss = '';
+  if ($j['metaGotToc'] == 'JToc') {
+    $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+    // RSS only if JournalTocs is source
+    if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ';
+  }
+  elseif ($j['metaGotToc'] == 'CRtoc') {
+    // Crossref does not work in a frame (obviously), just get toc JournalTouch style
+    //$toclink = 'http://search.crossref.org/?type=Journal+Article&sort=year&q='.$j['issn'];
+    $toclink = '<a href="#" class="button cr_getTOC"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+  }
+  else {
+    $toclink = '<a href="#" class="button"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+  }
 
-  $jtoc = 'http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'];
-  $meta = (($j['metaGotToc']) ? '<a href="'.$jtoc.'" class="button popup"><i class="'.$j['metaGotToc'].'"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ' : '');
-  $meta .= ($cfg->prefs->rss && $j['metaGotToc']) ? '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ' : '';
+  $meta = '';
+  //$meta = $j['metaGotToc'];
+  $meta .= $toclink;
+  $meta .= $rss;
   $link = ($cfg->prefs->inst_service) ? $cfg->prefs->inst_service.$j['issn'] : '';
   $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
   $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
