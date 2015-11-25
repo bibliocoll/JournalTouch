@@ -307,7 +307,14 @@ class GetJournalInfos {
     public function journaltoc_fetch_toc($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
         $xml = simplexml_load_file($jtURL);
+
+        // Nothing usable returned
         if (!is_object($xml)) {
+            return false;
+        }
+
+        // There are not items (articels) => not toc from JournalTocs
+        if ($xml->item->count() == 0) {
             return false;
         }
 
