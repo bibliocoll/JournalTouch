@@ -256,36 +256,6 @@ background-color: aliceblue;
 }
 
 
-/*************** old code: Journal (Cover) List : LIST (ACCORDION) *****************/
-
-/*dl.accordion dd.active a.item_name {*/
-/*background-color:#fff;*/
-/*}*/
-/*dl.accordion dd.active a.item_add {*/
-/*background-color:#007095;*/
-/*}*/
-
-/*dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {*/
-/*background: #43ac41!important;*/
-/*}*/
-
-/*.accordion dd {*/
-/*border-top: solid 1px #879CC6;*/
-/*}*/
-
-/*[> E-Mail library notification button on errors <]*/
-/*dl.accordion a.button {*/
-/*background-color: #008CBA!important;*/
-/*}*/
-/*dl.accordion a.button:hover {*/
-/*background-color: #007095!important;*/
-/*}*/
-
-/*dl.accordion a.close {*/
-/*background:none;*/
-/*}*/
-
-
 /*************** Journal (Cover) List : GRID / LIST ****************************/
 
 /* ===== GRID VIEW ===== */
@@ -593,6 +563,7 @@ color:#fff;
 position:relative;
 }
 
+
 /*************** Checkout ************************************************/
 
 #actions a {
@@ -631,13 +602,26 @@ font-size: larger;
 }
 
 
-/*************** Tagcloud ************************************************/
-
+/*************** Tagcloud (via menu) *****************************************/
 .tagcloud1 a, .tagcloud1 {font-size: 0.8em; color: #563E0B;}
 .tagcloud2 a, .tagcloud2 {font-size: 0.85em; color: #0A2E36;}
 .tagcloud3 a, .tagcloud3 {font-size: 0.875em; color: #99C228;}
 .tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
 .tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
+
+
+/*************** Filter Menu ********************************/
+/* Megamenu as suggested here: http://codepen.io/winghouchan/pen/esuGI */
+h3 {color: #fff !important;}
+@media only screen and (min-width: 641px) {
+    .dropdown-wrapper {
+        background-color: #333333 !important;
+        /*width: 540px !important; */
+        width: 880px !important;
+        padding: 10px 0;
+    }
+}
+
 
 /*************** Metainfo ************************************************/
 
@@ -700,4 +684,3 @@ margin-right:20px;
 }
 
 /* End Glowing Basket */
-
