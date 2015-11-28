@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>basic example</title>
+</head>
+<body>
+<script src="../jquery.js"></script>
+<script type="text/javascript" src="jquery.qrcode.min.js"></script>
+<script type="text/javascript" src="lib/qrcode.js"></script>
+
+<p>Render in table</p>
+<div id="qrcodeTable"></div>
+<p>Render in canvas</p>
+<div id="qrcodeCanvas"></div>
+<script>
+	jQuery('#qrcodeTable').qrcode({
+		render	: "table",
+		text	: "Hello"
+	});
+	jQuery('#qrcodeCanvas').qrcode({
+		text	: "Hello"
+	});
+</script>
+
+</body>
+</html>

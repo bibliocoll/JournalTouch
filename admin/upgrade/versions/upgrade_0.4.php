@@ -45,7 +45,9 @@ New
 - Added option to hide the list view
 - Added option to use proxy (e.g. EZproxy) for article links
 - Added option to display metainfo (and the journal title) above the toc, not only in list. Activate via config.
-- Added option to show meatinfo rss button (use with care and read the help in the config page)
+- Added option to show metainfo rss button (use with care and read the help in the config page)
+- Added button to show qr code for article link (displays always, currently no option)
+
 
 Changes
 - config option "$cfg->csv_col->col7 = 7" became "$cfg->csv_col->publisher = 7" - publisher is used for cover Download. The publisher is now automatically added on the (first) metadata update (at least if found at JournalTocs or JournalSeek).
@@ -54,6 +56,7 @@ Changes
 Improvements
 - Use JournalTocs title if no title is set in journals.csv on metadata fetching. Thus only the ISSNs are required to get started (although using the "library\'s journal name" is recommended). You might try it by renaming journals.csv.example to journals.csv in the data/journals folder
 - Filter menu now uses three columns (menu doesn\'t overflow screen bottom so easily)
+- Article Tocs now use full width in frame
 
 
 Fixes
@@ -74,6 +77,7 @@ Added 3rd party ressources
 - foundation-select: https://github.com/roymckenzie/foundation-select
 - jquery.AreYouSure: https://github.com/codedance/jquery.AreYouSure
 - JQuerySerializeCheckbox.js: https://gist.github.com/TaoK/1572512
+- jquery-qrcode: https://github.com/lrsjng/jquery-qrcode (wrapper for qrcode-generator: https://github.com/kazuhikoarase/qrcode-generator)
 
 
 Credits

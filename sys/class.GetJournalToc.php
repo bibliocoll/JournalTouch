@@ -158,6 +158,8 @@ class GetJournalInfos {
           <link href="../css/local.css" rel="stylesheet">
           <script src="../js/vendor/jquery.js"></script>
           <script src="../js/vendor/jquery.timeago.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/jquery.qrcode.min.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/lib/qrcode.js"></script>
     </head><body>';
       $html_postfix_ok = '<script src="../js/local/frame.js"></script></body></html>';
       $html_postfix_er = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body></html>';
@@ -253,10 +255,13 @@ class GetJournalInfos {
                 // abstract button: let us assume that strlen>300 == abstract
                 $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
                 $html .=      $link_dl.PHP_EOL;
+                // QR-Code
+                $html .=      '<a class="button medium radius qrcode" href="javascript:;"><i class="fi-qr"></i> QR</a> ';
                 // add button (cart)
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>
                 </div>';
-                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible small-12 columns"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    '<div class="qrcodeCanvas invisible small-12 columns"><span class="right"></span></div>';
                 $html .= '</div>';
             }
         }
