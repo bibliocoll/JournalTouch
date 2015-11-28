@@ -34,6 +34,24 @@ function readyFrame(loc){
         //	$(this).parent().prev().children("div.abstract").toggle("easeOutCubic");
         $(this).parent().next("div.abstract").fadeToggle();
     });
+
+    /* QR code on click */
+    $(document).on("click","a.qrcode",function() {
+        var link = $(this).parents('.tocItem').attr('data-link');
+
+        //alert($(this).parents().children("div.qrcodeCanvas").attr('title'));
+
+        $(this).parents().children("div.qrcodeCanvas").empty().fadeToggle();
+
+    	$(this).parents().children("div.qrcodeCanvas").qrcode({
+            render: 'canvas',
+    		text	: link,
+            size: 150
+    	});
+
+    });
+
+
     $(document).on("click",".item_add",function(){
         $(this)
             .removeClass("item_add")

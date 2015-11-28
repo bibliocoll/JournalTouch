@@ -448,6 +448,10 @@ color: #dbd417;
 
 /*************** Display TOC *********************************************/
 
+.tocItem {
+max-width: 100%;
+}
+
 #fillTOC h6 {
 color:#3E9C12;
 font-weight:bold;
@@ -497,6 +501,8 @@ background-color:#2F334D!important;
 #fillTOC a.disabled {
 background-color:#FFFFFF!important;
 }
+/* QR-code */
+.tocItem .qrcodeCanvas canvas {float:right;}
 
 
 /* special for Orbit */
