@@ -14,6 +14,10 @@
  *      instead of the fixed value in input.csv (that only works if you update
  *      daily and has some quirks)
  *
+ * @todo    2015-11-28
+ * - The mega menu for filters could be better more flexible; using the <h3>
+ *   headers for show all / show favorites / show new isn't too eye friendly
+ *
  * @author Daniel Zimmel <zimmel@coll.mpg.de>
  * @author Tobias Zeumer <tzeumer@verweisungsform.de>
  */
@@ -69,7 +73,7 @@ $journalUpdates = $lister->getJournalUpdates();
         <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
         <script src="js/vendor/modernizr.js"></script>
         <style type="text/css" rel="stylesheet">
-                img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");
+            img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");
         </style>
     </head>
 <!-- tell scripts if caching of tocs is enabled -->
@@ -95,25 +99,78 @@ $journalUpdates = $lister->getJournalUpdates();
                 <li><a href="#" id="myTags" data-reveal-id="tagsPopover"><i class="switcher fi-pencil"></i>&#160;<?php echo $cfg->translations['menu_tag'][$lang] ?></a>
                 </li>
                 <?php } ?>
+                <!-- Filters Menu -->
                 <?php if ($cfg->filters) { /* show filters only if set */?>
-                <li class="has-dropdown">
+                <li class="has-dropdown not-click">
                     <a id="filter-view" href="#"><i class="fi-filter"></i>&#160;<?php echo $cfg->translations['menu_filter'][$lang] ?></a>
-                    <ul class="dropdown">
-                        <li><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></li>
-                        <li><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></li>
-                        <li><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></li>
 <?php
-/* read all filters from the config file */
-foreach ($cfg->filters as $key => $filter_languages) {
-        //sort($filter_language);
-        foreach ($filter_languages AS $filter_language => $translation) {
-                if ($filter_language == $lang) {
-                        print '<li><a class="filter" id="filter-'.$key.'" href="#">'.$translation.'</a></li>';
-                }
-        }
+/* use filter translations from the config file */
+$filters_used = array_column($journals, 'filter');   // Get only the filters set for all journals
+$filters_used = array_count_values($filters_used);   // Count occurences of each filter
+
+// Get all filters that are actually used in journals.csv
+foreach ($filters_used as $filter_key => $filter_count) {
+    $filter_name = (isset($cfg->filters[$filter_key][$lang])) ? $cfg->filters[$filter_key][$lang] : '';
+
+    if ($filter_name) {
+        $filter_list[$filter_name] = '<li><a class="filter" id="filter-'.$filter_key.'" href="#">'.$filter_name.' ('.$filter_count.')</a></li>';
+    }
+}
+
+$columns = 3; // How many columns? @note: currently only 3, bad you get the idea and could easily change it
+// Sort alphabetically for current language and output list
+if (isset($filter_list)) {
+    ksort($filter_list);
+
+    // Show filters nicely distributed over three columns
+    $filter_total = count($filter_list);
+    $mod        = $filter_total % $columns;     // How many entries don't fit evenly?
+
+    //virtual entries (just act as if we had entires evenly divisible by columns)
+    $virt_entries = ($mod > 0) ? $filter_total + ($columns - $mod) : $filter_total;
+
+    // Get part of entries for each column
+    for ($i = 0; $i <= $columns-1; $i++) {
+        $start = $i * ceil($virt_entries/$columns);
+        $end   = $start +  ceil($virt_entries/$columns)-1;
+
+        if ($end > $filter_total-1) $end = $filter_total-$mod;
+
+        //echo "start: $start<br>End: $end <br>";
+        $filter_col[$i] = array_slice($filter_list, $start, $end-$start+1);
+    }
+}
+// Prevent notices below
+else {
+    for ($i = 0; $i <= $columns-1; $i++) $filter_col[$i] = array();
 }
 ?>
+                    <!-- START "Megamenu" for filter entries -->
+                    <ul class="dropdown dropdown-wrapper">
+                        <li>
+                            <div>
+                                <div class="small-4 columns">
+                                    <ul>
+                                        <li><h3><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></h3></li>
+                                        <li><?php echo implode("\n", $filter_col[0])?></li>
+                                </ul>
+                                </div>
+                                <div class="small-4 columns">
+                                    <ul>
+                                        <li><h3><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></h3></li>
+                                        <li><?php echo implode("\n", $filter_col[1])?></li>
+                                    </ul>
+                                </div>
+                                <div class="small-4 columns">
+                                    <ul>
+                                    <li><h3><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></h3></li>
+                                        <li><?php echo implode("\n", $filter_col[2])?></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
+                    <!-- END "Megamenu" for filter entries -->
                 </li>
                 <?php } ?>
                 <?php if ($cfg->prefs->menu_show_sort) { ?>

@@ -53,6 +53,7 @@ Changes
 
 Improvements
 - Use JournalTocs title if no title is set in journals.csv on metadata fetching. Thus only the ISSNs are required to get started (although using the "library\'s journal name" is recommended). You might try it by renaming journals.csv.example to journals.csv in the data/journals folder
+- Filter menu now uses three columns (menu doesn\'t overflow screen bottom so easily)
 
 
 Fixes
@@ -73,6 +74,7 @@ Added 3rd party ressources
 - foundation-select: https://github.com/roymckenzie/foundation-select
 - jquery.AreYouSure: https://github.com/codedance/jquery.AreYouSure
 - JQuerySerializeCheckbox.js: https://gist.github.com/TaoK/1572512
+
 
 Credits
 Last but not least. Thanks for suggestions and help from:
