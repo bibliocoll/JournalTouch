@@ -501,8 +501,17 @@ background-color:#2F334D!important;
 #fillTOC a.disabled {
 background-color:#FFFFFF!important;
 }
+
+/*DOI*/
+.tocItem .title_links_layer {width: 100%; line-height: 50px !important;}
+.lnkDOI     {float: right; }
+.doi_outer  {font-size: large;}
+.doi_prefix {background-color: orange; color: #ffffff; padding: 3px 8px; border-right: thin solid black;}
+.doi_link   {background-color: gray; padding: 3px 4px; }
+.doi_link a {color: #ffffff;}
+
 /* QR-code */
-.tocItem .qrcodeCanvas canvas {float:right;}
+.lnkQR      {}
 
 
 /* special for Orbit */

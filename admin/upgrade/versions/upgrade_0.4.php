@@ -46,7 +46,7 @@ New
 - Added option to use proxy (e.g. EZproxy) for article links
 - Added option to display metainfo (and the journal title) above the toc, not only in list. Activate via config.
 - Added option to show metainfo rss button (use with care and read the help in the config page)
-- Added button to show qr code for article link (displays always, currently no option)
+- Added button to show qr code for article link; doi if available otherwise fetched link (displays always, currently no option)
 
 
 Changes

@@ -223,6 +223,11 @@ class GetJournalInfos {
         array_reverse ($toc['sort'], $preserve_keys = true);
 
         foreach (array_keys($toc['sort']) as $id ) {
+            $doi = '';
+            if ($toc['doi'][$id]) {
+                $doi = '<span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/'.$toc['doi'][$id].'">'.$toc['doi'][$id].'</a></span></span>';
+            }
+
             if ($toc['title'][$id]) {
                 $authors = array_slice($toc['authors'][$id], 0, $max_authors);
                 $authors = implode(' & ', $authors);
@@ -256,12 +261,12 @@ class GetJournalInfos {
                 $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
                 $html .=      $link_dl.PHP_EOL;
                 // QR-Code
-                $html .=      '<a class="button medium radius qrcode" href="javascript:;"><i class="fi-qr"></i> QR</a> ';
+                $html .=      '<a class="button medium radius title_links" href="javascript:;"><i class="fi-link"></i></a> ';
                 // add button (cart)
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>
                 </div>';
                 $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible small-12 columns"><span>'.$toc['abstract'][$id].'</span></div>' : '');
-                $html .=    '<div class="qrcodeCanvas invisible small-12 columns"><span class="right"></span></div>';
+                $html .=    '<div class="title_links_layer invisible small-12 columns"><span class="lnkDOI right">'.$doi.'</span><span class="lnkQR right"></span></div>';
                 $html .= '</div>';
             }
         }
@@ -741,7 +746,7 @@ class GetJournalInfos {
             //&rft.eissn=
         }
 
-        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>&nbsp;';
+        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>';
 
         return $link_dl;
     }
