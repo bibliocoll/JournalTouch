@@ -35,15 +35,23 @@ function readyFrame(loc){
         $(this).parent().next("div.abstract").fadeToggle();
     });
 
-    /* QR code on click */
-    $(document).on("click","a.qrcode",function() {
-        var link = $(this).parents('.tocItem').attr('data-link');
+    // QR code and DOI on click
+    $(document).on("click","a.title_links",function() {
+        var link = '';
 
-        //alert($(this).parents().children("div.qrcodeCanvas").attr('title'));
+        // Use doi for qr if available. Otherwiese the regular link
+        var doi  = $(this).parents('.tocItem').attr('data-doi');
+        if (doi != '') {
+            link = 'https://dx.doi.org/'+doi;
+        } else{
+            link = $(this).parents('.tocItem').attr('data-link');
+        }
 
-        $(this).parents().children("div.qrcodeCanvas").empty().fadeToggle();
+        //alert($(this).parents().children("div.title_links_layer").children("span.lnkQR").text());
 
-    	$(this).parents().children("div.qrcodeCanvas").qrcode({
+        $(this).parents().children("div.title_links_layer").fadeToggle();
+
+    	$(this).parents().children("div.title_links_layer").children("span.lnkQR").empty().qrcode({
             render: 'canvas',
     		text	: link,
             size: 150
