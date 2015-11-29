@@ -66,7 +66,7 @@ $path_covers_api    = $cfg->sys->basepath.'data/covers/api/';
 
 // Url params
 $max_show = 100;
-$entry_start = (isset($_GET['start'])) ? $_GET['start'] : 0;
+$entry_start = (isset($_GET['start'])) ? $_GET['start'] : 1;
 
 // Get available journals images (manual and api)
 // Merge everthing in a big array with issn as key
