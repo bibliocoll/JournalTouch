@@ -57,6 +57,7 @@ Improvements
 - Use JournalTocs title if no title is set in journals.csv on metadata fetching. Thus only the ISSNs are required to get started (although using the "library\'s journal name" is recommended). You might try it by renaming journals.csv.example to journals.csv in the data/journals folder
 - Filter menu now uses three columns (menu doesn\'t overflow screen bottom so easily)
 - Article Tocs now use full width in frame
+- Removed curl requirement
 
 
 Fixes

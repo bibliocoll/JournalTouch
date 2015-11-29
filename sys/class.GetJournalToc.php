@@ -298,7 +298,6 @@ class GetJournalInfos {
      *
      * @todo 2015-09-05
      * - fetching DOIs is nice, but it slows things down. Make it an option...
-     * - also using curl might be fatal on certain configs
      *
      * @note  Shortest sfx link: http://sfx.gbv.de/sfx_tuhh?svc.fulltext=yes&rft_id=info:doi/10.1002/adma.201400310
      *
@@ -350,8 +349,8 @@ class GetJournalInfos {
             $jt_source    = preg_replace($tit_patterns, $tit_replacements, $article->children('dc', TRUE)->source);
 
             // DOI
-            $jt_doi       = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
-            $jt_doi       = $this->get_doi($jt_doi);
+            $jt_doi = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
+            if ($jt_doi) $jt_doi = $this->get_doi($jt_doi);
 
             // Author(s) don't have to be set + there might be more than one
             $jt_authors = array();
@@ -403,27 +402,31 @@ class GetJournalInfos {
             $toc['sort'][]     = $jt_sort;
 
             //i really want a doi. so remember this one for crossref! ~~krug 05.08.2015
+            // Zeumer 2015-11-29: weird sometimes less mssing dois than toc[dois]
+            // , e.g. for 0001-6918. Duplicate title?
             if ($jt_doi == '') {
                 //keep a reference to where the doi needs to go in $toc
-                $missing_dois[$jt_title] = &$toc['doi'][$itemcount];
+                $missing_dois[$jt_title.' '.$issn] = &$toc['doi'][$itemcount];
             }
+
             $itemcount++;
         }
 
-        //we have dois to fetch
+        // Since JournalTocs didn't provide DOIs, let's fetch them from CrossRef
+        // This most likely won't return a DOI for each article, but it's better
+        // than none
         if (count($missing_dois) > 0) {
-            $jsondata = json_encode(array_keys($missing_dois));
-            $ch = curl_init("http://search.crossref.org/links"); //yep, oldschool
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($jsondata)));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata );
-            $cr_result = curl_exec($ch);
-            $cr_return = json_decode($cr_result);
-            curl_close($ch);
-            if (is_object($cr_return)  && $cr_return->query_ok ){
-                foreach ($cr_return->results as $result) {
+            $context = stream_context_create(array('http' => array(
+            	'method' => 'POST',
+            	'content' => json_encode(array_keys($missing_dois)),
+            	'header' => 'Content-Type: application/json',
+            )));
+            $cr_json = file_get_contents('http://search.crossref.org/links', null, $context);
+            $obj = ($cr_json) ? json_decode($cr_json) : false;
+            if ($obj) {
+                foreach ($obj->results as $result) {
                     if ($result->match) {
+                        // Keep in mind $missing_dois... is a reference to $toc['doi'][$itemcount]
                         $missing_dois[$result->text] = $this->get_doi($result->doi);
                     }
                 }
