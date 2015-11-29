@@ -451,17 +451,17 @@ foreach ($journals as $j) {
     // @todo: seriously; make this better/cleaner
     $toclink = $rss = '';
     if ($j['metaGotToc'] == 'JToc') {
-        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup" title="'.__('Via JournalTocs').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
         // RSS only if JournalTocs is source
         if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ';
     }
     elseif ($j['metaGotToc'] == 'CRtoc') {
         // Crossref does not work in a frame (obviously), just get toc JournalTouch style
         //$toclink = 'http://search.crossref.org/?type=Journal+Article&sort=year&q='.$j['issn'];
-        $toclink = '<a href="#" class="button cr_getTOC"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button cr_getTOC" title="'.__('Via CrossRef').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
     else {
-        $toclink = '<a href="#" class="button"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button" title="'.__('No toc available').'"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
 
     $meta = '';
