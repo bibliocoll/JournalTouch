@@ -277,7 +277,7 @@ class GetJournalInfos {
         $this->log .= '</p>'.PHP_EOL;
 
         // Save last log to file
-        file_put_contents (dirname($this->csv_file->path). '/LastUpdate.log', $this->log);
+        file_put_contents (dirname($this->csv_file->path). '/LastUpdateLog.html', $this->log);
 
         // Alway return true...
         return true;
