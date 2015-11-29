@@ -634,6 +634,7 @@ h3 {color: #fff !important;}
         /*width: 540px !important; */
         width: 880px !important;
         padding: 10px 0;
+        right: -300px !important;
     }
 }
 
