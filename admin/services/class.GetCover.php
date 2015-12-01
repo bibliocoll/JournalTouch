@@ -672,7 +672,7 @@ class GetCover {
 
         // Try to guess extension if not provided
         if (!$ext) {
-            $pattern = '/.*\.(jpg|gif|png)/';
+            $pattern = '/.*\.(jpg|gif|png|svg)/';
             preg_match($pattern, $url, $matches);
             $ext = (isset($matches[1])) ? $matches[1] : 'jpg';
         }
