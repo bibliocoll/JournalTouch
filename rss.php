@@ -13,7 +13,7 @@ require_once("sys/bootstrap.php");
 # http://www.journaltocs.ac.uk/api/index.php
 
 if (isset($_GET["issn"]) && ! empty( $_GET["issn"]) ){
-    $rss = 'http://www.journaltocs.ac.uk/api/journals/'.$_GET["issn"].'?output=articles&user='.$cfg->api->jt->account;
+    $rss = '//www.journaltocs.ac.uk/api/journals/'.$_GET["issn"].'?output=articles&user='.$cfg->api->jt->account;
 
     if (!(isset($cfg->prefs->proxy) && !empty($cfg->prefs->proxy))) {
         header("Location: $rss");
