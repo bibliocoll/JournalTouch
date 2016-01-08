@@ -13,7 +13,7 @@
 // do not show system errors, these should be handled in js or below
 //error_reporting(0);
 
-require_once(__DIR__.'/../../config.php');
+require_once(__DIR__.'/../../sys/bootstrap.php');
 require_once(__DIR__.'/../../sys/class.ListJournals.php');
 /* setup methods & objects */
 $lister = new ListJournals();
@@ -60,7 +60,7 @@ function search_array($needle, $haystack) {
  *              but in class.getJournalInfos.php as well
  */
 function remove_ancient_cache_files() {
-  $files = glob('../cache/*.cache*'); // get all file names by pattern
+  $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
   $now = new DateTime(); //very OO
   $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
   $threshold = date_timestamp_get( $now->sub($age) ); //no longer very OO

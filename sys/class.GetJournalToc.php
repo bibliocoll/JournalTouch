@@ -40,6 +40,9 @@ class GetJournalInfos {
     /// \brief \b STR The ISSN of the current journal. Maybe useful somewhere (currently only a warning if datediff is pretty high)
     protected $issn;
 
+    /// \brief \b DATE The publishing date of the currently queries issue - used for caching
+    protected $pubdate = '1970-01-01';
+
     /* Array with toc information */
     protected $toc = array(
         'authors'  => array(),
@@ -60,19 +63,25 @@ class GetJournalInfos {
 
 
     /**
-     * @brief   Load config, set properties
+     * @brief   Load config (also loads bootstrap), set properties
      *
      * @return \b void
      */
-    public function __construct($cfg) {
+    public function __construct() {
         header('Content-Type: text/html; charset=utf-8');
         set_time_limit($this->maxtime);
         $this->script_timer();
 
-        //require_once($cfg->sys->basepath.'config.php'); //should be superfluous now
+        require('bootstrap.php');
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
+        $this->sys      = $cfg->sys;
+
+        // Check if caching should be used. Use if set and different from '1970-01-01'
+        // $_GET['pubdate'] should be formatted 'Y-m-d' (checked vis sys/bootstrap.php)
+        if (isset($_GET['pubdate']))          $this->pubdate = $_GET['pubdate'];
+        if ($this->pubdate == '1970-01-01')   $this->prefs->cache_toc_enable = false;
     }
 
 
@@ -93,16 +102,89 @@ class GetJournalInfos {
      * @return \b STR Some html
      */
     public function ajax_query_toc($issn) {
-        $this->issn = $issn;
+      $this->issn = $issn;
 
-        $toc = ($this->jt->account) ? $this->journaltoc_fetch_toc($issn, $this->jt->account) : false;
+      // If caching enabled create a file name pattern to look for
+      // (cache is automatically disbaled if no valid date is give; see constructor)
+      if ($this->prefs->cache_toc_enable) {
+        $query     = md5(implode('', $_GET));
+        $cachefile = $this->sys->data_cache."toc-$issn+$query.cache.html";
+      }
 
-        if (!$toc) {
-            $toc = $this->crossref_fetch_toc($issn);
+      // Is caching enabled and cached file exists? Load it
+      // (Issue date is same as in cache file name)
+      if ($this->prefs->cache_toc_enable && file_exists($cachefile)) {
+        $this->toc = file_get_contents($cachefile);
+        $toc_status = true;
+      }
+      // A valid pubdate is given but no cached file exists
+      elseif ($this->prefs->cache_toc_enable) {
+        // clean up and delete old toc's
+        $this->delete_expired($issn);
+
+        $toc_status = $this->get_toc($issn);
+        // A toc was found, cache it
+        if ($toc_status) {
+          file_put_contents($cachefile, $this->toc);
         }
+      }
+      // Ok, we got no date or caching is disabled. Get toc the old way
+      else {
+        $toc_status = $this->get_toc($issn);
+      }
 
-        // whatever we got, create html
-        return $this->ajax_response_toc($this->toc);
+      // Whatever $toc_status we got now, return the toc html
+      return $this->toc;
+    }
+
+
+    /**
+     * @brief   Get toc, pad it with some html and put it into an iframe
+     *
+     * @todo    Maybe use CDN for scripts
+     * @todo    2015-08-22: Remove hack for old non-iframe version if it finally
+     *          gets removed from conduit.js
+     * @todo    Outsource the iframe html to a template file for reuse and easy
+     *          modification
+     *
+     * @param $issn    \b STR  Journal ISSN
+     * @return \b STR Result as HTML; you may pass some variable as reference to get the status too
+     */
+    function get_toc($issn) {
+      $html_prefix = '<!DOCTYPE html>
+          <html><head>
+          <link href="../css/foundation.min.css" rel="stylesheet">
+          <link href="../css/foundation-icons/foundation-icons.css" rel="stylesheet">
+          <link href="../css/local.css" rel="stylesheet">
+          <script src="../js/vendor/jquery.js"></script>
+          <script src="../js/vendor/jquery.timeago.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/jquery.qrcode.min.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/lib/qrcode.js"></script>
+    </head><body>';
+      $html_postfix_ok = '<script src="../js/local/frame.js"></script></body></html>';
+      $html_postfix_er = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body></html>';
+
+      // Try primary source: JournalToc
+      $toc_status = ($this->jt->account) ? $this->journaltoc_fetch_toc($issn, $this->jt->account) : false;
+
+      // Try secondary source: CrossRef (if you know any other add them beyond)
+      if (!$toc_status) {
+        $toc_status = $this->crossref_fetch_toc($issn);
+      }
+
+      // Hack for non-iframe version
+      if (isset($_GET['noframe'])) return $this->ajax_response_toc($this->toc);
+
+      // Got nothing - return an error (@note with a little overHEAD...)
+      if (!$toc_status || !$this->toc) {
+        $this->toc = $html_prefix.$html_postfix_er;
+        return false;
+      }
+      // Create toc html and wrap it into the iframe html
+      else {
+        $this->toc = $html_prefix.$this->ajax_response_toc($this->toc).$html_postfix_ok;
+        return true;
+      }
     }
 
 
@@ -111,8 +193,8 @@ class GetJournalInfos {
      *
      * @todo
      * - Hmm, $toc should really be a class property?
-     * - This should be put into an iframe (like meta links), so the article list
-     *   can be scrolled, without scrolling the whole page
+     * - 2015-10-30: Added proxy option. It would be nice to add some guide if
+     *   there is no proxy (using $cfg->prefs->ip_subnet)...
      *
      * @author Daniel Zimmel <zimmel@coll.mpg.de>
      * @author Tobias Zeumer <tzeumer@verweisungsform.de>
@@ -125,9 +207,8 @@ class GetJournalInfos {
             /* write something we can read from our caller script */
             return false;
         }
-        //FIXME: temporarily removed i18n from this class
-        //$timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : __('Sorry, I could not find any information about the publishing date');
-        $timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : ('Sorry, I could not find any information about the publishing date');
+
+        $timestring = (isset($toc['update_date'])) ? date('c', strtotime($toc['update_date'])) : __('Sorry, I could not find any information about the publishing date');
     /*
     $journal = $toc['source'][0];
     $journal .= ($toc['volume'][0])                    ? ', Vol. '.$toc['volume'][0] : '';
@@ -135,24 +216,32 @@ class GetJournalInfos {
     $journal .= ($toc['volume'][0] && $toc['year'][0]) ? ' ('.$toc['year'][0].')'    : '';
      */
         $html  = '<h4 class="small-10 columns">'.$toc['source'][0].'</h4>';
-        //FIXME: temporarily removed i18n from this class
-        //$html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
-        $html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. ('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
+        $html .= '<h6 class="small-10 columns"><i class="fi-asterisk"></i> '. __('last update:') .' <time class="timeago" datetime="'.$timestring.'">'.$timestring.'</time> <i class="fi-asterisk"></i></h6>';
 
         // sort by date newest to oldest
         asort($toc['sort']);
         array_reverse ($toc['sort'], $preserve_keys = true);
 
         foreach (array_keys($toc['sort']) as $id ) {
+            $doi = '';
+            if ($toc['doi'][$id]) {
+                $doi = '<span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/'.$toc['doi'][$id].'">'.$toc['doi'][$id].'</a></span></span>';
+            }
+
             if ($toc['title'][$id]) {
                 $authors = array_slice($toc['authors'][$id], 0, $max_authors);
                 $authors = implode(' & ', $authors);
                 $authors .= ($authors) ? ' : ' : '';
 
-                $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
+                $link_dl = '';
+                if ($this->prefs->show_dl_button) {
+                    $link_dl = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($this->get_download_link($id)) : $this->get_download_link($id);
+                }
 
                 if ($this->api_all->articleLink == true) {
-                    $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
+                    // Prepend the proxy url to the article link (if one is set in the config)
+                    $url = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($toc['link'][$id]) : $toc['link'][$id];
+                    $entry = '<span class="item_name">'.$authors.'<a href="'.$url.'">'.$toc['title'][$id].'</a></span>';
                 }
                 else {
                     $entry = '<span class="item_name">'.$authors.$toc['title'][$id].'</a></span>';
@@ -169,14 +258,15 @@ class GetJournalInfos {
                 // get extra options, set class to invisible (change in css)
                 $html .= '<div class="small-6 medium-6 large-5 columns buttonbox">';
                 // abstract button: let us assume that strlen>300 == abstract
-                //FIXME: temporarily removed i18n from this class
-                //$html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
-                $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.('Abstract').'</a>&nbsp;' : '';
+                $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
                 $html .=      $link_dl.PHP_EOL;
+                // QR-Code
+                $html .=      '<a class="button medium radius title_links" href="javascript:;"><i class="fi-link"></i></a> ';
                 // add button (cart)
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>
                 </div>';
-                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible small-12 columns"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    '<div class="title_links_layer invisible small-12 columns"><span class="lnkDOI right">'.$doi.'</span><span class="lnkQR right"></span></div>';
                 $html .= '</div>';
             }
         }
@@ -211,6 +301,9 @@ class GetJournalInfos {
      * - writing source, year, volume, issue to every article is a bit useless?
      *   Leave for now - maybe nice for some manipulation...
      *
+     * @todo 2015-09-05
+     * - fetching DOIs is nice, but it slows things down. Make it an option...
+     *
      * @note  Shortest sfx link: http://sfx.gbv.de/sfx_tuhh?svc.fulltext=yes&rft_id=info:doi/10.1002/adma.201400310
      *
      * @author Daniel Zimmel <zimmel@coll.mpg.de>
@@ -223,7 +316,14 @@ class GetJournalInfos {
     public function journaltoc_fetch_toc($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
         $xml = simplexml_load_file($jtURL);
+
+        // Nothing usable returned
         if (!is_object($xml)) {
+            return false;
+        }
+
+        // There are not items (articels) => not toc from JournalTocs
+        if ($xml->item->count() == 0) {
             return false;
         }
 
@@ -254,8 +354,8 @@ class GetJournalInfos {
             $jt_source    = preg_replace($tit_patterns, $tit_replacements, $article->children('dc', TRUE)->source);
 
             // DOI
-            $jt_doi       = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
-            $jt_doi       = $this->get_doi($jt_doi);
+            $jt_doi = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
+            if ($jt_doi) $jt_doi = $this->get_doi($jt_doi);
 
             // Author(s) don't have to be set + there might be more than one
             $jt_authors = array();
@@ -307,31 +407,37 @@ class GetJournalInfos {
             $toc['sort'][]     = $jt_sort;
 
             //i really want a doi. so remember this one for crossref! ~~krug 05.08.2015
+            // Zeumer 2015-11-29: weird sometimes less mssing dois than toc[dois]
+            // , e.g. for 0001-6918. Duplicate title?
             if ($jt_doi == '') {
                 //keep a reference to where the doi needs to go in $toc
-                $missing_dois[$jt_title] = &$toc['doi'][$itemcount];
+                $missing_dois[$jt_title.' '.$issn] = &$toc['doi'][$itemcount];
             }
+
             $itemcount++;
         }
-        //we have dois to fetch
+
+        // Since JournalTocs didn't provide DOIs, let's fetch them from CrossRef
+        // This most likely won't return a DOI for each article, but it's better
+        // than none
         if (count($missing_dois) > 0) {
-            $jsondata = json_encode(array_keys($missing_dois));
-            $ch = curl_init("http://search.crossref.org/links"); //yep, oldschool
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($jsondata)));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata );
-            $cr_result = curl_exec($ch);
-            $cr_return = json_decode($cr_result);
-            curl_close($ch);
-            if (is_object($cr_return)  && $cr_return->query_ok ){
-                foreach ($cr_return->results as $result) {
+            $context = stream_context_create(array('http' => array(
+            	'method' => 'POST',
+            	'content' => json_encode(array_keys($missing_dois)),
+            	'header' => 'Content-Type: application/json',
+            )));
+            $cr_json = file_get_contents('http://search.crossref.org/links', null, $context);
+            $obj = ($cr_json) ? json_decode($cr_json) : false;
+            if ($obj) {
+                foreach ($obj->results as $result) {
                     if ($result->match) {
+                        // Keep in mind $missing_dois... is a reference to $toc['doi'][$itemcount]
                         $missing_dois[$result->text] = $this->get_doi($result->doi);
                     }
                 }
             }
         }
+
         if (isset($toc)) {
             $this->toc = $toc;
             return true;
@@ -369,20 +475,24 @@ class GetJournalInfos {
             parse_str($coins, $pcoins);
 
             // Article infos
-            $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            $cr_authors = array(0 => '');
+            if (isset($pcoins['rft_au'])) {
+                $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            }
             $cr_title    = $item['title'];
             $cr_link     = $item['doi'];
             $cr_doi      = $this->get_doi($item['doi']);
             $cr_abstract = '';
 
             // Source infos
-            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. " . $pcoins['rft.volume'] . ", No. " . $pcoins['rft.issue'] . " (" . $pcoins['rft_date'] . ")";
             //$jtitle = $pcoins['rft_jtitle']; // why again?
             $cr_date    = ''; // CR does not provide a date (for free?); only year via $pcoins['rft_date'] that's equal to $item['year']
             $cr_year    = $item['year'];
             $cr_vol     = (isset($pcoins['rft_volume'])) ? $pcoins['rft_volume'] : '';
             $cr_issue   = (isset($pcoins['rft_issue']))  ? $pcoins['rft_issue'] : '';
             $cr_page    = (isset($pcoins['rft_spage']))  ? $pcoins['rft_spage'] : '';
+            $cr_date    = (isset($pcoins['rft_date']))  ? $pcoins['rft_date'] : '';
+            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. $cr_vol, No. $cr_issue ($cr_date)";
 
             // sort string for toc output
             $cr_sort = $cr_year . '-' . $cr_vol . '-' . $cr_issue . '-' . $cr_page;
@@ -636,9 +746,31 @@ class GetJournalInfos {
             //&rft.eissn=
         }
 
-        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>&nbsp;';
+        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>';
 
         return $link_dl;
+    }
+
+
+    /**
+     * @brief   Delete expired cache files
+     *
+     * A cached file is old, if a file with the pattern "issn_getDate" does not exist,
+     * but a file with "issn" is found.
+     *
+     * @note  2015-08-30: For now the only necessary information for deleting a file
+     *        is the issn, because there only can be one toc. This would change if
+     *        e.g. a (server side) language specific toc would be introduced. In this
+     *        case the filename check should be adjusted.
+     *
+     * @param $cache_id    \b STR  Should be the issn for now
+     * @return \b void
+     */
+    function delete_expired($cache_id) {
+      $files = glob('../cache/*'.$cache_id.'*cache*'); // get all file names by pattern
+      foreach($files as $file) {
+        if(is_file($file)) unlink($file);
+      }
     }
 
 }

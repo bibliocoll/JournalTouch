@@ -16,8 +16,8 @@ padding-top:15px;
 height:75px;
 }
 
-.top-bar, 
-.top-bar.expanded, 
+.top-bar,
+.top-bar.expanded,
 .top-bar.expanded .title-area,
 .top-bar-section li:not(.has-form) a:not(.button) {
 background-color: #007095;
@@ -45,7 +45,7 @@ height:254px; /* reserve space */
 }
 
 /* header: filter + filter on panel */
-.filterSelected, 
+.filterSelected,
 #filterPanel,
 .top-bar-section li:not(.has-form) a.filterSelected {
 color:#fff;
@@ -135,6 +135,10 @@ border-color: #879cc6;
 display:none
 }
 
+.hidden {
+display: none !important;
+}
+
 .itemRow {
 padding-bottom: 10px;
 }
@@ -165,8 +169,8 @@ right: 50px;
 
 .preloader {
 margin-top: 120px;
-/* some stuff copied from old Foundation Version 
-   preloader moved to .slideshow-wrapper in official release 5.4, see https://github.com/zurb/foundation/commit/5d9cd17aa555437b8346b800f9cff12ae6fb782b 
+/* some stuff copied from old Foundation Version
+   preloader moved to .slideshow-wrapper in official release 5.4, see https://github.com/zurb/foundation/commit/5d9cd17aa555437b8346b800f9cff12ae6fb782b
    but we like generic */
 display: block;
 width: 40px;
@@ -195,7 +199,7 @@ border-radius: 1000px;
 animation-name: rotate;
 animation-duration: 1.5s;
 animation-iteration-count: infinite;
-animation-timing-function: linear; 
+animation-timing-function: linear;
 }
 
 .toc.preloader {
@@ -227,7 +231,7 @@ text-align: center;
 
 /*************** Journal (Cover) List : GENERAL **************************/
 
-.getTOC { 
+.getTOC {
 cursor: pointer;
 }
 
@@ -250,36 +254,6 @@ height: 35px;
 #search-form fieldset {
 background-color: aliceblue;
 }
-
-
-/*************** old code: Journal (Cover) List : LIST (ACCORDION) *****************/
-
-/*dl.accordion dd.active a.item_name {*/
-/*background-color:#fff;*/
-/*}*/
-/*dl.accordion dd.active a.item_add {*/
-/*background-color:#007095;*/
-/*}*/
-
-/*dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {*/
-/*background: #43ac41!important;*/
-/*}*/
-
-/*.accordion dd {*/
-/*border-top: solid 1px #879CC6;*/
-/*}*/
-
-/*[> E-Mail library notification button on errors <]*/
-/*dl.accordion a.button {*/
-/*background-color: #008CBA!important;*/
-/*}*/
-/*dl.accordion a.button:hover {*/
-/*background-color: #007095!important;*/
-/*}*/
-
-/*dl.accordion a.close {*/
-/*background:none;*/
-/*}*/
 
 
 /*************** Journal (Cover) List : GRID / LIST ****************************/
@@ -325,6 +299,16 @@ div#journalList.gridview > div.listitem > div.metaInfo > .button {
   font-size: 0.8125rem;
   border-radius: 3px;
 }
+
+#externalPopover div.metaInfo > .button {
+  background-color: #CFCFCF;
+  width: 130px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  border-radius: 3px;
+}
+
 
 div#journalList.gridview > div.listitem > div.title {
   height: 110px;
@@ -464,6 +448,10 @@ color: #dbd417;
 
 /*************** Display TOC *********************************************/
 
+.tocItem {
+max-width: 100%;
+}
+
 #fillTOC h6 {
 color:#3E9C12;
 font-weight:bold;
@@ -514,11 +502,32 @@ background-color:#2F334D!important;
 background-color:#FFFFFF!important;
 }
 
+/*DOI*/
+.tocItem .title_links_layer {width: 100%; line-height: 50px !important;}
+.lnkDOI     {float: right; }
+.doi_outer  {font-size: large;}
+.doi_prefix {background-color: orange; color: #ffffff; padding: 3px 8px; border-right: thin solid black;}
+.doi_link   {background-color: gray; padding: 3px 4px; }
+.doi_link a {color: #ffffff;}
+
+/* QR-code */
+.lnkQR      {}
+
 
 /* special for Orbit */
 #TOCbox h4, #TOCbox h5 {
 display:inline;
 }
+
+/* Alphabet and time navigation; hide one initially*/
+#alphabet {
+   display: none;
+}
+
+#timewarps {
+   display: none;
+}
+
 
 /*************** iframe TOC & Links **************************************/
 iframe {
@@ -569,6 +578,7 @@ color:#fff;
 position:relative;
 }
 
+
 /*************** Checkout ************************************************/
 
 #actions a {
@@ -607,13 +617,27 @@ font-size: larger;
 }
 
 
-/*************** Tagcloud ************************************************/
-
+/*************** Tagcloud (via menu) *****************************************/
 .tagcloud1 a, .tagcloud1 {font-size: 0.8em; color: #563E0B;}
 .tagcloud2 a, .tagcloud2 {font-size: 0.85em; color: #0A2E36;}
 .tagcloud3 a, .tagcloud3 {font-size: 0.875em; color: #99C228;}
 .tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
 .tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
+
+
+/*************** Filter Menu ********************************/
+/* Megamenu as suggested here: http://codepen.io/winghouchan/pen/esuGI */
+h3 {color: #fff !important;}
+@media only screen and (min-width: 641px) {
+    .dropdown-wrapper {
+        background-color: #333333 !important;
+        /*width: 540px !important; */
+        width: 880px !important;
+        padding: 10px 0;
+        right: -300px !important;
+    }
+}
+
 
 /*************** Metainfo ************************************************/
 
@@ -638,42 +662,41 @@ margin-right:20px;
     display: inline;
     padding: 8px;
     color: white;
-    background-color: #749a02; 
+    background-color: #749a02;
     -webkit-border-radius:6px;
     -webkit-animation: glow 2s infinite;
-		border-radius:6px;
-		animation: glow 2s infinite;
+      border-radius:6px;
+      animation: glow 2s infinite;
 }
 
 @-webkit-keyframes glow {
-    0% { 
-        background-color: #749a02; 
-        -webkit-box-shadow: 0 0 9px #ccc; 
+    0% {
+        background-color: #749a02;
+        -webkit-box-shadow: 0 0 9px #ccc;
     }
-    50% { 
-        background-color: #91bd09; 
-        -webkit-box-shadow: 0 0 18px #91bd09; 
+    50% {
+        background-color: #91bd09;
+        -webkit-box-shadow: 0 0 18px #91bd09;
     }
-    100% { 
-        background-color: #749a02; 
-        -webkit-box-shadow: 0 0 9px #ccc; 
+    100% {
+        background-color: #749a02;
+        -webkit-box-shadow: 0 0 9px #ccc;
     }
 }
 
 @keyframes glow {
-    0% { 
-        background-color: #749a02; 
-        box-shadow: 0 0 9px #ccc; 
+    0% {
+        background-color: #749a02;
+        box-shadow: 0 0 9px #ccc;
     }
-    50% { 
-        background-color: #91bd09; 
-        box-shadow: 0 0 18px #91bd09; 
+    50% {
+        background-color: #91bd09;
+        box-shadow: 0 0 18px #91bd09;
     }
-    100% { 
-        background-color: #749a02; 
-        box-shadow: 0 0 9px #ccc; 
+    100% {
+        background-color: #749a02;
+        box-shadow: 0 0 9px #ccc;
     }
 }
 
 /* End Glowing Basket */
-
