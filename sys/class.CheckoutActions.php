@@ -23,8 +23,10 @@ class CheckoutActions
   public function __construct($cfg)
     /* load some configuration */
   {
-    $this->mail  = $cfg->mail;
-    $this->prefs = $cfg->prefs;
+    $this->sys          = $cfg->sys;
+    $this->mail         = $cfg->mail;
+    $this->prefs        = $cfg->prefs;
+    $this->translations = $cfg->translations;
   }
 
   function getArticlesAsHTML($file) {
@@ -83,7 +85,7 @@ class CheckoutActions
     $rand_no = rand(0,500); // add a random number to make sure we do not write to the same file (e.g. two page requests in the same second)
 
     global $file;
-    $file = "export/".$hash."-".$rand_no.".csv";
+    $file = $this->sys->data_export.$hash."-".$rand_no.".csv";
     file_put_contents($file, $this->contents, LOCK_EX) or die("could not write to file!");
 
   }
@@ -91,25 +93,38 @@ class CheckoutActions
   function sendArticlesAsMail($file, $email) {
 
     try {
-      $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.__($this->mail->bodyMessage).': '.$_POST['message'].'</p>' : '');
+      $message = (isset($_POST['message']) && !empty($_POST['message']) ? '<p>'.$this->translations['mail_bodyMessage'][$this->prefs->current_lang].': '.$_POST['message'].'</p>' : '');
       $email->CharSet = 'utf-8';
       $email->Encoding = '8bit';
       $email->isHTML(true);
       $file = isset($_POST['file']) ? $_POST['file'] : '';
       $fileBody = (!empty($file)) ? $this->getArticlesAsHTML($file) : '';
-      $user = isset($_POST['username']) ? $_POST['username'] : $this->mail->fromAddress;
+
+      // Is the domain restriction set?
+      if ($this->mail->domain && isset($_POST['username'])) {
+        $usermail = $_POST['username'].'@'.$this->mail->domain;
+        $user     = $_POST['username'];
+      }
+      elseif (isset($_POST['username'])) {
+        $usermail = $_POST['username'];
+        $user     = $usermail;
+      }
+      else {
+        $user = $this->mail->fromAddress;
+      }
+
       if (isset($_POST['action']) && $_POST['action'] == "sendArticlesToLib") {
-        $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
-        $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
-        $email->Subject   = $this->mail->subjectToLib . ' (from '.$user.')';
-        $email->Body     = '<h2>'.__($this->mail->bodyOrder).'</h2><p>'.$message.'</p><hr/>'.$fileBody;
+        $email->FromName  = $usermail;
+        $email->From      = $usermail;
+        $email->Subject   = $this->translations['mail_subjectToLib'][$this->prefs->current_lang] . ' ('.__('from').' '.$user.')';
+        $email->Body     = '<h2>'.$this->translations['mail_bodyOrder'][$this->prefs->current_lang].'</h2><p>'.$message.'</p><hr/>'.$fileBody;
         $email->AddAddress($this->mail->toAddress);
       } else {
-        $email->FromName  = __($this->mail->fromName);
+        $email->FromName  = $this->translations['mail_fromName'][$this->prefs->current_lang];
         $email->From      = $this->mail->fromAddress;
-        $email->Subject   = __($this->mail->subjectToUser);
-        $email->Body     = '<h2>'.__($this->mail->bodySalutation).'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.__($this->mail->bodyClosing).'</p>';
-        $email->AddAddress($user.'@'.$this->mail->domain);
+        $email->Subject   = $this->translations['mail_subjectToUser'][$this->prefs->current_lang];
+        $email->Body     = '<h2>'.$this->translations['mail_bodySalutation'][$this->prefs->current_lang].'</h2>'.$message.'<hr/>'.$fileBody.'<p>'.$this->translations['mail_bodyClosing'][$this->prefs->current_lang].'</p>';
+        $email->AddAddress($usermail);
       }
 
 
@@ -148,11 +163,24 @@ class CheckoutActions
       $email->CharSet = 'utf-8';
       $email->Encoding = '8bit';
       $email->isHTML(false);
+
       $email->Body     = $message;
-      $user = isset($_POST['username']) ? $_POST['username'] : $this->mail->fromAddress;
-      $email->Subject   = __($this->mail->subjectFB) . ' (from '.$user.')';
-      $email->From      = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
-      $email->FromName  = isset($_POST['username']) ? $_POST['username'].'@'.$this->mail->domain : $this->mail->fromAddress;
+      // Is the domain restriction set?
+      if ($this->mail->domain && isset($_POST['username'])) {
+        $usermail = $_POST['username'].'@'.$this->mail->domain;
+        $user     = $_POST['username'];
+      }
+      elseif (isset($_POST['username'])) {
+        $usermail = $_POST['username'];
+        $user     = $usermail;
+      }
+      else {
+        $user = $this->mail->fromAddress;
+      }
+
+      $email->Subject   = __('JournalTouch Feedback') . ' ('.__('from').' '.$user.')';
+      $email->From      = $user;
+      $email->FromName  = $user;
       $email->AddAddress($this->mail->toAddress);
 
       $email->Send();

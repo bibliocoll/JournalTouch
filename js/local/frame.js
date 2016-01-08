@@ -34,6 +34,32 @@ function readyFrame(loc){
         //	$(this).parent().prev().children("div.abstract").toggle("easeOutCubic");
         $(this).parent().next("div.abstract").fadeToggle();
     });
+
+    // QR code and DOI on click
+    $(document).on("click","a.title_links",function() {
+        var link = '';
+
+        // Use doi for qr if available. Otherwiese the regular link
+        var doi  = $(this).parents('.tocItem').attr('data-doi');
+        if (doi != '') {
+            link = 'https://dx.doi.org/'+doi;
+        } else{
+            link = $(this).parents('.tocItem').attr('data-link');
+        }
+
+        //alert($(this).parents().children("div.title_links_layer").children("span.lnkQR").text());
+
+        $(this).parents().children("div.title_links_layer").fadeToggle();
+
+    	$(this).parents().children("div.title_links_layer").children("span.lnkQR").empty().qrcode({
+            render: 'canvas',
+    		text	: link,
+            size: 150
+    	});
+
+    });
+
+
     $(document).on("click",".item_add",function(){
         $(this)
             .removeClass("item_add")

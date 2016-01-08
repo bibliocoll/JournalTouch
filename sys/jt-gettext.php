@@ -1,7 +1,7 @@
 <?php
 // define constants
-define('PROJECT_DIR', realpath('./'));
-define('LOCALE_DIR', PROJECT_DIR .'/locale');
+define('PROJECT_DIR', $cfg->sys->basepath);
+define('LOCALE_DIR', PROJECT_DIR .'/languages');
 
 require_once('php-gettext/gettext.inc');
 

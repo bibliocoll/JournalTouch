@@ -1,9 +1,9 @@
 <?php
+require('sys/bootstrap.php');
 $mylist = $_POST;
 /* do we have GET parameters? (currently only used for contact) */
 $myaction = $_GET;
 /* load classes */
-require 'config.php';
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
 require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
 require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
@@ -17,12 +17,12 @@ $action = new CheckoutActions($cfg);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo __('MPI JournalTouch') ?> - <?php echo __('Checkout') ?></title>
+    <title><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?> - <?php echo __('Checkout') ?></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
     <link rel="stylesheet" href="css/media.css" />
-    <link rel="stylesheet" href="foundation-icons/foundation-icons.css" />
+    <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
     <script src="js/vendor/modernizr.js"></script>
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>
@@ -43,7 +43,7 @@ $action = new CheckoutActions($cfg);
             <ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
                 <!-- Title Area -->
                 <li class="name">
-                    <h1><?php echo __('JournalTouch <em><strong>beta</strong></em> - a library service') ?></h1>
+                    <h1><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?></h1>
                 </li>
                 <li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php?lang=<?php echo $action->prefs->current_lang ?>">&nbsp;Back</a></li>
             </ul>
@@ -75,8 +75,13 @@ $action = new CheckoutActions($cfg);
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
+
+// If domain is empty, allow full emails; see also conduit.js
+$allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
+
 if ($users == false) {
-    print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
+    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
+    print '<input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>';
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
@@ -160,10 +165,11 @@ if ($users == false) {
 <!-- Start Mailer Response -->
 <?php
 
+$file = '';
 if(isset($_POST['mailer']))
 {
     // if we have already sent an e-mail, read again from POST
-    if (empty($file)) {$file = $_POST['file'];}
+    $file = (empty($file) && isset($_POST['file'])) ? $file = $_POST['file'] : '';
 
         /* pass the PHPMailer object & save the return value (success or failure?) */
         /* is it feedback? */
@@ -220,15 +226,29 @@ if(isset($_POST['mailer']))
     <div id="mailForm" style="display:none">
             <form name="Request" method="post" action="checkout.php">
 
-                <div class="row sendArticlesToLib sendArticlesToUser">
-                    <div class="small-12 columns">
-                        <label><?php echo __('Your e-mail') ?>
-
+                <div class="row sendArticlesToLib sendArticlesToUser collapse">
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
 if ($users == false) {
-    print '<input name="username" placeholder="'. __('your username').'" type="text"/>';
+    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
+    $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
+    $coladd      = ($cfg->mail->domain) ? 3 : 0;
+
+    // If domain is empty, allow full emails; see also conduit.js
+    $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
+
+    echo'
+        <label>'.__('Your e-mail').'</label>
+        <div class="small-'.(12 - $coladd).' columns">
+          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
+        </div>';
+    // Add the allowed user mailing domain at the end ("employees only")
+    if ($coladd) {
+        echo '  <div class="small-'.$coladd.' columns">
+                    <span class="postfix">'.$postfix.'</span>
+                </div>';
+    }
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
@@ -248,7 +268,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex"><label for="attachFileBibTeX">BibTeX</label>
+                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label>
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
@@ -267,7 +287,7 @@ if ($users == false) {
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="file" value="<?php print $file; ?>"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>"/>
-                        <input type="hidden" name="action" value=""/><!-- this one is important and is set from conduit.js! -->
+                        <input type="hidden" name="action" id="cartAction" value=""/><!-- this one is important and is set from conduit.js! -->
                         <input class="radius button large right submit" type="submit" value="Submit">
                     </div>
                 </div>
