@@ -24,6 +24,7 @@ Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 
 # Dependencies
 - PHP 5.3 ([http://www.php.net])
+- php5-curl module ([http://php.net/manual/de/book.curl.php])
 - API key for JournalTocs ([http://www.journaltocs.ac.uk])
 
 # Wiki
