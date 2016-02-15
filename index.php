@@ -565,7 +565,7 @@ The list of journals is a selection of the journals licensed to the library.') ?
         </div>
     </div>
     <div class="row"><h1><?php echo __('Touch the screen to get started...') ?></h1></div>
-    <div class="row"><p class="text-center"><img src="img/bgcoll-logo.png"></img></p></div>
+    <div class="row"><p class="text-center"><img src="img/logo.png" /></p></div>
 </div>
 <?php } ?>
 <!-- end screensaver -->

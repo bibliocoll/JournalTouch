@@ -40,7 +40,7 @@ $action = new CheckoutActions($cfg);
     <!-- Navigation -->
 
         <nav class="top-bar" data-topbar>
-            <ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
+            <ul class="title-area">
                 <!-- Title Area -->
                 <li class="name">
                     <h1><a href="index.php"><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang] ?></a></h1>
