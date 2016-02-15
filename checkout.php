@@ -111,7 +111,7 @@ if ($users == false) {
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="feedback" value="true"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>">
-                        <input class="radius button large right submit" type="submit" value="Submit">
+                        <input class="radius button large right submit" type="submit" value="<?php echo __('Submit') ?>">
                     </div>
                 </div>
 
@@ -288,7 +288,7 @@ if ($users == false) {
                         <input type="hidden" name="file" value="<?php print $file; ?>"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>"/>
                         <input type="hidden" name="action" id="cartAction" value=""/><!-- this one is important and is set from conduit.js! -->
-                        <input class="radius button large right submit" type="submit" value="Submit">
+                        <input class="radius button large right submit" type="submit" value="<?php echo __('Submit') ?>">
                     </div>
                 </div>
 

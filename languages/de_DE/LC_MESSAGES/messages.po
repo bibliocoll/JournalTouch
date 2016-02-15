@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalToc\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-22 20:06+0100\n"
-"PO-Revision-Date: 2015-11-22 20:24+0100\n"
+"POT-Creation-Date: 2016-02-15 18:03+0100\n"
+"PO-Revision-Date: 2016-02-15 18:04+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team:  <tobias.zeumer@tuhh.de>\n"
 "MIME-Version: 1.0\n"
@@ -55,6 +55,11 @@ msgstr "Ihre Meldung an uns"
 msgid "if you have any comments for us please put them here!"
 msgstr "Bitte tragen Sie Ihre Nachricht an uns hier ein"
 
+#: checkout.php:114
+#: checkout.php:291
+msgid "Submit"
+msgstr "Absenden"
+
 #: checkout.php:124
 msgid "I want to..."
 msgstr "Ich möchte meine Artikelliste gerne..."
@@ -84,17 +89,17 @@ msgid "Clear Data and Logout"
 msgstr "Löschen und mich abmelden"
 
 #: checkout.php:148
-#: index.php:253
+#: index.php:309
 msgid "Do you really want to empty your basket?"
 msgstr "Wolle Sie Ihre Merkliste wirklich löschen?"
 
 #: checkout.php:149
-#: index.php:254
+#: index.php:310
 msgid "OK, empty my basket!"
 msgstr "Ok, meine Merkliste löschen!"
 
 #: checkout.php:150
-#: index.php:255
+#: index.php:311
 msgid "No, keep basket!"
 msgstr "Nein, Merkliste behalten!"
 
@@ -115,46 +120,42 @@ msgid "Your message"
 msgstr "Ihre Nachricht"
 
 #: checkout.php:325
-#: index.php:215
+#: index.php:271
 msgid "External Source"
 msgstr "Artikel zur Zeitschrift"
 
-#: index.php:66
-msgid "MPI JournalTouch"
-msgstr "MPI JournalTouch"
-
-#: index.php:85
+#: index.php:88
 msgid "menu"
 msgstr "menü"
 
-#: index.php:89
+#: index.php:92
 msgid "about"
 msgstr "über"
 
-#: index.php:103
-#: index.php:228
+#: index.php:154
+#: index.php:284
 msgid "show all"
 msgstr "alle anzeigen"
 
-#: index.php:105
+#: index.php:166
 msgid "new issues"
 msgstr "Neue Ausgaben"
 
-#: index.php:151
+#: index.php:207
 msgid "You are using JournalTouch with demo settings. Head over to <a href=\"admin/settings.php\">Settings</a> to set up you own configuration."
 msgstr "Sie verwenden JournaTouch im Demomodus. Erstellen Sie Ihre eigene Konfiguration unter <a href=\"admin/settings.php\">Konfiguration</a> im Adminbereich."
 
-#: index.php:175
+#: index.php:231
 msgid "About"
 msgstr "Über"
 
-#: index.php:178
-#: index.php:485
+#: index.php:234
+#: index.php:541
 msgid "<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues."
 msgstr "<em>JournalTouch</em> is der Alerting Service der<strong>PLACEHOLDER</strong> für aktuelle Zeitschriftenausgaben."
 
-#: index.php:184
-#: index.php:491
+#: index.php:240
+#: index.php:547
 msgid ""
 "It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
 "available, it will be indicated with an extra button.\n"
@@ -172,231 +173,241 @@ msgstr ""
 "- oder als bibliografische Liste zu exportieren, z.B. für Endote\n"
 "Die Liste ist eine Auswahl der von der Bibliothek lizensierten Journals."
 
-#: index.php:198
+#: index.php:254
 msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu!<br/><br/> <strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:199
-#: index.php:507
+#: index.php:255
+#: index.php:563
 msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
 msgstr "Inhaltsverzeichnise werden von <strong>CrossRef</strong> und <strong>JournalTocs</strong> bezogen."
 
-#: index.php:204
-#: index.php:468
+#: index.php:260
+#: index.php:524
 msgid "Get in touch!"
 msgstr "Kontakt"
 
-#: index.php:226
+#: index.php:282
 msgid "Tagcloud"
 msgstr "Tagcloud"
 
-#: index.php:239
+#: index.php:295
 msgid "Your basket is empty."
 msgstr "Ihre Merkliste ist leer."
 
-#: index.php:242
+#: index.php:298
 msgid "Send/Save my articles"
 msgstr "Sende/Speichere meine Artikel"
 
-#: index.php:244
+#: index.php:300
 msgid "Empty my basket"
 msgstr "Merkliste löschen"
 
-#: index.php:264
+#: index.php:320
 msgid "The newest editions"
 msgstr "Die neuesten Ausgaben"
 
-#: index.php:344
+#: index.php:392
 msgid "Filter active:"
 msgstr "Aktive Filter:"
 
-#: index.php:354
+#: index.php:402
 msgid "Search journal"
 msgstr "Suche Journal"
 
-#: index.php:357
+#: index.php:405
 msgid "No journals found"
 msgstr "Keine Zeitschriften gefunden"
 
-#: index.php:390
-msgid "Browse all journals from A to Z (grid view):"
-msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
+#: index.php:454
+#, fuzzy
+msgid "Via JournalTocs"
+msgstr "API: JournalTocs"
 
-#: index.php:415
+#: index.php:456
 msgid "RSS"
 msgstr "RSS"
 
-#: index.php:432
+#: index.php:461
+msgid "Via CrossRef"
+msgstr ""
+
+#: index.php:464
+#, fuzzy
+msgid "No toc available"
+msgstr "Toc verfügbar"
+
+#: index.php:487
 msgid "last update"
 msgstr "Letzte Aktualisierung"
 
-#: index.php:445
+#: index.php:501
 msgid "Something seems to be wrong with the network"
 msgstr "Leider scheint es Probleme mit dem Netzzugang zu geben."
 
-#: index.php:446
-#: index.php:451
+#: index.php:502
+#: index.php:507
 msgid "Please notify us!"
 msgstr "Benachrichtigen Sie uns!"
 
-#: index.php:450
+#: index.php:506
 msgid "No table of contents found! Are you interested in this title?"
 msgstr "Kein Inhaltsverzeichnis gefunden! Sind Sie an dieser Zeitschrift interessiert?"
 
-#: index.php:464
+#: index.php:520
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr "Inhaltsverzeichnise werden von <a href=\"http://www.crossref.org\">CrossRef</a> und <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a> bezogen"
 
-#: index.php:481
+#: index.php:537
 msgid "Touch me!"
 msgstr "Berühr mich!"
 
-#: index.php:482
+#: index.php:538
 msgid "What is this?"
 msgstr "Was ist das?"
 
-#: index.php:504
+#: index.php:560
 msgid "If a journal is missing, please let us know and we will add it to the list."
 msgstr "Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu."
 
-#: index.php:506
+#: index.php:562
 msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
 msgstr "<strong><em>JournalTouch</em> wird aktiv von der Bibliothek entwickelt</strong>."
 
-#: index.php:511
+#: index.php:567
 msgid "Touch the screen to get started..."
 msgstr "Berühren Sie den Bildschirm..."
 
-#: index.php:553
+#: index.php:609
 msgid "remove"
 msgstr "entfernen"
 
-#: admin/covers.php:149
+#: admin/covers.php:151
 msgid "LOAD"
 msgstr "LADE"
 
-#: admin/covers.php:171
+#: admin/covers.php:173
 msgid "JournalTouch Cover Management"
 msgstr "JournalTouch Cover Management"
 
-#: admin/covers.php:343
+#: admin/covers.php:345
 msgid "Cover Settings for Admins"
 msgstr "Cover-Einstellungen für Admins"
 
-#: admin/covers.php:348
+#: admin/covers.php:350
 msgid "Covers used"
 msgstr "Cover verwendet"
 
-#: admin/covers.php:349
+#: admin/covers.php:351
 msgid "Help"
 msgstr "Hilfe"
 
-#: admin/covers.php:357
+#: admin/covers.php:359
 msgid "Cover filter"
 msgstr "Cover-Filter"
 
-#: admin/covers.php:358
+#: admin/covers.php:360
 msgid "Show all journals"
 msgstr "Zeige alle Journals"
 
-#: admin/covers.php:358
+#: admin/covers.php:360
 msgid "All"
 msgstr "Alle"
 
-#: admin/covers.php:359
+#: admin/covers.php:361
 msgid "Journal has manual and api covers"
 msgstr "Journal hat manuelle und api-Covers"
 
-#: admin/covers.php:359
+#: admin/covers.php:361
 msgid "API & Manual"
 msgstr "API & Manuell"
 
-#: admin/covers.php:360
+#: admin/covers.php:362
 msgid "Journal has api only covers"
 msgstr "Journal hat nur api Covers"
 
-#: admin/covers.php:360
+#: admin/covers.php:362
 msgid "API only"
 msgstr "Nur API"
 
-#: admin/covers.php:361
+#: admin/covers.php:363
 msgid "Journal has only manually added covers"
 msgstr "Journal hat nur manuell hinzugefügte Covers"
 
-#: admin/covers.php:361
+#: admin/covers.php:363
 msgid "Manual only"
 msgstr "Nur manuell"
 
-#: admin/covers.php:362
+#: admin/covers.php:364
 msgid "Journal has more than one cover. Note: only appear at end of list."
 msgstr "Journal hat mehr als ein Cover. Achtung: Diese tauchen erst am Ende der Liste auf."
 
-#: admin/covers.php:362
+#: admin/covers.php:364
 msgid "Multiple"
 msgstr "Mehrere"
 
-#: admin/covers.php:363
+#: admin/covers.php:365
 msgid "Journal has no cover"
 msgstr "Journal hat kein Cover"
 
-#: admin/covers.php:363
+#: admin/covers.php:365
 msgid "None"
 msgstr "Keine"
 
-#: admin/covers.php:364
+#: admin/covers.php:366
 msgid "Covers for issn's that are not in journals.csv"
 msgstr "Covers für ISSNs die nicht in journals.csv vorkommen"
 
-#: admin/covers.php:364
+#: admin/covers.php:366
 msgid "Unused"
 msgstr "Ungenutzt"
 
-#: admin/covers.php:365
+#: admin/covers.php:367
 msgid "Covers greater than 15KB"
 msgstr "Cover größer als 15KB"
 
-#: admin/covers.php:365
+#: admin/covers.php:367
 msgid "Large active cover"
 msgstr "Großes aktives Cover"
 
-#: admin/covers.php:367
+#: admin/covers.php:369
 msgid "xxx"
 msgstr ""
 
-#: admin/covers.php:378
+#: admin/covers.php:380
 msgid "Available and missing covers"
 msgstr "Verfügbare und fehlende Covers"
 
-#: admin/covers.php:378
+#: admin/covers.php:380
 msgid "to"
 msgstr "bis"
 
-#: admin/covers.php:399
-#: admin/covers.php:418
+#: admin/covers.php:401
+#: admin/covers.php:420
 msgid "Delete file for good"
 msgstr "Datei endgültig löschen"
 
-#: admin/covers.php:419
+#: admin/covers.php:421
 msgid "Move file to manual folder (prevents being downloaded ever again by api)."
 msgstr "Datei in den Ordner für manuelle Cover schieben (verhindert, dass es jemals wieder per API runtergeladen wird)."
 
-#: admin/covers.php:438
+#: admin/covers.php:440
 msgid "Covers for"
 msgstr "Covers für"
 
-#: admin/covers.php:438
+#: admin/covers.php:440
 msgid "Cover(s) are not used for any journal with issn"
 msgstr "Cover(s) werden für kein journal genutzt. ISSN: "
 
-#: admin/covers.php:443
+#: admin/covers.php:445
 msgid "Your covers"
 msgstr "Ihre Covers"
 
-#: admin/covers.php:443
+#: admin/covers.php:445
 msgid "API covers"
 msgstr "API Cover"
 
-#: admin/covers.php:456
+#: admin/covers.php:458
 msgid ""
 "\n"
 "                    <h3>Help</h3>\n"
@@ -438,12 +449,12 @@ msgstr ""
 "                    </p>\n"
 "                "
 
-#: admin/covers.php:482
+#: admin/covers.php:484
 #: admin/settings.php:918
 msgid "Beware, you have unsaved settings"
 msgstr "Achtung, das Formular enthält noch ungespeicherte Änderungen."
 
-#: admin/covers.php:487
+#: admin/covers.php:489
 #: admin/settings.php:923
 msgid "Configuration successfully saved!"
 msgstr "Konfiguration erfolgreich gespeichert!"
@@ -1266,52 +1277,52 @@ msgstr "Optional/Auto. Diese Angabe wird automaitsch bezogen, wenn Sie Metadaten
 msgid "Optional/Auto. Got some subject indexing? Separate tags with commas :)"
 msgstr "Optional/Auto. Gehören Sie zu den Intellektuellen und besitzen Schlagwörter für Ihre Journals? Hier ist der Platz dafür. Kommagetrennt eingeben."
 
-#: admin/updateTocs.php:51
+#: admin/updateTocs.php:45
 msgid "Update options"
 msgstr "Update-Optionen"
 
-#: admin/updateTocs.php:52
+#: admin/updateTocs.php:46
 msgid "This updates your journals.csv with the dates for each journal issue. If you chose to fetch metadata, also some infos about publishers, legal infos and tags are fetched, mostly as tags for the tagcloud in JournalTouch. Be aware: metadata is only fetched the very first time. If you really want to redo it, you have to delete everything in column 14 (\"JToc\", \"Jseek\", \"CRtoc\")."
 msgstr "Hiermit wird die journals.csv mit den letzten Erscheinungsdaten aktualisiert. Wenn Sie den Metadatenabruf aktivieren, werden außerdem Infos zu Verlagen, Rechten und Tags geholt und zumeist in die Tag-Spalte geschrieben. Achtung: der Metadatenabruf wird nur beim allerersten Aktualisieren der journals.csv durchgeführt. Wenn Sie es wirklich wiederholen wollen, dann müssen Sie alles in Spalte 14 löschen (\"JToc\", \"Jseek\", \"CRtoc\")."
 
-#: admin/updateTocs.php:53
+#: admin/updateTocs.php:47
 msgid "Fetch metadata"
 msgstr "Metadatenabruf "
 
-#: admin/updateTocs.php:54
+#: admin/updateTocs.php:48
 msgid "Fetch recent issues"
 msgstr "Neuste Ausgaben suchen"
 
-#: admin/updateTocs.php:55
+#: admin/updateTocs.php:49
 msgid "Download/update covers"
 msgstr "Download/update Covers"
 
-#: admin/updateTocs.php:56
+#: admin/updateTocs.php:50
 msgid "Clean tags (experimental)"
 msgstr "Tags bereinigen (experimentell)"
 
-#: admin/updateTocs.php:59
+#: admin/updateTocs.php:53
 msgid "You have to edit data/journals/tag-remap.txt. Format: \"oldTag;newTag\""
 msgstr "Sie müssen die Datei data/journals/tag-remap.txt bearbeiten, nach folgendem Format: \"oldTag;newTag\""
 
-#: admin/updateTocs.php:65
-#: admin/updateTocs.php:67
+#: admin/updateTocs.php:59
+#: admin/updateTocs.php:61
 msgid "Clear Cache"
 msgstr "Cache löschen"
 
-#: admin/updateTocs.php:66
+#: admin/updateTocs.php:60
 msgid "If you enabled the caching in the config, you can clear it here"
 msgstr "Wenn Sie Cachig in den Optionen aktiviert haben, können Sie den hier manuell löschen."
 
-#: admin/updateTocs.php:71
+#: admin/updateTocs.php:65
 msgid "JournalTOC Premium Update"
 msgstr "JournalTOC Premium Update"
 
-#: admin/updateTocs.php:72
+#: admin/updateTocs.php:66
 msgid "This updates your updates.json.txt with the dates for recent issue."
 msgstr "hiermit wird Ihre updates.json.txt mit den aktuellen neusten Ausgaben aktualisiert."
 
-#: admin/updateTocs.php:73
+#: admin/updateTocs.php:67
 msgid "Update Premium"
 msgstr "Update Premium"
 
@@ -1332,15 +1343,15 @@ msgstr "von"
 msgid "JournalTouch Feedback"
 msgstr "Feedback zu JournalTouch"
 
-#: sys/class.GetJournalToc.php:209
+#: sys/class.GetJournalToc.php:211
 msgid "Sorry, I could not find any information about the publishing date"
 msgstr "Leider konnten keine Informationen zum Veröffentlichungsdatum gefunden werden"
 
-#: sys/class.GetJournalToc.php:217
+#: sys/class.GetJournalToc.php:219
 msgid "last update:"
 msgstr "Letzte Aktualisierung"
 
-#: sys/class.GetJournalToc.php:254
+#: sys/class.GetJournalToc.php:261
 msgid "Abstract"
 msgstr "Abstract"
 
@@ -1416,6 +1427,10 @@ msgstr ""
 msgid "Werkstoffwissenschaften"
 msgstr ""
 
+#~ msgid "MPI JournalTouch"
+#~ msgstr "MPI JournalTouch"
+#~ msgid "Browse all journals from A to Z (grid view):"
+#~ msgstr "Alle Zeitschriften von A-Z (Coveransicht):"
 #~ msgid "JournalTouch <em><strong>beta</strong></em> - a library service"
 #~ msgstr "JournalTouch <em><strong>beta</strong></em> - ein Bibliothekservice"
 #~ msgid "A-Z"
@@ -3728,8 +3743,6 @@ msgstr ""
 #~ msgstr "Benutzeranmeldung"
 #~ msgid "Full Site"
 #~ msgstr "Vollständige Seite"
-#~ msgid "Subitle"
-#~ msgstr "Untertitel"
 #~ msgid "Simple Search"
 #~ msgstr "Einfache Suche"
 #~ msgid "Custom Field 1"
