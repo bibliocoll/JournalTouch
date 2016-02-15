@@ -537,8 +537,10 @@ iframe {
 #externalPopover h3 {margin-top: 1.5rem;}
 #externalPopover .close-reveal-modal
                     {right: 1.6875rem}
-#externalPopover #frameBack
-                    {position: absolute; right: 9.5rem; top: 2.2rem;}
+/* #externalPopover #frameBack
+                    {position: absolute; right: 9.5rem; top: 2.2rem;} */
+#externalPopover #frameBack_inline
+                    {width: auto; background-color: #008cba; border-color: #007095;}
 #externalFrame      {width: 100%; height: 100%;}
 
 
