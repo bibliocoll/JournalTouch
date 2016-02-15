@@ -84,7 +84,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <nav class="top-bar" data-topbar="" data-options="is_hover: false">
         <ul class="title-area">
             <!-- Title Area -->
-            <li class="name"><h1><?php echo $cfg->translations['main_tagline'][$lang]    ?></h1></li>
+            <li class="name"><h1><a href="."><?php echo $cfg->translations['main_tagline'][$lang] ?></a></h1></li>
             <li class="toggle-topbar menu-icon"><a href="#"><span><?php echo __('menu') ?></span></a></li>
         </ul>
         <section class="top-bar-section">
