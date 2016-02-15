@@ -470,7 +470,7 @@ $(document).ready(function() {
 					$('#externalPopover').foundation('reveal', 'open');
 				} else {
 					$('.toc.preloader').hide();
-					$('#tocModal').foundation('reveal', 'open');
+					//$('#tocModal').foundation('reveal', 'open');
 					$('#tocNotFoundBox').fadeIn('slow');
 				}
 			} else if (message.hasOwnProperty('add')) {
