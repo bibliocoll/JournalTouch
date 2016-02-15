@@ -70,7 +70,6 @@
   /* fancy screensaver for large (touch) screen */
   #screensaver {
     position: fixed;
-    /*background: url('../img/bgcoll-logo.png') no-repeat center bottom;*/
     min-height:90%;
     left: 50%;
     z-index: 99;
