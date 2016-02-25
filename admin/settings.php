@@ -25,7 +25,7 @@ $langs_frm = frm_languages();
 
 // Start Ajax Save
 if (is_ajax()) {
-   if (isset($_GET['cfg']) && !empty($_GET['cfg'])) {
+   if (isset($_POST['cfg']) && !empty($_POST['cfg'])) {
         cfg_save();
     	$return['response'] = json_encode('Alles gut');
         echo json_encode($return);
@@ -52,11 +52,11 @@ function is_ajax() {
  */
 function cfg_save($user_cfg = '../data/config/user_config.php') {
     $status = false;
-    if (isset($_GET['cfg'])) {
+    if (isset($_POST['cfg'])) {
         // add the "$cfg" object on top; errm this is stupid?!?
         //$config = new stdClass();
         // encode to json for easier handling
-        $config = json_encode($_GET['cfg']);
+        $config = json_encode($_POST['cfg']);
 
         // form data comes as strings. Make it true boolean
         // Numbers stay strings. Well, it's not that php does care
@@ -68,7 +68,7 @@ function cfg_save($user_cfg = '../data/config/user_config.php') {
 
 
         // Now do the same for the cover download option, yet it must stay an array
-        $arrays = json_encode($_GET['cfg_ary']);
+        $arrays = json_encode($_POST['cfg_ary']);
         $arrays = str_replace('"true"', 'true', $arrays);
         $arrays = str_replace('"false"', 'false', $arrays);
         // Decode, but this time as associative array!
@@ -339,7 +339,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
                     // Send ajax request to this file (yeah, I know...)
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: 'settings.php',
                         data: formData,
                         dataType:'json',
@@ -926,7 +926,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
         <div id="help"></div>
     </div>
-    </form>    
+    </form>
 </div>
 <pre>
 <?php
