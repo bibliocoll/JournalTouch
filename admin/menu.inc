@@ -11,7 +11,7 @@
         <!-- Right Nav Section -->
         <ul class="right">
             <li class="">
-                <a href="#">JT Version <?php echo $cfg->sys->current_jt_version ?></a></li>
+                <a href="#">JT Version <?php echo $cfg->sys->current_jt_version ?></a>
             </li>
             <li class="has-dropdown">
                 <a href="#"><?php echo __('Help') ?></a>
@@ -28,7 +28,13 @@
             <li class=""><a href="index.php"><?php echo __('Home') ?></a></li>
             <li class=""><a href="settings.php"><?php echo __('Settings') ?></a></li>
             <li class=""><a href="covers.php"><?php echo __('Covers') ?></a></li>
-            <li class=""><a href="updateTocs.php"><?php echo __('Update Journals') ?></a></li>
+            <li class="has-dropdown">
+                <a href="updateTocs.php"><?php echo __('Update Journals') ?></a>
+                <ul class="dropdown">
+                    <li class=""><a href="updateTocs.php"><?php echo __('Update Journals') ?></a></li>
+                    <li class=""><a href="../data/journals/LastUpdateLog.html" target="_blank"><?php echo __('View Last Log') ?></a></li>
+                </ul>
+            </li>
             <li class=""><a href="upgrade.php"><?php echo __('Upgrade JournalTouch') ?></a></li>
             <li class=""><a href="../index.php"><?php echo __('View Site') ?></a></li>
         </ul>
