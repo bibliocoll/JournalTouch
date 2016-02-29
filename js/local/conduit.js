@@ -471,7 +471,10 @@ $(document).ready(function() {
 					var eFrm = document.getElementById('externalFrame');
 					eFrm.contentWindow.postMessage(cartinfo, myloc);
 					$('.toc.preloader').hide();
-					$('#externalPopover').foundation('reveal', 'open');
+                    // Workaround for IE - without timeout toc.preloader sticks sometimes...
+                    setTimeout(function() {
+                        $('#externalPopover').foundation('reveal', 'open');
+                    }, 100);
 				} else {
 					$('.toc.preloader').hide();
 					//$('#tocModal').foundation('reveal', 'open');
