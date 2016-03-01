@@ -93,6 +93,10 @@ function fetch_metabuttons_toc(issn) {
     $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
     $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
 
+    // Add inline back button
+    backlink = '<a id="frameBack_inline" class="button round" data-history="0" onclick="if ($(this).data(\'history\') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a> ';
+    $('#externalPopover .metaInfo').prepend(backlink);
+
     return true;
 }
 
@@ -470,7 +474,7 @@ $(document).ready(function() {
 					$('#externalPopover').foundation('reveal', 'open');
 				} else {
 					$('.toc.preloader').hide();
-					$('#tocModal').foundation('reveal', 'open');
+					//$('#tocModal').foundation('reveal', 'open');
 					$('#tocNotFoundBox').fadeIn('slow');
 				}
 			} else if (message.hasOwnProperty('add')) {

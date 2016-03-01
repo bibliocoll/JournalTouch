@@ -66,7 +66,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><?php echo __('MPI JournalTouch') ?></title>
+        <title><?php echo $cfg->translations['main_tagline'][$lang] ?></title>
         <link rel="stylesheet" href="css/foundation.min.css" />
         <link rel="stylesheet" href="css/local.css" />
         <link rel="stylesheet" href="css/media.css" />
@@ -84,7 +84,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <nav class="top-bar" data-topbar="" data-options="is_hover: false">
         <ul class="title-area">
             <!-- Title Area -->
-            <li class="name"><h1><?php echo $cfg->translations['main_tagline'][$lang]    ?></h1></li>
+            <li class="name"><h1><a href="."><?php echo $cfg->translations['main_tagline'][$lang] ?></a></h1></li>
             <li class="toggle-topbar menu-icon"><a href="#"><span><?php echo __('menu') ?></span></a></li>
         </ul>
         <section class="top-bar-section">
@@ -269,7 +269,7 @@ The list of journals is a selection of the journals licensed to the library.')
 <!-- start external link -->
 <div id="externalPopover" class="reveal-modal" data-reveal="">
     <h3><?php echo __('External Source') ?></h3>
-    <a id="frameBack" class="button round" data-history="0" onclick="if ($(this).data('history') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a>
+    <!-- <a id="frameBack" class="button round" data-history="0" onclick="if ($(this).data('history') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a> -->
     <a class="close-reveal-modal button radius">×</a>
     <!-- For preventing browser history for the iframe "externalFrame" it is dynamically created in conduit.js -->
 </div>
@@ -565,7 +565,7 @@ The list of journals is a selection of the journals licensed to the library.') ?
         </div>
     </div>
     <div class="row"><h1><?php echo __('Touch the screen to get started...') ?></h1></div>
-    <div class="row"><p class="text-center"><img src="img/bgcoll-logo.png"></img></p></div>
+    <div class="row"><p class="text-center"><img src="img/logo.png" /></p></div>
 </div>
 <?php } ?>
 <!-- end screensaver -->

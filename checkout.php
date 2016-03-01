@@ -40,10 +40,10 @@ $action = new CheckoutActions($cfg);
     <!-- Navigation -->
 
         <nav class="top-bar" data-topbar>
-            <ul class="title-area" style="background: url('img/bgcoll-logo-s.png') no-repeat left top;">
+            <ul class="title-area">
                 <!-- Title Area -->
                 <li class="name">
-                    <h1><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?></h1>
+                    <h1><a href="index.php"><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang] ?></a></h1>
                 </li>
                 <li class="toggle-topbar"><a class="i fi-arrow-left" href="index.php?lang=<?php echo $action->prefs->current_lang ?>">&nbsp;Back</a></li>
             </ul>
@@ -111,7 +111,7 @@ if ($users == false) {
                         <input type="hidden" name="mailer" value="true"/>
                         <input type="hidden" name="feedback" value="true"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>">
-                        <input class="radius button large right submit" type="submit" value="Submit">
+                        <input class="radius button large right submit" type="submit" value="<?php echo __('Submit') ?>">
                     </div>
                 </div>
 
@@ -288,7 +288,7 @@ if ($users == false) {
                         <input type="hidden" name="file" value="<?php print $file; ?>"/>
                         <input type="hidden" name="lang" value="<?php echo $action->prefs->current_lang ?>"/>
                         <input type="hidden" name="action" id="cartAction" value=""/><!-- this one is important and is set from conduit.js! -->
-                        <input class="radius button large right submit" type="submit" value="Submit">
+                        <input class="radius button large right submit" type="submit" value="<?php echo __('Submit') ?>">
                     </div>
                 </div>
 
