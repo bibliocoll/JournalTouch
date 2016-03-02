@@ -133,7 +133,9 @@ if ($users == false) {
                 <!--<a id="saveArticles" href="#" class="radius button large disabled"><i class="fi-save"></i> Save/Export</a>-->
                 <?php if(empty($_POST['mailer'])) { ?>
               <a id="sendArticlesToUser" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to my mailbox') ?></a>
-                <a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to library to get PDFs') ?></a>
+                    <?php if ($cfg->prefs->allow_ask_pdf) { ?>
+                        <a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to library to get PDFs') ?></a>
+                    <?php } ?>
                 <?php } else { ?>
                 <a id="sendDone" href="#" class="radius button large success"><i class="fi-check"></i> <?php echo __('You already sent your files') ?> </a>
                 <?php } ?>

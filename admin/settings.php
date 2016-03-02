@@ -503,6 +503,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                         <label for="cfg[prefs][clear_basket]"><?php echo __('Basket timing') ?></label><br />
                             <input type="text" name="cfg[prefs][clear_basket]" value="<?php echo $cfg->prefs->clear_basket ?>" aria-describedby="help_clear_basket" />
                             <div id="help_clear_basket" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before the basket is cleared. Default is 260 seconds (4 minutes, 20 seconds). Hint: set it slightly higher then the screensaver timing.') ?></span></div>
+                        <input type="checkbox" name="cfg[prefs][allow_ask_pdf]" <?php echo frm_checked($cfg->prefs->allow_ask_pdf) ?> aria-describedby="help_allow_ask_pdf" />
+                            <label for="cfg[prefs][allow_ask_pdf]"><?php echo __('Allow mail for PDF') ?></label>
+                            <div id="help_allow_ask_pdf" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Checkout action: May users send a mail to the library asking to get the pdf send to them?') ?></span></div>
                 </fieldset>
             </div>
 
