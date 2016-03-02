@@ -220,6 +220,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
              */
             function add_new_entry() {
                 var newKey = $('#new_filter_entry').val();
+                // Always make keys lowercase to prevent subsequent problems
+                newKey = newKey.toLowerCase();
 
                 // If no key was given return
                 if (newKey == '') {
