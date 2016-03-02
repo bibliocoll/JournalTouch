@@ -63,12 +63,12 @@ function cfg_save($user_cfg = '../data/config/user_config.php') {
         $config = str_replace('"true"', 'true', $config);
         $config = str_replace('"false"', 'false', $config);
 
-        // Now decode to get back our object (FALSE)
+        // a) Now decode to get back our object (FALSE)
         $config = json_decode($config, FALSE);
 
-
-        // Now do the same for the cover download option, yet it must stay an array
+        // b) Now do the same for the cover download and similar options, that must stay an array
         $arrays = json_encode($_POST['cfg_ary']);
+
         $arrays = str_replace('"true"', 'true', $arrays);
         $arrays = str_replace('"false"', 'false', $arrays);
         // Decode, but this time as associative array!
@@ -158,8 +158,9 @@ function frm_languages() {
 
 /**
  * @brief   Helper that returns an input field for each available language
+ * 2016-03-02: Added $textarea. Set true for textarea, else it defaults to input
  */
-function frm_input_translatable($name, $value, $label = '', $aria = '') {
+function frm_input_translatable($name, $value, $label = '', $aria = '', $textarea = array('rows' => 0, 'cols' => 0)) {
     global $cfg, $langs_available; // @see frm_languages()
 
     $inputs = '<div class="row">';
@@ -183,9 +184,15 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         $css       .= " toggle_$language";
 
         $inputs .= '<div class="large-6 columns '.$css.'">
-                        <label for="'.$frm_name.'">'.$label.' ('.$language.')</label>
-                            <input type="text" name="'.$frm_name.'" value="'.$frm_value.'" aria-describedby="'.$aria.'" />
-                    </div>';
+                        <label for="'.$frm_name.'">'.$label.' ('.$language.')</label>';
+        // Input or texarea?
+        if ($textarea['rows'] == 0) {
+            $inputs .= '<input type="input" name="'.$frm_name.'" value="'.$frm_value.'" aria-describedby="'.$aria.'" />';
+        } else {
+            $inputs .= '<textarea name="'.$frm_name.'" aria-describedby="'.$aria.'" rows="'.$textarea['rows'].'" cols="'.$textarea['cols'].'">'.$frm_value.'</textarea>';
+        }
+        $inputs .= '</div>';
+
     }
     $inputs .= '</div>';
 
@@ -557,6 +564,12 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         <div id="help_trans_meta_journalHP" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The button linking to the journal\'s homepage (see journals.csv column 16).') ?></span></div>
                         <?php echo frm_input_translatable('cfg_ary[translations][meta_inst_service]',  $cfg->translations['meta_inst_service'], __('Library service'), 'help_trans_meta_inst_service') ?>
                         <div id="help_trans_meta_inst_service" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The link to you catalogue/service witht the journal\'s issn appended.') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Translations: Other') ?></legend>
+                        <?php //@TODO: Make inputing html nicer and easier ?>
+                        <?php echo frm_input_translatable('cfg_ary[translations][other_about]',  $cfg->translations['other_about'], __('About and Screensaver'), 'help_trans_other_about', $textarea = array('rows' => 25, 'cols' => 55)) ?>
+                        <div id="help_trans_other_about" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The text displayed when screensaver triggers or user clicks the about button. Please use [ and ] instead of &lt; and &gt; for HTML tags. The text fields are sized for an amount of text that can reasonably be displayed on a single screen.') ?></span></div>
                 </fieldset>
             </div>
             <div class="content" id="formTab4">
