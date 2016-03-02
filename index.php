@@ -151,19 +151,19 @@ else {
                             <div>
                                 <div class="small-4 columns">
                                     <ul>
-                                        <li><h3><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></h3></li>
+                                        <li class="filter-special-row" id="filter-show-all"><h3><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[0])?></li>
                                 </ul>
                                 </div>
                                 <div class="small-4 columns">
                                     <ul>
-                                        <li><h3><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></h3></li>
+                                        <li class="filter-special-row" id="filter-show-favs"><h3><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[1])?></li>
                                     </ul>
                                 </div>
                                 <div class="small-4 columns">
                                     <ul>
-                                    <li><h3><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></h3></li>
+                                    <li class="filter-special-row" id="filter-show-new"><h3><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[2])?></li>
                                     </ul>
                                 </div>

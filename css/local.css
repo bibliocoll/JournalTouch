@@ -628,7 +628,11 @@ font-size: larger;
 
 /*************** Filter Menu ********************************/
 /* Megamenu as suggested here: http://codepen.io/winghouchan/pen/esuGI */
-h3 {color: #fff !important;}
+/* You might hide/modify the three special entries here */
+#filter-show-all    {}
+#filter-show-favs   {}
+#filter-show-new    {}
+li.filter-special-row h3 a {color: #FFDD00 !important;}
 @media only screen and (min-width: 641px) {
     .dropdown-wrapper {
         background-color: #333333 !important;
