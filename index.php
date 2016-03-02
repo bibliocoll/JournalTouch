@@ -264,7 +264,7 @@ else {
 <!-- end Tagcloud -->
 
 
-<div id="cartPopover" class="reveal-modal" data-reveal="">
+<div id="cartPopover" class="reveal-modal" data-reveal="" data-clearSeconds="<?php echo $cfg->prefs->clear_basket ?>">
     <div class="simpleCart_items"></div>
     <div id="cartData" class="clearfix"></div>
     <div id="shelfIsEmpty" style="display:none">

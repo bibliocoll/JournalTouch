@@ -98,6 +98,7 @@ $cfg->prefs->rss                = true;  // Show an RSS-Feed link. Be aware that
 
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
 $cfg->prefs->screensaver_secs = 240;    // Idle time in seconds before screensaver is displayed. Set to zero to disable
+$cfg->prefs->clear_basket     = 260;    // Idle time until basket is cleared
 
 // Caching: only activate it if you do
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true
