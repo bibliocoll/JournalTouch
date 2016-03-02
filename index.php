@@ -229,31 +229,7 @@ else {
     <div class="row">
         <div class="small-12 medium-12 large-12 columns left">
             <h2><?php echo __('About') ?></h2>
-            <p>
-<?php
-$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
-echo $lib_teaser;
-?>
-            </p>
-            <p>
-<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-available, it will be indicated with an extra button.
-When you are finished, click on your basket to check out.
-You can now send the article information to your e-mail address, send a
-request for the PDF files to the library, or view/save it as a
-list. Export for citation management systems like Endnote is also available. <br/>
-The list of journals is a selection of the journals licensed to the library.')
-?>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="small-8 medium-9 large-9 columns left">
-            <p>
-                <?php echo __('If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>.') ?>
-                <br /><?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
-            </p>
+            <?php echo preg_replace(array('/\[/', '/\]/'), array('<', '>'), $cfg->translations['other_about'][$lang]); ?>
         </div>
         <div class="small-4 medium-3 large-3 columns right">
             <ul class="inline-list right">
@@ -536,32 +512,7 @@ foreach ($journals as $j) {
         <div class="small-12 medium-12 large-12 columns left">
             <h1><?php echo __('Touch me!') ?></h1>
             <h2><?php echo __('What is this?') ?></h2>
-            <p>
-<?php
-$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
-echo $lib_teaser;
-?>
-            </p>
-            <p>
-<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-available, it will be indicated with an extra button.
-When you are finished, click on your basket to check out.
-You can now send the article information to your e-mail address, send a
-request for the PDF files to the library, or view/save it as a
-list. Export for citation management systems like Endnote is also available. <br/>
-The list of journals is a selection of the journals licensed to the library.') ?>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="small-8 medium-9 large-9 columns left">
-            <p>
-                <?php echo __('If a journal is missing, please let us know and we will add it to the list.') ?>
-                <br />
-                <br /><?php echo __('<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>') ?>
-                <br /><?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
-            </p>
+            <?php echo preg_replace(array('/\[/', '/\]/'), array('<', '>'), $cfg->translations['other_about'][$lang]); ?>
         </div>
     </div>
     <div class="row"><h1><?php echo __('Touch the screen to get started...') ?></h1></div>
