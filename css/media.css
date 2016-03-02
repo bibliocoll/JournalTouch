@@ -85,7 +85,7 @@
   }
   
   /* filter position */
-  #filterPanel { position:fixed; z-index:99; top: 100px; right: 50px; }
+  #filterPanel { position:fixed; z-index:95; top: 100px; right: 50px; cursor: pointer; }
   
   /* Grid: Dynamic Letter Box */
   #letterbox { position:fixed; top:10%; left:40px; width:12rem; font-size:6rem; padding:2rem; color:#007095; background-color:#efefef; }
