@@ -402,17 +402,18 @@ $(document).ready(function() {
 	// START screensaver-like thing with timeout (large screens only, see media.css)
 	var s_saver, clear_basket;
     var usr_screensaver_activate = $('#screensaver').attr('data-activateSeconds') * 1000;
+    var usr_clear_basket         = $('#cartPopover').attr('data-clearSeconds') * 1000;
 
     // Function to set timer
     function start_timeout_on_load() {
-        if (usr_screensaver_activate == 0) return; // screensaver is disabled
-        var s_saver = setTimeout(function(){ $('#screensaver').fadeIn(900);}, usr_screensaver_activate);
-
         var clear_basket = setTimeout(function(){
-            simpleCart.empty();
+            if (usr_clear_basket > 0) simpleCart.empty();
             $('#myArticles').removeClass('full');
             $('#externalPopover').foundation('reveal', 'close');
-        }, 900000);
+        }, usr_clear_basket);
+
+        if (usr_screensaver_activate == 0) return; // screensaver is disabled
+        var s_saver = setTimeout(function(){ $('#screensaver').fadeIn(900);}, usr_screensaver_activate);
     };
 
     // Start timer for screensaver after loading page

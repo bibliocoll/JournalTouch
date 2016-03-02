@@ -498,6 +498,12 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                             <input type="text" name="cfg[prefs][screensaver_secs]" value="<?php echo $cfg->prefs->screensaver_secs ?>" aria-describedby="help_screensaver_secs" />
                             <div id="help_screensaver_secs" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before screensaver is displayed. Set to 0 to disable screensaver. Default is 240 seconds (4 minutes).') ?></span></div>
                 </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Preferences: Checkout') ?></legend>
+                        <label for="cfg[prefs][clear_basket]"><?php echo __('Basket timing') ?></label><br />
+                            <input type="text" name="cfg[prefs][clear_basket]" value="<?php echo $cfg->prefs->clear_basket ?>" aria-describedby="help_clear_basket" />
+                            <div id="help_clear_basket" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before the basket is cleared. Default is 260 seconds (4 minutes, 20 seconds). Hint: set it slightly higher then the screensaver timing.') ?></span></div>
+                </fieldset>
             </div>
 
             <div class="content" id="formTab3">
