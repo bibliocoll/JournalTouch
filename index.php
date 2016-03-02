@@ -505,9 +505,9 @@ foreach ($journals as $j) {
 </footer>
 
 
-<!-- a fancy screensaver when screen is idle (see css for switching) -->
-<?php if ($cfg->prefs->show_screensaver) { ?>
-<div id="screensaver" style="display:none">
+<!-- a fancy screensaver when screen is idle (see css for switching)
+     See Admin settings for timer; disabled if set to zero -->
+<div id="screensaver" style="display:none" data-activateSeconds="<?php echo $cfg->prefs->screensaver_secs ?>">
     <div class="row">
         <div class="small-12 medium-12 large-12 columns left">
             <h1><?php echo __('Touch me!') ?></h1>
@@ -518,7 +518,6 @@ foreach ($journals as $j) {
     <div class="row"><h1><?php echo __('Touch the screen to get started...') ?></h1></div>
     <div class="row"><p class="text-center"><img src="img/logo.png" /></p></div>
 </div>
-<?php } ?>
 <!-- end screensaver -->
 
 

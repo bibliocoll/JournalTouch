@@ -96,8 +96,8 @@ $cfg->prefs->show_metainfo_list = false; // Show the block with the meta infos r
 $cfg->prefs->show_metainfo_toc  = true;  // Show the block with the meta infos above the toc. Note: If show_metainfo_list is true, it will show above the toc, even if set to false here
 $cfg->prefs->rss                = true;  // Show an RSS-Feed link. Be aware that this uses and displays the E-Mail you registered with at JournalTocs
 
-$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
+$cfg->prefs->screensaver_secs = 240;    // Idle time in seconds before screensaver is displayed. Set to zero to disable
 
 // Caching: only activate it if you do
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true

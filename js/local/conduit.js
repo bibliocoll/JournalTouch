@@ -399,21 +399,33 @@ $(document).ready(function() {
 		$('#errorUsername').hide();
 	});
 
-	// screensaver-like thing with timeout (large screens only, see media.css)
+	// START screensaver-like thing with timeout (large screens only, see media.css)
 	var s_saver, clear_basket;
-	$('body').mousedown(function() {
+    var usr_screensaver_activate = $('#screensaver').attr('data-activateSeconds') * 1000;
+
+    // Function to set timer
+    function start_timeout_on_load() {
+        if (usr_screensaver_activate == 0) return; // screensaver is disabled
+        var s_saver = setTimeout(function(){ $('#screensaver').fadeIn(900);}, usr_screensaver_activate);
+
+        var clear_basket = setTimeout(function(){
+            simpleCart.empty();
+            $('#myArticles').removeClass('full');
+            $('#externalPopover').foundation('reveal', 'close');
+        }, 900000);
+    };
+
+    // Start timer for screensaver after loading page
+    start_timeout_on_load();
+
+    // Reset and restart timer for screensaver and basket after each click/touch
+    $('body').on('mousedown touchstart', function() {
 		clearTimeout(s_saver);
 		clearTimeout(clear_basket);
-		s_saver = setTimeout(function(){
-			$('#screensaver').fadeIn(900);
-		}, 300000);
-		clear_basket = setTimeout(function(){
-			simpleCart.empty();
-			$('#myArticles').removeClass('full');
-			$('#externalPopover').foundation('reveal', 'close');
-		}, 900000);
+        start_timeout_on_load();
 		$('#screensaver').fadeOut(100);
 	});
+    // END screensaver
 
 	// timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp
 	$.timeago.settings.allowFuture = true;
