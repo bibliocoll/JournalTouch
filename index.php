@@ -66,7 +66,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><?php echo $cfg->translations['main_tagline'][$lang] ?></title>
+        <title><?php echo strip_tags($cfg->translations['main_tagline'][$lang]) ?></title>
         <link rel="stylesheet" href="css/foundation.min.css" />
         <link rel="stylesheet" href="css/local.css" />
         <link rel="stylesheet" href="css/media.css" />
