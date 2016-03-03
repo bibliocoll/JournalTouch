@@ -17,7 +17,7 @@ $action = new CheckoutActions($cfg);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?> - <?php echo __('Checkout') ?></title>
+    <title><?php echo strip_tags($cfg->translations['main_tagline'][$cfg->prefs->current_lang])  ?> - <?php echo __('Checkout') ?></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
