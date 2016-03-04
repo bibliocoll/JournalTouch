@@ -208,7 +208,8 @@ class ListJournals
                     else {
                         $multiplier = $this->GetTagSizeLogarithmic($count, $tag_min, $tag_max, 1, $cssClasses+1);
                         $css = 'tagcloud'.$multiplier;
-                        $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
+                        $tag_print = str_replace('_', ' ', $tag);
+                        $cloud .= '<span class="tagentry '.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag_print.'</a> ('.$count.')</span> ';
                     }
                 }
             }
