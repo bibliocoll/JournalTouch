@@ -319,5 +319,6 @@ $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing?
 /**
  * Variables that are not set in the user config - only used for vanilla installation
  */
-$cfg->sys->newInstallation = true;  // If this is set, show a hint to user that he should create his config
+$cfg->sys->newInstallation  = true;  // If this is set, show a hint to user that he should create his config
+$cfg->sys->adminSecured     = false; // Is admin page secured ny htaccess file (checked on page loading)?
 ?>

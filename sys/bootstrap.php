@@ -42,6 +42,9 @@ if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
     exit;
 }
 
+// Check if admin folder is secured by htaccess
+$cfg->sys->adminSecured = file_exists($cfg->sys->basepath.'admin/.htaccess');
+
 
 // Honor user choices for paths; else set default ones
 $cfg->sys->data_cache    = ($cfg->sys->data_cache_usr)     ? $cfg->sys->data_cache_usr      : $cfg->sys->basepath.'data/cache/';
