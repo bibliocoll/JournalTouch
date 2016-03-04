@@ -324,7 +324,9 @@ $(document).ready(function() {
 		$('#cartAction').val(clickedId);
 
 		// display chosen action as a heading
-		$('#actionGreeter h1').text(thisText);
+		$('#actionGreeter h1 #subMenu').text(thisText);
+		$('#actionGreeter h1 #subMenu').show();
+		$('#actionGreeter h1 #topMenu').hide();
 
 		// hide other buttons
 		$(this).siblings().hide(); $(this).hide();
@@ -351,7 +353,8 @@ $(document).ready(function() {
 
 	$('#resetActions').click(function() {
 		$('.alert-box').hide(); // cleanup
-		$('#actionGreeter h1').text("I want to...");
+		$('#actionGreeter h1 #subMenu').hide();
+		$('#actionGreeter h1 #topMenu').show();
 		$('#actionsResultBox').find('div').hide();
 		$('#actionsResultBox').hide(); // clean
 		$(this).hide();
