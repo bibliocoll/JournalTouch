@@ -203,8 +203,14 @@ else {
         </section>
     </nav>
     <?php if (isset($cfg->sys->newInstallation)) { ?>
-    <div id="dataUnsaved" data-alert class="alert-box warning radius">
+    <div id="dataUnsaved" data-alert class="alert-box warning radius" style="margin-bottom: 0">
         <?php echo __('You are using JournalTouch with demo settings. Head over to <a href="admin/settings.php">Settings</a> to set up you own configuration.') ?>
+        <a href="#" class="close">&times;</a>
+    </div>
+    <?php } ?>
+    <?php if (!$cfg->sys->adminSecured) { ?>
+    <div id="adminUnsecured" data-alert class="alert-box warning radius">
+        <?php echo __('The admin folder is not secured by an .htaccess file. Anyone has access. Just rename admin/.htaccess.sample to .htaccess if you don\'t care and want to disable this message.') ?>
         <a href="#" class="close">&times;</a>
     </div>
     <?php } ?>
