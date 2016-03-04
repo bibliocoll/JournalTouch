@@ -457,9 +457,11 @@ $(document).ready(function() {
 		//		$('a.popup').click(function(event) {
 		var url = $(this).attr("href");
 
-        // Load meta buttons above toc (if visible)
-		issn = $(this).parents('.listitem').attr('data-issn').trim();
-        fetch_metabuttons_toc(issn);
+        // Load meta buttons above toc (if visible); but not on checkout page
+        if ($(this).parents('.listitem')) {
+    		issn = $(this).parents('.listitem').attr('data-issn').trim();
+            fetch_metabuttons_toc(issn);
+        }
 
 		createModalFrame(url);
 		$('#externalPopover').foundation('reveal', 'open');
