@@ -587,8 +587,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
             <div class="content" id="formTab4">
                 <h3><?php echo __('API Settings') ?></h3>
                 <fieldset>
-                    <legend>Performance</legend>
-                        <div class="panel"><?php echo __('Only activate caching if you do<ul><li>A (daily) cron to http://my.journaltouch.local/admin/updateTocs.php?optRecent=on&upd=true</li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php</li></ul>') ?></div>
+                    <legend><?php echo __('Performance') ?></legend>
+                        <div class="panel"><?php echo __('Only activate caching if you do<ul><li>A (daily) cron like <i>wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1</i></li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php (replace url in above example for cron job)</li></ul>') ?></div>
                         <input type="checkbox" name="cfg[prefs][cache_toc_enable]" <?php echo frm_checked($cfg->prefs->cache_toc_enable) ?> aria-describedby="help_cache_toc_enable" />
                             <label for="cfg[prefs][cache_toc_enable]"><?php echo __('Enable Caching Tocs') ?>?</label><br />
                             <div id="help_cache_toc_enable" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Caches fetched tocs so they only are processed once there is a new issue. Recommended.') ?></span></div>
