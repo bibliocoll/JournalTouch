@@ -83,18 +83,22 @@ function setLetterBox() {
 }
 
 
-function fetch_metabuttons_toc(issn) {
+/*  Fetch meta buttons so they are displayed above the iframe
+    @note params: We only really ne the issn, but without the other two
+    parameters it's hard to ge a home link */
+function fetch_metabuttons_toc(issn, para_caching, para_pubdate) {
     // Append meta (ugly hack, or maybe not that bad...?)
-    var custom_button = '<a onlick="window.history.go(-100)" class="button"><i class=""></i> Home</a> ';
+    var custom_button = '<a href="sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate + '" class="button" target="externalFrame"><i class=""></i> Home</a> ';
     $('#externalPopover h3').html($("div[data-issn='"+issn+"'] h5").clone()); // get title
     $('#externalPopover h3').after($("div[data-issn='"+issn+"'] .metaInfo").clone()); // show button
     $('#externalPopover .metaInfo').removeClass('hidden'); // remove the hidden class (if the buttons are not shown in the list)
     $('#externalPopover .metaInfo a').removeClass('popup'); // remove popup class from buttons
     $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
+    $('#externalPopover .metaInfo a').addClass('historyAdd'); // remove popup class from buttons
     $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
 
     // Add inline back button
-    backlink = '<a id="frameBack_inline" class="button round" data-history="0" onclick="if ($(this).data(\'history\') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a> ';
+    backlink = '<a id="frameBack_inline" class="button round hidden" data-history="0" onclick="history.go(-1)"><i class="fi-arrow-left"></i></a> ';
     $('#externalPopover .metaInfo').prepend(backlink);
 
     return true;
@@ -178,7 +182,20 @@ $(document).ready(function() {
 		$('.toc.preloader').show();
 
         // Load meta buttons above toc (if visible)
-        fetch_metabuttons_toc(issn);
+        fetch_metabuttons_toc(issn, para_caching, para_pubdate);
+
+        // Monitor clicks on meta button links in modal; show back arrow if > 0
+    	$(document).on('click', '#externalPopover .metaInfo a.historyAdd', function() {
+            num = $('#frameBack_inline').data("history") + 1;
+            $('#frameBack_inline').data('history', num);
+            $('#frameBack_inline').removeClass('hidden');
+    	});
+        // Monitor clicks on frameBack_inline link in modal; hide on 0
+    	$(document).on('click', '#frameBack_inline', function() {
+            num = $('#frameBack_inline').data("history") - 1;
+            $('#frameBack_inline').data('history', num);
+            if ($('#frameBack_inline').data("history") == 0) $('#frameBack_inline').addClass('hidden');
+    	});
 
 		// get Journal TOC in iframe
 		createModalFrame('sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate);
