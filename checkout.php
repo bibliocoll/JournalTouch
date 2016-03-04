@@ -295,7 +295,7 @@ if ($users == false) {
                 </div>
 
             </form>
-        </div>
+
 
 
 <!-- End Mailer -->
@@ -345,6 +345,9 @@ if ($users == false) {
 -->
 <!-- End Save/Export -->
             </div>
+
+        </div>
+
 <script>
 $(document).foundation();
 
