@@ -121,7 +121,7 @@ if ($users == false) {
 
         <div class="row" id="actionGreeter">
             <div class="small-12 columns" style="padding-top:20px">
-                <h1><?php echo __('I want to...') ?></h1>
+                <h1><span id="topMenu"><?php echo __('I want to...') ?></span><span id="subMenu"></span></h1>
             </div>
         </div>
 
