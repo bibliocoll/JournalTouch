@@ -404,6 +404,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
             .sortable li { margin: 0 3px 5px 3px; padding: 0; padding-left: 1.5em; font-size: 1.4em; height: 37px; }
             .sortable li span { position: absolute; margin-left: -1.3em; }
             .sortable li a {color: #ffffff !important;}
+
+            /* Slightly smaller Tab Menu */
+            .tabs .tab-title > a {padding: 1rem 1.5rem; font-size: 0.9rem};
         </style>
     </head>
 <body>
