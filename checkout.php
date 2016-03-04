@@ -228,7 +228,7 @@ if(isset($_POST['mailer']))
     <div id="mailForm" style="display:none">
             <form name="Request" method="post" action="checkout.php">
 
-                <div class="row sendArticlesToLib sendArticlesToUser collapse">
+                <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
@@ -241,8 +241,8 @@ if ($users == false) {
     $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
     echo'
-        <label>'.__('Your e-mail').'</label>
         <div class="small-'.(12 - $coladd).' columns">
+          <label>'.__('Your e-mail').'</label>
           <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
         </div>';
     // Add the allowed user mailing domain at the end ("employees only")
