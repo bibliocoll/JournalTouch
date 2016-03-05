@@ -354,6 +354,10 @@ $(document).foundation();
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 </script>
+
+<!-- START Kiosk policies -->
+<?php echo $cfg->sys->kioskPolicy_HTML ?>
+<!-- END Kiosk policies -->
   </body>
 </html>
 

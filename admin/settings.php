@@ -430,9 +430,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
             <li class="tab-title"><a href="#formTab4"><?php echo __('API') ?></a></li>
             <li class="tab-title"><a href="#formTab5"><?php echo __('Covers') ?></a></li>
             <li class="tab-title"><a href="#formTab6"><?php echo __('Filter') ?></a></li>
-            <li class="tab-title"><a href="#formTab7"><?php echo __('Mailing') ?></a></li>
-            <li class="tab-title"><a href="#formTab8"><?php echo __('Paths') ?></a></li>
-            <li class="tab-title"><a href="#formTab9"><?php echo __('Journal List') ?></a></li>
+            <li class="tab-title"><a href="#formTab7"><?php echo __('Kiosk PCs') ?></a></li>
+            <li class="tab-title"><a href="#formTab8"><?php echo __('Mailing') ?></a></li>
+            <li class="tab-title"><a href="#formTab9"><?php echo __('Paths') ?></a></li>
+            <li class="tab-title"><a href="#formTab10"><?php echo __('Journal List') ?></a></li>
             <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
         </ul>
     </div>
@@ -752,6 +753,36 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                 </div>
             </div>
             <div class="content" id="formTab7">
+                <h3><?php echo __('Kiosk PCs') ?></h3>
+                <fieldset>
+                    <legend><?php echo __('Agent\'s & IP\'s') ?></legend>
+                        <div class="panel"><?php echo __('<p>If you display JournalTouch on a kiosk device within your institution, you might want to disable certain settings. For example displaying printing buttons might make no sense.<br />Instead of setting up a second JournalTouch installation, you just can disable certain elements for an IP or a browser user agent.</p><ul><li><strong>IP</strong>: only works if the kiosk PC is accessing the webserver directly (not behind a proxy or a NAT router)</li><li><strong>Browser agent</strong>: Kiosk software often offer an easy way to set a custom user agent string for the browser. If you don\'t got such software or it doesn\'t come with such an option, you can do it yourself. It can be done easily for most browser, e.g. with a plugin.</li></ul><p>You can include many IPs or agents, but you can\'t set different policies for each. If you require that, edit js/kiosk/kiosk_policy_custom.js - this file won\'t be overwritten</p>') ?></div>
+
+                        <label for="cfg[kiosk][IPs]"><?php echo __('IP Addresses') ?></label><br />
+                            <input type="text" name="cfg[kiosk][IPs]" value="<?php echo $cfg->kiosk->IPs ?>" aria-describedby="help_kiosk_ips" />
+                            <div id="help_kiosk_ips" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enter one or multiple IPs. Separate by comma (<i>1.2.3.1, 1.2.3.2</i>).') ?></span></div>
+                        <label for="cfg[kiosk][agents]"><?php echo __('Browser User Agents') ?></label><br />
+                            <input type="text" name="cfg[kiosk][agents]" value="<?php echo $cfg->kiosk->agents ?>" aria-describedby="help_kiosk_agents" />
+                            <div id="help_kiosk_agents" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enter one or more user agent (the relevant keyword is enough). You might enter multiple agents. Separate by comma.') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Policies: Checkout page') ?></legend>
+                        <input type="checkbox" name="cfg[kiosk][policy_NoPrint]" <?php echo frm_checked($cfg->kiosk->policy_NoPrint) ?> aria-describedby="help_kiosk_ips" />
+                            <label for="cfg[kiosk][policy_NoPrint]"><?php echo (__('Disable').' "'.__('View &amp; Print').'"') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoPrint" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Hide printing on kiosk pc\'s.') ?></span></div>
+
+                        <input type="checkbox" name="cfg[kiosk][policy_NoSendLib]" <?php echo frm_checked($cfg->kiosk->policy_NoSendLib) ?> aria-describedby="help_kiosk_policy_NoSendLib" />
+                            <label for="cfg[kiosk][policy_NoSendLib]"><?php echo (__('Disable').' "'.__('Send to library to get PDFs').'"') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoSendLib" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t allow users to send request for PDFs to library on kiosk pc\'s. To completly disable this feature, go to "Settings"') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Policies: Main page') ?></legend>
+                        <input type="checkbox" name="cfg[kiosk][policy_NoRSS]" <?php echo frm_checked($cfg->kiosk->policy_NoRSS) ?> aria-describedby="help_kiosk_policy_NoRSS" />
+                            <label for="cfg[kiosk][policy_NoRSS]"><?php echo __('Disable RSS meta button') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoRSS" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t show RSS button in meta menu on kiosk pc\'s. Of little use there.') ?></span></div>
+                </fieldset>
+            </div>
+            <div class="content" id="formTab8">
                 <h3><?php echo __('Mailing Settings') ?></h3>
                     <fieldset>
                         <legend><?php echo __('Mailing: General Settings') ?></legend>
@@ -793,7 +824,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                                 <div id="help_dbpass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The password...') ?></span></div>
                     </fieldset>
             </div>
-            <div class="content" id="formTab8">
+            <div class="content" id="formTab9">
                 <h3>Saving Path Settings</h3>
                 <fieldset>
                     <legend>Speicherpfade</legend>
@@ -812,7 +843,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                         <div id="help_data_journals_usr" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef.') ?></span></div>
                 </fieldset>
             </div>
-            <div class="content" id="formTab9">
+            <div class="content" id="formTab10">
                 <h3><?php echo __('Journals.csv Columns') ?></h3>
                 <fieldset>
                     <legend><?php echo __('Table Columns') ?></legend>

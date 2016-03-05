@@ -160,4 +160,52 @@ function valid_issn($input, $validate = TRUE) {
   // no validation and no preg fail
   return TRUE;
 }
+
+
+/**
+  * @brief  Save same data to identify client and only locally apply some
+  *         jquery actions. Useful for kiosk or library pc's
+  * 
+  * @return \b str HTML to output on page and that can be used by javascript
+  */
+function get_client_infos($cfg) {
+    $html = '';
+
+    // Move policies to array (easier to check)
+    $policyIPs    = array_flip(array_map('trim', explode(',', $cfg->kiosk->IPs)));
+    $policyAgents = array_map('trim', explode(',', $cfg->kiosk->agents));
+
+    // Get client infos
+    $clientIP    = $_SERVER['REMOTE_ADDR'];
+    $clientAgent = $_SERVER['HTTP_USER_AGENT'];
+
+    // Check if current browser user agent contains the agent(s) set via setting
+    $clientAgentHit = false;
+    foreach ($policyAgents as $agent) {
+        if (stripos($clientAgent, $agent)) {
+            $clientAgentHit = true;
+        }
+    }
+
+    // Create html if IP exists
+    if (array_key_exists($clientIP, $policyIPs) || $clientAgentHit) {
+        $html = '<span id="kioskPolicies" style="display: none">
+                    <!--Script for JournalTouch policies -->
+                    <script src="js/kiosk/kiosk_policy.js"></script>
+                    <!-- Policies: Main -->
+                    <span id="kioskPolicy_NoRSS">'.$cfg->kiosk->policy_NoRSS.'</span>
+                    <!-- Policies: Checkout -->
+                    <span id="kioskPolicy_NoPrint">'.$cfg->kiosk->policy_NoPrint.'</span>
+                    <span id="kioskPolicy_NoSendLib">'.$cfg->kiosk->policy_NoSendLib.'</span>
+
+                    <!--Script for your own policies -->
+                    <script src="js/kiosk/kiosk_policy_custom.js"></script>
+                    <!-- Client info -->
+                    <span id="client_IP">'.$clientIP.'</span>
+                    <span id="client_Agent">'.$clientAgent.'</span>
+                </span>';
+    }
+
+  return $html;
+}
 ?>

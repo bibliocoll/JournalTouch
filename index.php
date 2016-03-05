@@ -433,17 +433,17 @@ foreach ($journals as $j) {
     // @todo: seriously; make this better/cleaner
     $toclink = $rss = '';
     if ($j['metaGotToc'] == 'JToc') {
-        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup" title="'.__('Via JournalTocs').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup meta_toc" title="'.__('Via JournalTocs').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
         // RSS only if JournalTocs is source
-        if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ';
+        if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup meta_rss"><i class="fi-rss"></i> '.__('RSS').'</a> ';
     }
     elseif ($j['metaGotToc'] == 'CRtoc') {
         // Crossref does not work in a frame (obviously), just get toc JournalTouch style
         //$toclink = 'http://search.crossref.org/?type=Journal+Article&sort=year&q='.$j['issn'];
-        $toclink = '<a href="#" class="button cr_getTOC" title="'.__('Via CrossRef').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button cr_getTOC meta_toc" title="'.__('Via CrossRef').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
     else {
-        $toclink = '<a href="#" class="button" title="'.__('No toc available').'"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button meta_toc" title="'.__('No toc available').'"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
 
     $meta = '';
@@ -451,10 +451,10 @@ foreach ($journals as $j) {
     $meta .= $toclink;
     $meta .= $rss;
     $link = ($cfg->prefs->inst_service) ? $cfg->prefs->inst_service.$j['issn'] : '';
-    $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
-    $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
+    $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup meta_library"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
+    $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup meta_website"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
     $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-    $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+    $meta .= (($j['metaShelfmark']) ? ' <span class="button meta_print"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 
     if ($meta && $cfg->prefs->show_metainfo_list) {
          echo '<div class="metaInfo">'.$meta.'</div>';
@@ -525,7 +525,6 @@ foreach ($journals as $j) {
     <div class="row"><p class="text-center"><img src="img/logo.png" /></p></div>
 </div>
 <!-- end screensaver -->
-
 
 <script src="js/vendor/jquery.js"></script>
 <script src="js/foundation.min.js"></script>
@@ -599,6 +598,9 @@ var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 </script>
 
+<!-- START Kiosk policies -->
+<?php echo $cfg->sys->kioskPolicy_HTML ?>
+<!-- END Kiosk policies -->
 </body>
 </html>
 
