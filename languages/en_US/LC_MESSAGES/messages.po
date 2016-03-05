@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-15 18:04+0100\n"
-"PO-Revision-Date: 2016-02-15 18:04+0100\n"
+"POT-Creation-Date: 2016-03-05 01:47+0100\n"
+"PO-Revision-Date: 2016-03-05 01:47+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,18 +32,18 @@ msgstr ""
 
 #: checkout.php:73
 #: checkout.php:83
-#: checkout.php:234
-#: checkout.php:242
+#: checkout.php:236
+#: checkout.php:245
 msgid "Your e-mail"
 msgstr ""
 
 #: checkout.php:83
-#: checkout.php:234
+#: checkout.php:236
 msgid "your username"
 msgstr ""
 
 #: checkout.php:95
-#: checkout.php:262
+#: checkout.php:264
 msgid "please choose a name"
 msgstr ""
 
@@ -52,12 +52,12 @@ msgid "Your feedback message"
 msgstr ""
 
 #: checkout.php:103
-#: checkout.php:279
+#: checkout.php:281
 msgid "if you have any comments for us please put them here!"
 msgstr ""
 
 #: checkout.php:114
-#: checkout.php:291
+#: checkout.php:293
 msgid "Submit"
 msgstr ""
 
@@ -66,6 +66,7 @@ msgid "I want to..."
 msgstr ""
 
 #: checkout.php:132
+#: admin/settings.php:771
 msgid "View &amp; Print"
 msgstr ""
 
@@ -73,55 +74,56 @@ msgstr ""
 msgid "Send to my mailbox"
 msgstr ""
 
-#: checkout.php:136
+#: checkout.php:137
+#: admin/settings.php:775
 msgid "Send to library to get PDFs"
 msgstr ""
 
-#: checkout.php:138
+#: checkout.php:140
 msgid "You already sent your files"
 msgstr ""
 
-#: checkout.php:140
+#: checkout.php:142
 msgid "choose another option"
 msgstr ""
 
-#: checkout.php:142
+#: checkout.php:144
 msgid "Clear Data and Logout"
 msgstr ""
 
-#: checkout.php:148
-#: index.php:309
+#: checkout.php:150
+#: index.php:291
 msgid "Do you really want to empty your basket?"
 msgstr ""
 
-#: checkout.php:149
-#: index.php:310
+#: checkout.php:151
+#: index.php:292
 msgid "OK, empty my basket!"
 msgstr ""
 
-#: checkout.php:150
-#: index.php:311
+#: checkout.php:152
+#: index.php:293
 msgid "No, keep basket!"
 msgstr ""
 
-#: checkout.php:158
+#: checkout.php:160
 msgid "Your articles have been successfully deleted! You will automatically be taken to the start page."
 msgstr ""
 
-#: checkout.php:189
+#: checkout.php:191
 msgid "Your message has been successfully sent!"
 msgstr ""
 
-#: checkout.php:269
+#: checkout.php:271
 msgid "Attach citations?"
 msgstr ""
 
-#: checkout.php:278
+#: checkout.php:280
 msgid "Your message"
 msgstr ""
 
-#: checkout.php:325
-#: index.php:271
+#: checkout.php:327
+#: index.php:253
 msgid "External Source"
 msgstr ""
 
@@ -134,7 +136,7 @@ msgid "about"
 msgstr ""
 
 #: index.php:154
-#: index.php:284
+#: index.php:266
 msgid "show all"
 msgstr ""
 
@@ -146,131 +148,101 @@ msgstr ""
 msgid "You are using JournalTouch with demo settings. Head over to <a href=\"admin/settings.php\">Settings</a> to set up you own configuration."
 msgstr ""
 
-#: index.php:231
+#: index.php:213
+msgid "The admin folder is not secured by an .htaccess file. Anyone has access. Just rename admin/.htaccess.sample to .htaccess if you don't care and want to disable this message."
+msgstr ""
+
+#: index.php:237
 msgid "About"
 msgstr ""
 
-#: index.php:234
-#: index.php:541
-msgid "<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues."
-msgstr ""
-
-#: index.php:240
-#: index.php:547
-msgid ""
-"It's easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract\n"
-"available, it will be indicated with an extra button.\n"
-"When you are finished, click on your basket to check out.\n"
-"You can now send the article information to your e-mail address, send a\n"
-"request for the PDF files to the library, or view/save it as a\n"
-"list. Export for citation management systems like Endnote is also available. <br/>\n"
-"The list of journals is a selection of the journals licensed to the library."
-msgstr ""
-
-#: index.php:254
-msgid "If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>."
-msgstr ""
-
-#: index.php:255
-#: index.php:563
-msgid "Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>."
-msgstr ""
-
-#: index.php:260
-#: index.php:524
+#: index.php:242
+#: index.php:506
 msgid "Get in touch!"
 msgstr ""
 
-#: index.php:282
+#: index.php:264
 msgid "Tagcloud"
 msgstr ""
 
-#: index.php:295
+#: index.php:277
 msgid "Your basket is empty."
 msgstr ""
 
-#: index.php:298
+#: index.php:280
 msgid "Send/Save my articles"
 msgstr ""
 
-#: index.php:300
+#: index.php:282
 msgid "Empty my basket"
 msgstr ""
 
-#: index.php:320
+#: index.php:302
 msgid "The newest editions"
 msgstr ""
 
-#: index.php:392
+#: index.php:374
 msgid "Filter active:"
 msgstr ""
 
-#: index.php:402
+#: index.php:384
 msgid "Search journal"
 msgstr ""
 
-#: index.php:405
+#: index.php:387
 msgid "No journals found"
 msgstr ""
 
-#: index.php:454
+#: index.php:436
 msgid "Via JournalTocs"
 msgstr ""
 
-#: index.php:456
+#: index.php:438
 msgid "RSS"
 msgstr ""
 
-#: index.php:461
+#: index.php:443
 msgid "Via CrossRef"
 msgstr ""
 
-#: index.php:464
+#: index.php:446
 msgid "No toc available"
 msgstr ""
 
-#: index.php:487
+#: index.php:469
 msgid "last update"
 msgstr ""
 
-#: index.php:501
+#: index.php:483
 msgid "Something seems to be wrong with the network"
 msgstr ""
 
-#: index.php:502
-#: index.php:507
+#: index.php:484
+#: index.php:489
 msgid "Please notify us!"
 msgstr ""
 
-#: index.php:506
+#: index.php:488
 msgid "No table of contents found! Are you interested in this title?"
 msgstr ""
 
-#: index.php:520
+#: index.php:502
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr ""
 
-#: index.php:537
+#: index.php:519
 msgid "Touch me!"
 msgstr ""
 
-#: index.php:538
+#: index.php:520
 msgid "What is this?"
 msgstr ""
 
-#: index.php:560
-msgid "If a journal is missing, please let us know and we will add it to the list."
-msgstr ""
-
-#: index.php:562
-msgid "<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>"
-msgstr ""
-
-#: index.php:567
+#: index.php:524
 msgid "Touch the screen to get started..."
 msgstr ""
 
-#: index.php:609
+#: index.php:564
 msgid "remove"
 msgstr ""
 
@@ -423,434 +395,475 @@ msgid ""
 msgstr ""
 
 #: admin/covers.php:484
-#: admin/settings.php:918
+#: admin/settings.php:976
 msgid "Beware, you have unsaved settings"
 msgstr ""
 
 #: admin/covers.php:489
-#: admin/settings.php:923
+#: admin/settings.php:981
 msgid "Configuration successfully saved!"
 msgstr ""
 
-#: admin/settings.php:404
+#: admin/settings.php:416
 msgid "JournalTouch Settings for Admins"
 msgstr ""
 
-#: admin/settings.php:414
-#: admin/settings.php:424
+#: admin/settings.php:426
+#: admin/settings.php:437
 msgid "Save"
 msgstr ""
 
-#: admin/settings.php:415
+#: admin/settings.php:427
 msgid "Your Institution"
 msgstr ""
 
-#: admin/settings.php:416
-#: admin/settings.php:455
+#: admin/settings.php:428
+#: admin/settings.php:468
 msgid "Preferences"
 msgstr ""
 
-#: admin/settings.php:417
-#: admin/settings.php:495
+#: admin/settings.php:429
+#: admin/settings.php:517
 msgid "Translations"
 msgstr ""
 
-#: admin/settings.php:418
+#: admin/settings.php:430
 msgid "API"
 msgstr ""
 
-#: admin/settings.php:419
-#: admin/settings.php:777
+#: admin/settings.php:431
+#: admin/settings.php:835
 msgid "Covers"
 msgstr ""
 
-#: admin/settings.php:420
-#: admin/settings.php:801
+#: admin/settings.php:432
+#: admin/settings.php:859
 msgid "Filter"
 msgstr ""
 
-#: admin/settings.php:421
-msgid "Mailing"
-msgstr ""
-
-#: admin/settings.php:422
-msgid "Paths"
-msgstr ""
-
-#: admin/settings.php:423
-msgid "Journal List"
-msgstr ""
-
-#: admin/settings.php:432
-msgid "Settings for your institution"
+#: admin/settings.php:433
+#: admin/settings.php:756
+msgid "Kiosk PCs"
 msgstr ""
 
 #: admin/settings.php:434
-msgid "Your institution"
+msgid "Mailing"
 msgstr ""
 
 #: admin/settings.php:435
-msgid "Institution name"
+msgid "Paths"
 msgstr ""
 
 #: admin/settings.php:436
-msgid "Your institution name. Currently only shown in the about text."
-msgstr ""
-
-#: admin/settings.php:439
-msgid "Institution: Discover and access"
-msgstr ""
-
-#: admin/settings.php:440
-msgid "Catalogue Link"
-msgstr ""
-
-#: admin/settings.php:442
-msgid "Adds a link with the journal's issn to your catalogue or discovery. The link shows as a meta button next to the journal in the list and/or above the toc. Leave empty to disable."
-msgstr ""
-
-#: admin/settings.php:443
-msgid "Proxy"
+msgid "Journal List"
 msgstr ""
 
 #: admin/settings.php:445
-msgid "If you got a proxy (e.g. EZproxy) to allow patrons outside of your ip range access then set the base url here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=)."
+msgid "Settings for your institution"
 msgstr ""
 
 #: admin/settings.php:447
-msgid "Enable button for direct download?"
+msgid "Your institution"
 msgstr ""
 
 #: admin/settings.php:448
-msgid "If you enable this a button for directly downloading a article's pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page."
+msgid "Institution name"
 msgstr ""
 
 #: admin/settings.php:449
-msgid "SFX Service"
+msgid "Your institution name. Currently only shown in the about text."
 msgstr ""
 
-#: admin/settings.php:451
-msgid "Your sfx baseurl (e.g. http://sfx.gbv.de/sfx_tuhh). Currently used as alternative for the direct download button."
+#: admin/settings.php:452
+msgid "Institution: Discover and access"
 msgstr ""
 
-#: admin/settings.php:457
-msgid "Preferences: Navigation Menues"
+#: admin/settings.php:453
+msgid "Catalogue Link"
 msgstr ""
 
-#: admin/settings.php:459
-msgid "Enable list view"
+#: admin/settings.php:455
+msgid "Adds a link with the journal's issn to your catalogue or discovery. The link shows as a meta button next to the journal in the list and/or above the toc. Leave empty to disable."
+msgstr ""
+
+#: admin/settings.php:456
+msgid "Proxy"
+msgstr ""
+
+#: admin/settings.php:458
+msgid "If you got a proxy (e.g. EZproxy) to allow patrons outside of your ip range access then set the base url here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=)."
 msgstr ""
 
 #: admin/settings.php:460
-msgid "Show menu entry to switch to list view (otherwise it's always the grid view with covers)"
+msgid "Enable button for direct download?"
+msgstr ""
+
+#: admin/settings.php:461
+msgid "If you enable this a button for directly downloading a article's pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page."
 msgstr ""
 
 #: admin/settings.php:462
-msgid "Enable sorting by date or alphabetical"
+msgid "SFX Service"
 msgstr ""
 
-#: admin/settings.php:463
-msgid "Show the menu entry to switch between alphabetical and date sorting (otherwise it's the default sort set below)"
+#: admin/settings.php:464
+msgid "Your sfx baseurl (e.g. http://sfx.gbv.de/sfx_tuhh). Currently used as alternative for the direct download button."
 msgstr ""
 
-#: admin/settings.php:465
-msgid "Enable tags"
-msgstr ""
-
-#: admin/settings.php:466
-msgid "Show the menu entry for the tagcloud?"
-msgstr ""
-
-#: admin/settings.php:467
-msgid "Minimum tag frequency"
-msgstr ""
-
-#: admin/settings.php:469
-msgid "How often must a tag be used at least to show up in the tagcloud (if enabled)? Useful if you got very many tags."
+#: admin/settings.php:470
+msgid "Preferences: Navigation Menues"
 msgstr ""
 
 #: admin/settings.php:472
-msgid "Preferences: Default View"
+msgid "Enable list view"
 msgstr ""
 
-#: admin/settings.php:474
-msgid "Sort by date by default"
+#: admin/settings.php:473
+msgid "Show menu entry to switch to list view (otherwise it's always the grid view with covers)"
 msgstr ""
 
 #: admin/settings.php:475
-msgid "Enabled to sort date by default. Otherwise it is alphabetical."
+msgid "Enable sorting by date or alphabetical"
 msgstr ""
 
-#: admin/settings.php:477
-msgid "Show meta menu in journal list"
+#: admin/settings.php:476
+msgid "Show the menu entry to switch between alphabetical and date sorting (otherwise it's the default sort set below)"
 msgstr ""
 
 #: admin/settings.php:478
-msgid "Enable to show the block with the meta menu buttons rightside from the covers (toc, weblink, shelfmark etc.)."
+msgid "Enable tags"
+msgstr ""
+
+#: admin/settings.php:479
+msgid "Show the menu entry for the tagcloud?"
 msgstr ""
 
 #: admin/settings.php:480
-msgid "Show meta menu above toc"
+msgid "Minimum tag frequency"
 msgstr ""
 
-#: admin/settings.php:481
-msgid "Show the block with the meta menu buttons above the toc. <strong>Note</strong>: If show_metainfo_list is true, it will show above the toc, even if set to false here. Sorry for now if you happen to exactly not wanting this..."
+#: admin/settings.php:482
+msgid "How often must a tag be used at least to show up in the tagcloud (if enabled)? Useful if you got very many tags."
 msgstr ""
 
-#: admin/settings.php:483
-msgid "Enable RSS Meta Button (read help carefully)"
-msgstr ""
-
-#: admin/settings.php:484
-msgid "This enabled a link to the JournalTocs RSS feed. Since the feed is only usable with an account, YOUR email must be used and is visible in the url. Two aspects make this charming. First and before all: if you use a proxy (see Your Institution), the links in the rss feed are \"proxified\". Second: it's easier to provide the user with a link than explaining how to create an account themselves at JournalTocs."
-msgstr ""
-
-#: admin/settings.php:486
-msgid "Enable Screensaver"
+#: admin/settings.php:485
+msgid "Preferences: Default View"
 msgstr ""
 
 #: admin/settings.php:487
-msgid "Show a screensaver after idle time. <strong>The time is currently is fixed at 5 minutes</strong>"
+msgid "Sort by date by default"
 msgstr ""
 
-#: admin/settings.php:489
-msgid "Enable Orbit"
+#: admin/settings.php:488
+msgid "Enabled to sort date by default. Otherwise it is alphabetical."
 msgstr ""
 
 #: admin/settings.php:490
-msgid "This displayed a slide of the newest issues at the top of the journal list."
+msgid "Show meta menu in journal list"
+msgstr ""
+
+#: admin/settings.php:491
+msgid "Enable to show the block with the meta menu buttons rightside from the covers (toc, weblink, shelfmark etc.)."
+msgstr ""
+
+#: admin/settings.php:493
+msgid "Show meta menu above toc"
+msgstr ""
+
+#: admin/settings.php:494
+msgid "Show the block with the meta menu buttons above the toc. <strong>Note</strong>: If show_metainfo_list is true, it will show above the toc, even if set to false here. Sorry for now if you happen to exactly not wanting this..."
+msgstr ""
+
+#: admin/settings.php:496
+msgid "Enable RSS Meta Button (read help carefully)"
 msgstr ""
 
 #: admin/settings.php:497
-msgid "Default language and languages enabled for switching"
+msgid "This enabled a link to the JournalTocs RSS feed. Since the feed is only usable with an account, YOUR email must be used and is visible in the url. Two aspects make this charming. First and before all: if you use a proxy (see Your Institution), the links in the rss feed are \"proxified\". Second: it's easier to provide the user with a link than explaining how to create an account themselves at JournalTocs."
+msgstr ""
+
+#: admin/settings.php:499
+msgid "Enable Orbit"
 msgstr ""
 
 #: admin/settings.php:500
-msgid "Default language"
+msgid "This displayed a slide of the newest issues at the top of the journal list."
 msgstr ""
 
-#: admin/settings.php:510
-msgid "The language used initially."
+#: admin/settings.php:501
+msgid "Screesaver timing"
 msgstr ""
 
-#: admin/settings.php:513
-msgid "Enabled languages (multiple choice)"
+#: admin/settings.php:503
+msgid "Set the idle time in seconds before screensaver is displayed. Set to 0 to disable screensaver. Default is 240 seconds (4 minutes)."
 msgstr ""
 
-#: admin/settings.php:514
-msgid "Enable languages"
+#: admin/settings.php:506
+msgid "Preferences: Checkout"
 msgstr ""
 
-#: admin/settings.php:517
-msgid "Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page."
+#: admin/settings.php:507
+msgid "Basket timing"
+msgstr ""
+
+#: admin/settings.php:509
+msgid "Set the idle time in seconds before the basket is cleared. Default is 260 seconds (4 minutes, 20 seconds). Hint: set it slightly higher then the screensaver timing."
+msgstr ""
+
+#: admin/settings.php:511
+msgid "Allow mail for PDF"
+msgstr ""
+
+#: admin/settings.php:512
+msgid "Checkout action: May users send a mail to the library asking to get the pdf send to them?"
+msgstr ""
+
+#: admin/settings.php:519
+msgid "Default language and languages enabled for switching"
 msgstr ""
 
 #: admin/settings.php:522
-msgid "Translations: General Elements"
-msgstr ""
-
-#: admin/settings.php:523
-msgid "Tagline"
-msgstr ""
-
-#: admin/settings.php:524
-msgid "The tagline at the left upper screen."
-msgstr ""
-
-#: admin/settings.php:525
-msgid "Floating \"Send articles\""
-msgstr ""
-
-#: admin/settings.php:526
-msgid "The button floating at the right side, so a user can always send his basket articles, without going up to the menu."
-msgstr ""
-
-#: admin/settings.php:529
-msgid "Translations: Menus"
-msgstr ""
-
-#: admin/settings.php:530
-#: admin/settings.php:903
-msgid "Tags"
-msgstr ""
-
-#: admin/settings.php:531
-msgid "Name for the tag menu."
+msgid "Default language"
 msgstr ""
 
 #: admin/settings.php:532
-msgid "Filters"
-msgstr ""
-
-#: admin/settings.php:533
-msgid "The name of the filter menu."
-msgstr ""
-
-#: admin/settings.php:534
-msgid "Special Filter"
+msgid "The language used initially."
 msgstr ""
 
 #: admin/settings.php:535
-msgid "The name of you special filter within the filter menu (special filters are set in column 4 of the journals.csv)."
+msgid "Enabled languages (multiple choice)"
 msgstr ""
 
 #: admin/settings.php:536
-msgid "My Basket"
+msgid "Enable languages"
 msgstr ""
 
-#: admin/settings.php:537
-msgid "The basket menu name."
-msgstr ""
-
-#: admin/settings.php:540
-msgid "Translations: Menus with toggle"
-msgstr ""
-
-#: admin/settings.php:541
-msgid "Sort by date"
-msgstr ""
-
-#: admin/settings.php:542
-msgid "The name of the sort menu: when switching to date sort."
-msgstr ""
-
-#: admin/settings.php:543
-msgid "Sort alphabetically"
+#: admin/settings.php:539
+msgid "Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page."
 msgstr ""
 
 #: admin/settings.php:544
-msgid "The name of the sort menu: when switching to alphabetical sort."
+msgid "Translations: General Elements"
 msgstr ""
 
 #: admin/settings.php:545
-msgid "List view"
+msgid "Tagline"
 msgstr ""
 
 #: admin/settings.php:546
-msgid "The name of the menu to toggle the list view"
+msgid "The tagline at the left upper screen."
 msgstr ""
 
 #: admin/settings.php:547
-msgid "Grid view"
+msgid "Floating \"Send articles\""
 msgstr ""
 
 #: admin/settings.php:548
-msgid "The name of the menu to toggle the grid view"
+msgid "The button floating at the right side, so a user can always send his basket articles, without going up to the menu."
 msgstr ""
 
 #: admin/settings.php:551
-msgid "Translations: Meta Info Buttons"
+msgid "Translations: Menus"
 msgstr ""
 
 #: admin/settings.php:552
-msgid "Meta Button: TOC (available)"
+#: admin/settings.php:961
+msgid "Tags"
 msgstr ""
 
 #: admin/settings.php:553
-msgid "The button indicating that a toc is available (see journals.csv column 14)."
+msgid "Name for the tag menu."
 msgstr ""
 
 #: admin/settings.php:554
-msgid "Meta Button: Journal Homepage"
+msgid "Filters"
 msgstr ""
 
 #: admin/settings.php:555
-msgid "The button linking to the journal's homepage (see journals.csv column 16)."
+msgid "The name of the filter menu."
 msgstr ""
 
 #: admin/settings.php:556
-msgid "Library service"
+msgid "Special Filter"
 msgstr ""
 
 #: admin/settings.php:557
-msgid "The link to you catalogue/service witht the journal's issn appended."
+msgid "The name of you special filter within the filter menu (special filters are set in column 4 of the journals.csv)."
 msgstr ""
 
-#: admin/settings.php:561
-msgid "API Settings"
+#: admin/settings.php:558
+msgid "My Basket"
+msgstr ""
+
+#: admin/settings.php:559
+msgid "The basket menu name."
+msgstr ""
+
+#: admin/settings.php:562
+msgid "Translations: Menus with toggle"
+msgstr ""
+
+#: admin/settings.php:563
+msgid "Sort by date"
 msgstr ""
 
 #: admin/settings.php:564
-msgid "Only activate caching if you do<ul><li>A (daily) cron to http://my.journaltouch.local/admin/updateTocs.php?optRecent=on&upd=true</li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php</li></ul>"
+msgid "The name of the sort menu: when switching to date sort."
+msgstr ""
+
+#: admin/settings.php:565
+msgid "Sort alphabetically"
 msgstr ""
 
 #: admin/settings.php:566
-msgid "Enable Caching Tocs"
+msgid "The name of the sort menu: when switching to alphabetical sort."
 msgstr ""
 
 #: admin/settings.php:567
-msgid "Caches fetched tocs so they only are processed once there is a new issue. Recommended."
+msgid "List view"
+msgstr ""
+
+#: admin/settings.php:568
+msgid "The name of the menu to toggle the list view"
 msgstr ""
 
 #: admin/settings.php:569
-msgid "Enabling Caching Main Page"
+msgid "Grid view"
 msgstr ""
 
 #: admin/settings.php:570
-msgid "Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often. Since this caching might be a source for confusion, it is not really recommended."
+msgid "The name of the menu to toggle the grid view"
 msgstr ""
 
 #: admin/settings.php:573
-msgid "Api: General Settings"
+msgid "Translations: Meta Info Buttons"
+msgstr ""
+
+#: admin/settings.php:574
+msgid "Meta Button: TOC (available)"
 msgstr ""
 
 #: admin/settings.php:575
-msgid "Make articles in tocs a clickable link"
+msgid "The button indicating that a toc is available (see journals.csv column 14)."
 msgstr ""
 
 #: admin/settings.php:576
-msgid "If people access JournalTouch from somewhere where they have no access to the licenced ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves)."
+msgid "Meta Button: Journal Homepage"
 msgstr ""
 
 #: admin/settings.php:577
-msgid "Mark issue for how many days as new?"
+msgid "The button linking to the journal's homepage (see journals.csv column 16)."
+msgstr ""
+
+#: admin/settings.php:578
+msgid "Library service"
 msgstr ""
 
 #: admin/settings.php:579
-msgid "If a new issue is found on the update (use a daily cron to keep track) it is marked as new for as many days as specified here. You might think it'd be much cooler if the journal's publishing frequency would be used. Well, we think so too, but where to get it - or who would want to enter it by hand. Anyway, if you got a premium account and use the data for the live view (see below) you can ignore this setting.)"
+msgid "The link to you catalogue/service witht the journal's issn appended."
 msgstr ""
 
 #: admin/settings.php:582
-msgid "Api: JournalTocs"
+msgid "Translations: Other"
 msgstr ""
 
-#: admin/settings.php:583
-msgid "Your JournalTocs Account (Mail)"
+#: admin/settings.php:584
+msgid "About and Screensaver"
 msgstr ""
 
 #: admin/settings.php:585
-msgid "The mail you are registered with at JournalTocs. This is crucial for making the most of JournalTouch!"
-msgstr ""
-
-#: admin/settings.php:587
-msgid "Got Premium Account?"
-msgstr ""
-
-#: admin/settings.php:588
-msgid "Enable if you have a premium account. You get slightly better data for recent issue dates. Check yourself what the benefits of a premium account are - it is not required."
+msgid "The text displayed when screensaver triggers or user clicks the about button. Please use [ and ] instead of &lt; and &gt; for HTML tags. The text fields are sized for an amount of text that can reasonably be displayed on a single screen."
 msgstr ""
 
 #: admin/settings.php:589
-msgid "URL for JournalTocs Premium"
+msgid "API Settings"
 msgstr ""
 
 #: admin/settings.php:591
-msgid "This is just for the unlikely case that the url ever changes."
+msgid "Performance"
 msgstr ""
 
-#: admin/settings.php:593
-msgid "Use premium data for live view (slow!)"
+#: admin/settings.php:592
+msgid "Only activate caching if you do<ul><li>A (daily) cron like <i>wget -O - -q -t 1 \"http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true\" >/dev/null 2>&1</i></li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php (replace url in above example for cron job)</li></ul>"
 msgstr ""
 
 #: admin/settings.php:594
-msgid "Uses premium infos to mark issues as new. Slows page loading down"
+msgid "Enable Caching Tocs"
+msgstr ""
+
+#: admin/settings.php:595
+msgid "Caches fetched tocs so they only are processed once there is a new issue. Recommended."
+msgstr ""
+
+#: admin/settings.php:597
+msgid "Enabling Caching Main Page"
 msgstr ""
 
 #: admin/settings.php:598
+msgid "Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often. Since this caching might be a source for confusion, it is not really recommended."
+msgstr ""
+
+#: admin/settings.php:601
+msgid "Api: General Settings"
+msgstr ""
+
+#: admin/settings.php:603
+msgid "Make articles in tocs a clickable link"
+msgstr ""
+
+#: admin/settings.php:604
+msgid "If people access JournalTouch from somewhere where they have no access to the licenced ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves)."
+msgstr ""
+
+#: admin/settings.php:605
+msgid "Mark issue for how many days as new?"
+msgstr ""
+
+#: admin/settings.php:607
+msgid "If a new issue is found on the update (use a daily cron to keep track) it is marked as new for as many days as specified here. You might think it'd be much cooler if the journal's publishing frequency would be used. Well, we think so too, but where to get it - or who would want to enter it by hand. Anyway, if you got a premium account and use the data for the live view (see below) you can ignore this setting.)"
+msgstr ""
+
+#: admin/settings.php:610
+msgid "Api: JournalTocs"
+msgstr ""
+
+#: admin/settings.php:611
+msgid "Your JournalTocs Account (Mail)"
+msgstr ""
+
+#: admin/settings.php:613
+msgid "The mail you are registered with at JournalTocs. This is crucial for making the most of JournalTouch!"
+msgstr ""
+
+#: admin/settings.php:615
+msgid "Got Premium Account?"
+msgstr ""
+
+#: admin/settings.php:616
+msgid "Enable if you have a premium account. You get slightly better data for recent issue dates. Check yourself what the benefits of a premium account are - it is not required."
+msgstr ""
+
+#: admin/settings.php:617
+msgid "URL for JournalTocs Premium"
+msgstr ""
+
+#: admin/settings.php:619
+msgid "This is just for the unlikely case that the url ever changes."
+msgstr ""
+
+#: admin/settings.php:621
+msgid "Use premium data for live view (slow!)"
+msgstr ""
+
+#: admin/settings.php:622
+msgid "Uses premium infos to mark issues as new. Slows page loading down"
+msgstr ""
+
+#: admin/settings.php:626
 msgid "Information & Disclaimer"
 msgstr ""
 
-#: admin/settings.php:600
+#: admin/settings.php:628
 msgid ""
 "<h2>Cover Downloading</h2>\n"
 "                    <p>Put your own covers into the data/covers folder. The name must be the issn specified for the journal. The extension might be jpg, gif or png.</p>\n"
@@ -871,431 +884,484 @@ msgid ""
 "                  "
 msgstr ""
 
-#: admin/settings.php:619
+#: admin/settings.php:647
 msgid "Cover Settings"
 msgstr ""
 
-#: admin/settings.php:621
+#: admin/settings.php:649
 msgid "Covers: General Settings"
 msgstr ""
 
-#: admin/settings.php:622
+#: admin/settings.php:650
 msgid "Cover Placeholder"
 msgstr ""
 
-#: admin/settings.php:624
+#: admin/settings.php:652
 msgid "<p>An image that is used if no journal cover is available.</p>"
 msgstr ""
 
-#: admin/settings.php:625
+#: admin/settings.php:653
 msgid "Cover Api"
 msgstr ""
 
-#: admin/settings.php:627
+#: admin/settings.php:655
 msgid "You might input an url where an issn can be appended (\"http://myservice.net/issn=\") - and mail us if you got such a thing ;)"
 msgstr ""
 
-#: admin/settings.php:630
+#: admin/settings.php:658
 msgid "Download: Generic sources"
 msgstr ""
 
-#: admin/settings.php:631
+#: admin/settings.php:659
 msgid "Drag service in the order you want them to be checked for covers"
 msgstr ""
 
-#: admin/settings.php:653
+#: admin/settings.php:681
 msgid "These are sites where covers for many publishers can be fetched. If a cover is found the remaining sources won't be checked."
 msgstr ""
 
-#: admin/settings.php:656
+#: admin/settings.php:684
 msgid "Download: Publishers"
 msgstr ""
 
-#: admin/settings.php:665
+#: admin/settings.php:693
 msgid "For these publishers JournalTouch provides a way for direct cover download."
 msgstr ""
 
-#: admin/settings.php:669
+#: admin/settings.php:697
 msgid "Filter Settings"
 msgstr ""
 
-#: admin/settings.php:675
+#: admin/settings.php:703
 msgid "New filter alias for journals.csv table"
 msgstr ""
 
-#: admin/settings.php:676
+#: admin/settings.php:704
 msgid "In the filter column (= column 2 in journals.csv) you write a shorthand code for the filter. Here you map that shorthand code to some human readable name and add translations. These will be shown in the filter menu to filter by topic."
 msgstr ""
 
-#: admin/settings.php:679
+#: admin/settings.php:707
 msgid "Add filter"
 msgstr ""
 
-#: admin/settings.php:685
+#: admin/settings.php:713
 msgid "Filters for filter menu"
 msgstr ""
 
-#: admin/settings.php:700
-#: admin/settings.php:715
+#: admin/settings.php:728
+#: admin/settings.php:743
 msgid "Delete"
 msgstr ""
 
-#: admin/settings.php:722
+#: admin/settings.php:750
 msgid "You can't change a filter shorthand later. Remove and readd it above."
 msgstr ""
 
-#: admin/settings.php:723
+#: admin/settings.php:751
 msgid "Give your shorthand a meaningful name to show up in the filter menu."
 msgstr ""
 
-#: admin/settings.php:728
-msgid "Mailing Settings"
-msgstr ""
-
-#: admin/settings.php:730
-msgid "Mailing: General Settings"
-msgstr ""
-
-#: admin/settings.php:731
-msgid "Restrict users addresses to domain"
-msgstr ""
-
-#: admin/settings.php:733
-msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
-msgstr ""
-
-#: admin/settings.php:736
-msgid "Mailing: To User"
-msgstr ""
-
-#: admin/settings.php:737
-msgid "Your From Address"
-msgstr ""
-
-#: admin/settings.php:739
-msgid "From which address shall mails be sent (e.g. library@my-university.net)."
-msgstr ""
-
-#: admin/settings.php:740
-msgid "From Name"
-msgstr ""
-
-#: admin/settings.php:741
-msgid "Subject"
-msgstr ""
-
-#: admin/settings.php:742
-msgid "Message body"
-msgstr ""
-
-#: admin/settings.php:743
-msgid "Salutation"
-msgstr ""
-
-#: admin/settings.php:744
-msgid "Signature"
-msgstr ""
-
-#: admin/settings.php:745
-msgid "The message will look like this:<br><br><strong>From mail: library@my-university.net<br>From name: Library Name<br>Subject: Your saved articles from JournalTouch</strong><br><br>Your message was: xxx<br><br>Here are your articles, enjoy!<br><br>Best regards, your library team!"
-msgstr ""
-
-#: admin/settings.php:748
-msgid "Mailing: From User (Orders)"
-msgstr ""
-
-#: admin/settings.php:749
-msgid "To (your receiving address)"
-msgstr ""
-
-#: admin/settings.php:751
-msgid "To which mail shalls orders be sent?"
-msgstr ""
-
-#: admin/settings.php:752
-msgid "Order subject"
-msgstr ""
-
-#: admin/settings.php:753
-msgid "Order message"
-msgstr ""
-
-#: admin/settings.php:754
-msgid "The message will look like this:<br><br><strong>From mail: some.user@somewhere.net<br>Subject: New order for the library from JournalTouch</strong><br><br>New order from JournalTouch <i>Article list</i>"
-msgstr ""
-
-#: admin/settings.php:757
-msgid "Allowed users from database"
+#: admin/settings.php:758
+msgid "Agent's & IP's"
 msgstr ""
 
 #: admin/settings.php:759
-msgid "Enable user list from database"
-msgstr ""
-
-#: admin/settings.php:760
-msgid "On mailing users can select their name from a list (instead of supplying a mail). This is something very special for MPI purposes and you should leave it disabled (unless you happen to work there ;))."
+msgid "<p>If you display JournalTouch on a kiosk device within your institution, you might want to disable certain settings. For example displaying printing buttons might make no sense.<br />Instead of setting up a second JournalTouch installation, you just can disable certain elements for an IP or a browser user agent.</p><ul><li><strong>IP</strong>: only works if the kiosk PC is accessing the webserver directly (not behind a proxy or a NAT router)</li><li><strong>Browser agent</strong>: Kiosk software often offer an easy way to set a custom user agent string for the browser. If you don't got such software or it doesn't come with such an option, you can do it yourself. It can be done easily for most browser, e.g. with a plugin.</li></ul><p>You can include many IPs or agents, but you can't set different policies for each. If you require that, edit js/kiosk/kiosk_policy_custom.js - this file won't be overwritten</p>"
 msgstr ""
 
 #: admin/settings.php:761
-msgid "DB User"
+msgid "IP Addresses"
 msgstr ""
 
 #: admin/settings.php:763
-msgid "User name with access to database."
+msgid "Enter one or multiple IPs. Separate by comma (<i>1.2.3.1, 1.2.3.2</i>)."
 msgstr ""
 
 #: admin/settings.php:764
-msgid "DB Password"
+msgid "Browser User Agents"
 msgstr ""
 
 #: admin/settings.php:766
-msgid "The password..."
+msgid "Enter one or more user agent (the relevant keyword is enough). You might enter multiple agents. Separate by comma."
 msgstr ""
 
-#: admin/settings.php:773
-msgid "Usually everything concerning you JournalTouch settings is saved into /data. This folder must be writable by the webserver. If you really need to, you can change some of the paths here. Yet, why would you want that?"
+#: admin/settings.php:769
+msgid "Policies: Checkout page"
 msgstr ""
 
-#: admin/settings.php:774
-msgid "Cache"
+#: admin/settings.php:771
+#: admin/settings.php:775
+msgid "Disable"
+msgstr ""
+
+#: admin/settings.php:772
+msgid "Hide printing on kiosk pc's."
 msgstr ""
 
 #: admin/settings.php:776
-msgid "Here are fetched tocs cached. See menu API."
+msgid "Don't allow users to send request for PDFs to library on kiosk pc's. To completly disable this feature, go to \"Settings\""
 msgstr ""
 
 #: admin/settings.php:779
-msgid "Here you put your own journal covers. Automatically downloaded covers are put into the \"api\" subfolder."
+msgid "Policies: Main page"
 msgstr ""
 
-#: admin/settings.php:780
-msgid "Export"
+#: admin/settings.php:781
+msgid "Disable RSS meta button"
 msgstr ""
 
 #: admin/settings.php:782
-msgid "Here are exports from the basket cached."
+msgid "Don't show RSS button in meta menu on kiosk pc's. Of little use there."
 msgstr ""
 
-#: admin/settings.php:783
-msgid "Journal list"
+#: admin/settings.php:786
+msgid "Mailing Settings"
 msgstr ""
 
-#: admin/settings.php:785
-msgid "Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef."
+#: admin/settings.php:788
+msgid "Mailing: General Settings"
 msgstr ""
 
 #: admin/settings.php:789
-msgid "Journals.csv Columns"
+msgid "Restrict users addresses to domain"
 msgstr ""
 
 #: admin/settings.php:791
-msgid "Table Columns"
+msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
 msgstr ""
 
-#: admin/settings.php:792
-msgid "This is only a reference to the columns in journals.csv, since they are not in the file itself."
-msgstr ""
-
-#: admin/settings.php:795
-msgid "Titel"
+#: admin/settings.php:794
+msgid "Mailing: To User"
 msgstr ""
 
 #: admin/settings.php:795
-#: admin/settings.php:801
-#: admin/settings.php:813
-#: admin/settings.php:834
-#: admin/settings.php:867
-#: admin/settings.php:876
-#: admin/settings.php:888
-msgid "Optional"
+msgid "Your From Address"
+msgstr ""
+
+#: admin/settings.php:797
+msgid "From which address shall mails be sent (e.g. library@my-university.net)."
 msgstr ""
 
 #: admin/settings.php:798
-msgid "Optional (recommended). The title of the journal."
+msgid "From Name"
 msgstr ""
 
-#: admin/settings.php:804
-msgid "Optional. Used for the filter menu, to filter journals by category. See config menu \"Filter\"."
+#: admin/settings.php:799
+msgid "Subject"
+msgstr ""
+
+#: admin/settings.php:800
+msgid "Message body"
+msgstr ""
+
+#: admin/settings.php:801
+msgid "Salutation"
+msgstr ""
+
+#: admin/settings.php:802
+msgid "Signature"
+msgstr ""
+
+#: admin/settings.php:803
+msgid "The message will look like this:<br><br><strong>From mail: library@my-university.net<br>From name: Library Name<br>Subject: Your saved articles from JournalTouch</strong><br><br>Your message was: xxx<br><br>Here are your articles, enjoy!<br><br>Best regards, your library team!"
+msgstr ""
+
+#: admin/settings.php:806
+msgid "Mailing: From User (Orders)"
 msgstr ""
 
 #: admin/settings.php:807
-msgid "Col2"
+msgid "To (your receiving address)"
 msgstr ""
 
-#: admin/settings.php:807
-#: admin/settings.php:822
-msgid "Ignore"
+#: admin/settings.php:809
+msgid "To which mail shalls orders be sent?"
 msgstr ""
 
 #: admin/settings.php:810
-#: admin/settings.php:825
-msgid "Ignore. This column exists for historical reasons, but is not used for anything by JournalTouch."
+msgid "Order subject"
 msgstr ""
 
-#: admin/settings.php:813
-msgid "Favorites"
+#: admin/settings.php:811
+msgid "Order message"
 msgstr ""
 
-#: admin/settings.php:816
-msgid "Optional. These journals are filtered with the \"special\" filter in filter menu, if column isn't empty (anything is ok)."
+#: admin/settings.php:812
+msgid "The message will look like this:<br><br><strong>From mail: some.user@somewhere.net<br>Subject: New order for the library from JournalTouch</strong><br><br>New order from JournalTouch <i>Article list</i>"
+msgstr ""
+
+#: admin/settings.php:815
+msgid "Allowed users from database"
+msgstr ""
+
+#: admin/settings.php:817
+msgid "Enable user list from database"
+msgstr ""
+
+#: admin/settings.php:818
+msgid "On mailing users can select their name from a list (instead of supplying a mail). This is something very special for MPI purposes and you should leave it disabled (unless you happen to work there ;))."
+msgstr ""
+
+#: admin/settings.php:819
+msgid "DB User"
+msgstr ""
+
+#: admin/settings.php:821
+msgid "User name with access to database."
 msgstr ""
 
 #: admin/settings.php:822
-msgid "Col4"
+msgid "DB Password"
 msgstr ""
 
-#: admin/settings.php:828
-msgid "P-Issn"
-msgstr ""
-
-#: admin/settings.php:828
-msgid "Required"
+#: admin/settings.php:824
+msgid "The password..."
 msgstr ""
 
 #: admin/settings.php:831
-msgid "Required. Without issn's we have nothing to work with :)"
+msgid "Usually everything concerning you JournalTouch settings is saved into /data. This folder must be writable by the webserver. If you really need to, you can change some of the paths here. Yet, why would you want that?"
+msgstr ""
+
+#: admin/settings.php:832
+msgid "Cache"
 msgstr ""
 
 #: admin/settings.php:834
-msgid "E-Issn"
+msgid "Here are fetched tocs cached. See menu API."
 msgstr ""
 
 #: admin/settings.php:837
-msgid "Optional. An e-issn to try if issn fails to get toc."
+msgid "Here you put your own journal covers. Automatically downloaded covers are put into the \"api\" subfolder."
+msgstr ""
+
+#: admin/settings.php:838
+msgid "Export"
 msgstr ""
 
 #: admin/settings.php:840
-msgid "Publisher"
+msgid "Here are exports from the basket cached."
 msgstr ""
 
-#: admin/settings.php:840
-#: admin/settings.php:849
-#: admin/settings.php:855
-#: admin/settings.php:861
-#: admin/settings.php:882
-#: admin/settings.php:894
-#: admin/settings.php:903
-msgid "Optional/Auto"
+#: admin/settings.php:841
+msgid "Journal list"
 msgstr ""
 
 #: admin/settings.php:843
-msgid "Optional/Auto. Publisher. Used for cover download (currently: \"De Gruyter\", \"Elsevier\", \"Sage\" and \"Springer-Verlag\" will work). Publishers are automatically fetched if you used \"fetch metadata\"."
+msgid "Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef."
+msgstr ""
+
+#: admin/settings.php:847
+msgid "Journals.csv Columns"
 msgstr ""
 
 #: admin/settings.php:849
+msgid "Table Columns"
+msgstr ""
+
+#: admin/settings.php:850
+msgid "This is only a reference to the columns in journals.csv, since they are not in the file itself."
+msgstr ""
+
+#: admin/settings.php:853
+msgid "Titel"
+msgstr ""
+
+#: admin/settings.php:853
+#: admin/settings.php:859
+#: admin/settings.php:871
+#: admin/settings.php:892
+#: admin/settings.php:925
+#: admin/settings.php:934
+#: admin/settings.php:946
+msgid "Optional"
+msgstr ""
+
+#: admin/settings.php:856
+msgid "Optional (recommended). The title of the journal."
+msgstr ""
+
+#: admin/settings.php:862
+msgid "Optional. Used for the filter menu, to filter journals by category. See config menu \"Filter\"."
+msgstr ""
+
+#: admin/settings.php:865
+msgid "Col2"
+msgstr ""
+
+#: admin/settings.php:865
+#: admin/settings.php:880
+msgid "Ignore"
+msgstr ""
+
+#: admin/settings.php:868
+#: admin/settings.php:883
+msgid "Ignore. This column exists for historical reasons, but is not used for anything by JournalTouch."
+msgstr ""
+
+#: admin/settings.php:871
+msgid "Favorites"
+msgstr ""
+
+#: admin/settings.php:874
+msgid "Optional. These journals are filtered with the \"special\" filter in filter menu, if column isn't empty (anything is ok)."
+msgstr ""
+
+#: admin/settings.php:880
+msgid "Col4"
+msgstr ""
+
+#: admin/settings.php:886
+msgid "P-Issn"
+msgstr ""
+
+#: admin/settings.php:886
+msgid "Required"
+msgstr ""
+
+#: admin/settings.php:889
+msgid "Required. Without issn's we have nothing to work with :)"
+msgstr ""
+
+#: admin/settings.php:892
+msgid "E-Issn"
+msgstr ""
+
+#: admin/settings.php:895
+msgid "Optional. An e-issn to try if issn fails to get toc."
+msgstr ""
+
+#: admin/settings.php:898
+msgid "Publisher"
+msgstr ""
+
+#: admin/settings.php:898
+#: admin/settings.php:907
+#: admin/settings.php:913
+#: admin/settings.php:919
+#: admin/settings.php:940
+#: admin/settings.php:952
+#: admin/settings.php:961
+msgid "Optional/Auto"
+msgstr ""
+
+#: admin/settings.php:901
+msgid "Optional/Auto. Publisher. Used for cover download (currently: \"De Gruyter\", \"Elsevier\", \"Sage\" and \"Springer-Verlag\" will work). Publishers are automatically fetched if you used \"fetch metadata\"."
+msgstr ""
+
+#: admin/settings.php:907
 msgid "New Marker"
 msgstr ""
 
-#: admin/settings.php:852
+#: admin/settings.php:910
 msgid "Optional/Auto. Marks journal (issue) as new if not empty. This is done automatically, but you might mark a journal as new by hand (e.g. if no toc is found)."
 msgstr ""
 
-#: admin/settings.php:855
+#: admin/settings.php:913
 msgid "Issue date"
 msgstr ""
 
-#: admin/settings.php:858
+#: admin/settings.php:916
 msgid "Optional/Auto. Date of last issue."
 msgstr ""
 
-#: admin/settings.php:861
+#: admin/settings.php:919
 msgid "Issue numbering"
 msgstr ""
 
-#: admin/settings.php:864
+#: admin/settings.php:922
 msgid "Optional/Auto. Format \"year/vol/issue\". Used for Crossref check."
 msgstr ""
 
-#: admin/settings.php:867
+#: admin/settings.php:925
 msgid "Print holding"
 msgstr ""
 
-#: admin/settings.php:870
+#: admin/settings.php:928
 msgid "Optional. Are you subscribed for the print edition of this journal? Just enter anything (e.g. \"p\"). It's used in combination with the shelfmark for the meta info button."
 msgstr ""
 
-#: admin/settings.php:876
+#: admin/settings.php:934
 msgid "Online holding"
 msgstr ""
 
-#: admin/settings.php:879
+#: admin/settings.php:937
 msgid "Optional. Are you subscribed for the online edition of the journal? This information is used to decide if a direct download button should be shown; see Your Institution\" setting."
 msgstr ""
 
-#: admin/settings.php:882
+#: admin/settings.php:940
 msgid "Toc available"
 msgstr ""
 
-#: admin/settings.php:885
+#: admin/settings.php:943
 msgid "Optional/Auto. You might want to show journals you are subscribed to, even though no toc can be fetched. Usually this is automatically set on update. If for some reason toc fetching does not work, you might clear this field in the table. The info is shown as meta info button."
 msgstr ""
 
-#: admin/settings.php:888
+#: admin/settings.php:946
 msgid "Shelfmark"
 msgstr ""
 
-#: admin/settings.php:891
+#: admin/settings.php:949
 msgid "Optional. If you got the print edition (too) you might provide the shelfmark here. The info is shown as meta info button."
 msgstr ""
 
-#: admin/settings.php:894
+#: admin/settings.php:952
 msgid "Journal's Homepage"
 msgstr ""
 
-#: admin/settings.php:897
+#: admin/settings.php:955
 msgid "Optional/Auto. The journal's website. Automatically fetched if you used \"fetch metadata\" (and information was available)."
 msgstr ""
 
-#: admin/settings.php:906
+#: admin/settings.php:964
 msgid "Optional/Auto. Got some subject indexing? Separate tags with commas :)"
 msgstr ""
 
-#: admin/updateTocs.php:45
+#: admin/updateTocs.php:51
 msgid "Update options"
 msgstr ""
 
-#: admin/updateTocs.php:46
+#: admin/updateTocs.php:52
 msgid "This updates your journals.csv with the dates for each journal issue. If you chose to fetch metadata, also some infos about publishers, legal infos and tags are fetched, mostly as tags for the tagcloud in JournalTouch. Be aware: metadata is only fetched the very first time. If you really want to redo it, you have to delete everything in column 14 (\"JToc\", \"Jseek\", \"CRtoc\")."
 msgstr ""
 
-#: admin/updateTocs.php:47
+#: admin/updateTocs.php:53
 msgid "Fetch metadata"
 msgstr ""
 
-#: admin/updateTocs.php:48
+#: admin/updateTocs.php:54
 msgid "Fetch recent issues"
 msgstr ""
 
-#: admin/updateTocs.php:49
+#: admin/updateTocs.php:55
 msgid "Download/update covers"
 msgstr ""
 
-#: admin/updateTocs.php:50
+#: admin/updateTocs.php:56
 msgid "Clean tags (experimental)"
 msgstr ""
 
-#: admin/updateTocs.php:53
+#: admin/updateTocs.php:59
 msgid "You have to edit data/journals/tag-remap.txt. Format: \"oldTag;newTag\""
 msgstr ""
 
-#: admin/updateTocs.php:59
-#: admin/updateTocs.php:61
+#: admin/updateTocs.php:65
+#: admin/updateTocs.php:67
 msgid "Clear Cache"
 msgstr ""
 
-#: admin/updateTocs.php:60
+#: admin/updateTocs.php:66
 msgid "If you enabled the caching in the config, you can clear it here"
 msgstr ""
 
-#: admin/updateTocs.php:65
+#: admin/updateTocs.php:71
 msgid "JournalTOC Premium Update"
 msgstr ""
 
-#: admin/updateTocs.php:66
+#: admin/updateTocs.php:72
 msgid "This updates your updates.json.txt with the dates for recent issue."
 msgstr ""
 
-#: admin/updateTocs.php:67
+#: admin/updateTocs.php:73
 msgid "Update Premium"
 msgstr ""
 
@@ -1326,77 +1392,5 @@ msgstr ""
 
 #: sys/class.GetJournalToc.php:261
 msgid "Abstract"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:102
-msgid "Feedback from JournalTouch"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:106
-msgid "Your Library JournalTouch"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:107
-msgid "Your saved articles from JournalTouch"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:108
-msgid "You sent the following message"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:109
-msgid "Here are your articles, enjoy!"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:110
-msgid "Best regards, your library team!"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:114
-msgid "New order for the library from JournalTouch"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:115
-msgid "New order from JournalTouch"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:165
-msgid "Bauingenieurwesen"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:166
-msgid "Bibliothek"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:167
-msgid "Chemie"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:168
-msgid "Mathematik"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:169
-msgid "Maschinenbau"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:170
-msgid "Physik"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:171
-msgid "Technische Informatik"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:172
-msgid "Umweltwissenschaften"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:173
-msgid "Verfahrenstechnik"
-msgstr ""
-
-#: _dev/2015-11-03/config.php:174
-msgid "Werkstoffwissenschaften"
 msgstr ""
 
