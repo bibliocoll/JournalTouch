@@ -266,7 +266,7 @@ class GetJournalInfos {
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>
                 </div>';
                 $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible small-12 columns"><span>'.$toc['abstract'][$id].'</span></div>' : '');
-                $html .=    '<div class="title_links_layer invisible small-12 columns"><span class="lnkDOI right">'.$doi.'</span><span class="lnkQR right"></span></div>';
+                $html .=    '<div class="title_links_layer invisible small-12 columns"><span class="lnkDOI right">'.$doi.'</span><p style="clear: both"></p><span class="lnkQR right"></span></div>';
                 $html .= '</div>';
             }
         }
