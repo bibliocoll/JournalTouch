@@ -501,6 +501,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                         <label for="cfg[prefs][screensaver_secs]"><?php echo __('Screesaver timing') ?></label><br />
                             <input type="text" name="cfg[prefs][screensaver_secs]" value="<?php echo $cfg->prefs->screensaver_secs ?>" aria-describedby="help_screensaver_secs" />
                             <div id="help_screensaver_secs" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before screensaver is displayed. Set to 0 to disable screensaver. Default is 240 seconds (4 minutes).') ?></span></div>
+                        <label for="cfg[prefs][screensaver_speed]"><?php echo __('Screesaver Animation Speed') ?></label><br />
+                            <input type="text" name="cfg[prefs][screensaver_speed]" value="<?php echo $cfg->prefs->screensaver_speed ?>" aria-describedby="help_screensaver_speed" />
+                            <div id="help_screensaver_speed" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The screensaver moves around the screen. Set to 0 to disable (only still standing messsage). Good speed values are between 0.01 and around 0.04. Default is 0.025.') ?></span></div>
                 </fieldset>
                 <fieldset>
                     <legend><?php echo __('Preferences: Checkout') ?></legend>

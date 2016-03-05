@@ -60,7 +60,7 @@ Improvements
 - Filter menu now uses three columns (menu doesn\'t overflow screen bottom so easily)
 - Article Tocs now use full width in frame
 - Removed curl requirement
-- Screensaver activation time is configurable
+- Screensaver activation time is configurable. It also can be an animation now.
 - Cart rest time is configurable
 - Tags are presented a little bit better
 

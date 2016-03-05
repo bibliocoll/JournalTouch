@@ -17,8 +17,8 @@ As for the logic:
     covers never change anyway). This one will always be displayed.
 2.  Second choice is: a cover exists in data/covers/api
 3.  If no cover exists in either folder, it will be downloaded trying the activated services.
-3.1 Publishers are preferred to a generic source (you might want to disable Elsevier since STMcovers provides real high quality ;))
-3.2 If no publisher is provided (the updater does this automatically) or a download fails generic sources are checked
+  1. Publishers are preferred to a generic source (you might want to disable Elsevier since STMcovers provides real high quality ;))
+  2. If no publisher is provided (the updater does this automatically) or a download fails generic sources are checked
 4.  If a cover exists in data/covers/api, but a new issue is found by the updater, it will be redownloaded.
 
 As for image size:
@@ -52,7 +52,7 @@ To easily set default and api covers, the admin menu now also features a simple 
 - Filter menu now uses three columns (menu doesn't overflow screen bottom so easily)
 - Article Tocs now use full width in frame
 - Removed curl requirement
-- Screensaver activation time is configurable
+- Screensaver activation time is configurable. It also can be an animation now.
 - Cart rest time is configurable
 - Tags are presented a little bit better
 
@@ -84,6 +84,6 @@ To easily set default and api covers, the admin menu now also features a simple 
 
 ###Credits
 Last but not least. Thanks for suggestions and help from:
-- Andreas Bohne-Lang (Medizinische Fakultät Mannheim der Ruprecht-Karls-Universität Heidelberg) - EZproxy, Cover download, RSS
-- Oliver Löwe (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
+- Andreas Bohne-Lang (Medizinische FakultÃ¤t Mannheim der Ruprecht-Karls-UniversitÃ¤t Heidelberg) - EZproxy, Cover download, RSS
+- Oliver LÃ¶we (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
 ';
