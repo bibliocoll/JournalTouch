@@ -135,6 +135,41 @@ $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_upda
 
 
 
+$cfg->kiosk = new stdClass();
+/**
+ * Settings for kiosk PCs
+ *
+ * If you display JournalTouch on a kios device within your institution, you
+ * might want to disable certain settings. For example printing buttons might
+ * make no sense.
+ * Instead of setting up a second JournalTouch installation, you just can
+ * disable certain elements for an IP or a browser user agent.
+ *
+ * IP: only works if the kiosk PC is accessing the webserver directly (not behind
+ * a proxy or a NAT router)
+ *
+ * Browser agent: Kiosk software often offer an easy way to set a custom user
+ * agent string for the browser. If you got no such software or it doesn't come
+ * with such an option, you can do it yourself. It can be done easily for most
+ * browser, e.g. with a plugin.
+ *
+ * How it works:
+ * 1. Make your settings in the admin menu
+ * 2. The webserver checks IP and agent against those settings
+ *    (see: sys/bootstrap.functions.php::get_client_infos())
+ * 3. The policies are written at the end of each page (index.php and
+ *    checkout.php) via echo $cfg->sys->kioskPolicy_HTML. This also includes
+ *    the js/kiosk/kiosk_policy.js
+ * 4. The kiosk_policy.js hides stuff acccordingly.
+ */
+$cfg->kiosk->IPs            = '';           // Enter one or multiple IPs ('1.2.3.1, 1.2.3.2')
+$cfg->kiosk->agents         = 'SiteKiosk';  // Enter one or more user agent (the relevant keyword is enough)
+$cfg->kiosk->policy_NoPrint     = 1;        // Checkout: disable "View & Print" option
+$cfg->kiosk->policy_NoSendLib   = 1;        // Checkout: disable "Send to library to get PDFs" option
+$cfg->kiosk->policy_NoRSS       = 1;        // Main: disable RSS button
+
+
+
 $cfg->mail = new stdClass();
 /**
  * Mailer settings
