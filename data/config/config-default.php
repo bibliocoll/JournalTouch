@@ -96,7 +96,7 @@ $cfg->prefs->show_metainfo_list = false; // Show the block with the meta infos r
 $cfg->prefs->show_metainfo_toc  = true;  // Show the block with the meta infos above the toc. Note: If show_metainfo_list is true, it will show above the toc, even if set to false here
 $cfg->prefs->rss                = true;  // Show an RSS-Feed link. Be aware that this uses and displays the E-Mail you registered with at JournalTocs
 
-$cfg->prefs->show_orbit        = false;  // Do you want to see the slide of the newest issues?
+$cfg->prefs->show_orbit        = false;  // This displayed a slide of the you favorite journals (marked in column 4 of journals.csv) at the top of the journal list.
 $cfg->prefs->screensaver_secs  = 240;    // Idle time in seconds before screensaver is displayed. Set to zero to disable
 $cfg->prefs->screensaver_speed = 0.025;  // The screensaver moves around the screen. Set to 0 to disable (only still standing messsage). Good speed values are between 0.01 and around 0.04
 
