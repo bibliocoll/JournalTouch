@@ -297,7 +297,7 @@ else {
 <div id="view-orbit">
     <div class="row">
         <div class="large-12 columns" style="padding-top:20px">
-            <h3><?php echo __('The newest editions') ?></h3>
+            <h3><?php echo __('Top Journals') ?></h3>
             <?php // print date('M d Y',strtotime('-7 day'))." - " .date('M d Y',strtotime('today'));    ?>
         </div>
     </div>
