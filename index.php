@@ -237,10 +237,8 @@ else {
             <h2><?php echo __('About') ?></h2>
             <?php echo preg_replace(array('/\[/', '/\]/'), array('<', '>'), $cfg->translations['other_about'][$lang]); ?>
         </div>
-        <div class="small-4 medium-3 large-3 columns right">
-            <ul class="inline-list right">
-                <li><a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a></li>
-            </ul>
+        <div class="small-3 small-centered columns">
+            <a class="button radius" href="checkout.php?action=contact&amp;lang=<?php echo $lang ?>"><i class="fi-comment"></i> <?php echo __('Get in touch!') ?></a>
         </div>
     </div>
     <a class="close-reveal-modal button radius alert">×</a>
