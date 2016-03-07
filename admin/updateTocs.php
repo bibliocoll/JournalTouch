@@ -17,6 +17,12 @@ $optCovers  = (isset($_GET['optCovers'])) ? true : false;
         <link rel="stylesheet" href="../css/foundation-icons/foundation-icons.css" />
         <script src="../js/vendor/jquery.js"></script>
         <script src="../js/foundation.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Load foundation
+                $(document).foundation();
+            });
+        </script>
     </head>
 <body>
     <?php include('menu.inc') ?>

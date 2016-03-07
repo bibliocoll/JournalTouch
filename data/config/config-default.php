@@ -53,6 +53,9 @@ $cfg->translations['meta_inst_service']['de_DE'] = 'Bibliothek';
 $cfg->translations['meta_journalHP']['en_US'] = 'Journal';
 $cfg->translations['meta_journalHP']['de_DE'] = 'Journal';
 
+// About and screensaver text
+$cfg->translations['other_about']['en_US'] = "[p][em]JournalTouch[/em] is the [strong] University Library (TUB HH) of the Hamburg University of Technology's[/strong] alerting service for newly published journal issues.[/p][p]It's easy - select a journal and add interesting articles to your shopping basket. If there is an abstract available, it will be indicated with an extra button. When you are finished, click on your basket to check out. You can now [ul][li]send the article information to your e-mail address[/li][li]send a request for the PDF files to the library[/li][li]or view/save it as a list. Export for citation management systems like Endnote is also available.[/li][/ul][/p][p]The list of journals is a selection of the journals licensed to the library.If a journal is missing, please let us know and we will add it to the list.[br][br] [strong][em]JournalTouch[/em] is actively being developed by the library team[/strong].[br]Tables of contents are provided by [strong]CrossRef[/strong] and [strong]JournalTocs[/strong].[/p]";
+$cfg->translations['other_about']['de_DE'] = "[p][em]JournalTouch[/em] is der Alerting Service der[strong] Universitätsbibliothek (TUB HH) der Technischen Universität Hamburg[/strong] für aktuelle Zeitschriftenausgaben.[/p][p]Alles ganz einfach. Wählen Sie ein Journal, wählen Sie die Artikel, die Sie interessieren und fügen Sie diese der Merkliste hinzu. Sofern ein Abstract verfügbar ist, wird Ihnen das mit einem zusätzlichen Button angezeigt. Wenn Sie fertig, klicken Sie auf die Merkliste um[ul][li]sich die Artikelinformation an Ihre E-Mail schicken zu lassen[/li][li]den Artikel bei der Bibliothek anzufordern[/li][li]oder als bibliografische Liste zu exportieren, z.B. für Endote[/li][/ul][/p][p]Die Liste ist eine Auswahl der von der Bibliothek lizensierten Journals. Lassen Sie es uns wissen, wenn eine Zeitschrift fehlt und wir fügen sie hinzu![br][br] [strong][em]JournalTouch[/em] wird aktiv von der Bibliothek entwickelt[/strong].[br]Inhaltsverzeichnise werden von [strong]CrossRef[/strong] und [strong]JournalTocs[/strong] bezogen.[/p]";
 
 
 $cfg->prefs = new stdClass();
@@ -93,8 +96,13 @@ $cfg->prefs->show_metainfo_list = false; // Show the block with the meta infos r
 $cfg->prefs->show_metainfo_toc  = true;  // Show the block with the meta infos above the toc. Note: If show_metainfo_list is true, it will show above the toc, even if set to false here
 $cfg->prefs->rss                = true;  // Show an RSS-Feed link. Be aware that this uses and displays the E-Mail you registered with at JournalTocs
 
-$cfg->prefs->show_screensaver = true;   // Do you want to see the screensaver?
 $cfg->prefs->show_orbit       = false;  // Do you want to see the slide of the newest issues?
+$cfg->prefs->screensaver_secs = 240;    // Idle time in seconds before screensaver is displayed. Set to zero to disable
+
+// Checkout related settings
+$cfg->prefs->clear_basket     = 260;    // Idle time until basket is cleared
+$cfg->prefs->allow_ask_pdf    = true;   // May users send a mail to the library asking to get the pdf send to them?
+
 
 // Caching: only activate it if you do
 // a) a (daily) cron to http://my.journaltouch.local/admin/index.php?optRecent=on&upd=true
@@ -124,6 +132,41 @@ $cfg->api->jt->account  = '';       // The mail you are registered with at Journ
 $cfg->api->jt->premium  = false;    // Premium: Set to true if you got a premium account
 $cfg->api->jt->upd_show = false;    // Premium: Uses infos from outfile. Slows page loading down
 $cfg->api->jt->updates  = 'http://www.journaltocs.ac.uk/api/journals/latest_updates?user='; // Premium: Update URL
+
+
+
+$cfg->kiosk = new stdClass();
+/**
+ * Settings for kiosk PCs
+ *
+ * If you display JournalTouch on a kios device within your institution, you
+ * might want to disable certain settings. For example printing buttons might
+ * make no sense.
+ * Instead of setting up a second JournalTouch installation, you just can
+ * disable certain elements for an IP or a browser user agent.
+ *
+ * IP: only works if the kiosk PC is accessing the webserver directly (not behind
+ * a proxy or a NAT router)
+ *
+ * Browser agent: Kiosk software often offer an easy way to set a custom user
+ * agent string for the browser. If you got no such software or it doesn't come
+ * with such an option, you can do it yourself. It can be done easily for most
+ * browser, e.g. with a plugin.
+ *
+ * How it works:
+ * 1. Make your settings in the admin menu
+ * 2. The webserver checks IP and agent against those settings
+ *    (see: sys/bootstrap.functions.php::get_client_infos())
+ * 3. The policies are written at the end of each page (index.php and
+ *    checkout.php) via echo $cfg->sys->kioskPolicy_HTML. This also includes
+ *    the js/kiosk/kiosk_policy.js
+ * 4. The kiosk_policy.js hides stuff acccordingly.
+ */
+$cfg->kiosk->IPs            = '';           // Enter one or multiple IPs ('1.2.3.1, 1.2.3.2')
+$cfg->kiosk->agents         = 'SiteKiosk';  // Enter one or more user agent (the relevant keyword is enough)
+$cfg->kiosk->policy_NoPrint     = 1;        // Checkout: disable "View & Print" option
+$cfg->kiosk->policy_NoSendLib   = 1;        // Checkout: disable "Send to library to get PDFs" option
+$cfg->kiosk->policy_NoRSS       = 1;        // Main: disable RSS button
 
 
 
@@ -311,5 +354,6 @@ $cfg->csv_col->tags          = 16;  // Optional/Auto. Got some subject indexing?
 /**
  * Variables that are not set in the user config - only used for vanilla installation
  */
-$cfg->sys->newInstallation = true;  // If this is set, show a hint to user that he should create his config
+$cfg->sys->newInstallation  = true;  // If this is set, show a hint to user that he should create his config
+$cfg->sys->adminSecured     = false; // Is admin page secured ny htaccess file (checked on page loading)?
 ?>
