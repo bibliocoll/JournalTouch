@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-05 20:12+0100\n"
-"PO-Revision-Date: 2016-03-05 20:12+0100\n"
+"POT-Creation-Date: 2016-03-06 18:25+0100\n"
+"PO-Revision-Date: 2016-03-06 18:26+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -92,17 +92,17 @@ msgid "Clear Data and Logout"
 msgstr ""
 
 #: checkout.php:150
-#: index.php:291
+#: index.php:289
 msgid "Do you really want to empty your basket?"
 msgstr ""
 
 #: checkout.php:151
-#: index.php:292
+#: index.php:290
 msgid "OK, empty my basket!"
 msgstr ""
 
 #: checkout.php:152
-#: index.php:293
+#: index.php:291
 msgid "No, keep basket!"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgid "Your message"
 msgstr ""
 
 #: checkout.php:327
-#: index.php:253
+#: index.php:251
 msgid "External Source"
 msgstr ""
 
@@ -136,7 +136,7 @@ msgid "about"
 msgstr ""
 
 #: index.php:154
-#: index.php:266
+#: index.php:264
 msgid "show all"
 msgstr ""
 
@@ -156,93 +156,93 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: index.php:242
-#: index.php:506
+#: index.php:241
+#: index.php:504
 msgid "Get in touch!"
 msgstr ""
 
-#: index.php:264
+#: index.php:262
 msgid "Tagcloud"
 msgstr ""
 
-#: index.php:277
+#: index.php:275
 msgid "Your basket is empty."
 msgstr ""
 
-#: index.php:280
+#: index.php:278
 msgid "Send/Save my articles"
 msgstr ""
 
-#: index.php:282
+#: index.php:280
 msgid "Empty my basket"
 msgstr ""
 
-#: index.php:302
-msgid "The newest editions"
+#: index.php:300
+msgid "Top Journals"
 msgstr ""
 
-#: index.php:374
+#: index.php:372
 msgid "Filter active:"
 msgstr ""
 
-#: index.php:384
+#: index.php:382
 msgid "Search journal"
 msgstr ""
 
-#: index.php:387
+#: index.php:385
 msgid "No journals found"
 msgstr ""
 
-#: index.php:436
+#: index.php:434
 msgid "Via JournalTocs"
 msgstr ""
 
-#: index.php:438
+#: index.php:436
 msgid "RSS"
 msgstr ""
 
-#: index.php:443
+#: index.php:441
 msgid "Via CrossRef"
 msgstr ""
 
-#: index.php:446
+#: index.php:444
 msgid "No toc available"
 msgstr ""
 
-#: index.php:469
+#: index.php:467
 msgid "last update"
 msgstr ""
 
-#: index.php:483
+#: index.php:481
 msgid "Something seems to be wrong with the network"
 msgstr ""
 
-#: index.php:484
-#: index.php:489
+#: index.php:482
+#: index.php:487
 msgid "Please notify us!"
 msgstr ""
 
-#: index.php:488
+#: index.php:486
 msgid "No table of contents found! Are you interested in this title?"
 msgstr ""
 
-#: index.php:502
+#: index.php:500
 msgid "Tables of contents provided by <a href=\"http://www.crossref.org\">CrossRef</a> and <a href=\"http://www.journaltocs.ac.uk/\">JournalTocs</a>"
 msgstr ""
 
-#: index.php:519
+#: index.php:517
 msgid "Touch me!"
 msgstr ""
 
-#: index.php:520
+#: index.php:518
 msgid "What is this?"
 msgstr ""
 
-#: index.php:524
+#: index.php:522
 msgid "Touch the screen to get started..."
 msgstr ""
 
-#: index.php:564
+#: index.php:562
 msgid "remove"
 msgstr ""
 
@@ -587,7 +587,7 @@ msgid "Enable Orbit"
 msgstr ""
 
 #: admin/settings.php:500
-msgid "This displayed a slide of the newest issues at the top of the journal list."
+msgid "This displays a slide of the you favorite journals (marked in column 4 of journals.csv) at the top of the journal list. You must mark some journals as favorites, otherwise you'll see a large white space on top of the page."
 msgstr ""
 
 #: admin/settings.php:501
