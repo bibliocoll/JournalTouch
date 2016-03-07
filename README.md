@@ -17,7 +17,7 @@ See latest changelog for unreleased version: [JournalTouch Version 0.4](doc/gith
 6. Go again to http://myinstallation.net/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
 7. Go to http://myinstallation.net/ and be happy
 8. IF you are happy, set a cronjob to call http://myinstallation.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
-8.1. Example Cronjob: wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1
+  1. Example Cronjob: wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1
 
 
 ## Translations
