@@ -116,7 +116,7 @@ font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleG
 
 /* About page Modal */
 #about > .row:first-child {
-background: url('../img/logo.png') no-repeat right top;
+background: url('../img/logo.png') no-repeat right bottom;
 }
 
 i.switcher {

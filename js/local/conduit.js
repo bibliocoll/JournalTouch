@@ -143,6 +143,7 @@ function start_screensaver(srcDiv) {
 
         if (usr_screensaver_activate == 0) return; // screensaver is completely disabled
         var s_saver = setTimeout(function(){
+            $('html, body').scrollTop(0); // go to top first
             // Use animation?
             if (usr_screensaver_speed != 0) {
                 animateDiv();
