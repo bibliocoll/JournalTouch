@@ -73,7 +73,7 @@ $journalUpdates = $lister->getJournalUpdates();
         <link rel="stylesheet" href="css/foundation-icons/foundation-icons.css" />
         <script src="js/vendor/modernizr.js"></script>
         <style type="text/css" rel="stylesheet">
-            img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");
+            img.getTOC {background-image: url("<?php echo $cfg->covers->placeholder; ?>");}
         </style>
     </head>
 <!-- tell scripts if caching of tocs is enabled -->
@@ -178,7 +178,7 @@ else {
                                 $sort_current = ($cfg->prefs->default_sort_date) ? $cfg->translations['menu_sort_az'][$lang] : $cfg->translations['menu_sort_date'][$lang];
                                 $sort_alt         = ($cfg->prefs->default_sort_date) ? $cfg->translations['menu_sort_date'][$lang] : $cfg->translations['menu_sort_az'][$lang];
                         ?>
-                        <li><a id="switch-sort" "href="#"><i class="switcher fi-shuffle"></i>
+                        <li><a id="switch-sort" href="#"><i class="switcher fi-shuffle"></i>
                         <span>&#160;
                         <?php
                                 echo '<span id="sort-alt" data-lang="'.$sort_alt.'">'.$sort_current.'</span>';
@@ -511,7 +511,7 @@ foreach ($journals as $j) {
 
 <!-- a fancy screensaver when screen is idle (see css for switching)
      See Admin settings for timer; disabled if set to zero -->
-<div id="screensaver" style="display:none" data-activateSeconds="<?php echo $cfg->prefs->screensaver_secs ?>" data-animateSpeed="<?php echo $cfg->prefs->screensaver_speed ?>"">
+<div id="screensaver" style="display:none" data-activateSeconds="<?php echo $cfg->prefs->screensaver_secs ?>" data-animateSpeed="<?php echo $cfg->prefs->screensaver_speed ?>">
     <div class="row">
         <div class="small-12 medium-12 large-12 columns left">
             <h1><?php echo __('Touch me!') ?></h1>
