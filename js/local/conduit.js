@@ -135,15 +135,19 @@ function start_screensaver(srcDiv) {
      * @return void
      */
     function start_timeout() {
-        var clear_basket = setTimeout(function(){
+        // clear old timeouts
+		clearTimeout(s_saver);
+		clearTimeout(clear_basket);
+
+        clear_basket = setTimeout(function(){
             if (usr_clear_basket > 0) simpleCart.empty();
             $('#myArticles').removeClass('full');
             $('#externalPopover').foundation('reveal', 'close');
         }, usr_clear_basket);
 
         if (usr_screensaver_activate == 0) return; // screensaver is completely disabled
-        var s_saver = setTimeout(function(){
-            $('html, body').scrollTop(0); // go to top first
+        s_saver = setTimeout(function(){
+            $('html').scrollTop(0); // go to top first
             // Use animation?
             if (usr_screensaver_speed != 0) {
                 animateDiv();
@@ -162,9 +166,7 @@ function start_screensaver(srcDiv) {
      * @return void
      */
     $('body').on('mousedown touchstart', function() {
-        $('#screensaver').stop( true, true ).fadeOut(100);
-		clearTimeout(s_saver);
-		clearTimeout(clear_basket);
+        $('#screensaver').stop( true, false ).fadeOut(100);
         start_timeout();
 	});
     // END basic screensaver
