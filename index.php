@@ -66,7 +66,7 @@ $journalUpdates = $lister->getJournalUpdates();
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><?php echo $cfg->translations['main_tagline'][$lang] ?></title>
+        <title><?php echo strip_tags($cfg->translations['main_tagline'][$lang]) ?></title>
         <link rel="stylesheet" href="css/foundation.min.css" />
         <link rel="stylesheet" href="css/local.css" />
         <link rel="stylesheet" href="css/media.css" />
@@ -151,19 +151,19 @@ else {
                             <div>
                                 <div class="small-4 columns">
                                     <ul>
-                                        <li><h3><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></h3></li>
+                                        <li class="filter-special-row" id="filter-show-all"><h3><a class="filter" id="filter-reset" href="#"><i class="fi-refresh"></i>&#160;<?php echo __('show all') ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[0])?></li>
                                 </ul>
                                 </div>
                                 <div class="small-4 columns">
                                     <ul>
-                                        <li><h3><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></h3></li>
+                                        <li class="filter-special-row" id="filter-show-favs"><h3><a class="filter" id="topJ" href="#"><i class="fi-star"></i>&#160;<?php echo $cfg->translations['menu_filter_special'][$lang] ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[1])?></li>
                                     </ul>
                                 </div>
                                 <div class="small-4 columns">
                                     <ul>
-                                    <li><h3><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></h3></li>
+                                    <li class="filter-special-row" id="filter-show-new"><h3><a class="filter" id="new" href="#"><i class="fi-burst-new"></i>&#160;<?php echo __('new issues') ?></a></h3></li>
                                         <li><?php echo implode("\n", $filter_col[2])?></li>
                                     </ul>
                                 </div>
@@ -203,8 +203,14 @@ else {
         </section>
     </nav>
     <?php if (isset($cfg->sys->newInstallation)) { ?>
-    <div id="dataUnsaved" data-alert class="alert-box warning radius">
+    <div id="dataUnsaved" data-alert class="alert-box warning radius" style="margin-bottom: 0">
         <?php echo __('You are using JournalTouch with demo settings. Head over to <a href="admin/settings.php">Settings</a> to set up you own configuration.') ?>
+        <a href="#" class="close">&times;</a>
+    </div>
+    <?php } ?>
+    <?php if (!$cfg->sys->adminSecured) { ?>
+    <div id="adminUnsecured" data-alert class="alert-box warning radius">
+        <?php echo __('The admin folder is not secured by an .htaccess file. Anyone has access. Just rename admin/.htaccess.sample to .htaccess if you don\'t care and want to disable this message.') ?>
         <a href="#" class="close">&times;</a>
     </div>
     <?php } ?>
@@ -229,31 +235,7 @@ else {
     <div class="row">
         <div class="small-12 medium-12 large-12 columns left">
             <h2><?php echo __('About') ?></h2>
-            <p>
-<?php
-$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
-echo $lib_teaser;
-?>
-            </p>
-            <p>
-<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-available, it will be indicated with an extra button.
-When you are finished, click on your basket to check out.
-You can now send the article information to your e-mail address, send a
-request for the PDF files to the library, or view/save it as a
-list. Export for citation management systems like Endnote is also available. <br/>
-The list of journals is a selection of the journals licensed to the library.')
-?>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="small-8 medium-9 large-9 columns left">
-            <p>
-                <?php echo __('If a journal is missing, please let us know and we will add it to the list.<br/><br/> <strong><em>JournalTouch</em> is actively being developed by the library team</strong>.') ?>
-                <br /><?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
-            </p>
+            <?php echo preg_replace(array('/\[/', '/\]/'), array('<', '>'), $cfg->translations['other_about'][$lang]); ?>
         </div>
         <div class="small-4 medium-3 large-3 columns right">
             <ul class="inline-list right">
@@ -288,7 +270,7 @@ The list of journals is a selection of the journals licensed to the library.')
 <!-- end Tagcloud -->
 
 
-<div id="cartPopover" class="reveal-modal" data-reveal="">
+<div id="cartPopover" class="reveal-modal" data-reveal="" data-clearSeconds="<?php echo $cfg->prefs->clear_basket ?>">
     <div class="simpleCart_items"></div>
     <div id="cartData" class="clearfix"></div>
     <div id="shelfIsEmpty" style="display:none">
@@ -451,17 +433,17 @@ foreach ($journals as $j) {
     // @todo: seriously; make this better/cleaner
     $toclink = $rss = '';
     if ($j['metaGotToc'] == 'JToc') {
-        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup" title="'.__('Via JournalTocs').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="http://www.journaltocs.ac.uk/index.php?action=tocs&issn='.$j['issn'].'" class="button popup meta_toc" title="'.__('Via JournalTocs').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
         // RSS only if JournalTocs is source
-        if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup"><i class="fi-rss"></i> '.__('RSS').'</a> ';
+        if ($cfg->prefs->rss && $j['metaGotToc'] == 'JToc') $rss = '<a href="rss.php?issn='.$j['id'].'" class="button popup meta_rss"><i class="fi-rss"></i> '.__('RSS').'</a> ';
     }
     elseif ($j['metaGotToc'] == 'CRtoc') {
         // Crossref does not work in a frame (obviously), just get toc JournalTouch style
         //$toclink = 'http://search.crossref.org/?type=Journal+Article&sort=year&q='.$j['issn'];
-        $toclink = '<a href="#" class="button cr_getTOC" title="'.__('Via CrossRef').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button cr_getTOC meta_toc" title="'.__('Via CrossRef').'"><i class="fi-like"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
     else {
-        $toclink = '<a href="#" class="button" title="'.__('No toc available').'"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
+        $toclink = '<a href="#" class="button meta_toc" title="'.__('No toc available').'"><i class="fi-dislike"></i> '.$cfg->translations['meta_toc'][$lang].'</a> ';
     }
 
     $meta = '';
@@ -469,10 +451,10 @@ foreach ($journals as $j) {
     $meta .= $toclink;
     $meta .= $rss;
     $link = ($cfg->prefs->inst_service) ? $cfg->prefs->inst_service.$j['issn'] : '';
-    $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
-    $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
+    $meta .= (($j['metaOnline'] && $link) ? ' <a href="'.$link.'" class="button popup meta_library"><i class="'.$j['metaOnline'].'"></i> '.$cfg->translations['meta_inst_service'][$lang].'</a>': '');
+    $meta .= (($j['metaWebsite']) ? ' <a href="'.$j['metaWebsite'].'" class="button popup meta_website"><i class="fi-home"></i> '.$cfg->translations['meta_journalHP'][$lang].'</a>': '');
     $print_meta = (($j['metaPrint']) ? 'class="'.$j['metaPrint'].'"' : "");
-    $meta .= (($j['metaShelfmark']) ? ' <span class="button"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
+    $meta .= (($j['metaShelfmark']) ? ' <span class="button meta_print"><i '.$print_meta.'> '.$j['metaShelfmark'].'</i></span>' : "&nbsp;");
 
     if ($meta && $cfg->prefs->show_metainfo_list) {
          echo '<div class="metaInfo">'.$meta.'</div>';
@@ -529,47 +511,20 @@ foreach ($journals as $j) {
 </footer>
 
 
-<!-- a fancy screensaver when screen is idle (see css for switching) -->
-<?php if ($cfg->prefs->show_screensaver) { ?>
-<div id="screensaver" style="display:none">
+<!-- a fancy screensaver when screen is idle (see css for switching)
+     See Admin settings for timer; disabled if set to zero -->
+<div id="screensaver" style="display:none" data-activateSeconds="<?php echo $cfg->prefs->screensaver_secs ?>">
     <div class="row">
         <div class="small-12 medium-12 large-12 columns left">
             <h1><?php echo __('Touch me!') ?></h1>
             <h2><?php echo __('What is this?') ?></h2>
-            <p>
-<?php
-$lib_teaser = __("<em>JournalTouch</em> is the <strong>PLACEHOLDER's</strong> alerting service for newly published journal issues.");
-$lib_teaser = str_replace('PLACEHOLDER', ' '.$cfg->translations['prefs_lib_name'][$lang], $lib_teaser);
-echo $lib_teaser;
-?>
-            </p>
-            <p>
-<?php echo __('It\'s easy &dash; select a journal and add interesting articles to your shopping basket. If there is an abstract
-available, it will be indicated with an extra button.
-When you are finished, click on your basket to check out.
-You can now send the article information to your e-mail address, send a
-request for the PDF files to the library, or view/save it as a
-list. Export for citation management systems like Endnote is also available. <br/>
-The list of journals is a selection of the journals licensed to the library.') ?>
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="small-8 medium-9 large-9 columns left">
-            <p>
-                <?php echo __('If a journal is missing, please let us know and we will add it to the list.') ?>
-                <br />
-                <br /><?php echo __('<strong><em>JournalTouch</em> is actively being developed by the library team.</strong>') ?>
-                <br /><?php echo __('Tables of contents are provided by <strong>CrossRef</strong> and <strong>JournalTocs</strong>.') ?>
-            </p>
+            <?php echo preg_replace(array('/\[/', '/\]/'), array('<', '>'), $cfg->translations['other_about'][$lang]); ?>
         </div>
     </div>
     <div class="row"><h1><?php echo __('Touch the screen to get started...') ?></h1></div>
     <div class="row"><p class="text-center"><img src="img/logo.png" /></p></div>
 </div>
-<?php } ?>
 <!-- end screensaver -->
-
 
 <script src="js/vendor/jquery.js"></script>
 <script src="js/foundation.min.js"></script>
@@ -643,6 +598,9 @@ var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 </script>
 
+<!-- START Kiosk policies -->
+<?php echo $cfg->sys->kioskPolicy_HTML ?>
+<!-- END Kiosk policies -->
 </body>
 </html>
 

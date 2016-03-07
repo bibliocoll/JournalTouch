@@ -17,7 +17,7 @@ $action = new CheckoutActions($cfg);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo $cfg->translations['main_tagline'][$cfg->prefs->current_lang]  ?> - <?php echo __('Checkout') ?></title>
+    <title><?php echo strip_tags($cfg->translations['main_tagline'][$cfg->prefs->current_lang])  ?> - <?php echo __('Checkout') ?></title>
     <link rel="stylesheet" href="css/foundation.css" />
     <link rel="stylesheet" href="css/local.css" />
     <link rel="stylesheet" href="css/local-print.css" media="print" />
@@ -121,7 +121,7 @@ if ($users == false) {
 
         <div class="row" id="actionGreeter">
             <div class="small-12 columns" style="padding-top:20px">
-                <h1><?php echo __('I want to...') ?></h1>
+                <h1><span id="topMenu"><?php echo __('I want to...') ?></span><span id="subMenu"></span></h1>
             </div>
         </div>
 
@@ -133,7 +133,9 @@ if ($users == false) {
                 <!--<a id="saveArticles" href="#" class="radius button large disabled"><i class="fi-save"></i> Save/Export</a>-->
                 <?php if(empty($_POST['mailer'])) { ?>
               <a id="sendArticlesToUser" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to my mailbox') ?></a>
-                <a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to library to get PDFs') ?></a>
+                    <?php if ($cfg->prefs->allow_ask_pdf) { ?>
+                        <a id="sendArticlesToLib" href="#" class="button radius large mailForm"><i class="fi-mail"></i> <?php echo __('Send to library to get PDFs') ?></a>
+                    <?php } ?>
                 <?php } else { ?>
                 <a id="sendDone" href="#" class="radius button large success"><i class="fi-check"></i> <?php echo __('You already sent your files') ?> </a>
                 <?php } ?>
@@ -226,7 +228,7 @@ if(isset($_POST['mailer']))
     <div id="mailForm" style="display:none">
             <form name="Request" method="post" action="checkout.php">
 
-                <div class="row sendArticlesToLib sendArticlesToUser collapse">
+                <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
 $userHandle = new GetUsers($cfg);
 $users = $userHandle->getUsers();
@@ -239,8 +241,8 @@ if ($users == false) {
     $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
     echo'
-        <label>'.__('Your e-mail').'</label>
         <div class="small-'.(12 - $coladd).' columns">
+          <label>'.__('Your e-mail').'</label>
           <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
         </div>';
     // Add the allowed user mailing domain at the end ("employees only")
@@ -293,7 +295,7 @@ if ($users == false) {
                 </div>
 
             </form>
-        </div>
+
 
 
 <!-- End Mailer -->
@@ -343,12 +345,19 @@ if ($users == false) {
 -->
 <!-- End Save/Export -->
             </div>
+
+        </div>
+
 <script>
 $(document).foundation();
 
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 </script>
+
+<!-- START Kiosk policies -->
+<?php echo $cfg->sys->kioskPolicy_HTML ?>
+<!-- END Kiosk policies -->
   </body>
 </html>
 

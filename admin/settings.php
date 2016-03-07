@@ -25,7 +25,7 @@ $langs_frm = frm_languages();
 
 // Start Ajax Save
 if (is_ajax()) {
-   if (isset($_GET['cfg']) && !empty($_GET['cfg'])) {
+   if (isset($_POST['cfg']) && !empty($_POST['cfg'])) {
         cfg_save();
     	$return['response'] = json_encode('Alles gut');
         echo json_encode($return);
@@ -52,23 +52,23 @@ function is_ajax() {
  */
 function cfg_save($user_cfg = '../data/config/user_config.php') {
     $status = false;
-    if (isset($_GET['cfg'])) {
+    if (isset($_POST['cfg'])) {
         // add the "$cfg" object on top; errm this is stupid?!?
         //$config = new stdClass();
         // encode to json for easier handling
-        $config = json_encode($_GET['cfg']);
+        $config = json_encode($_POST['cfg']);
 
         // form data comes as strings. Make it true boolean
         // Numbers stay strings. Well, it's not that php does care
         $config = str_replace('"true"', 'true', $config);
         $config = str_replace('"false"', 'false', $config);
 
-        // Now decode to get back our object (FALSE)
+        // a) Now decode to get back our object (FALSE)
         $config = json_decode($config, FALSE);
 
+        // b) Now do the same for the cover download and similar options, that must stay an array
+        $arrays = json_encode($_POST['cfg_ary']);
 
-        // Now do the same for the cover download option, yet it must stay an array
-        $arrays = json_encode($_GET['cfg_ary']);
         $arrays = str_replace('"true"', 'true', $arrays);
         $arrays = str_replace('"false"', 'false', $arrays);
         // Decode, but this time as associative array!
@@ -158,8 +158,9 @@ function frm_languages() {
 
 /**
  * @brief   Helper that returns an input field for each available language
+ * 2016-03-02: Added $textarea. Set true for textarea, else it defaults to input
  */
-function frm_input_translatable($name, $value, $label = '', $aria = '') {
+function frm_input_translatable($name, $value, $label = '', $aria = '', $textarea = array('rows' => 0, 'cols' => 0)) {
     global $cfg, $langs_available; // @see frm_languages()
 
     $inputs = '<div class="row">';
@@ -183,9 +184,15 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
         $css       .= " toggle_$language";
 
         $inputs .= '<div class="large-6 columns '.$css.'">
-                        <label for="'.$frm_name.'">'.$label.' ('.$language.')</label>
-                            <input type="text" name="'.$frm_name.'" value="'.$frm_value.'" aria-describedby="'.$aria.'" />
-                    </div>';
+                        <label for="'.$frm_name.'">'.$label.' ('.$language.')</label>';
+        // Input or texarea?
+        if ($textarea['rows'] == 0) {
+            $inputs .= '<input type="input" name="'.$frm_name.'" value="'.$frm_value.'" aria-describedby="'.$aria.'" />';
+        } else {
+            $inputs .= '<textarea name="'.$frm_name.'" aria-describedby="'.$aria.'" rows="'.$textarea['rows'].'" cols="'.$textarea['cols'].'">'.$frm_value.'</textarea>';
+        }
+        $inputs .= '</div>';
+
     }
     $inputs .= '</div>';
 
@@ -220,6 +227,8 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
              */
             function add_new_entry() {
                 var newKey = $('#new_filter_entry').val();
+                // Always make keys lowercase to prevent subsequent problems
+                newKey = newKey.toLowerCase();
 
                 // If no key was given return
                 if (newKey == '') {
@@ -339,7 +348,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
                     // Send ajax request to this file (yeah, I know...)
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: 'settings.php',
                         data: formData,
                         dataType:'json',
@@ -395,6 +404,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             .sortable li { margin: 0 3px 5px 3px; padding: 0; padding-left: 1.5em; font-size: 1.4em; height: 37px; }
             .sortable li span { position: absolute; margin-left: -1.3em; }
             .sortable li a {color: #ffffff !important;}
+
+            /* Slightly smaller Tab Menu */
+            .tabs .tab-title > a {padding: 1rem 1.5rem; font-size: 0.9rem};
         </style>
     </head>
 <body>
@@ -418,9 +430,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
             <li class="tab-title"><a href="#formTab4"><?php echo __('API') ?></a></li>
             <li class="tab-title"><a href="#formTab5"><?php echo __('Covers') ?></a></li>
             <li class="tab-title"><a href="#formTab6"><?php echo __('Filter') ?></a></li>
-            <li class="tab-title"><a href="#formTab7"><?php echo __('Mailing') ?></a></li>
-            <li class="tab-title"><a href="#formTab8"><?php echo __('Paths') ?></a></li>
-            <li class="tab-title"><a href="#formTab9"><?php echo __('Journal List') ?></a></li>
+            <li class="tab-title"><a href="#formTab7"><?php echo __('Kiosk PCs') ?></a></li>
+            <li class="tab-title"><a href="#formTab8"><?php echo __('Mailing') ?></a></li>
+            <li class="tab-title"><a href="#formTab9"><?php echo __('Paths') ?></a></li>
+            <li class="tab-title"><a href="#formTab10"><?php echo __('Journal List') ?></a></li>
             <li class="tab-title"><button type="submit" class="button submit_btn" name="save"><?php echo __('Save') ?></button></li>
         </ul>
     </div>
@@ -482,12 +495,21 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         <input type="checkbox" name="cfg[prefs][rss]" <?php echo frm_checked($cfg->prefs->rss) ?> aria-describedby="help_rss" />
                             <label for="cfg[prefs][rss]"><?php echo __('Enable RSS Meta Button (read help carefully)') ?></label><br />
                             <div id="help_rss" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('This enabled a link to the JournalTocs RSS feed. Since the feed is only usable with an account, YOUR email must be used and is visible in the url. Two aspects make this charming. First and before all: if you use a proxy (see Your Institution), the links in the rss feed are "proxified". Second: it\'s easier to provide the user with a link than explaining how to create an account themselves at JournalTocs.') ?></span></div>
-                        <input type="checkbox" name="cfg[prefs][show_screensaver]" <?php echo frm_checked($cfg->prefs->show_screensaver) ?> aria-describedby="help_show_screensaver" />
-                            <label for="cfg[prefs][show_screensaver]"><?php echo __('Enable Screensaver') ?></label><br />
-                            <div id="help_show_screensaver" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Show a screensaver after idle time. <strong>The time is currently is fixed at 5 minutes</strong>') ?></span></div>
                         <input type="checkbox" name="cfg[prefs][show_orbit]" <?php echo frm_checked($cfg->prefs->show_orbit) ?> aria-describedby="help_show_orbit" />
                             <label for="cfg[prefs][show_orbit]"><?php echo __('Enable Orbit') ?></label>
                             <div id="help_show_orbit" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('This displayed a slide of the newest issues at the top of the journal list.') ?></span></div>
+                        <label for="cfg[prefs][screensaver_secs]"><?php echo __('Screesaver timing') ?></label><br />
+                            <input type="text" name="cfg[prefs][screensaver_secs]" value="<?php echo $cfg->prefs->screensaver_secs ?>" aria-describedby="help_screensaver_secs" />
+                            <div id="help_screensaver_secs" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before screensaver is displayed. Set to 0 to disable screensaver. Default is 240 seconds (4 minutes).') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Preferences: Checkout') ?></legend>
+                        <label for="cfg[prefs][clear_basket]"><?php echo __('Basket timing') ?></label><br />
+                            <input type="text" name="cfg[prefs][clear_basket]" value="<?php echo $cfg->prefs->clear_basket ?>" aria-describedby="help_clear_basket" />
+                            <div id="help_clear_basket" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Set the idle time in seconds before the basket is cleared. Default is 260 seconds (4 minutes, 20 seconds). Hint: set it slightly higher then the screensaver timing.') ?></span></div>
+                        <input type="checkbox" name="cfg[prefs][allow_ask_pdf]" <?php echo frm_checked($cfg->prefs->allow_ask_pdf) ?> aria-describedby="help_allow_ask_pdf" />
+                            <label for="cfg[prefs][allow_ask_pdf]"><?php echo __('Allow mail for PDF') ?></label>
+                            <div id="help_allow_ask_pdf" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Checkout action: May users send a mail to the library asking to get the pdf send to them?') ?></span></div>
                 </fieldset>
             </div>
 
@@ -556,12 +578,18 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         <?php echo frm_input_translatable('cfg_ary[translations][meta_inst_service]',  $cfg->translations['meta_inst_service'], __('Library service'), 'help_trans_meta_inst_service') ?>
                         <div id="help_trans_meta_inst_service" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The link to you catalogue/service witht the journal\'s issn appended.') ?></span></div>
                 </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Translations: Other') ?></legend>
+                        <?php //@TODO: Make inputing html nicer and easier ?>
+                        <?php echo frm_input_translatable('cfg_ary[translations][other_about]',  $cfg->translations['other_about'], __('About and Screensaver'), 'help_trans_other_about', $textarea = array('rows' => 25, 'cols' => 55)) ?>
+                        <div id="help_trans_other_about" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The text displayed when screensaver triggers or user clicks the about button. Please use [ and ] instead of &lt; and &gt; for HTML tags. The text fields are sized for an amount of text that can reasonably be displayed on a single screen.') ?></span></div>
+                </fieldset>
             </div>
             <div class="content" id="formTab4">
                 <h3><?php echo __('API Settings') ?></h3>
                 <fieldset>
-                    <legend>Performance</legend>
-                        <div class="panel"><?php echo __('Only activate caching if you do<ul><li>A (daily) cron to http://my.journaltouch.local/admin/updateTocs.php?optRecent=on&upd=true</li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php</li></ul>') ?></div>
+                    <legend><?php echo __('Performance') ?></legend>
+                        <div class="panel"><?php echo __('Only activate caching if you do<ul><li>A (daily) cron like <i>wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1</i></li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php (replace url in above example for cron job)</li></ul>') ?></div>
                         <input type="checkbox" name="cfg[prefs][cache_toc_enable]" <?php echo frm_checked($cfg->prefs->cache_toc_enable) ?> aria-describedby="help_cache_toc_enable" />
                             <label for="cfg[prefs][cache_toc_enable]"><?php echo __('Enable Caching Tocs') ?>?</label><br />
                             <div id="help_cache_toc_enable" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Caches fetched tocs so they only are processed once there is a new issue. Recommended.') ?></span></div>
@@ -725,6 +753,36 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                 </div>
             </div>
             <div class="content" id="formTab7">
+                <h3><?php echo __('Kiosk PCs') ?></h3>
+                <fieldset>
+                    <legend><?php echo __('Agent\'s & IP\'s') ?></legend>
+                        <div class="panel"><?php echo __('<p>If you display JournalTouch on a kiosk device within your institution, you might want to disable certain settings. For example displaying printing buttons might make no sense.<br />Instead of setting up a second JournalTouch installation, you just can disable certain elements for an IP or a browser user agent.</p><ul><li><strong>IP</strong>: only works if the kiosk PC is accessing the webserver directly (not behind a proxy or a NAT router)</li><li><strong>Browser agent</strong>: Kiosk software often offer an easy way to set a custom user agent string for the browser. If you don\'t got such software or it doesn\'t come with such an option, you can do it yourself. It can be done easily for most browser, e.g. with a plugin.</li></ul><p>You can include many IPs or agents, but you can\'t set different policies for each. If you require that, edit js/kiosk/kiosk_policy_custom.js - this file won\'t be overwritten</p>') ?></div>
+
+                        <label for="cfg[kiosk][IPs]"><?php echo __('IP Addresses') ?></label><br />
+                            <input type="text" name="cfg[kiosk][IPs]" value="<?php echo $cfg->kiosk->IPs ?>" aria-describedby="help_kiosk_ips" />
+                            <div id="help_kiosk_ips" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enter one or multiple IPs. Separate by comma (<i>1.2.3.1, 1.2.3.2</i>).') ?></span></div>
+                        <label for="cfg[kiosk][agents]"><?php echo __('Browser User Agents') ?></label><br />
+                            <input type="text" name="cfg[kiosk][agents]" value="<?php echo $cfg->kiosk->agents ?>" aria-describedby="help_kiosk_agents" />
+                            <div id="help_kiosk_agents" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enter one or more user agent (the relevant keyword is enough). You might enter multiple agents. Separate by comma.') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Policies: Checkout page') ?></legend>
+                        <input type="checkbox" name="cfg[kiosk][policy_NoPrint]" <?php echo frm_checked($cfg->kiosk->policy_NoPrint) ?> aria-describedby="help_kiosk_ips" />
+                            <label for="cfg[kiosk][policy_NoPrint]"><?php echo (__('Disable').' "'.__('View &amp; Print').'"') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoPrint" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Hide printing on kiosk pc\'s.') ?></span></div>
+
+                        <input type="checkbox" name="cfg[kiosk][policy_NoSendLib]" <?php echo frm_checked($cfg->kiosk->policy_NoSendLib) ?> aria-describedby="help_kiosk_policy_NoSendLib" />
+                            <label for="cfg[kiosk][policy_NoSendLib]"><?php echo (__('Disable').' "'.__('Send to library to get PDFs').'"') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoSendLib" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t allow users to send request for PDFs to library on kiosk pc\'s. To completly disable this feature, go to "Settings"') ?></span></div>
+                </fieldset>
+                <fieldset>
+                    <legend><?php echo __('Policies: Main page') ?></legend>
+                        <input type="checkbox" name="cfg[kiosk][policy_NoRSS]" <?php echo frm_checked($cfg->kiosk->policy_NoRSS) ?> aria-describedby="help_kiosk_policy_NoRSS" />
+                            <label for="cfg[kiosk][policy_NoRSS]"><?php echo __('Disable RSS meta button') ?>?</label><br />
+                            <div id="help_kiosk_policy_NoRSS" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t show RSS button in meta menu on kiosk pc\'s. Of little use there.') ?></span></div>
+                </fieldset>
+            </div>
+            <div class="content" id="formTab8">
                 <h3><?php echo __('Mailing Settings') ?></h3>
                     <fieldset>
                         <legend><?php echo __('Mailing: General Settings') ?></legend>
@@ -766,7 +824,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                                 <div id="help_dbpass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The password...') ?></span></div>
                     </fieldset>
             </div>
-            <div class="content" id="formTab8">
+            <div class="content" id="formTab9">
                 <h3>Saving Path Settings</h3>
                 <fieldset>
                     <legend>Speicherpfade</legend>
@@ -785,7 +843,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
                         <div id="help_data_journals_usr" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef.') ?></span></div>
                 </fieldset>
             </div>
-            <div class="content" id="formTab9">
+            <div class="content" id="formTab10">
                 <h3><?php echo __('Journals.csv Columns') ?></h3>
                 <fieldset>
                     <legend><?php echo __('Table Columns') ?></legend>
@@ -926,7 +984,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '') {
 
         <div id="help"></div>
     </div>
-    </form>    
+    </form>
 </div>
 <pre>
 <?php

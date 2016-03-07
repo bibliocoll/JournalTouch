@@ -1,7 +1,7 @@
 # Changes in these folder/files should reasonably never be tracked/pushed
+admin/.htaccess
 admin/update/history/*
 data/*
-doc/*
 config.php
 
 # Some exclusions, so the folders always are created, even if initally empty

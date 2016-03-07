@@ -83,18 +83,22 @@ function setLetterBox() {
 }
 
 
-function fetch_metabuttons_toc(issn) {
+/*  Fetch meta buttons so they are displayed above the iframe
+    @note params: We only really ne the issn, but without the other two
+    parameters it's hard to ge a home link */
+function fetch_metabuttons_toc(issn, para_caching, para_pubdate) {
     // Append meta (ugly hack, or maybe not that bad...?)
-    var custom_button = '<a onlick="window.history.go(-100)" class="button"><i class=""></i> Home</a> ';
+    var custom_button = '<a href="sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate + '" class="button" target="externalFrame"><i class=""></i> Home</a> ';
     $('#externalPopover h3').html($("div[data-issn='"+issn+"'] h5").clone()); // get title
     $('#externalPopover h3').after($("div[data-issn='"+issn+"'] .metaInfo").clone()); // show button
     $('#externalPopover .metaInfo').removeClass('hidden'); // remove the hidden class (if the buttons are not shown in the list)
     $('#externalPopover .metaInfo a').removeClass('popup'); // remove popup class from buttons
     $('#externalPopover .metaInfo a').attr('target', 'externalFrame'); // on click show content in frame
+    $('#externalPopover .metaInfo a').addClass('historyAdd'); // remove popup class from buttons
     $('#externalPopover .metaInfo').prepend(custom_button); // add a home button
 
     // Add inline back button
-    backlink = '<a id="frameBack_inline" class="button round" data-history="0" onclick="if ($(this).data(\'history\') < history.length) history.go(-1)"><i class="fi-arrow-left"></i></a> ';
+    backlink = '<a id="frameBack_inline" class="button round hidden" data-history="0" onclick="history.go(-1)"><i class="fi-arrow-left"></i></a> ';
     $('#externalPopover .metaInfo').prepend(backlink);
 
     return true;
@@ -178,7 +182,20 @@ $(document).ready(function() {
 		$('.toc.preloader').show();
 
         // Load meta buttons above toc (if visible)
-        fetch_metabuttons_toc(issn);
+        fetch_metabuttons_toc(issn, para_caching, para_pubdate);
+
+        // Monitor clicks on meta button links in modal; show back arrow if > 0
+    	$(document).on('click', '#externalPopover .metaInfo a.historyAdd', function() {
+            num = $('#frameBack_inline').data("history") + 1;
+            $('#frameBack_inline').data('history', num);
+            $('#frameBack_inline').removeClass('hidden');
+    	});
+        // Monitor clicks on frameBack_inline link in modal; hide on 0
+    	$(document).on('click', '#frameBack_inline', function() {
+            num = $('#frameBack_inline').data("history") - 1;
+            $('#frameBack_inline').data('history', num);
+            if ($('#frameBack_inline').data("history") == 0) $('#frameBack_inline').addClass('hidden');
+    	});
 
 		// get Journal TOC in iframe
 		createModalFrame('sys/ajax_toc.php?issn='+ issn + para_caching + para_pubdate);
@@ -324,7 +341,9 @@ $(document).ready(function() {
 		$('#cartAction').val(clickedId);
 
 		// display chosen action as a heading
-		$('#actionGreeter h1').text(thisText);
+		$('#actionGreeter h1 #subMenu').text(thisText);
+		$('#actionGreeter h1 #subMenu').show();
+		$('#actionGreeter h1 #topMenu').hide();
 
 		// hide other buttons
 		$(this).siblings().hide(); $(this).hide();
@@ -351,7 +370,8 @@ $(document).ready(function() {
 
 	$('#resetActions').click(function() {
 		$('.alert-box').hide(); // cleanup
-		$('#actionGreeter h1').text("I want to...");
+		$('#actionGreeter h1 #subMenu').hide();
+		$('#actionGreeter h1 #topMenu').show();
 		$('#actionsResultBox').find('div').hide();
 		$('#actionsResultBox').hide(); // clean
 		$(this).hide();
@@ -399,21 +419,34 @@ $(document).ready(function() {
 		$('#errorUsername').hide();
 	});
 
-	// screensaver-like thing with timeout (large screens only, see media.css)
+	// START screensaver-like thing with timeout (large screens only, see media.css)
 	var s_saver, clear_basket;
-	$('body').mousedown(function() {
+    var usr_screensaver_activate = $('#screensaver').attr('data-activateSeconds') * 1000;
+    var usr_clear_basket         = $('#cartPopover').attr('data-clearSeconds') * 1000;
+
+    // Function to set timer
+    function start_timeout_on_load() {
+        var clear_basket = setTimeout(function(){
+            if (usr_clear_basket > 0) simpleCart.empty();
+            $('#myArticles').removeClass('full');
+            $('#externalPopover').foundation('reveal', 'close');
+        }, usr_clear_basket);
+
+        if (usr_screensaver_activate == 0) return; // screensaver is disabled
+        var s_saver = setTimeout(function(){ $('#screensaver').fadeIn(900);}, usr_screensaver_activate);
+    };
+
+    // Start timer for screensaver after loading page
+    start_timeout_on_load();
+
+    // Reset and restart timer for screensaver and basket after each click/touch
+    $('body').on('mousedown touchstart', function() {
 		clearTimeout(s_saver);
 		clearTimeout(clear_basket);
-		s_saver = setTimeout(function(){
-			$('#screensaver').fadeIn(900);
-		}, 300000);
-		clear_basket = setTimeout(function(){
-			simpleCart.empty();
-			$('#myArticles').removeClass('full');
-			$('#externalPopover').foundation('reveal', 'close');
-		}, 900000);
+        start_timeout_on_load();
 		$('#screensaver').fadeOut(100);
 	});
+    // END screensaver
 
 	// timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp
 	$.timeago.settings.allowFuture = true;
@@ -441,9 +474,11 @@ $(document).ready(function() {
 		//		$('a.popup').click(function(event) {
 		var url = $(this).attr("href");
 
-        // Load meta buttons above toc (if visible)
-		issn = $(this).parents('.listitem').attr('data-issn').trim();
-        fetch_metabuttons_toc(issn);
+        // Load meta buttons above toc (if visible); but not on checkout page
+        if ($(this).parents('.listitem')) {
+    		issn = $(this).parents('.listitem').attr('data-issn').trim();
+            fetch_metabuttons_toc(issn);
+        }
 
 		createModalFrame(url);
 		$('#externalPopover').foundation('reveal', 'open');
@@ -471,7 +506,10 @@ $(document).ready(function() {
 					var eFrm = document.getElementById('externalFrame');
 					eFrm.contentWindow.postMessage(cartinfo, myloc);
 					$('.toc.preloader').hide();
-					$('#externalPopover').foundation('reveal', 'open');
+                    // Workaround for IE - without timeout toc.preloader sticks sometimes...
+                    setTimeout(function() {
+                        $('#externalPopover').foundation('reveal', 'open');
+                    }, 100);
 				} else {
 					$('.toc.preloader').hide();
 					//$('#tocModal').foundation('reveal', 'open');
