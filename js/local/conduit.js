@@ -105,9 +105,126 @@ function fetch_metabuttons_toc(issn, para_caching, para_pubdate) {
 }
 
 
+/**
+ * Screensaver with or without animation. Also clears basket currently.
+ *
+ * The basket div should have one data attribute:
+ * - data-clearSeconds: Time after which the basket is emptied
+ *
+ * The screensaver div should have two data attributes:
+ * - data-activateSeconds: Time after which screensaver is displayed
+ * - data-animateSpeed: Speed which the div moves at (0 to disable)
+ *
+ * @param srcDiv    \b STR  Class or id of screensaver div
+ *
+ * @return void
+ */
+function start_screensaver(srcDiv) {
+    var srcDiv = srcDiv || '#screensaver';
+    var s_saver, clear_basket;
+    // Get user set values from data elements of divs
+    var usr_clear_basket         = $('#cartPopover').attr('data-clearSeconds') * 1000;
+    var usr_screensaver_activate = $(srcDiv).attr('data-activateSeconds') * 1000;
+    var usr_screensaver_speed    = $(srcDiv).attr('data-animateSpeed');
+
+    start_timeout();
+
+    /**
+     * [Basic screensaver] Function to set timer for displaying screensaver and
+     * clearing basket
+     * @return void
+     */
+    function start_timeout() {
+        var clear_basket = setTimeout(function(){
+            if (usr_clear_basket > 0) simpleCart.empty();
+            $('#myArticles').removeClass('full');
+            $('#externalPopover').foundation('reveal', 'close');
+        }, usr_clear_basket);
+
+        if (usr_screensaver_activate == 0) return; // screensaver is completely disabled
+        var s_saver = setTimeout(function(){
+            // Use animation?
+            if (usr_screensaver_speed != 0) {
+                animateDiv();
+            }
+            // otherwise center div
+            else {
+                $(srcDiv).css({'left': '50%', 'margin-left': '-40%'});
+            }
+            $(srcDiv).fadeIn(900);
+        }, usr_screensaver_activate);
+    };
+
+    /**
+     * [Basic screensaver] Function to reset and restart timer for screensaver
+     * and basket after each click/touch.
+     * @return void
+     */
+    $('body').on('mousedown touchstart', function() {
+        $('#screensaver').stop( true, true ).fadeOut(100);
+		clearTimeout(s_saver);
+		clearTimeout(clear_basket);
+        start_timeout();
+	});
+    // END basic screensaver
+
+
+    /**
+     * [Animated screensaver] Starts animated screensaver
+     * Credits go to Lee at https://stackoverflow.com/a/10386178
+     * @return void
+     */
+    function animateDiv(){
+        var newq = makeNewPosition();
+        var oldq = $(srcDiv).offset();
+        var speed = calcSpeed([oldq.top, oldq.left], newq);
+
+        //jQuery.fx.interval = 100
+        $(srcDiv).animate({ top: newq[0], left: newq[1] }, speed, function(){
+            animateDiv();
+        });
+    };
+    /**
+     * [Animated screensaver] Caluclate random new position for div
+     * Credits go to Lee at https://stackoverflow.com/a/10386178
+     * @return array with new coordinates
+     */
+    function makeNewPosition(){
+        // Get viewport dimensions (remove the dimension of the div + some margin)
+        var h = $(window).height() - ($(srcDiv).height() + 20);
+        var w = $(window).width() - ($(srcDiv).width() + 60);
+
+        var nh = Math.floor(Math.random() * h);
+        var nw = Math.floor(Math.random() * w);
+
+        return [nh,nw];
+    }
+    /**
+     * [Animated screensaver] Caluclate random new speed for animation
+     * Credits go to Lee at https://stackoverflow.com/a/10386178
+     * @return float with speed value
+     */
+    function calcSpeed(prev, next) {
+        var x = Math.abs(prev[1] - next[1]);
+        var y = Math.abs(prev[0] - next[0]);
+
+        var greatest = x > y ? x : y;
+
+        var speedModifier = usr_screensaver_speed;
+
+        var speed = Math.ceil(greatest/speedModifier);
+
+        return speed;
+    }
+}
+
+
 $(document).ready(function() {
 	// run unveil plugin on page load
 	setTimeout(function() {$("img.getTOC").unveil();}, 1);
+
+    // Start timer for screensaver after loading page (if activated)
+    start_screensaver();
 
 	// Alphabet button bar;  currently for grid view only
 	$('#alphabet a').click(function() {
@@ -419,34 +536,6 @@ $(document).ready(function() {
 		$('#errorUsername').hide();
 	});
 
-	// START screensaver-like thing with timeout (large screens only, see media.css)
-	var s_saver, clear_basket;
-    var usr_screensaver_activate = $('#screensaver').attr('data-activateSeconds') * 1000;
-    var usr_clear_basket         = $('#cartPopover').attr('data-clearSeconds') * 1000;
-
-    // Function to set timer
-    function start_timeout_on_load() {
-        var clear_basket = setTimeout(function(){
-            if (usr_clear_basket > 0) simpleCart.empty();
-            $('#myArticles').removeClass('full');
-            $('#externalPopover').foundation('reveal', 'close');
-        }, usr_clear_basket);
-
-        if (usr_screensaver_activate == 0) return; // screensaver is disabled
-        var s_saver = setTimeout(function(){ $('#screensaver').fadeIn(900);}, usr_screensaver_activate);
-    };
-
-    // Start timer for screensaver after loading page
-    start_timeout_on_load();
-
-    // Reset and restart timer for screensaver and basket after each click/touch
-    $('body').on('mousedown touchstart', function() {
-		clearTimeout(s_saver);
-		clearTimeout(clear_basket);
-        start_timeout_on_load();
-		$('#screensaver').fadeOut(100);
-	});
-    // END screensaver
 
 	// timestamp setup: render timestamps for all 'time' elements with class 'datetime' that has an ISO 8601 timestamp
 	$.timeago.settings.allowFuture = true;
