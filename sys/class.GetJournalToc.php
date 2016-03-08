@@ -347,6 +347,7 @@ class GetJournalInfos {
         $itemcount = 0;
         $toc       = array();
         $missing_dois = array();
+        $found_dois = false;
         foreach ($xml->item as $article) {
             $jt_title     = preg_replace($tit_patterns, $tit_replacements, $article->title);
             $jt_abstract  = strip_tags(preg_replace($patterns, $replacements, $article->description));
@@ -412,6 +413,8 @@ class GetJournalInfos {
             if ($jt_doi == '') {
                 //keep a reference to where the doi needs to go in $toc
                 $missing_dois[$jt_title.' '.$issn] = &$toc['doi'][$itemcount];
+            } else {
+                $found_dois = true;
             }
 
             $itemcount++;
@@ -420,7 +423,10 @@ class GetJournalInfos {
         // Since JournalTocs didn't provide DOIs, let's fetch them from CrossRef
         // This most likely won't return a DOI for each article, but it's better
         // than none
-        if (count($missing_dois) > 0) {
+        // 2016-03-08: Some "articles" don't have a DOI (e.g. editorials). If
+        // one DOI is found it's sensible to assume that provided all available
+        // DOIs
+        if ($found_dois == false && count($missing_dois) > 0) {
             $context = stream_context_create(array('http' => array(
             	'method' => 'POST',
             	'content' => json_encode(array_keys($missing_dois)),
