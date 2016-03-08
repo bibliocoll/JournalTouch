@@ -626,6 +626,7 @@ class GetJournalInfos {
      */
     private function jt_clean_date($date = '') {
         $journal_date= str_replace("\n", '', $date); // has line breaks sometimes?
+        $journal_date= str_replace(",", '', $journal_date); // "22 December, 2015" becomes 2016-12-22; "22 December 2015" works
 
         // weird?
         if (!$journal_date) {
