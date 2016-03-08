@@ -25,11 +25,11 @@ class ListJournals
     /// \brief \b OBJ @see config.php
     protected $csv_col;
     /// \brief \b OBJ @see config.php
-    protected $covers;
+    public $covers;
     /// \brief \b OBJ @see config.php
     protected $api_all;
     /// \brief \b OBJ @see config.php
-    protected $jt;
+    public $jt;
     /// \brief \b ARY @see config.php
     public $filters;
     /// \brief \b OBJ @see config.php
@@ -56,8 +56,8 @@ class ListJournals
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
-        $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filter : false;
-    $this->sys      = $cfg->sys;
+        $this->filters  = (!empty($this->csv_col->filter)) ? $cfg->filters : false;
+        $this->sys      = $cfg->sys;
     }
 
 
@@ -140,24 +140,29 @@ class ListJournals
     /**
      * @brief   Get cover file for specified issn
      *
-     * @note    The api check is a stub. @see config.php
+     * @note    As of version 0.4.0 covers are downloaded via the updater.
+     *          Therefore the api call is removed here
      *
      * @return \b STR Path to cover file
      */
     function getCover($issn) {
-        if ($this->covers->api) {
-            $img = $this->covers->api.$issn;
-        } else {
-      $png = $this->sys->data_covers.$issn.'.png';
-      $jpg = $this->sys->data_covers.$issn.'.jpg';
-      $gif = $this->sys->data_covers.$issn.'.gif';
-            //    $img = (file_exists($png) ? $png : file_exists($jpg) ? $jpg : $this->covers->placeholder);
-            if (file_exists($jpg)) {$img = $jpg;}
-            else if (file_exists($gif)) {$img = $gif;}
-            else if (file_exists($png)) { $img = $png; }
-            else {$img= $this->covers->placeholder;};
+        $extensions = array('jpg', 'gif', 'png');
+
+        // First check folder with manually added covers
+        foreach ($extensions as $ext) {
+            $img = $this->sys->data_covers.$issn.'.'.$ext;
+            if (file_exists($img)) return $img;
         }
-        return $img;
+
+        // Second: check downloaded covers
+        foreach ($extensions as $ext) {
+            $img = $this->sys->data_covers.'/api/'.$issn.'.'.$ext;
+            if (file_exists($img)) return $img;
+        }
+
+        // All failed, return transparent.gif to cancel loading animation
+        // Placeholder is set via css - should be more efficient with loading
+        return 'img/transparent.gif';
     }
 
 
@@ -203,7 +208,8 @@ class ListJournals
                     else {
                         $multiplier = $this->GetTagSizeLogarithmic($count, $tag_min, $tag_max, 1, $cssClasses+1);
                         $css = 'tagcloud'.$multiplier;
-                        $cloud .= '<span class="'.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag.'</a> ('.$count.')</span> ';
+                        $tag_print = str_replace('_', ' ', $tag);
+                        $cloud .= '<span class="tagentry '.$css.'"><a class="filter" id="tag-'.$tag.'" href="javascript:;">'.$tag_print.'</a> ('.$count.')</span> ';
                     }
                 }
             }
@@ -284,11 +290,10 @@ class ListJournals
 
                 // Meta
                 $metaPrint = $metaOnline = $metaGotToc = $metaShelfmark = $metaWebsite = '';
-                if ($this->prefs->show_metainfo == true) {
+                if ($this->prefs->show_metainfo_list == true || $this->prefs->show_metainfo_toc) {
                     $metaPrint    = (!empty($data[$this->csv_col->metaPrint]) ? 'fi-page-copy' : '');
                     $metaOnline = (!empty($data[$this->csv_col->metaOnline]) ? 'fi-download' : '');
-                    $metaGotToc = (!empty($data[$this->csv_col->metaGotToc]) && $data[$this->csv_col->metaGotToc] !== 'Jseek' && $data[$this->csv_col->metaGotToc] !== '-' );
-                    $metaGotToc = ($metaGotToc) ? 'fi-like' : 'fi-dislike';
+                    $metaGotToc = $data[$this->csv_col->metaGotToc];
                     $metaShelfmark = (!empty($data[$this->csv_col->metaShelfmark]) ? $data[$this->csv_col->metaShelfmark] : '');
                     $metaWebsite = (!empty($data[$this->csv_col->metaWebsite]) ? $data[$this->csv_col->metaWebsite] : '');
                 }

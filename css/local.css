@@ -23,6 +23,8 @@ height:75px;
 background-color: #007095;
 }
 
+.top-bar a {outline: 0;}
+
 .top-bar-section li:not(.has-form) a:not(.button):hover {
 background-color: #035773!important;
 }
@@ -40,7 +42,7 @@ border-right: dotted 1px #FFFFFF;
 }
 
 div.logo {
-background: url('../img/bgcoll-logo.png') no-repeat left top;
+background: url('../img/logo.png') no-repeat left top;
 height:254px; /* reserve space */
 }
 
@@ -83,7 +85,6 @@ background-color:#007095;
 min-height:150px;
 }
 footer > div {
-/*background: url('../img/bgcoll-logo-w.png') no-repeat left top;*/
 color:#efefef;
 padding: 24px 0 10px;
 width: 100%;
@@ -115,7 +116,7 @@ font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleG
 
 /* About page Modal */
 #about > .row:first-child {
-background: url('../img/bgcoll-logo.png') no-repeat right top;
+background: url('../img/logo.png') no-repeat right bottom;
 }
 
 i.switcher {
@@ -133,6 +134,10 @@ border-color: #879cc6;
 
 .headerRow {
 display:none
+}
+
+.hidden {
+display: none !important;
 }
 
 .itemRow {
@@ -252,36 +257,6 @@ background-color: aliceblue;
 }
 
 
-/*************** old code: Journal (Cover) List : LIST (ACCORDION) *****************/
-
-/*dl.accordion dd.active a.item_name {*/
-/*background-color:#fff;*/
-/*}*/
-/*dl.accordion dd.active a.item_add {*/
-/*background-color:#007095;*/
-/*}*/
-
-/*dl.accordion dd.active .item_added, dl.accordion dd.active .item_added:hover, .item_added, .item_added:hover {*/
-/*background: #43ac41!important;*/
-/*}*/
-
-/*.accordion dd {*/
-/*border-top: solid 1px #879CC6;*/
-/*}*/
-
-/*[> E-Mail library notification button on errors <]*/
-/*dl.accordion a.button {*/
-/*background-color: #008CBA!important;*/
-/*}*/
-/*dl.accordion a.button:hover {*/
-/*background-color: #007095!important;*/
-/*}*/
-
-/*dl.accordion a.close {*/
-/*background:none;*/
-/*}*/
-
-
 /*************** Journal (Cover) List : GRID / LIST ****************************/
 
 /* ===== GRID VIEW ===== */
@@ -325,6 +300,16 @@ div#journalList.gridview > div.listitem > div.metaInfo > .button {
   font-size: 0.8125rem;
   border-radius: 3px;
 }
+
+#externalPopover div.metaInfo > .button {
+  background-color: #CFCFCF;
+  width: 130px;
+  padding: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8125rem;
+  border-radius: 3px;
+}
+
 
 div#journalList.gridview > div.listitem > div.title {
   height: 110px;
@@ -464,6 +449,10 @@ color: #dbd417;
 
 /*************** Display TOC *********************************************/
 
+.tocItem {
+max-width: 100%;
+}
+
 #fillTOC h6 {
 color:#3E9C12;
 font-weight:bold;
@@ -514,6 +503,17 @@ background-color:#2F334D!important;
 background-color:#FFFFFF!important;
 }
 
+/*DOI*/
+.tocItem .title_links_layer {width: 100%; line-height: 50px !important;}
+.lnkDOI     {float: right; }
+.doi_outer  {font-size: large;}
+.doi_prefix {background-color: orange; color: #ffffff; padding: 3px 8px; border-right: thin solid black;}
+.doi_link   {background-color: gray; padding: 3px 4px; }
+.doi_link a {color: #ffffff;}
+
+/* QR-code */
+.lnkQR      {}
+
 
 /* special for Orbit */
 #TOCbox h4, #TOCbox h5 {
@@ -539,8 +539,10 @@ iframe {
 #externalPopover h3 {margin-top: 1.5rem;}
 #externalPopover .close-reveal-modal
                     {right: 1.6875rem}
-#externalPopover #frameBack
-                    {position: absolute; right: 9.5rem; top: 2.2rem;}
+/* #externalPopover #frameBack
+                    {position: absolute; right: 9.5rem; top: 2.2rem;} */
+#externalPopover #frameBack_inline
+                    {width: auto; background-color: #008cba; border-color: #007095;}
 #externalFrame      {width: 100%; height: 100%;}
 
 
@@ -578,6 +580,7 @@ font-size: 2em;
 color:#fff;
 position:relative;
 }
+
 
 /*************** Checkout ************************************************/
 
@@ -617,13 +620,41 @@ font-size: larger;
 }
 
 
-/*************** Tagcloud ************************************************/
+/*************** Tagcloud (via menu) *****************************************/
+.tagentry {white-space: nowrap; border-radius: 25px; background: #F4F4F4; padding: 5px; margin: 0 5px; line-height: 200%; display: inline-block; vertical-align: middle;}
+.tagentry, .tagentry a {color: #332942;}
+.tagentry a.filterSelected {color: #FF8000; background-color: transparent;}
 
+.tagcloud1 a, .tagcloud1 {font-size: x-small; font-weight: 100;}
+.tagcloud2 a, .tagcloud2 {font-size: small; font-weight: 300;}
+.tagcloud3 a, .tagcloud3 {font-size: medium; font-weight: 500;}
+.tagcloud4 a, .tagcloud4 {font-size: large; font-weight: 700;}
+.tagcloud5 a, .tagcloud5 {font-size: x-large; font-weight: 900;}
+/*
 .tagcloud1 a, .tagcloud1 {font-size: 0.8em; color: #563E0B;}
 .tagcloud2 a, .tagcloud2 {font-size: 0.85em; color: #0A2E36;}
 .tagcloud3 a, .tagcloud3 {font-size: 0.875em; color: #99C228;}
 .tagcloud4 a, .tagcloud4 {font-size: 0.975em; color: #332942;}
 .tagcloud5 a, .tagcloud5 {font-size: 1.1em; color: #708084;}
+*/
+
+/*************** Filter Menu ********************************/
+/* Megamenu as suggested here: http://codepen.io/winghouchan/pen/esuGI */
+/* You might hide/modify the three special entries here */
+#filter-show-all    {}
+#filter-show-favs   {}
+#filter-show-new    {}
+li.filter-special-row h3 a {color: #FFDD00 !important;}
+@media only screen and (min-width: 641px) {
+    .dropdown-wrapper {
+        background-color: #333333 !important;
+        /*width: 540px !important; */
+        width: 880px !important;
+        padding: 10px 0;
+        right: -300px !important;
+    }
+}
+
 
 /*************** Metainfo ************************************************/
 
@@ -686,4 +717,3 @@ margin-right:20px;
 }
 
 /* End Glowing Basket */
-

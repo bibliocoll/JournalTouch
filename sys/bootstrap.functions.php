@@ -10,25 +10,91 @@
 
 
 /**
-  * @brief   Check if a journal touch update is required
+  * @brief   Load user configuration
+  *
+  * Set the result always to $cfg = cfg_load();
+  *
+  * Without calling this, nothing will work ;)
+  *
+  * @see admin/settings.php - there the object is saved
+  *
+  * @return \b OBJ The configuration object
+  */
+function cfg_load($user_cfg = '') {
+    if (!$user_cfg) $user_cfg = realpath( __DIR__ ).'/../data/config/user_config.php';
+
+    if (file_exists($user_cfg)) {
+        $restore    = file_get_contents($user_cfg);
+        $cfg = unserialize($restore);
+    } else {
+        //always load the config-default.php, so nothing is ever missed; povides $cfg
+        // @todo: REMOVE THE SUPRESS ERROR
+        @require(realpath( __DIR__ ).'/../data/config/config-default.php');
+    }
+
+    return $cfg;
+}
+
+
+/**
+  * @brief  Create a language switch that can be used in any foundation menu
+  *         (admin-page or user site)
+  *
+  * @todo
+  * - Use url_rewrite via bootstrap to make it looks nicer (jt.de/EN/index.php)
+  * - create something like $cfg->sys->url_home to prevent shit like $relative_dir
+  *
+  * @return \b STR HTML for language switch
+  */
+function language_switch($cfg) {
+    $lng_options = $switch = '';
+    $current_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+    $relative_dir = (strpos($current_url, 'admin')) ? '../' : '';
+
+    foreach ($cfg->prefs->languages as $set_lang) {
+        if ($set_lang != $cfg->prefs->current_lang) {
+            $lng_options .= '<li><a id="switch-language" href="'.$current_url.'?lang='.$set_lang.'"><img src="'.$relative_dir.'languages/'.$set_lang.'.gif" /></a></li>';
+        }
+    }
+
+    // Show a drop down menu if more than two languages are available
+    if (count($cfg->prefs->languages) > 2) {
+        $switch = '  <li class="divider"></li>
+                <li class="has-dropdown switch-language">
+                    <a id="langauge-view" href="#"><i class="fi-flag"></i>&#160;'. __('Language').'</a>
+                    <ul class="dropdown">'.$lng_options.'</ul>
+                </li>';
+    }
+    // Otherwise just show a simple toggle
+    elseif (count($cfg->prefs->languages) == 2) {
+        $switch = '<li class="divider"></li>'.$lng_options;
+    }
+    // And (implicit) nothing if only one language is available
+
+    return $switch;
+}
+
+/**
+  * @brief   Check if a journal touch upgrade is required
   *
   * Updating was introduced with version 0.4
   *
   * @todo Instead of just using empty files, the files could be the release notes
   *
-  * @return \b bool True if update is needed, false otherwise
+  * @return \b bool True if upgrade is needed, false otherwise
   */
-function check_update_required($cfg) {
-    // The very first time, create an info, what is our initial JT version 
+function check_upgrade_required($cfg) {
+    // The very first time, create an info, what is our initial JT version
     // (the "fresh" installation). It's easy - it's the first info in history
-    $upd_dir    = $cfg->sys->basepath.'admin/update/';
+    $upd_dir    = $cfg->sys->basepath.'admin/upgrade/';
 
     $historyDir     = glob($upd_dir.'history/ver_*');
     $historyCount   = count($historyDir);
-  
+
     // Write our initial version
     if ($historyCount === 0) {
-        // Special case, coming from 0.3, which had no update mechanism
+        // Special case, coming from 0.3, which had no upgrade mechanism
         // Check for something that only existed in 0.3
         if (file_exists($cfg->sys->basepath.'locale/de_DE.gif')) {
             file_put_contents($upd_dir.'history/ver_0.3', '');
@@ -37,9 +103,9 @@ function check_update_required($cfg) {
             file_put_contents($upd_dir.'history/ver_'.$cfg->sys->current_jt_version, '');
         }
     }
-    
-    // Now check if the current version differs from our last updated version
-    if (!file_exists($cfg->sys->basepath.'admin/update/history/ver_'.$cfg->sys->current_jt_version)) {
+
+    // Now check if the current version differs from our last upgraded version
+    if (!file_exists($cfg->sys->basepath.'admin/upgrade/history/ver_'.$cfg->sys->current_jt_version)) {
         return true;
     } else {
         return false;
@@ -94,5 +160,52 @@ function valid_issn($input, $validate = TRUE) {
   // no validation and no preg fail
   return TRUE;
 }
+
+
+/**
+  * @brief  Save same data to identify client and only locally apply some
+  *         jquery actions. Useful for kiosk or library pc's
+  * 
+  * @return \b str HTML to output on page and that can be used by javascript
+  */
+function get_client_infos($cfg) {
+    $html = '';
+
+    // Move policies to array (easier to check)
+    $policyIPs    = array_flip(array_map('trim', explode(',', $cfg->kiosk->IPs)));
+    $policyAgents = array_map('trim', explode(',', $cfg->kiosk->agents));
+
+    // Get client infos
+    $clientIP    = $_SERVER['REMOTE_ADDR'];
+    $clientAgent = $_SERVER['HTTP_USER_AGENT'];
+
+    // Check if current browser user agent contains the agent(s) set via setting
+    $clientAgentHit = false;
+    foreach ($policyAgents as $agent) {
+        if (stripos($clientAgent, $agent)) {
+            $clientAgentHit = true;
+        }
+    }
+
+    // Create html if IP exists
+    if (array_key_exists($clientIP, $policyIPs) || $clientAgentHit) {
+        $html = '<span id="kioskPolicies" style="display: none">
+                    <!--Script for JournalTouch policies -->
+                    <script src="js/kiosk/kiosk_policy.js"></script>
+                    <!-- Policies: Main -->
+                    <span id="kioskPolicy_NoRSS">'.$cfg->kiosk->policy_NoRSS.'</span>
+                    <!-- Policies: Checkout -->
+                    <span id="kioskPolicy_NoPrint">'.$cfg->kiosk->policy_NoPrint.'</span>
+                    <span id="kioskPolicy_NoSendLib">'.$cfg->kiosk->policy_NoSendLib.'</span>
+
+                    <!--Script for your own policies -->
+                    <script src="js/kiosk/kiosk_policy_custom.js"></script>
+                    <!-- Client info -->
+                    <span id="client_IP">'.$clientIP.'</span>
+                    <span id="client_Agent">'.$clientAgent.'</span>
+                </span>';
+    }
+
+  return $html;
+}
 ?>
-<!-- vim: set sw=2 ts=2 et ft=php fdm=marker: -->

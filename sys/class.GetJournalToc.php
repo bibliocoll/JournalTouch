@@ -72,7 +72,7 @@ class GetJournalInfos {
         set_time_limit($this->maxtime);
         $this->script_timer();
 
-        require_once('../config.php');
+        require('bootstrap.php');
         $this->api_all  = $cfg->api->all;
         $this->jt       = $cfg->api->jt;
         $this->prefs    = $cfg->prefs;
@@ -158,6 +158,8 @@ class GetJournalInfos {
           <link href="../css/local.css" rel="stylesheet">
           <script src="../js/vendor/jquery.js"></script>
           <script src="../js/vendor/jquery.timeago.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/jquery.qrcode.min.js"></script>
+          <script type="text/javascript" src="../js/vendor/jquery-qrcode/lib/qrcode.js"></script>
     </head><body>';
       $html_postfix_ok = '<script src="../js/local/frame.js"></script></body></html>';
       $html_postfix_er = '<script>$(document).ready(window.parent.postMessage({"ready": false},"*"));</script></body></html>';
@@ -191,8 +193,8 @@ class GetJournalInfos {
      *
      * @todo
      * - Hmm, $toc should really be a class property?
-     * - This should be put into an iframe (like meta links), so the article list
-     *   can be scrolled, without scrolling the whole page
+     * - 2015-10-30: Added proxy option. It would be nice to add some guide if
+     *   there is no proxy (using $cfg->prefs->ip_subnet)...
      *
      * @author Daniel Zimmel <zimmel@coll.mpg.de>
      * @author Tobias Zeumer <tzeumer@verweisungsform.de>
@@ -221,15 +223,25 @@ class GetJournalInfos {
         array_reverse ($toc['sort'], $preserve_keys = true);
 
         foreach (array_keys($toc['sort']) as $id ) {
+            $doi = '';
+            if ($toc['doi'][$id]) {
+                $doi = '<span class="doi_outer"><span class="doi_prefix">DOI</span><span class="doi_link"><a href="https://dx.doi.org/'.$toc['doi'][$id].'">'.$toc['doi'][$id].'</a></span></span>';
+            }
+
             if ($toc['title'][$id]) {
                 $authors = array_slice($toc['authors'][$id], 0, $max_authors);
                 $authors = implode(' & ', $authors);
                 $authors .= ($authors) ? ' : ' : '';
 
-                $link_dl = ($this->prefs->show_dl_button) ? $this->get_download_link($id) : '';
+                $link_dl = '';
+                if ($this->prefs->show_dl_button) {
+                    $link_dl = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($this->get_download_link($id)) : $this->get_download_link($id);
+                }
 
                 if ($this->api_all->articleLink == true) {
-                    $entry = '<span class="item_name">'.$authors.'<a href="'.$toc['link'][$id].'">'.$toc['title'][$id].'</a></span>';
+                    // Prepend the proxy url to the article link (if one is set in the config)
+                    $url = ($this->prefs->proxy) ? $this->prefs->proxy.urlencode($toc['link'][$id]) : $toc['link'][$id];
+                    $entry = '<span class="item_name">'.$authors.'<a href="'.$url.'">'.$toc['title'][$id].'</a></span>';
                 }
                 else {
                     $entry = '<span class="item_name">'.$authors.$toc['title'][$id].'</a></span>';
@@ -248,10 +260,13 @@ class GetJournalInfos {
                 // abstract button: let us assume that strlen>300 == abstract
                 $html .=      (strlen($toc['abstract'][$id]) > 300) ? '<a class="button medium radius abstract">'.__('Abstract').'</a>&nbsp;' : '';
                 $html .=      $link_dl.PHP_EOL;
+                // QR-Code
+                $html .=      '<a class="button medium radius title_links" href="javascript:;"><i class="fi-link"></i></a> ';
                 // add button (cart)
                 $html .=      '<a class="item_add button medium radius" href="javascript:;"><i class="fi-plus"></i></a>
                 </div>';
-                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    (($toc['abstract'][$id]) ? '<div class="abstract invisible small-12 columns"><span>'.$toc['abstract'][$id].'</span></div>' : '');
+                $html .=    '<div class="title_links_layer invisible small-12 columns"><span class="lnkDOI right">'.$doi.'</span><p style="clear: both"></p><span class="lnkQR right"></span></div>';
                 $html .= '</div>';
             }
         }
@@ -288,7 +303,7 @@ class GetJournalInfos {
      *
      * @todo 2015-09-05
      * - fetching DOIs is nice, but it slows things down. Make it an option...
-     * - also using curl might be fatal on certain configs
+     * - 2016-03-08; improved, only fetch if no doi was found
      *
      * @note  Shortest sfx link: http://sfx.gbv.de/sfx_tuhh?svc.fulltext=yes&rft_id=info:doi/10.1002/adma.201400310
      *
@@ -302,7 +317,14 @@ class GetJournalInfos {
     public function journaltoc_fetch_toc($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
         $xml = simplexml_load_file($jtURL);
+
+        // Nothing usable returned
         if (!is_object($xml)) {
+            return false;
+        }
+
+        // There are not items (articels) => not toc from JournalTocs
+        if ($xml->item->count() == 0) {
             return false;
         }
 
@@ -326,6 +348,7 @@ class GetJournalInfos {
         $itemcount = 0;
         $toc       = array();
         $missing_dois = array();
+        $found_dois = false;
         foreach ($xml->item as $article) {
             $jt_title     = preg_replace($tit_patterns, $tit_replacements, $article->title);
             $jt_abstract  = strip_tags(preg_replace($patterns, $replacements, $article->description));
@@ -333,8 +356,8 @@ class GetJournalInfos {
             $jt_source    = preg_replace($tit_patterns, $tit_replacements, $article->children('dc', TRUE)->source);
 
             // DOI
-            $jt_doi       = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
-            $jt_doi       = $this->get_doi($jt_doi);
+            $jt_doi = (string)$article->children('dc', TRUE)->identifier; // must be there and only one ???
+            if ($jt_doi) $jt_doi = $this->get_doi($jt_doi);
 
             // Author(s) don't have to be set + there might be more than one
             $jt_authors = array();
@@ -386,27 +409,36 @@ class GetJournalInfos {
             $toc['sort'][]     = $jt_sort;
 
             //i really want a doi. so remember this one for crossref! ~~krug 05.08.2015
+            // Zeumer 2015-11-29: weird sometimes less mssing dois than toc[dois]
+            // , e.g. for 0001-6918. Duplicate title?
             if ($jt_doi == '') {
                 //keep a reference to where the doi needs to go in $toc
-                $missing_dois[$jt_title] = &$toc['doi'][$itemcount];
+                $missing_dois[$jt_title.' '.$issn] = &$toc['doi'][$itemcount];
+            } else {
+                $found_dois = true;
             }
+
             $itemcount++;
         }
 
-        //we have dois to fetch
-        if (count($missing_dois) > 0) {
-            $jsondata = json_encode(array_keys($missing_dois));
-            $ch = curl_init("http://search.crossref.org/links"); //yep, oldschool
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 'Content-Length: ' . strlen($jsondata)));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsondata );
-            $cr_result = curl_exec($ch);
-            $cr_return = json_decode($cr_result);
-            curl_close($ch);
-            if (is_object($cr_return)  && $cr_return->query_ok ){
-                foreach ($cr_return->results as $result) {
+        // Since JournalTocs didn't provide DOIs, let's fetch them from CrossRef
+        // This most likely won't return a DOI for each article, but it's better
+        // than none
+        // 2016-03-08: Some "articles" don't have a DOI (e.g. editorials). If
+        // one DOI is found it's sensible to assume that provided all available
+        // DOIs
+        if ($found_dois == false && count($missing_dois) > 0) {
+            $context = stream_context_create(array('http' => array(
+            	'method' => 'POST',
+            	'content' => json_encode(array_keys($missing_dois)),
+            	'header' => 'Content-Type: application/json',
+            )));
+            $cr_json = file_get_contents('http://search.crossref.org/links', null, $context);
+            $obj = ($cr_json) ? json_decode($cr_json) : false;
+            if ($obj) {
+                foreach ($obj->results as $result) {
                     if ($result->match) {
+                        // Keep in mind $missing_dois... is a reference to $toc['doi'][$itemcount]
                         $missing_dois[$result->text] = $this->get_doi($result->doi);
                     }
                 }
@@ -450,20 +482,24 @@ class GetJournalInfos {
             parse_str($coins, $pcoins);
 
             // Article infos
-            $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            $cr_authors = array(0 => '');
+            if (isset($pcoins['rft_au'])) {
+                $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+            }
             $cr_title    = $item['title'];
             $cr_link     = $item['doi'];
             $cr_doi      = $this->get_doi($item['doi']);
             $cr_abstract = '';
 
             // Source infos
-            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. " . $pcoins['rft.volume'] . ", No. " . $pcoins['rft.issue'] . " (" . $pcoins['rft_date'] . ")";
             //$jtitle = $pcoins['rft_jtitle']; // why again?
             $cr_date    = ''; // CR does not provide a date (for free?); only year via $pcoins['rft_date'] that's equal to $item['year']
             $cr_year    = $item['year'];
             $cr_vol     = (isset($pcoins['rft_volume'])) ? $pcoins['rft_volume'] : '';
             $cr_issue   = (isset($pcoins['rft_issue']))  ? $pcoins['rft_issue'] : '';
             $cr_page    = (isset($pcoins['rft_spage']))  ? $pcoins['rft_spage'] : '';
+            $cr_date    = (isset($pcoins['rft_date']))  ? $pcoins['rft_date'] : '';
+            $cr_source  = $pcoins['rft_jtitle'] . ", Vol. $cr_vol, No. $cr_issue ($cr_date)";
 
             // sort string for toc output
             $cr_sort = $cr_year . '-' . $cr_vol . '-' . $cr_issue . '-' . $cr_page;
@@ -533,26 +569,19 @@ class GetJournalInfos {
     /**
      * @brief   Tries to return a plain doi
      *
+     * 2016-03-08: Use regular expression as suggested by CrossRef itself:
+     * http://blog.crossref.org/2015/08/doi-regular-expressions.html
+     *
      * @param $doi_string  \b STR  Some string with a doi
      * @return \b STR The doi
      */
     private function get_doi($doi_string) {
         $doi = '';
-        $doi_string = strtolower($doi_string);
+        $doi_string = trim(strtolower($doi_string));
 
-        if ((substr ($doi_string, 0, 4) == 'http')) {
-            // anything like http://dx.doi.org/10.1002/adma.201400310
-            preg_match('/http.*\/\/.*\/{1}(.*\..*?\/.*?)($|\/*$|\?.*|\/\?*$)/', $doi_string, $matches);
-            //FIXME: i think i've seen dois with 2 forward slashes? ~~krug 06.08.2015
-            if (isset($matches[1])) $doi = $matches[1];
-        }
-        elseif ((substr ($doi_string, 0, 3) == 'doi')) {
-            // "doi " or "doi:"
-            // a doi should have at least a length of 3 (x/x) -> start looking for end at 7
-            // ()?: <- use min() if not 0, else strlen
-            $end = (min(strpos($doi_string,' ', 7), strpos($doi_string,';', 7)))?: strlen($doi_string);
-            $doi = substr($doi_string, 4, $end -4);
-        }
+        // anything like http://dx.doi.org/10.1002/adma.201400310
+        preg_match('/.*(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i', $doi_string, $matches);
+        if (isset($matches[1])) $doi = $matches[1];
 
         return $doi;
     }
@@ -597,6 +626,7 @@ class GetJournalInfos {
      */
     private function jt_clean_date($date = '') {
         $journal_date= str_replace("\n", '', $date); // has line breaks sometimes?
+        $journal_date= str_replace(",", '', $journal_date); // "22 December, 2015" becomes 2016-12-22; "22 December 2015" works
 
         // weird?
         if (!$journal_date) {
@@ -717,7 +747,7 @@ class GetJournalInfos {
             //&rft.eissn=
         }
 
-        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>&nbsp;';
+        if ($link_dl) $link_dl = '<a class="button medium radius '.$icon.'" href="'.$link_dl.'">&nbsp;</a>';
 
         return $link_dl;
     }

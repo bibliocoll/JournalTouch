@@ -69,24 +69,23 @@
 
   /* fancy screensaver for large (touch) screen */
   #screensaver {
-    position: fixed;
-    /*background: url('../img/bgcoll-logo.png') no-repeat center bottom;*/
-    min-height:90%;
-    left: 50%;
-    z-index: 99;
+    position: absolute;
+    top: 3.25rem;
     height: auto;
-    margin-left: -40%;
+    min-height:90%;
+    z-index: 99;
     width: 80%;
     background-color: #F0F8FF;
     padding: 1.25rem;
     border: solid 1px #666;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    top: 3.25rem;
+    /* left: 50%; */
+    /* margin-left: -40%;*/
   }
   
   /* filter position */
-  #filterPanel { position:fixed; z-index:99; top: 100px; right: 50px; }
+  #filterPanel { position:fixed; z-index:95; top: 100px; right: 50px; cursor: pointer; }
   
   /* Grid: Dynamic Letter Box */
   #letterbox { position:fixed; top:10%; left:40px; width:12rem; font-size:6rem; padding:2rem; color:#007095; background-color:#efefef; }
