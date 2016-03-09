@@ -374,7 +374,7 @@ class GetJournalInfos {
                 $journal_dates[] = $journal_date;
             }
         }
-        arsort($journal_dates);
+        rsort($journal_dates);
 
         $recent_date = (isset($journal_dates[0])) ? $journal_dates[0] : false;
         if ($recent_date !== false) {
