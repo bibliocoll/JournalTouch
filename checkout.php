@@ -6,9 +6,7 @@ $myaction = $_GET;
 /* load classes */
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
 require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
-require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
 /* setup methods & objects */
-$email = new PHPMailer(true);
 $action = new CheckoutActions($cfg);
 ?>
 <!doctype html>
@@ -170,15 +168,30 @@ if ($users == false) {
 $file = '';
 if(isset($_POST['mailer']))
 {
+  // looks like we need to initialize PHPMailer
+  require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
+  $mail = new PHPMailer(true);
+  //$mail->SMTPDebug = 3; // Enable verbose debug output
+  if ($cfg->mail->useSMTP) {
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = $cfg->mail->smtpServer;  // Specify main and backup SMTP servers
+    $mail->Port = $cfg->mail->smtpPort;
+    if ($cfg->mail->useSMTPAuth) {
+      $mail->SMTPAuth = true; // Enable SMTP authentication
+      $mail->Username = $cfg->mail->smtpUser; // SMTP username
+      $mail->Password = $cfg->mail->smtpPass; // SMTP password
+      if (!empty($cfg->mail->smtpSec)) { $mail->SMTPSecure = strtolower($cfg->mail->smtpSec); } // Enable TLS encryption, `ssl` also accepted
+    }
+  }
     // if we have already sent an e-mail, read again from POST
     $file = (empty($file) && isset($_POST['file'])) ? $file = $_POST['file'] : '';
 
         /* pass the PHPMailer object & save the return value (success or failure?) */
         /* is it feedback? */
         if (isset($_POST['feedback'])) {
-            $mailerResponse = $action->sendFeedback($email);
+            $mailerResponse = $action->sendFeedback($mail);
         } else {
-            $mailerResponse = $action->sendArticlesAsMail($file, $email);
+            $mailerResponse = $action->sendArticlesAsMail($file, $mail);
         }
     /* error handling */
     if ($mailerResponse == "OK") {
@@ -360,4 +373,3 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 <!-- END Kiosk policies -->
   </body>
 </html>
-
