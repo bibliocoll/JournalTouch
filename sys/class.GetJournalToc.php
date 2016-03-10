@@ -303,6 +303,7 @@ class GetJournalInfos {
      *
      * @todo 2015-09-05
      * - fetching DOIs is nice, but it slows things down. Make it an option...
+     * - 2016-03-08; improved, only fetch if no doi was found
      *
      * @note  Shortest sfx link: http://sfx.gbv.de/sfx_tuhh?svc.fulltext=yes&rft_id=info:doi/10.1002/adma.201400310
      *
@@ -347,6 +348,7 @@ class GetJournalInfos {
         $itemcount = 0;
         $toc       = array();
         $missing_dois = array();
+        $found_dois = false;
         foreach ($xml->item as $article) {
             $jt_title     = preg_replace($tit_patterns, $tit_replacements, $article->title);
             $jt_abstract  = strip_tags(preg_replace($patterns, $replacements, $article->description));
@@ -412,6 +414,8 @@ class GetJournalInfos {
             if ($jt_doi == '') {
                 //keep a reference to where the doi needs to go in $toc
                 $missing_dois[$jt_title.' '.$issn] = &$toc['doi'][$itemcount];
+            } else {
+                $found_dois = true;
             }
 
             $itemcount++;
@@ -420,7 +424,10 @@ class GetJournalInfos {
         // Since JournalTocs didn't provide DOIs, let's fetch them from CrossRef
         // This most likely won't return a DOI for each article, but it's better
         // than none
-        if (count($missing_dois) > 0) {
+        // 2016-03-08: Some "articles" don't have a DOI (e.g. editorials). If
+        // one DOI is found it's sensible to assume that provided all available
+        // DOIs
+        if ($found_dois == false && count($missing_dois) > 0) {
             $context = stream_context_create(array('http' => array(
             	'method' => 'POST',
             	'content' => json_encode(array_keys($missing_dois)),
@@ -562,26 +569,19 @@ class GetJournalInfos {
     /**
      * @brief   Tries to return a plain doi
      *
+     * 2016-03-08: Use regular expression as suggested by CrossRef itself:
+     * http://blog.crossref.org/2015/08/doi-regular-expressions.html
+     *
      * @param $doi_string  \b STR  Some string with a doi
      * @return \b STR The doi
      */
     private function get_doi($doi_string) {
         $doi = '';
-        $doi_string = strtolower($doi_string);
+        $doi_string = trim(strtolower($doi_string));
 
-        if ((substr ($doi_string, 0, 4) == 'http')) {
-            // anything like http://dx.doi.org/10.1002/adma.201400310
-            preg_match('/http.*\/\/.*\/{1}(.*\..*?\/.*?)($|\/*$|\?.*|\/\?*$)/', $doi_string, $matches);
-            //FIXME: i think i've seen dois with 2 forward slashes? ~~krug 06.08.2015
-            if (isset($matches[1])) $doi = $matches[1];
-        }
-        elseif ((substr ($doi_string, 0, 3) == 'doi')) {
-            // "doi " or "doi:"
-            // a doi should have at least a length of 3 (x/x) -> start looking for end at 7
-            // ()?: <- use min() if not 0, else strlen
-            $end = (min(strpos($doi_string,' ', 7), strpos($doi_string,';', 7)))?: strlen($doi_string);
-            $doi = substr($doi_string, 4, $end -4);
-        }
+        // anything like http://dx.doi.org/10.1002/adma.201400310
+        preg_match('/.*(10.\d{4,9}\/[-._;()\/:A-Z0-9]+$)/i', $doi_string, $matches);
+        if (isset($matches[1])) $doi = $matches[1];
 
         return $doi;
     }
@@ -626,6 +626,7 @@ class GetJournalInfos {
      */
     private function jt_clean_date($date = '') {
         $journal_date= str_replace("\n", '', $date); // has line breaks sometimes?
+        $journal_date= str_replace(",", '', $journal_date); // "22 December, 2015" becomes 2016-12-22; "22 December 2015" works
 
         // weird?
         if (!$journal_date) {
