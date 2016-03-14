@@ -815,7 +815,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                                 <div id="help_smtpuser" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Username for the SMTP server') ?></span></div>
                             <label for="cfg[mail][smtppass]"><?php echo __('SMTP Password') ?></label>
                                 <input type="password" name="cfg[mail][smtpPass]" value="<?php echo $cfg->mail->smtpPass ?>" aria-describedby="help_smtppass" />
-                                <div id="help_smtppass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!' ?></span></div>
+                                <div id="help_smtppass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!') ?></span></div>
                     </fieldset>
                     <fieldset>
                         <legend><?php echo __('Mailing: To User') ?></legend>
