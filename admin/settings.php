@@ -809,7 +809,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                                 <div id="help_useSMTPAuth" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Unless you choose to rely on IP based "security", check here and provide SMTP credentials below') ?></span></div>
                             <label for="cfg[mail][smtpsec]"><?php echo __('SMTP security type') ?></label>
                                 <input type="text" name="cfg[mail][smtpSec]" value="<?php echo $cfg->mail->smtpSec ?>" aria-describedby="help_smtpsec" />
-                                <div id="help_smtpsec" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Encryption setting for the SMTP Auth connection, if any. Please enter "tls", "ssl", or "" for none') ?></span></div>
+                                <div id="help_smtpsec" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Encryption setting for the SMTP Auth connection, if any. Please enter "tls", "ssl", or "" for none.') ?></span></div>
                             <label for="cfg[mail][smtpuser]"><?php echo __('SMTP User') ?></label>
                                 <input type="text" name="cfg[mail][smtpUser]" value="<?php echo $cfg->mail->smtpUser ?>" aria-describedby="help_smtpuser" />
                                 <div id="help_smtpuser" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Username for the SMTP server') ?></span></div>
