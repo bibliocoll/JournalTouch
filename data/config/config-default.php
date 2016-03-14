@@ -183,8 +183,17 @@ $cfg->mail = new stdClass();
  *
  * @todo  This domain thing seriously should be changed to optional.
  */
-$cfg->mail->domain         = ''; // Your mailer domain (my-library.net)
-$cfg->mail->subjectFB->en_US      = 'Feedback from JournalTouch'; // Feedback button caption
+$cfg->mail->domain = ''; // Your mailer domain (my-library.net)
+$cfg->mail->subjectFB->en_US = 'Feedback from JournalTouch'; // Feedback button caption
+// Use an SMTP account at a (remote) mailserver to send mails
+$cfg->mail->useSMTP = false;
+$cfg->mail->smtpServer = '';
+$cfg->mail->smtpPort = '';
+$cfg->mail->useSMTPAuth = false;
+$cfg->mail->smtpSec = ''; // PHPMailer recognizes ""/"tls"/"ssl"
+$cfg->mail->smtpUser = '';
+$cfg->mail->smtpPass = '';
+
 
 // Sending article list to user
 $cfg->mail->fromAddress    = ''; // Your default address (service@my-library.net)
@@ -197,7 +206,7 @@ $cfg->translations['mail_bodyMessage']['de_DE'] = 'Ihre Nachricht an uns war';
 $cfg->translations['mail_bodySalutation']['en_US'] = 'Here are your articles, enjoy!';
 $cfg->translations['mail_bodySalutation']['de_DE'] = 'Ihre Artikel, viel Freude!';
 $cfg->translations['mail_bodyClosing']['en_US'] = 'Best regards, your library team!';
-$cfg->translations['mail_bodyClosing']['de_DE'] = 'Viele Grüße Ihr Bibliotheksteam!';
+$cfg->translations['mail_bodyClosing']['de_DE'] = 'Viele Grüße, Ihr Bibliotheksteam!';
 
 // Sending order from user to library
 $cfg->mail->toAddress      = ''; // Your contact address (journaltouch@my-library.net)
