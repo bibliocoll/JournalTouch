@@ -1056,6 +1056,70 @@ msgstr "Benutzer-E-Mails auf Domain beschränken"
 msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
 msgstr "Wenn Sie das Mailing auf Angehörige Ihrer Einrichtung beschränken wollen, dann geben Sie hier die Domain an (z.B. heinz.mueller@<strong>my-university.net</strong>). Lassen Sie das Feld frei um alle Mails zuzulassen."
 
+##### admin/settings.php - SMTP Settings #####
+
+#: admin/settings.php:797
+msgid "(optional) SMTP Server settings"
+msgstr "(optionale) SMTP-Server Einstellungen"
+
+#: admin/settings.php:799
+msgid "Use the SMTP server configured below instead of local mail system"
+msgstr "Den hier konfigurierten SMTP-Server statt des lokalen Mailsystems verwenden"
+
+#: admin/settings.php:800
+msgid "Unchecked: PHPMailer will use the mail delivery systems available on the machine JournalTouch runs on. Checked: PHPMailer will try to use the specified server instead"
+msgstr "Ohne Häkchen: PHPMailer wird versuchen, ein auf dem Webserver laufendes Mailsystem zu verwenden (z.B.: sendmail). Mit Häckchen: PHPMailer wird versuchen, den angegebenen SMTP-Server zum Emailversand zu benutzen."
+
+#: admin/settings.php:801
+msgid "SMTP Server"
+msgstr "SMTP-Server"
+
+#: admin/settings.php:803
+msgid "Mailserver to use (eg: mail.mybib.net)"
+msgstr "Zu benutzender Mailserver (z.B.: mail.meinebib.de)"
+
+#: admin/settings.php:804
+msgid "SMTP Server Port"
+msgstr "SMTP-Port"
+
+#: admin/settings.php:806
+msgid "Port to use (eg: 25)"
+msgstr "Der zu verwendende Port auf dem SMTP-Server (z.B.: 25)"
+
+#: admin/settings.php:808
+msgid "Authenticate to the Mailserver"
+msgstr "Beim SMTP-Server einloggen (SMTP-Auth)"
+
+#: admin/settings.php:809
+msgid "Unless you choose to rely on IP based \"security\", check here and provide SMTP credentials below"
+msgstr "Falls der Mailserver nicht aufgrund der IP-Adresse unautentifizierten Mailversand zulässt, hier ein Häkchen setzen und weiter unten Benutzer/Passwort angeben."
+
+#: admin/settings.php:810
+msgid "SMTP security type"
+msgstr "Typ der SMTP-Verschlüsselung"
+
+#: admin/settings.php:812
+msgid "Encryption setting for the SMTP Auth connection, if any. Please enter \"tls\", \"ssl\", or \"\" for none."
+msgstr "Der zu verwendende Typ von  SMTP-Sicherheit, gültige Werte sind: \"tls\", \"ssl\" oder \"\" für keine."
+
+#: admin/settings.php:813
+msgid "SMTP User"
+msgstr "SMTP-Benutzername"
+
+#: admin/settings.php:815
+msgid "Username for the SMTP server"
+msgstr "Benutzername zum Einloggen beim SMTP-Server"
+
+#: admin/settings.php:816
+msgid "SMTP Password"
+msgstr "SMTP-Passwort"
+
+#: admin/settings.php:818
+msgid "The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!"
+msgstr "Das SMTP-Passwort. Achtung: Wir speichern das Passwort derzeit im Klartext, bitte sicherstellen, dass die .htaccess-Dateien richtig gesetzt sind!"
+
+##### admin/settings.php - Mail Inhalte #####
+
 #: admin/settings.php:797
 msgid "Mailing: To User"
 msgstr "Mailing: An Benutzer"
@@ -3992,4 +4056,3 @@ msgstr "Abstract"
 #~ "ausgeliehen"
 #~ msgid "You cannot supply a blank password!"
 #~ msgstr "Es muss ein Passwort angegeben werden!"
-

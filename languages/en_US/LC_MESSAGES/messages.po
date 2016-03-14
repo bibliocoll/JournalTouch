@@ -1038,91 +1038,156 @@ msgstr ""
 msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
 msgstr ""
 
+##### admin/settings.php - SMTP Settings #####
+
 #: admin/settings.php:797
-msgid "Mailing: To User"
+msgid "(optional) SMTP Server settings"
 msgstr ""
 
-#: admin/settings.php:798
-msgid "Your From Address"
+#: admin/settings.php:799
+msgid "Use the SMTP server configured below instead of local mail system"
 msgstr ""
 
 #: admin/settings.php:800
-msgid "From which address shall mails be sent (e.g. library@my-university.net)."
+msgid "Unchecked: PHPMailer will use the mail delivery systems available on the machine JournalTouch runs on. Checked: PHPMailer will try to use the specified server instead"
 msgstr ""
 
 #: admin/settings.php:801
-msgid "From Name"
-msgstr ""
-
-#: admin/settings.php:802
-msgid "Subject"
+msgid "SMTP Server"
 msgstr ""
 
 #: admin/settings.php:803
-msgid "Message body"
+msgid "Mailserver to use (eg: mail.mybib.net)"
 msgstr ""
 
 #: admin/settings.php:804
-msgid "Salutation"
-msgstr ""
-
-#: admin/settings.php:805
-msgid "Signature"
+msgid "SMTP Server Port"
 msgstr ""
 
 #: admin/settings.php:806
-msgid "The message will look like this:<br><br><strong>From mail: library@my-university.net<br>From name: Library Name<br>Subject: Your saved articles from JournalTouch</strong><br><br>Your message was: xxx<br><br>Here are your articles, enjoy!<br><br>Best regards, your library team!"
+msgid "Port to use (eg: 25)"
+msgstr ""
+
+#: admin/settings.php:808
+msgid "Authenticate to the Mailserver"
 msgstr ""
 
 #: admin/settings.php:809
-msgid "Mailing: From User (Orders)"
+msgid "Unless you choose to rely on IP based \"security\", check here and provide SMTP credentials below"
 msgstr ""
 
 #: admin/settings.php:810
-msgid "To (your receiving address)"
+msgid "SMTP security type"
 msgstr ""
 
 #: admin/settings.php:812
-msgid "To which mail shalls orders be sent?"
+msgid "Encryption setting for the SMTP Auth connection, if any. Please enter \"tls\", \"ssl\", or \"\" for none"
 msgstr ""
 
 #: admin/settings.php:813
-msgid "Order subject"
-msgstr ""
-
-#: admin/settings.php:814
-msgid "Order message"
+msgid "SMTP User"
 msgstr ""
 
 #: admin/settings.php:815
-msgid "The message will look like this:<br><br><strong>From mail: some.user@somewhere.net<br>Subject: New order for the library from JournalTouch</strong><br><br>New order from JournalTouch <i>Article list</i>"
+msgid "Username for the SMTP server"
+msgstr ""
+
+#: admin/settings.php:816
+msgid "SMTP Password"
 msgstr ""
 
 #: admin/settings.php:818
-msgid "Allowed users from database"
+msgid "The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!"
 msgstr ""
 
-#: admin/settings.php:820
-msgid "Enable user list from database"
-msgstr ""
+##### admin/settings.php - Email Content #####
 
 #: admin/settings.php:821
-msgid "On mailing users can select their name from a list (instead of supplying a mail). This is something very special for MPI purposes and you should leave it disabled (unless you happen to work there ;))."
+msgid "Mailing: To User"
 msgstr ""
 
 #: admin/settings.php:822
-msgid "DB User"
+msgid "Your From Address"
 msgstr ""
 
+
 #: admin/settings.php:824
-msgid "User name with access to database."
+msgid "From which address shall mails be sent (e.g. library@my-university.net)."
 msgstr ""
 
 #: admin/settings.php:825
-msgid "DB Password"
+msgid "From Name"
+msgstr ""
+
+#: admin/settings.php:826
+msgid "Subject"
 msgstr ""
 
 #: admin/settings.php:827
+msgid "Message body"
+msgstr ""
+
+#: admin/settings.php:828
+msgid "Salutation"
+msgstr ""
+
+#: admin/settings.php:829
+msgid "Signature"
+msgstr ""
+
+#: admin/settings.php:830
+msgid "The message will look like this:<br><br><strong>From mail: library@my-university.net<br>From name: Library Name<br>Subject: Your saved articles from JournalTouch</strong><br><br>Your message was: xxx<br><br>Here are your articles, enjoy!<br><br>Best regards, your library team!"
+msgstr ""
+
+#: admin/settings.php:831
+msgid "Mailing: From User (Orders)"
+msgstr ""
+
+#: admin/settings.php:832
+msgid "To (your receiving address)"
+msgstr ""
+
+#: admin/settings.php:836
+msgid "To which mail shalls orders be sent?"
+msgstr ""
+
+#: admin/settings.php:837
+msgid "Order subject"
+msgstr ""
+
+#: admin/settings.php:838
+msgid "Order message"
+msgstr ""
+
+#: admin/settings.php:839
+msgid "The message will look like this:<br><br><strong>From mail: some.user@somewhere.net<br>Subject: New order for the library from JournalTouch</strong><br><br>New order from JournalTouch <i>Article list</i>"
+msgstr ""
+
+#: admin/settings.php:842
+msgid "Allowed users from database"
+msgstr ""
+
+#: admin/settings.php:844
+msgid "Enable user list from database"
+msgstr ""
+
+#: admin/settings.php:845
+msgid "On mailing users can select their name from a list (instead of supplying a mail). This is something very special for MPI purposes and you should leave it disabled (unless you happen to work there ;))."
+msgstr ""
+
+#: admin/settings.php:846
+msgid "DB User"
+msgstr ""
+
+#: admin/settings.php:848
+msgid "User name with access to database."
+msgstr ""
+
+#: admin/settings.php:849
+msgid "DB Password"
+msgstr ""
+
+#: admin/settings.php:851
 msgid "The password..."
 msgstr ""
 
@@ -1401,4 +1466,3 @@ msgstr ""
 #: sys/class.GetJournalToc.php:261
 msgid "Abstract"
 msgstr ""
-

@@ -183,8 +183,8 @@ $cfg->mail = new stdClass();
  *
  * @todo  This domain thing seriously should be changed to optional.
  */
-$cfg->mail->domain         = ''; // Your mailer domain (my-library.net)
-$cfg->mail->subjectFB->en_US      = 'Feedback from JournalTouch'; // Feedback button caption
+$cfg->mail->domain = ''; // Your mailer domain (my-library.net)
+$cfg->mail->subjectFB->en_US = 'Feedback from JournalTouch'; // Feedback button caption
 // Use an SMTP account at a (remote) mailserver to send mails
 $cfg->mail->useSMTP = false;
 $cfg->mail->smtpServer = '';
