@@ -1081,7 +1081,7 @@ msgid "SMTP security type"
 msgstr ""
 
 #: admin/settings.php:812
-msgid "Encryption setting for the SMTP Auth connection, if any. Please enter \"tls\", \"ssl\", or \"\" for none"
+msgid "Encryption setting for the SMTP Auth connection, if any. Please enter \"tls\", \"ssl\", or \"\" for none."
 msgstr ""
 
 #: admin/settings.php:813
