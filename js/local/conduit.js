@@ -121,7 +121,7 @@ function fetch_metabuttons_toc(issn, para_caching, para_pubdate) {
  */
 function start_screensaver(srcDiv) {
     var srcDiv = srcDiv || '#screensaver';
-    var s_saver, clear_basket;
+    var s_saver, clear_basket, reset_screen;
     // Get user set values from data elements of divs
     var usr_clear_basket         = $('#cartPopover').attr('data-clearSeconds') * 1000;
     var usr_screensaver_activate = $(srcDiv).attr('data-activateSeconds') * 1000;
@@ -138,6 +138,25 @@ function start_screensaver(srcDiv) {
         // clear old timeouts
 		clearTimeout(s_saver);
 		clearTimeout(clear_basket);
+		clearTimeout(reset_screen);
+
+        // Reset stuff before 2 seconds before either basket or screensaver
+        // fires (whatever comes first)
+        // @todo: Does nearly the same as $('a.filter').click(function(){} - refactor
+        reset_timer = (Math.min(usr_clear_basket, usr_screensaver_activate)) - 2000;
+        reset_screen = setTimeout(function(){
+            // go to top first
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+    		// remove any open modal
+    		$('.reveal-modal').foundation('reveal', 'close');
+    		// reset alphabet
+    		$('#alphabet li a').show();
+            // Disable filters (if any are still set)
+            $('.listitem').show();
+            $('#filterPanel').fadeOut();
+            // Clear search field
+            $('#search').val('');
+        }, reset_timer);
 
         clear_basket = setTimeout(function(){
             if (usr_clear_basket > 0) simpleCart.empty();
@@ -147,7 +166,6 @@ function start_screensaver(srcDiv) {
 
         if (usr_screensaver_activate == 0) return; // screensaver is completely disabled
         s_saver = setTimeout(function(){
-            $('html').scrollTop(0); // go to top first
             // Use animation?
             if (usr_screensaver_speed != 0) {
                 animateDiv();
