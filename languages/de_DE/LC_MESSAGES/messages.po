@@ -206,7 +206,7 @@ msgstr "Via CrossRef"
 
 #: index.php:444
 msgid "No toc available"
-msgstr "Kein Toc verfügbar"
+msgstr "Kein ToC verfügbar"
 
 #: index.php:467
 msgid "last update"
@@ -490,7 +490,7 @@ msgstr "Einrichtungsname"
 
 #: admin/settings.php:449
 msgid "Your institution name. Currently only shown in the about text."
-msgstr "Ihr Einrichtungsname. Derzeit nur im über-Text angezeigt."
+msgstr "Ihr Einrichtungsname. Derzeit nur im \"Über\"-Text angezeigt."
 
 #: admin/settings.php:452
 msgid "Institution: Discover and access"
@@ -502,7 +502,7 @@ msgstr "Kataloglink"
 
 #: admin/settings.php:455
 msgid "Adds a link with the journal's issn to your catalogue or discovery. The link shows as a meta button next to the journal in the list and/or above the toc. Leave empty to disable."
-msgstr "Fügt einen Link zu Ihrem Katalog oder Discovery mit der angehängten Journal-ISSN  hinzu. Der Link wird als Metabutton neben den Journals in der Übersicht und/oder über dem Toc angezeigt. Leer lassen zum deaktivieren."
+msgstr "Fügt einen Link zu Ihrem Katalog oder Discoverysystem mit der angehängten Journal-ISSN  hinzu. Der Link wird als Metabutton neben den Journals in der Übersicht und/oder über dem ToC angezeigt. Leer lassen zum deaktivieren."
 
 #: admin/settings.php:456
 msgid "Proxy"
@@ -518,7 +518,7 @@ msgstr "Aktivere Button für Direktdownload"
 
 #: admin/settings.php:461
 msgid "If you enable this a button for directly downloading a article's pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page."
-msgstr "Wird diese Option aktiviert, wird ein Direkdownload.-Button für die PDF-Version von Artikeln im Toc eines Journals angezeigt. Dies gilt nur für Verlage, wo wir disen Link herausgefunden haben. Die Idee ist, nicht unbedingt auf der Verlags-Landing-Page landen zu müssen."
+msgstr "Wird diese Option aktiviert, wird ein Direkdownload-Button für die PDF-Version von Artikeln im ToC eines Journals angezeigt. Dies gilt nur für Verlage, wo wir diesen Link herausgefunden haben. Die Idee ist, nicht unbedingt auf der Verlags-Landing-Page landen zu müssen."
 
 #: admin/settings.php:462
 msgid "SFX Service"
@@ -526,7 +526,7 @@ msgstr "SFX Service"
 
 #: admin/settings.php:464
 msgid "Your sfx baseurl (e.g. http://sfx.gbv.de/sfx_tuhh). Currently used as alternative for the direct download button."
-msgstr "Ihre SFX-Basisadresse (z.B.  http://sfx.gbv.de/sfx_tuhh). Derzeit nur als Alternative für den Direktdownloadbutton genutzt."
+msgstr "Ihre SFX-Basisadresse (z.B.  http://sfx.gbv.de/sfx_tuhh). Derzeit nur als Alternative für den Direktdownload-Button genutzt."
 
 #: admin/settings.php:470
 msgid "Preferences: Navigation Menues"
@@ -562,7 +562,7 @@ msgstr "Minimale Taghäufigkeit"
 
 #: admin/settings.php:482
 msgid "How often must a tag be used at least to show up in the tagcloud (if enabled)? Useful if you got very many tags."
-msgstr "Wie oft muss ein Tag genutzt sein, damit er in der Tagcloud angezeigt wird (sofern diese aktivier ist). Nützlich wenn Sie sehr viele Tags haben."
+msgstr "Wie oft muss ein Tag genutzt sein, damit er in der Tagcloud angezeigt wird (sofern diese aktiviert ist). Nützlich wenn Sie sehr viele Tags haben."
 
 #: admin/settings.php:485
 msgid "Preferences: Default View"
@@ -574,7 +574,7 @@ msgstr "Datumssortierung als Standard"
 
 #: admin/settings.php:488
 msgid "Enabled to sort date by default. Otherwise it is alphabetical."
-msgstr "Setzt die Datumssortierung als Standard. Ansonsonsten ist sie alphapebtisch."
+msgstr "Setzt die Datumssortierung als Standard. Ansonsonsten wird standardmäßig alphabetisch sortiert."
 
 #: admin/settings.php:490
 msgid "Show meta menu in journal list"
@@ -582,15 +582,15 @@ msgstr "Zeige Metamenü in der Übersicht"
 
 #: admin/settings.php:491
 msgid "Enable to show the block with the meta menu buttons rightside from the covers (toc, weblink, shelfmark etc.)."
-msgstr "Aktivieren um den Block mit den Metabuttons rechts von den Covern anzizeien (Toc, Weblink, Regalsignatur etc.)."
+msgstr "Aktivieren, um den Block mit den Metabuttons rechts von den Covern anzuzeigen (ToC, Weblink, Regalsignatur etc.)."
 
 #: admin/settings.php:493
 msgid "Show meta menu above toc"
-msgstr "Zeige Block mit Metabuttons über dem Toc"
+msgstr "Zeige Block mit Metabuttons über dem ToC"
 
 #: admin/settings.php:494
 msgid "Show the block with the meta menu buttons above the toc. <strong>Note</strong>: If show_metainfo_list is true, it will show above the toc, even if set to false here. Sorry for now if you happen to exactly not wanting this..."
-msgstr "Aktivieren um den Block mit dem Metabutton oberhalb des Tocs anzuzeige. <strong>Hinweis</strong>: Wenn die Anzeige für die Übersicht aktiviert ist, wird sie immer über den Toc angezeigt, selbst wenn sie hier deaktiviert ist. Sorry, wenn Sie genau diesen Fall wünschen..."
+msgstr "Aktivieren, um den Block mit dem Metabutton oberhalb des Tocs anzuzeigen. <strong>Hinweis</strong>: Wenn die Anzeige der Übersicht aktiviert ist, wird diese immer über den ToC angezeigt, selbst wenn sie hier deaktiviert ist. Sorry, wenn Sie genau diesen Fall wünschen..."
 
 #: admin/settings.php:496
 msgid "Enable RSS Meta Button (read help carefully)"
@@ -598,7 +598,7 @@ msgstr "RSS Metabutton aktivieren (Hilfe genau lesen)"
 
 #: admin/settings.php:497
 msgid "This enabled a link to the JournalTocs RSS feed. Since the feed is only usable with an account, YOUR email must be used and is visible in the url. Two aspects make this charming. First and before all: if you use a proxy (see Your Institution), the links in the rss feed are \"proxified\". Second: it's easier to provide the user with a link than explaining how to create an account themselves at JournalTocs."
-msgstr "Hiermit wird ein link zum JournalTocs RSS-Feed aktiviert. Da der Feed nur mit einem JournalTocs-Account bezogen werden kann, muss dafür IHRE JournalTocs-Mail sichtbar verwendet werden. Aus zwei Gründen kann es dennoch charmant sein. Ersten und vor allem: wenn Sie einen Proxy eingestellt haben (sie Ihre Einrichtung), dann werden die RSS-Links zusätzlich \"proxifiziert\". Zweitens: Es ist leichter einem Nutzer einfach einen Link zu geben, statt ihm zu erkllären, wie selber ein Konto erstellt werden könnte bei JournalTocs."
+msgstr "Hiermit wird ein link zum JournalTocs RSS-Feed aktiviert. Da der Feed nur mit einem JournalTocs-Account bezogen werden kann, muss dafür IHRE JournalTocs-Mail sichtbar verwendet werden. Aus zwei Gründen kann es dennoch charmant sein. Ersten und vor allem: wenn Sie einen Proxy eingestellt haben (\"Sie\" als \"Ihre Einrichtung\"), dann werden die RSS-Links zusätzlich \"proxifiziert\". Zweitens: Es ist leichter einem Nutzer einfach einen Link zu geben, statt ihm zu erklären, wie ein persönliches Konto bei JournalTocs erstellt werden könnte."
 
 #: admin/settings.php:499
 msgid "Enable Orbit"
@@ -606,7 +606,7 @@ msgstr "Orbit aktivieren"
 
 #: admin/settings.php:500
 msgid "This displays a slide of the you favorite journals (marked in column 4 of journals.csv) at the top of the journal list. You must mark some journals as favorites, otherwise you'll see a large white space on top of the page."
-msgstr "Hiermit wird eine Slideshow Ihrer Top-Journals (markiert in Spalte 4 von journals.csv) über der Journalübersicht angzeigt. Sie müssen ein paar Journals als Favorit makieren, ansonsten wird nur ein leerer großer weißer Bereich am Seitenanfang angezeigt."
+msgstr "Hiermit wird eine Slideshow Ihrer Top-Journals (markiert in Spalte 4 von journals.csv) über der Journalübersicht angezeigt. Sie müssen ein paar Journals als Favorit makieren, ansonsten wird nur ein leerer großer weißer Bereich am Seitenanfang angezeigt."
 
 #: admin/settings.php:501
 msgid "Screesaver timing"
@@ -614,7 +614,7 @@ msgstr "Screensaver-Aktivierung"
 
 #: admin/settings.php:503
 msgid "Set the idle time in seconds before screensaver is displayed. Set to 0 to disable screensaver. Default is 240 seconds (4 minutes)."
-msgstr "Geben Sie eine Inaktivitätszeit in Sekunden an nach welcher der Screensaver erscheint. 0 deaktiviert den Screensaver. Standwert ist 240 Sekunden (4 Minuten)."
+msgstr "Geben Sie eine Inaktivitätszeit in Sekunden an nach welcher der Screensaver erscheint. 0 deaktiviert den Screensaver. Standwert ist 240 Sekunden (4 Minuten). Zu Beachten: der Screensaver wird derzeit nur in Browserfenstern breiter als etwa 1560px angezeigt"
 
 #: admin/settings.php:504
 msgid "Screesaver Animation Speed"
@@ -622,7 +622,7 @@ msgstr "Screensaver: Animationsgeschwindigkeit"
 
 #: admin/settings.php:506
 msgid "The screensaver moves around the screen. Set to 0 to disable (only still standing messsage). Good speed values are between 0.01 and around 0.04. Default is 0.025."
-msgstr "Der Screensaver bewegt sich über den Bildschirm. Auf 0 setzen, um die Animation zu deaktivieren (nurstillstehende Einblendung). Gute Werte liegen zwischen 0.01 und 0.04. Standard ist 0.025."
+msgstr "Der Screensaver bewegt sich über den Bildschirm. Auf 0 setzen, um die Animation zu deaktivieren (unbewegte Einblendung). Gute Werte liegen zwischen 0.01 und 0.04. Standard ist 0.025."
 
 #: admin/settings.php:509
 msgid "Preferences: Checkout"
@@ -634,7 +634,7 @@ msgstr "Merklisten löschen"
 
 #: admin/settings.php:512
 msgid "Set the idle time in seconds before the basket is cleared. Default is 260 seconds (4 minutes, 20 seconds). Hint: set it slightly higher then the screensaver timing."
-msgstr "Geben Sie eine Inaktivitätszeit in Sekunden an nach welcher die Merkliste gelöscht wird. Tipp: setzten Sie den Wert etwas höher als die Screensaver-Aktivierung."
+msgstr "Geben Sie eine Inaktivitätszeit in Sekunden an, nach welcher die Merkliste gelöscht wird. Tipp: setzten Sie den Wert etwas höher als die Screensaver-Aktivierung."
 
 #: admin/settings.php:514
 msgid "Allow mail for PDF"
@@ -642,7 +642,7 @@ msgstr "Erlaube PDF-Anfrage via E-Mail"
 
 #: admin/settings.php:515
 msgid "Checkout action: May users send a mail to the library asking to get the pdf send to them?"
-msgstr "Merklistenaktion: Dürfen Nutzer dr Bibliothek eine E-Mail mit einer Anfrage nach dem Artikel-PDF senden?"
+msgstr "Merklistenaktion: Dürfen Nutzer der Bibliothek eine E-Mail mit einer Anfrage nach dem Artikel-PDF senden?"
 
 #: admin/settings.php:522
 msgid "Default language and languages enabled for switching"
@@ -658,7 +658,7 @@ msgstr "Die Standardsprache bei Seitenaufruf."
 
 #: admin/settings.php:538
 msgid "Enabled languages (multiple choice)"
-msgstr "Aktiviere Sprachen (Mehrfachwahl)"
+msgstr "Aktivierte Sprachen (Mehrfachwahl)"
 
 #: admin/settings.php:539
 msgid "Enable languages"
@@ -666,7 +666,7 @@ msgstr "Sprachen aktivieren"
 
 #: admin/settings.php:542
 msgid "Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page."
-msgstr "Aktivieren sie alle Sprachen, die Nutzern zur Verfügung stehen sollen. Für alle aktivierten Sprachen sind viele Felder via diesem Adminmenü übersetzbar. Wenn Sie eine Sprache aktivieren werden die Übersetungsfelder allerdings erst nach dem Speichern und Neuladen angezeigt."
+msgstr "Aktivieren Sie alle Sprachen, die Nutzern zur Verfügung stehen sollen. Für alle aktivierten Sprachen sind viele Felder via diesem Adminmenü übersetzbar. Wenn Sie eine Sprache aktivieren werden die Übersetungsfelder allerdings erst nach dem Speichern und Neuladen angezeigt."
 
 #: admin/settings.php:547
 msgid "Translations: General Elements"
@@ -690,7 +690,7 @@ msgstr "Der rechts immer mittscrollene Buttons mit dem der Nutzer immer zu seine
 
 #: admin/settings.php:554
 msgid "Translations: Menus"
-msgstr "Übersetung: Menüs"
+msgstr "Übersetzung: Menüs"
 
 #: admin/settings.php:555
 #: admin/settings.php:964
@@ -739,7 +739,7 @@ msgstr "Name für das Menü \"Sortierung\", wenn zur Datumssortierung gewechselt
 
 #: admin/settings.php:568
 msgid "Sort alphabetically"
-msgstr "Soriere A-Z"
+msgstr "Sortiere A-Z"
 
 #: admin/settings.php:569
 msgid "The name of the sort menu: when switching to alphabetical sort."
@@ -766,12 +766,12 @@ msgid "Translations: Meta Info Buttons"
 msgstr "Übersetzung: Metabuttons"
 
 #: admin/settings.php:577
-msgid "Meta Button: TOC (available)"
-msgstr "Metabutton: Toc (verfügbar)"
+msgid "Meta Button: ToC (available)"
+msgstr "Metabutton: ToC (verfügbar)"
 
 #: admin/settings.php:578
-msgid "The button indicating that a toc is available (see journals.csv column 14)."
-msgstr "Der Button, der einzeigt, dass ein Toc verfügbar ist (siehe journal.csv, spalte 14)."
+msgid "The button indicating that a ToC is available (see journals.csv column 14)."
+msgstr "Der Button, der einzeigt, dass ein ToC verfügbar ist (siehe journal.csv, spalte 14)."
 
 #: admin/settings.php:579
 msgid "Meta Button: Journal Homepage"
@@ -795,7 +795,7 @@ msgstr "Übersetungen: Weitere"
 
 #: admin/settings.php:587
 msgid "About and Screensaver"
-msgstr "Über und Bildschirmschoner"
+msgstr "\"Über\"-Text und Bildschirmschoner"
 
 #: admin/settings.php:588
 msgid "The text displayed when screensaver triggers or user clicks the about button. Please use [ and ] instead of &lt; and &gt; for HTML tags. The text fields are sized for an amount of text that can reasonably be displayed on a single screen."
@@ -810,7 +810,7 @@ msgid "Performance"
 msgstr "Performance"
 
 #: admin/settings.php:595
-msgid "Only activate caching if you do<ul><li>A (daily) cron like <i>wget -O - -q -t 1 \"http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true\" >/dev/null 2>&1</i></li><li>If you got a premium Jtoc account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php (replace url in above example for cron job)</li></ul>"
+msgid "Only activate caching if you do<ul><li>A (daily) cron like <i>wget -O - -q -t 1 \"http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true\" >/dev/null 2>&1</i></li><li>If you got a premium JToC account: a cron too for: http://my.journaltouch.local/admin/services/getLatestJournals.php (replace url in above example for cron job)</li></ul>"
 msgstr "Aktivieren Sie das Caching nur, wenn<ul><li>Einen (täglichen) Cronjob á la <i>wget -O - -q -t 1 \"http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true\" >/dev/null 2>&1</i> eingerichtet haben</li><li>Wenn Sie ein Premiumkonto haben, dann ebenfalls einen a Cronjob für: http://my.journaltouch.local/admin/services/getLatestJournals.php (erstzenSie den URL in obigen Beispiel)</li></ul>"
 
 #: admin/settings.php:597
@@ -827,7 +827,7 @@ msgstr "Caching der Hauptseite aktivieren"
 
 #: admin/settings.php:601
 msgid "Basically JT only serves a static page, so it makes sense not to generate it all the time. Anyway, best is, you only activate this, if run your cron often. Since this caching might be a source for confusion, it is not really recommended."
-msgstr "Grundsätzlich liefer JT eigentlich nur eine statische Seite aus, weswegen es eigentlich sinnvol ist, diese nicht jedes Mal neu zu generieren. Dennoch, am besten aktivieren Sie diese Option nur, wenn Ihr Cronjob regelmäßig läuft. Da dieses Caching ein Quell von Verwirrung ist, ist die Aktivierung insgesamt nicht unbedingt empfohlen."
+msgstr "Grundsätzlich liefert JT eigentlich nur eine statische Seite aus, weswegen es eigentlich sinnvoll ist, diese nicht jedes Mal neu zu generieren. Dennoch, am besten aktivieren Sie diese Option nur, wenn Ihr Cronjob regelmäßig läuft. Da dieses Caching ein Quell von Verwirrung ist, ist die Aktivierung insgesamt nicht unbedingt empfohlen."
 
 #: admin/settings.php:604
 msgid "Api: General Settings"
@@ -835,11 +835,11 @@ msgstr "API: Allgemeine Einstellungen"
 
 #: admin/settings.php:606
 msgid "Make articles in tocs a clickable link"
-msgstr "Artikellinks in Tocs sind klickbare Links"
+msgstr "Artikel-Links in ToCs sind klickbare Links"
 
 #: admin/settings.php:607
 msgid "If people access JournalTouch from somewhere where they have no access to the licenced ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves)."
-msgstr "Wird auf Ihr JournalTouch von außerhalb der Bibliothek zugegriffen (ohne Zugriff auf lizensierte Ressourcen), dann ist die Deaktivierung des Linking eine Möglichkeit um Frust zu vermeiden. Nutzer können immer noch Artikel auf die Merkliste setzen und die bestellen oder selber in der Bibliothek besorgen."
+msgstr "Wird auf Ihr JournalTouch von außerhalb der Bibliothek zugegriffen (ohne Zugriff auf lizensierte Ressourcen), dann ist die Deaktivierung des Linking eine Möglichkeit, um Frust zu vermeiden. Nutzer können immer noch Artikel auf die Merkliste setzen und diese bestellen oder selbst in der Bibliothek besorgen."
 
 #: admin/settings.php:608
 msgid "Mark issue for how many days as new?"
@@ -847,7 +847,7 @@ msgstr "Markiere Ausgabe für so viele Tage als neu"
 
 #: admin/settings.php:610
 msgid "If a new issue is found on the update (use a daily cron to keep track) it is marked as new for as many days as specified here. You might think it'd be much cooler if the journal's publishing frequency would be used. Well, we think so too, but where to get it - or who would want to enter it by hand. Anyway, if you got a premium account and use the data for the live view (see below) you can ignore this setting.)"
-msgstr "Wenn bei einem Update eine neue Ausgabe gefunden wird (der täglich Conjob sorgt für lückenlose Sicherheit), dann wird es für die hier angegebene Zahl an Tagen als neu markiert in der Übersicht. (ENGLISCH AUSFÜHRLICHER)"
+msgstr "Wenn bei einem Update eine neue Ausgabe gefunden wird (z.B. via den täglichen Cronjob), dann wird es für die hier angegebene Zahl an Tagen als neu markiert in der Übersicht. (ENGLISCH AUSFÜHRLICHER)"
 
 #: admin/settings.php:613
 msgid "Api: JournalTocs"
@@ -859,7 +859,7 @@ msgstr "Ihr JournalTocs-Konto (E-Mail)"
 
 #: admin/settings.php:616
 msgid "The mail you are registered with at JournalTocs. This is crucial for making the most of JournalTouch!"
-msgstr "Die Mailadresse mit der Sie bei JournalTocs registriert sind. Die ist entscheidend um das meiste auf JournalTouch heraus zu holen!"
+msgstr "Die Mailadresse mit der Sie bei JournalTocs registriert sind. Die ist entscheidend, um das meiste auf JournalTouch heraus zu holen!"
 
 #: admin/settings.php:618
 msgid "Got Premium Account?"
@@ -875,7 +875,7 @@ msgstr "URL für JournaTocs-Premium"
 
 #: admin/settings.php:622
 msgid "This is just for the unlikely case that the url ever changes."
-msgstr "Dies ist nur für den unwahrscheinlichen Fall, dass sich die Adresse jemals ändert."
+msgstr "Dies ist nur für den unwahrscheinlichen Fall, dass sich der URL jemals ändert."
 
 #: admin/settings.php:624
 msgid "Use premium data for live view (slow!)"
@@ -883,7 +883,7 @@ msgstr "Premiumdaten für die Liveansicht nutzen (langsam)"
 
 #: admin/settings.php:625
 msgid "Uses premium infos to mark issues as new. Slows page loading down"
-msgstr "Verwendet die Premiuminformationen um Ausgaben als neu zu markieren. Verlangsamt das Laden der Seite."
+msgstr "Verwendet die Premium-Informationen um Ausgaben als neu zu markieren. Verlangsamt das Laden der Seite."
 
 #: admin/settings.php:629
 msgid "Information & Disclaimer"
@@ -932,7 +932,7 @@ msgstr "Cover-API"
 
 #: admin/settings.php:658
 msgid "You might input an url where an issn can be appended (\"http://myservice.net/issn=\") - and mail us if you got such a thing ;)"
-msgstr "Geben Sie hier eine URL an, an die die ISSN angehängt werden kann, um ein Cover zu downloadedn (\"http://myservice.net/issn=\") - und schreiben Sie uns eine Mail, wenn Sie einen solchen Dienst kennen ;)"
+msgstr "Geben Sie hier einen URL an, an den die ISSN angehängt werden kann, um ein Cover zu downloadedn (\"http://myservice.net/issn=\") - und schreiben Sie uns eine Mail, wenn Sie einen solchen Dienst kennen ;)"
 
 #: admin/settings.php:661
 msgid "Download: Generic sources"
@@ -993,7 +993,7 @@ msgstr "Agents & IPs"
 
 #: admin/settings.php:762
 msgid "<p>If you display JournalTouch on a kiosk device within your institution, you might want to disable certain settings. For example displaying printing buttons might make no sense.<br />Instead of setting up a second JournalTouch installation, you just can disable certain elements for an IP or a browser user agent.</p><ul><li><strong>IP</strong>: only works if the kiosk PC is accessing the webserver directly (not behind a proxy or a NAT router)</li><li><strong>Browser agent</strong>: Kiosk software often offer an easy way to set a custom user agent string for the browser. If you don't got such software or it doesn't come with such an option, you can do it yourself. It can be done easily for most browser, e.g. with a plugin.</li></ul><p>You can include many IPs or agents, but you can't set different policies for each. If you require that, edit js/kiosk/kiosk_policy_custom.js - this file won't be overwritten</p>"
-msgstr "<p>Zeigen Sie JournalTouch auf einem Kiosk-Gerät innerhalb Ihrer Einrichtung an, dann wolen Sie möglicherweise einige Optionen nicht anzeigen. Beispielsweise kann die Anzeige der Druckoption nutzlos sein.<br />Statt eine zweite JournalTocuh-Installation aufzusetzen, können Sie bestimmte Elemente für eine IP oder einen Browser User Agent deaktivieren</p><ul><li><strong>IP</strong>: diese Methode funktioniert nur, wenn der Kiosk-PC direkt auf den Webserver zugreift, also nicht hinter einem Proxy oder einem NAT-Router.</li><li><li><strong>Browser agent</strong>: Häufig bietet Kiosk-Software bereits die Möglichkeit auf einfache Weise dem User Agent einen String anzufügen. Haben Sie keine solche Software oder bietet diese keine solche Option, kann es für meisten Browser auch einfach mit einem Plugin gemacht werden.</li></ul><p>Sie können mehrere IPs und User Agents angeben, es können aber für alle nur dieselben Regeln gesetzt werden. Wenn sie Bedarf an differenzierten Regeln haben, können Sie js/kiosk/kiosk_policy_custom.js entsprechend bearbeiten - diese Datei wird bei Updates nicht überschrieben.</p>"
+msgstr "<p>Zeigen Sie JournalTouch auf einem Kiosk-Gerät innerhalb Ihrer Einrichtung an, dann wollen Sie möglicherweise einige Optionen nicht anzeigen. Beispielsweise kann die Anzeige der Druckoption nutzlos sein.<br />Statt eine zweite JournalTouch-Installation aufzusetzen, können Sie bestimmte Elemente für eine IP oder einen Browser User Agent deaktivieren</p><ul><li><strong>IP</strong>: diese Methode funktioniert nur, wenn der Kiosk-PC direkt auf den Webserver zugreift, also nicht via einen Proxy oder NAT-Router.</li><li><strong>Browser-Agent</strong>: Häufig bietet Kiosk-Software bereits die Möglichkeit, auf einfache Weise dem Browser User Agent einen String anzufügen. Haben Sie keine solche Software oder bietet diese keine solche Option, kann es für viele Browser auch einfach mit einem Plugin gemacht werden.</li></ul><p>Sie können mehrere IPs und User Agents angeben, es können aber für alle nur dieselben Regeln gesetzt werden. Wenn Sie Bedarf an differenzierten Regeln haben, können Sie js/kiosk/kiosk_policy_custom.js entsprechend bearbeiten - diese Datei wird bei Updates nicht überschrieben.</p>"
 
 #: admin/settings.php:764
 msgid "IP Addresses"
@@ -1009,11 +1009,11 @@ msgstr "Browser User Agents"
 
 #: admin/settings.php:769
 msgid "Enter one or more user agent (the relevant keyword is enough). You might enter multiple agents. Separate by comma."
-msgstr "Geben Sie einen oder mehrere User Agents ein (ein Stichwort reicht aus). Trennen Sie mehrere Agents durch Komma."
+msgstr "Geben Sie einen oder mehrere User Agents ein (ein Stichwort/Teilstring reicht aus). Trennen Sie mehrere Agents durch Komma."
 
 #: admin/settings.php:772
 msgid "Policies: Checkout page"
-msgstr "Regeln: Merklistenaktionsübersicht"
+msgstr "Regeln: Merklisten-Aktionsübersicht"
 
 #: admin/settings.php:774
 #: admin/settings.php:778
@@ -1054,7 +1054,7 @@ msgstr "Benutzer-E-Mails auf Domain beschränken"
 
 #: admin/settings.php:794
 msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
-msgstr "Wenn Sie das Mailing auf Angehörige Ihrer Einrichtung beschränken wollen, dann geben Sie hier die Domain an (z.B. heinz.mueller@<strong>my-university.net</strong>). Lassen Sie das Feld frei um alle Mails zuzulassen."
+msgstr "Wenn Sie das Mailing auf Angehörige Ihrer Einrichtung beschränken wollen, dann geben Sie hier die Domain an (z.B. heinz.mueller@<strong>my-university.net</strong>). Lassen Sie das Feld frei, um alle Mails an beliebige Adressen zuzulassen."
 
 ##### admin/settings.php - SMTP Settings #####
 
@@ -1092,7 +1092,7 @@ msgstr "Beim SMTP-Server einloggen (SMTP-Auth)"
 
 #: admin/settings.php:809
 msgid "Unless you choose to rely on IP based \"security\", check here and provide SMTP credentials below"
-msgstr "Falls der Mailserver nicht aufgrund der IP-Adresse unautentifizierten Mailversand zulässt, hier ein Häkchen setzen und weiter unten Benutzer/Passwort angeben."
+msgstr "Falls der Mailserver nicht aufgrund der von JournalTouch verwendeten IP-Adresse unauthentifizierten Mailversand zulässt, hier ein Häkchen setzen und weiter unten Benutzer/Passwort angeben."
 
 #: admin/settings.php:810
 msgid "SMTP security type"
@@ -1100,7 +1100,7 @@ msgstr "Typ der SMTP-Verschlüsselung"
 
 #: admin/settings.php:812
 msgid "Encryption setting for the SMTP Auth connection, if any. Please enter \"tls\", \"ssl\", or \"\" for none."
-msgstr "Der zu verwendende Typ von  SMTP-Sicherheit, gültige Werte sind: \"tls\", \"ssl\" oder \"\" für keine."
+msgstr "Der zu verwendende Typ von SMTP-Sicherheit, gültige Werte sind: \"tls\", \"ssl\" oder \"\" für keine."
 
 #: admin/settings.php:813
 msgid "SMTP User"
@@ -1116,7 +1116,7 @@ msgstr "SMTP-Passwort"
 
 #: admin/settings.php:818
 msgid "The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!"
-msgstr "Das SMTP-Passwort. Achtung: Wir speichern das Passwort derzeit im Klartext, bitte sicherstellen, dass die .htaccess-Dateien richtig gesetzt sind!"
+msgstr "Das SMTP-Passwort. Achtung: Wir speichern das Passwort derzeit im Klartext, die Übermittlung zwischen dem Rechner, mit dem Sie die Admin-Oberfläche bedienen und der JournalTouch-Installation ist auch ungesichert. In Mindesten bitte sicherstellen, dass die .htaccess-Dateien richtig gesetzt sind!"
 
 ##### admin/settings.php - Mail Inhalte #####
 
@@ -1206,7 +1206,7 @@ msgstr "DB Passwort"
 
 #: admin/settings.php:827
 msgid "The password..."
-msgstr "Das Passwort..."
+msgstr "Das Passwort... (hier gilt das gleiche wie beim SMTP-Passwort: derzeit keine sinnvolle Absicherung)"
 
 #: admin/settings.php:834
 msgid "Usually everything concerning you JournalTouch settings is saved into /data. This folder must be writable by the webserver. If you really need to, you can change some of the paths here. Yet, why would you want that?"
@@ -1218,11 +1218,11 @@ msgstr "Cache"
 
 #: admin/settings.php:837
 msgid "Here are fetched tocs cached. See menu API."
-msgstr "Hier werden abgerufenen Tocs gecached. Siehe Menü API"
+msgstr "Hier werden abgerufenen ToCs gecached. Siehe Menü API"
 
 #: admin/settings.php:840
 msgid "Here you put your own journal covers. Automatically downloaded covers are put into the \"api\" subfolder."
-msgstr "Hier legen Sie Ihre eigenen Journalcover ab. Automatisch gedownloadet Cover werden in den \"api\"-Unterordner abgelegt."
+msgstr "Hier legen Sie Ihre eigenen Journalcover ab. Automatisch heruntergeladene Cover werden in den \"api\"-Unterordner abgelegt."
 
 #: admin/settings.php:841
 msgid "Export"
@@ -1238,7 +1238,7 @@ msgstr "Zeitschriftenliste"
 
 #: admin/settings.php:846
 msgid "Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef."
-msgstr "Hier liegt die journals.csv - Ihr ganzer Zeitschriftenbestand in einer Datei, die fröhlich voon JournalTouch - unter kräftiger Mithilfe von JournalTocs und CrossRef - aktualisiert wird."
+msgstr "Hier liegt die journals.csv - Ihr ganzer Zeitschriftenbestand in einer Datei, die fröhlich von JournalTouch - unter kräftiger Mithilfe von JournalTocs und CrossRef - aktualisiert wird."
 
 #: admin/settings.php:850
 msgid "Journals.csv Columns"
@@ -1318,7 +1318,7 @@ msgstr "E-Issn"
 
 #: admin/settings.php:898
 msgid "Optional. An e-issn to try if issn fails to get toc."
-msgstr "Optional: eine E-ISSN. Wird verwendet, falls mit der P-ISSN kein Toc gefunden wurde."
+msgstr "Optional: eine E-ISSN. Wird verwendet, falls mit der P-ISSN kein ToC gefunden wurde."
 
 #: admin/settings.php:901
 msgid "Publisher"
@@ -1343,8 +1343,8 @@ msgid "New Marker"
 msgstr "Neu-Marker"
 
 #: admin/settings.php:913
-msgid "Optional/Auto. Marks journal (issue) as new if not empty. This is done automatically, but you might mark a journal as new by hand (e.g. if no toc is found)."
-msgstr "Optional/Auto. Markiert Journal-Ausgaben als neu, wenn etwas in der Spalte steht. Dies geschieht automatisch, aber Sie können es auch von Hand eingeben (z.B. wenn trotzdem kein Toc gefunden wird)."
+msgid "Optional/Auto. Marks journal (issue) as new if not empty. This is done automatically, but you might mark a journal as new by hand (e.g. if no ToC is found)."
+msgstr "Optional/Auto. Markiert Journal-Ausgaben als neu, wenn etwas in der Spalte steht. Dies geschieht automatisch, aber Sie können es auch von Hand eingeben (z.B. wenn trotzdem kein ToC gefunden wird)."
 
 #: admin/settings.php:916
 msgid "Issue date"
@@ -1376,15 +1376,15 @@ msgstr "Elektronischer Bestand"
 
 #: admin/settings.php:940
 msgid "Optional. Are you subscribed for the online edition of the journal? This information is used to decide if a direct download button should be shown; see Your Institution\" setting."
-msgstr "Optional. Beseitzen Sie die elektronische Ausgabe des Journals? Diese Information wird genutzt um zu entscheiden, ob der Direkdownloadbutton gezeigt werden soll (siehe Ihre Einirichtung-Einstellungen)."
+msgstr "Optional. Beseitzen Sie die elektronische Ausgabe des Journals? Diese Information wird genutzt um zu entscheiden, ob der Direktdownload-Button gezeigt werden soll (siehe Ihre Einrichtung-Einstellungen)."
 
 #: admin/settings.php:943
-msgid "Toc available"
-msgstr "Toc verfügbar"
+msgid "ToC available"
+msgstr "ToC verfügbar"
 
 #: admin/settings.php:946
 msgid "Optional/Auto. You might want to show journals you are subscribed to, even though no toc can be fetched. Usually this is automatically set on update. If for some reason toc fetching does not work, you might clear this field in the table. The info is shown as meta info button."
-msgstr "Optional/Auto. Mögicherweise wollen Sie Journals in der Liste zeigen für die es keinen Toc gibt (z.B. nur Printbestand). Normalerweise wird dies automatisch beim Update gesetzt. Sollte das widererwartend nicht klappen, können Sie das Feld in der Tabelle leeren. Die Info wird als Metabutton angezeigt."
+msgstr "Optional/Auto. Mögicherweise wollen Sie Journals in der Liste zeigen für die es keinen ToC gibt (z.B. nur Printbestand). Normalerweise wird dies automatisch beim Update gesetzt. Sollte das wider Erwarten nicht klappen, können Sie das Feld in der Tabelle leeren. Die Info wird als Metabutton angezeigt."
 
 #: admin/settings.php:949
 msgid "Shelfmark"
@@ -1392,11 +1392,11 @@ msgstr "Regalsignatur"
 
 #: admin/settings.php:952
 msgid "Optional. If you got the print edition (too) you might provide the shelfmark here. The info is shown as meta info button."
-msgstr "Optional. Wenn Sie die Durkcausgabe (auch) besitzen, können Sie deren Regalsignatur hier angeben. Die Information wird als Metabutton angezeigt."
+msgstr "Optional. Wenn Sie die Druckausgabe (auch) besitzen, können Sie deren Regalsignatur hier angeben. Die Information wird als Metabutton angezeigt."
 
 #: admin/settings.php:955
 msgid "Journal's Homepage"
-msgstr "Journal's Homepage"
+msgstr "Homepage des Journals"
 
 #: admin/settings.php:958
 msgid "Optional/Auto. The journal's website. Automatically fetched if you used \"fetch metadata\" (and information was available)."
@@ -1445,11 +1445,11 @@ msgstr "Wenn Sie Cachig in den Optionen aktiviert haben, können Sie den hier ma
 
 #: admin/updateTocs.php:71
 msgid "JournalTOC Premium Update"
-msgstr "JournalTOC Premium Update"
+msgstr "JournalToC Premium Update"
 
 #: admin/updateTocs.php:72
 msgid "This updates your updates.json.txt with the dates for recent issue."
-msgstr "hiermit wird Ihre updates.json.txt mit den aktuellen neusten Ausgaben aktualisiert."
+msgstr "hiermit wird Ihre updates.json.txt mit den aktuellen neuesten Ausgaben aktualisiert."
 
 #: admin/updateTocs.php:73
 msgid "Update Premium"
@@ -1457,7 +1457,7 @@ msgstr "Update Premium"
 
 #: admin/services/getLatestJournalTocPremium.php:134
 msgid "Most recent journal updates from the last PLACEHOLDER days"
-msgstr "Die neusten Updates der letzten PLACEHOLDER Tage"
+msgstr "Die neuesten Updates der letzten PLACEHOLDER Tage"
 
 #: sys/bootstrap.functions.php:65
 msgid "Language"

@@ -10,8 +10,8 @@ See latest changelog for unreleased version: [JournalTouch Version 0.4](doc/gith
 
 ## Quick Start
 1. Create a free [JournalTocs account](http://www.journaltocs.ac.uk/index.php?action=register). While not strictly required, it is highly recommended.
-2. Download JournalToc one the right side ("Download zip")
-3. Extract to you apache webfolder. Make sure the data folder and its subfolders are writable by the webserver.
+2. Download JournalTouch (e.g. by clicking "Download ZIP", upper right on this page).
+3. Extract to your Apache webfolder. Make sure the data folder and its subfolders are writable by the webserver (e.g. the user/group www-data under Ubuntu).
 4. Go to http://myinstallation.net/admin and set enter your JournalTocs mail there (you also should make sure this folder is secured, e.g. by using a htaccess).
 5. Edit data/cover/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg->csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.
 6. Go again to http://myinstallation.net/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
@@ -46,8 +46,7 @@ License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 
 # Dependencies
-- PHP 5.3 ([http://www.php.net])
-- php5-curl module ([http://php.net/manual/de/book.curl.php])
+- PHP 5.3 or newer ([http://www.php.net]), please use the most up-to-date version you have available
 - API key for JournalTocs ([http://www.journaltocs.ac.uk])
 
 # Wiki
