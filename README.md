@@ -3,7 +3,7 @@ JournalTouch provides a touch-optimized, responsive interface for browsing curre
 
 See latest changelog for unreleased version: [JournalTouch Version 0.4](doc/github/version_0.4_unreleased.md).
 
-# Quickstart
+# Installation
 ## Prerequisites
 1. Make sure you have Apache and PHP available. Nothing else is needed
 2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily donwload covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
@@ -19,19 +19,18 @@ See latest changelog for unreleased version: [JournalTouch Version 0.4](doc/gith
 8. IF you are happy, set a cronjob to call http://myinstallation.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
   1. Example Cronjob: wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1
 
-
 ## Translations
 - If you want to change translations you can use [Poedit](https://poedit.net/) - it's free.
 - As of version 0.4 many thing can be translated in the Settings menu in the admin panel :)
 
-# Current version: 0.4 (alpha-beta-gamma)
-This is JournalTouch Version 0.4 (the current official version is 0.3).
+# Current version: 0.4 (Release Candidate)
+This is JournalTouch Version 0.4
 
 We're using the git-flow project structure, so the master branch always holds the latest stable released version of this project.
 Work towards the next release happens on the `develop` branch. For more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
 
 # License
-@copyright 2015 MPI for Research on Collective Goods, Library
+@copyright 2015-2016 MPI for Research on Collective Goods, Library
 (Contact: fruehauf@coll.mpg.de and krug@coll.mpg.de)
 
 @author Alexander Krug <krug@coll.mpg.de> (Maintainer)
