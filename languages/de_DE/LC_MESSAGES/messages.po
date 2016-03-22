@@ -1283,6 +1283,19 @@ msgstr "Col2"
 msgid "Ignore"
 msgstr "Ignorieren"
 
+
+msgid "Field Separator"
+msgstr "Feld-Trennzeichen"
+
+msgid "Field separator used in your CSV-file"
+msgstr "In Ihrer CSV-Datei verwendetes Trennzeichen"
+
+msgid "Separator"
+msgstr "Trennzeichen"
+
+msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \";\""
+msgstr "Das (Sonder)zeichen, mit dem in Ihrer CSV-Datei die Felder getrennt werden, üblicherweise \",\" oder \";\". Voreinstellung: \";\""
+
 #: admin/settings.php:871
 #: admin/settings.php:886
 msgid "Ignore. This column exists for historical reasons, but is not used for anything by JournalTouch."
@@ -1807,8 +1820,6 @@ msgstr "Abstract"
 #~ msgstr "Exportwerkzeug"
 #~ msgid "Export bibliographics data to CSV file"
 #~ msgstr "Titelaufnahmen in Datei exportieren (CSV-Format)"
-#~ msgid "Field Separator"
-#~ msgstr "Trennzeichen für Felder"
 #~ msgid "Field Enclosed With"
 #~ msgstr "Feldinhalte eingeschlossen zwischen"
 #~ msgid "Record Separator"

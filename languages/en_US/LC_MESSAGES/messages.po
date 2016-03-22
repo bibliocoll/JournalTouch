@@ -1266,6 +1266,18 @@ msgstr ""
 msgid "Ignore"
 msgstr ""
 
+msgid "Field Separator"
+msgstr ""
+
+msgid "Field separator used in your CSV-file"
+msgstr ""
+
+msgid "Separator"
+msgstr ""
+
+msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \";\""
+msgstr ""
+
 #: admin/settings.php:871
 #: admin/settings.php:886
 msgid "Ignore. This column exists for historical reasons, but is not used for anything by JournalTouch."
