@@ -69,11 +69,13 @@ class ListJournals
      * @return \b BOL True if needle is found
      */
     function search_array($needle, $haystack) {
-        if(in_array($needle, $haystack)) return true;
+        if (!empty($needle) && is_array($haystack)) {
+          if(in_array($needle, $haystack)) return true;
 
-        foreach($haystack as $element) {
-            if(is_array($element) && $this->search_array($needle, $element))
-                return true;
+          foreach($haystack as $element) {
+              if(is_array($element) && $this->search_array($needle, $element))
+                  return true;
+          }
         }
         return false;
     }
@@ -156,7 +158,7 @@ class ListJournals
 
         // Second: check downloaded covers
         foreach ($extensions as $ext) {
-            $img = $this->sys->data_covers.'/api/'.$issn.'.'.$ext;
+            $img = $this->sys->data_covers.'api/'.$issn.'.'.$ext;
             if (file_exists($img)) return $img;
         }
 
@@ -272,9 +274,9 @@ class ListJournals
                 //$myISSN = (strlen($data[$this->csv_col->p_issn] < 1) ? $data[$this->csv_col->e_issn] : $data[$this->csv_col->p_issn]);
 
                 $myISSN = '';
-                if (valid_issn($data[$this->csv_col->p_issn], TRUE) === TRUE) {
+                if (isset($data[$this->csv_col->p_issn]) && valid_issn($data[$this->csv_col->p_issn], TRUE) === TRUE) {
                     $myISSN = $data[$this->csv_col->p_issn];
-                } elseif (valid_issn($data[$this->csv_col->e_issn], TRUE) === TRUE) {
+                } elseif (isset($data[$this->csv_col->p_issn]) && valid_issn($data[$this->csv_col->e_issn], TRUE) === TRUE) {
                     $myISSN = $data[$this->csv_col->e_issn];
                 } else {
                     //no valid ISSN, lets skip this one

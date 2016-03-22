@@ -188,7 +188,7 @@ class GetJournalInfos {
                 }
 
                 $issn = $this->issn;
-                if ($issn !== '') {
+                if (valid_issn($issn, TRUE)) {
                     ob_flush();
                     //if ($this->processed > 3) break(1);
                     $this->processed++;

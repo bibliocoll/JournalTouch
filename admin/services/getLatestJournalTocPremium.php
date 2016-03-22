@@ -14,15 +14,16 @@
 //error_reporting(0);
 
 require_once(__DIR__.'/../../sys/bootstrap.php');
-require_once(__DIR__.'/../../sys/class.ListJournals.php');
+if (!isset($cfg)) { die('$cfg not set!'); }
+require_once($cfg->sys->basepath . 'sys/class.ListJournals.php');
 /* setup methods & objects */
-$lister = new ListJournals();
+$lister = new ListJournals($cfg);
 $journals = $lister->getJournals();
 $updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
 //$issn = $_GET['issn']; //where did that come from? oO
 
-$jsonFile = __DIR__."/../../". $cfg->api->jt->outfile;
+$jsonFile = $cfg->sys->basepath . $cfg->api->jt->outfile;
 
 
 function myget ($query,$xpath) {
@@ -60,6 +61,7 @@ function search_array($needle, $haystack) {
  *              but in class.getJournalInfos.php as well
  */
 function remove_ancient_cache_files() {
+  global $cfg;
   $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
   $now = new DateTime(); //very OO
   $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
@@ -179,4 +181,3 @@ file_put_contents($jsonFile,json_encode($upd));
 //do some housekeeping
 remove_ancient_cache_files();
 ?>
-
