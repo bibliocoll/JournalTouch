@@ -849,6 +849,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                             <label for="cfg[dbusers][dbpass]"><?php echo __('DB Password') ?></label>
                                 <input type="text" name="cfg[dbusers][dbpass]" value="<?php echo $cfg->dbusers->dbpass ?>" aria-describedby="help_dbpass" />
                                 <div id="help_dbpass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The password...') ?></span></div>
+                            <label for="cfg[dbusers][dbhost]"><?php echo __('DB Server') ?></label>
+                                <input type="text" name="cfg[dbusers][dbhost]" value="<?php echo $cfg->dbusers->dbhost ?>" aria-describedby="help_dbhost" />
+                                <div id="help_dbhost" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Hostname of the DB server') ?></span></div>
                     </fieldset>
             </div>
             <div class="content" id="formTab9">

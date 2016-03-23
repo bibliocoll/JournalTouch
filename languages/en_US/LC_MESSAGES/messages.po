@@ -1191,6 +1191,12 @@ msgstr ""
 msgid "The password..."
 msgstr ""
 
+msgid "DB Server"
+msgstr ""
+
+msgid "Hostname of the DB server"
+msgstr ""
+
 #: admin/settings.php:834
 msgid "Usually everything concerning you JournalTouch settings is saved into /data. This folder must be writable by the webserver. If you really need to, you can change some of the paths here. Yet, why would you want that?"
 msgstr ""

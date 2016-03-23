@@ -3,6 +3,7 @@ admin/.htaccess
 admin/update/history/*
 data/*
 config.php
+sys/class.GetUsers.php
 
 # Some exclusions, so the folders always are created, even if initally empty
 !*.gitkeep
