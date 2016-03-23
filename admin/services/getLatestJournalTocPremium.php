@@ -80,13 +80,10 @@ if (!is_array($updatesURL)) {
 }
 foreach ($updatesURL as $updateURL) {
 
-  echo "querying " .$updateURL."...";
-
-  $x = $updateURL;
+  echo "querying ".$updateURL." ...";
 
   $neuDom = new DOMDocument;
-
-  $neuDom->load($x);
+  $neuDom->load($updateURL);
   $xpath = new DOMXPath( $neuDom );
 
   $rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI);
@@ -114,7 +111,7 @@ foreach ($updatesURL as $updateURL) {
     $issn = myget("//prism:issn",$xpath);
     $eIssn = myget("//prism:eIssn",$xpath);
     // write only one $issn
-    $issn = !empty($issn) ? $issn : $eIssn;
+    $issn = valid_issn($issn, TRUE) === TRUE ? $issn : valid_issn($eIssn, TRUE) === TRUE ? $eIssn : '';
     $date = myget("//dc:date",$xpath);
     if (!isset($date) || $date === '') $date = date('c');
 
@@ -141,7 +138,7 @@ foreach ($updatesURL as $updateURL) {
 
       if (!empty($item['title'])) {
 
-        if (!empty($item['issn'])) {
+        if ($item['issn'] !== '') {
           if (search_array($item['issn'], $journals)) {
 
             $date = new DateTime($item['date']);
