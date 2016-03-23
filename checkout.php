@@ -254,9 +254,10 @@ if ($users == false) {
     $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
     echo'
+      <div class="row collapse">
+        <label for="'.$allowed.'">'.__('Your e-mail').'</label>
         <div class="small-'.(12 - $coladd).' columns">
-          <label>'.__('Your e-mail').'</label>
-          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
+          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text" />
         </div>';
     // Add the allowed user mailing domain at the end ("employees only")
     if ($coladd) {
@@ -264,6 +265,7 @@ if ($users == false) {
                     <span class="postfix">'.$postfix.'</span>
                 </div>';
     }
+    echo '</div>';
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
@@ -283,7 +285,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label>
+                        <!-- <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label> -->
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
