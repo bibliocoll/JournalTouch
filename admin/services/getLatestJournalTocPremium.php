@@ -23,7 +23,7 @@ $updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
 //$issn = $_GET['issn']; //where did that come from? oO
 
-$jsonFile = $cfg->sys->basepath . $cfg->api->jt->outfile;
+$jsonFile = $cfg->api->jt->outfile;
 
 
 function myget ($query,$xpath) {
