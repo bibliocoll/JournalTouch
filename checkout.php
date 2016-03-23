@@ -5,7 +5,6 @@ $mylist = $_POST;
 $myaction = $_GET;
 /* load classes */
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
-require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
 /* setup methods & objects */
 $action = new CheckoutActions($cfg);
 ?>
@@ -243,9 +242,15 @@ if(isset($_POST['mailer']))
 
                 <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
-$userHandle = new GetUsers($cfg);
-$users = $userHandle->getUsers();
-if ($users == false) {
+if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === TRUE) {
+  require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
+  $userHandle = new GetUsers($cfg);
+  $users = $userHandle->getUsers();
+} else {
+  $users = FALSE;
+}
+// if GetUsers failed or was turned off, allow entering an adress
+if ($users === FALSE) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
     $coladd      = ($cfg->mail->domain) ? 3 : 0;
