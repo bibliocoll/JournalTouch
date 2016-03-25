@@ -37,7 +37,7 @@ $cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_
 require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 
 // Set current version
-$cfg->sys->current_jt_version = 0.4;
+$cfg->sys->current_jt_version = 0.5;
 
 // Check if upgrade is required
 if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
