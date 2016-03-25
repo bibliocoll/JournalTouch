@@ -23,6 +23,9 @@
 // All important basic functions in a separate file - keep the overview
 require_once('bootstrap.functions.php');
 
+// Sanitize GET and POST before using them
+sanitize_request();
+
 // Load THE config
 $cfg = cfg_load();
 
@@ -69,8 +72,4 @@ $cfg->csv_file = new stdClass();
 */
 $cfg->csv_file->separator  = ';';
 $cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
-
-// Sanitize GET and POST
-sanitize_request();
-
 ?>

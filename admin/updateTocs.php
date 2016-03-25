@@ -70,7 +70,7 @@ if ($btn_cache) {
                 <!-- Quick & Dirty - Update input.csv -->
                 <legend><b><?php echo __('JournalTOC Premium Update') ?></b></legend>
                 <div class="panel"><?php echo __('This updates your updates.json.txt with the dates for recent issue.') ?></div>
-                <a href="services/getLatestJournals.php" class="button"><?php echo __('Update Premium') ?></a>
+                <a href="services/getLatestJournalTocPremium.php" class="button"><?php echo __('Update Premium') ?></a>
             </fieldset>
     </div>
     </form>

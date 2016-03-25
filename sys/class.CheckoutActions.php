@@ -99,7 +99,7 @@ class CheckoutActions
       $email->isHTML(true);
       $file = isset($_POST['file']) ? $_POST['file'] : '';
       $fileBody = (!empty($file)) ? $this->getArticlesAsHTML($file) : '';
-      
+
       // Is the domain restriction set?
       if ($this->mail->domain && isset($_POST['username'])) {
         $usermail = $_POST['username'].'@'.$this->mail->domain;

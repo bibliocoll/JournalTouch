@@ -305,7 +305,6 @@ function create_nav($total, $current, $limit = 100) {
                 /**
                  * @brief   Nothing yet
                  */
- 
 
             });
         </script>

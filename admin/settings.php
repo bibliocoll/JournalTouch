@@ -794,6 +794,30 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                                 <div id="help_domain" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses.') ?></span></div>
                     </fieldset>
                     <fieldset>
+                        <legend><?php echo __('(optional) SMTP Server settings') ?></legend>
+                            <input type="checkbox" name="cfg[mail][useSMTP]" <?php echo frm_checked($cfg->mail->useSMTP) ?> aria-describedby="help_usesmtp" />
+                                <label for="cfg[mail][useSMTP]"><?php echo __('Use the SMTP server configured below instead of local mail system') ?></label>
+                                <div id="help_usesmtp" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Unchecked: PHPMailer will use the mail delivery systems available on the machine JournalTouch runs on. Checked: PHPMailer will try to use the specified server instead') ?></span></div>
+                            <label for="cfg[mail][smtpserver]"><?php echo __('SMTP Server') ?></label>
+                                <input type="text" name="cfg[mail][smtpServer]" value="<?php echo $cfg->mail->smtpServer ?>" aria-describedby="help_smtpserver" />
+                                <div id="help_smtpserver" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Mailserver to use (eg: mail.mybib.net)') ?></span></div>
+                            <label for="cfg[mail][smtpport]"><?php echo __('SMTP Server Port') ?></label>
+                                <input type="text" name="cfg[mail][smtpPort]" value="<?php echo $cfg->mail->smtpPort ?>" aria-describedby="help_smtpport" />
+                                <div id="help_smtpport" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Port to use (eg: 25)') ?></span></div>
+                            <input type="checkbox" name="cfg[mail][useSMTPAuth]" <?php echo frm_checked($cfg->mail->useSMTPAuth) ?> aria-describedby="help_useSMTPAuth" />
+                                <label for="cfg[mail][useSMTPAuth]"><?php echo __('Authenticate to the Mailserver') ?></label>
+                                <div id="help_useSMTPAuth" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Unless you choose to rely on IP based "security", check here and provide SMTP credentials below') ?></span></div>
+                            <label for="cfg[mail][smtpsec]"><?php echo __('SMTP security type') ?></label>
+                                <input type="text" name="cfg[mail][smtpSec]" value="<?php echo $cfg->mail->smtpSec ?>" aria-describedby="help_smtpsec" />
+                                <div id="help_smtpsec" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Encryption setting for the SMTP Auth connection, if any. Please enter "tls", "ssl", or "" for none.') ?></span></div>
+                            <label for="cfg[mail][smtpuser]"><?php echo __('SMTP User') ?></label>
+                                <input type="text" name="cfg[mail][smtpUser]" value="<?php echo $cfg->mail->smtpUser ?>" aria-describedby="help_smtpuser" />
+                                <div id="help_smtpuser" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Username for the SMTP server') ?></span></div>
+                            <label for="cfg[mail][smtppass]"><?php echo __('SMTP Password') ?></label>
+                                <input type="password" name="cfg[mail][smtpPass]" value="<?php echo $cfg->mail->smtpPass ?>" aria-describedby="help_smtppass" />
+                                <div id="help_smtppass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!') ?></span></div>
+                    </fieldset>
+                    <fieldset>
                         <legend><?php echo __('Mailing: To User') ?></legend>
                             <label for="cfg[mail][fromAddress]"><?php echo __('Your From Address') ?></label>
                                 <input type="text" name="cfg[mail][fromAddress]" value="<?php echo $cfg->mail->fromAddress ?>" aria-describedby="help_fromAddress" />
@@ -825,6 +849,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                             <label for="cfg[dbusers][dbpass]"><?php echo __('DB Password') ?></label>
                                 <input type="text" name="cfg[dbusers][dbpass]" value="<?php echo $cfg->dbusers->dbpass ?>" aria-describedby="help_dbpass" />
                                 <div id="help_dbpass" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The password...') ?></span></div>
+                            <label for="cfg[dbusers][dbhost]"><?php echo __('DB Server') ?></label>
+                                <input type="text" name="cfg[dbusers][dbhost]" value="<?php echo $cfg->dbusers->dbhost ?>" aria-describedby="help_dbhost" />
+                                <div id="help_dbhost" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Hostname of the DB server') ?></span></div>
                     </fieldset>
             </div>
             <div class="content" id="formTab9">
@@ -847,6 +874,13 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                 </fieldset>
             </div>
             <div class="content" id="formTab10">
+                <h3><?php echo __('Field Separator') ?></h3>
+                <fieldset>
+                    <legend><?php echo __('Field separator used in your CSV-file') ?></legend>
+                    <label for="cfg[csv_file][separator]"><?php echo __('Separator') ?></label>
+                        <input type="text" name="cfg[csv_file][separator]" value="<?php echo $cfg->csv_file->separator  ?>" placeholder="<?php echo $cfg->sys->data_journals ?>" aria-describedby="help_csv_separator" />
+                        <div id="help_csv_separator" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The glyph used to separate fields in your CSV file, usually either "," or ";". Defaults to ","') ?></span></div>
+                </fieldset>
                 <h3><?php echo __('Journals.csv Columns') ?></h3>
                 <fieldset>
                     <legend><?php echo __('Table Columns') ?></legend>

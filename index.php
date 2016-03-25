@@ -398,11 +398,11 @@ foreach ($timewarps as $label => $timestamp) {
     <div id="updateBox" class="small-12 columns">
         <ul>
 <?php
-if (!empty($journalUpdates)) {
-    foreach ($journalUpdates as $j) {
-        print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
-    }
-}
+// if (!empty($journalUpdates)) {
+//    foreach ($journalUpdates as $j) {
+//        print '<li><a href="#">' . $j['title'] . '</a> (last update <time class="timeago" datetime="'.$j['timestr'].'">' . $j['timestr'] . '</time>)</li>';
+//    }
+// }
 ?>
         </ul>
     </div>

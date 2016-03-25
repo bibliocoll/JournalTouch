@@ -14,15 +14,16 @@
 //error_reporting(0);
 
 require_once(__DIR__.'/../../sys/bootstrap.php');
-require_once(__DIR__.'/../../sys/class.ListJournals.php');
+if (!isset($cfg)) { die('$cfg not set!'); }
+require_once($cfg->sys->basepath . 'sys/class.ListJournals.php');
 /* setup methods & objects */
-$lister = new ListJournals();
+$lister = new ListJournals($cfg);
 $journals = $lister->getJournals();
 $updatesURL = $cfg->api->jt->updates . $cfg->api->jt->account;
 
 //$issn = $_GET['issn']; //where did that come from? oO
 
-$jsonFile = __DIR__."/../../". $cfg->api->jt->outfile;
+$jsonFile = $cfg->api->jt->outfile;
 
 
 function myget ($query,$xpath) {
@@ -60,6 +61,7 @@ function search_array($needle, $haystack) {
  *              but in class.getJournalInfos.php as well
  */
 function remove_ancient_cache_files() {
+  global $cfg;
   $files = glob($cfg->sys->data_cache.'*.cache*'); // get all file names by pattern
   $now = new DateTime(); //very OO
   $age = isset($cfg->prefs->cache_max_age)? DateInterval::createFromDateString($cfg->prefs->cache_max_age) : DateInterval::createFromDateString("33 days");
@@ -78,13 +80,10 @@ if (!is_array($updatesURL)) {
 }
 foreach ($updatesURL as $updateURL) {
 
-  echo "querying " .$updateURL."...";
-
-  $x = $updateURL;
+  echo "querying ".$updateURL." ...";
 
   $neuDom = new DOMDocument;
-
-  $neuDom->load($x);
+  $neuDom->load($updateURL);
   $xpath = new DOMXPath( $neuDom );
 
   $rootNamespace = $neuDom->lookupNamespaceUri($neuDom->namespaceURI);
@@ -112,7 +111,7 @@ foreach ($updatesURL as $updateURL) {
     $issn = myget("//prism:issn",$xpath);
     $eIssn = myget("//prism:eIssn",$xpath);
     // write only one $issn
-    $issn = !empty($issn) ? $issn : $eIssn;
+    $issn = valid_issn($issn, TRUE) === TRUE ? $issn : valid_issn($eIssn, TRUE) === TRUE ? $eIssn : '';
     $date = myget("//dc:date",$xpath);
     if (!isset($date) || $date === '') $date = date('c');
 
@@ -139,7 +138,7 @@ foreach ($updatesURL as $updateURL) {
 
       if (!empty($item['title'])) {
 
-        if (!empty($item['issn'])) {
+        if ($item['issn'] !== '') {
           if (search_array($item['issn'], $journals)) {
 
             $date = new DateTime($item['date']);
@@ -179,4 +178,3 @@ file_put_contents($jsonFile,json_encode($upd));
 //do some housekeeping
 remove_ancient_cache_files();
 ?>
-

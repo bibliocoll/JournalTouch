@@ -5,10 +5,7 @@ $mylist = $_POST;
 $myaction = $_GET;
 /* load classes */
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
-require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
-require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
 /* setup methods & objects */
-$email = new PHPMailer(true);
 $action = new CheckoutActions($cfg);
 ?>
 <!doctype html>
@@ -170,15 +167,30 @@ if ($users == false) {
 $file = '';
 if(isset($_POST['mailer']))
 {
+  // looks like we need to initialize PHPMailer
+  require_once($cfg->sys->basepath.'sys/PHPMailer/PHPMailerAutoload.php');
+  $mail = new PHPMailer(true);
+  //$mail->SMTPDebug = 3; // Enable verbose debug output
+  if ($cfg->mail->useSMTP) {
+    $mail->isSMTP(); // Set mailer to use SMTP
+    $mail->Host = $cfg->mail->smtpServer;  // Specify main and backup SMTP servers
+    $mail->Port = $cfg->mail->smtpPort;
+    if ($cfg->mail->useSMTPAuth) {
+      $mail->SMTPAuth = true; // Enable SMTP authentication
+      $mail->Username = $cfg->mail->smtpUser; // SMTP username
+      $mail->Password = $cfg->mail->smtpPass; // SMTP password
+      if (!empty($cfg->mail->smtpSec)) { $mail->SMTPSecure = strtolower($cfg->mail->smtpSec); } // Enable TLS encryption, `ssl` also accepted
+    }
+  }
     // if we have already sent an e-mail, read again from POST
     $file = (empty($file) && isset($_POST['file'])) ? $file = $_POST['file'] : '';
 
         /* pass the PHPMailer object & save the return value (success or failure?) */
         /* is it feedback? */
         if (isset($_POST['feedback'])) {
-            $mailerResponse = $action->sendFeedback($email);
+            $mailerResponse = $action->sendFeedback($mail);
         } else {
-            $mailerResponse = $action->sendArticlesAsMail($file, $email);
+            $mailerResponse = $action->sendArticlesAsMail($file, $mail);
         }
     /* error handling */
     if ($mailerResponse == "OK") {
@@ -230,9 +242,15 @@ if(isset($_POST['mailer']))
 
                 <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
-$userHandle = new GetUsers($cfg);
-$users = $userHandle->getUsers();
-if ($users == false) {
+if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === TRUE) {
+  require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
+  $userHandle = new GetUsers($cfg);
+  $users = $userHandle->getUsers();
+} else {
+  $users = FALSE;
+}
+// if GetUsers failed or was turned off, allow entering an adress
+if ($users === FALSE) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
     $coladd      = ($cfg->mail->domain) ? 3 : 0;
@@ -241,9 +259,10 @@ if ($users == false) {
     $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
     echo'
+      <div class="row collapse">
+        <label for="'.$allowed.'">'.__('Your e-mail').'</label>
         <div class="small-'.(12 - $coladd).' columns">
-          <label>'.__('Your e-mail').'</label>
-          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>
+          <input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text" />
         </div>';
     // Add the allowed user mailing domain at the end ("employees only")
     if ($coladd) {
@@ -251,6 +270,7 @@ if ($users == false) {
                     <span class="postfix">'.$postfix.'</span>
                 </div>';
     }
+    echo '</div>';
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
@@ -270,7 +290,7 @@ if ($users == false) {
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
                         <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
-                        <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label>
+                        <!-- <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label> -->
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>
                 </div>
@@ -360,4 +380,3 @@ doc.setAttribute('data-useragent', navigator.userAgent);
 <!-- END Kiosk policies -->
   </body>
 </html>
-

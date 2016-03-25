@@ -170,6 +170,8 @@ class GetJournalInfos {
      */
     public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false, $fetch_covers = false) {
         if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
+            //include bootstrap.functions for valid_issn()
+            require_once(__DIR__ . '/../../sys/bootstrap.functions.php');
             // if fetch_covers enabled, create an instance
             if ($fetch_covers) {
                 require('class.GetCover.php');
@@ -181,9 +183,9 @@ class GetJournalInfos {
                 $this->log .= '<p>';
 
                 $this->issn = '';
-                if (!empty($journal_rows[$this->csv_col->p_issn])) {
+                if (valid_issn($journal_rows[$this->csv_col->p_issn], TRUE) === TRUE) {
                     $this->issn = $journal_rows[$this->csv_col->p_issn];
-                } elseif (!empty($journal_rows[$this->csv_col->e_issn])) {
+                } elseif (valid_issn($journal_rows[$this->csv_col->e_issn], TRUE) === TRUE) {
                     $this->issn = $journal_rows[$this->csv_col->e_issn];
                 }
 
