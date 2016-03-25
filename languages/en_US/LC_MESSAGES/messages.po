@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: JournalTouch\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 18:25+0100\n"
-"PO-Revision-Date: 2016-03-06 18:26+0100\n"
+"POT-Creation-Date: 2016-03-25 14:46+0100\n"
+"PO-Revision-Date: 2016-03-25 14:46+0100\n"
 "Last-Translator: Tobias Zeumer <tobias.zeumer@tuhh.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,111 +18,111 @@ msgstr ""
 "X-Poedit-Basepath: ../../../\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: checkout.php:20
+#: checkout.php:17
 msgid "Checkout"
 msgstr ""
 
-#: checkout.php:55
+#: checkout.php:52
 msgid "Back to journal selection"
 msgstr ""
 
-#: checkout.php:66
+#: checkout.php:63
 msgid "Send your feedback to the library"
 msgstr ""
 
-#: checkout.php:73
-#: checkout.php:83
-#: checkout.php:236
-#: checkout.php:245
+#: checkout.php:70
+#: checkout.php:80
+#: checkout.php:254
+#: checkout.php:263
 msgid "Your e-mail"
 msgstr ""
 
-#: checkout.php:83
-#: checkout.php:236
+#: checkout.php:80
+#: checkout.php:254
 msgid "your username"
 msgstr ""
 
-#: checkout.php:95
-#: checkout.php:264
+#: checkout.php:92
+#: checkout.php:284
 msgid "please choose a name"
 msgstr ""
 
-#: checkout.php:102
+#: checkout.php:99
 msgid "Your feedback message"
 msgstr ""
 
-#: checkout.php:103
-#: checkout.php:281
+#: checkout.php:100
+#: checkout.php:301
 msgid "if you have any comments for us please put them here!"
 msgstr ""
 
-#: checkout.php:114
-#: checkout.php:293
+#: checkout.php:111
+#: checkout.php:313
 msgid "Submit"
 msgstr ""
 
-#: checkout.php:124
+#: checkout.php:121
 msgid "I want to..."
 msgstr ""
 
-#: checkout.php:132
+#: checkout.php:129
 #: admin/settings.php:774
 msgid "View &amp; Print"
 msgstr ""
 
-#: checkout.php:135
+#: checkout.php:132
 msgid "Send to my mailbox"
 msgstr ""
 
-#: checkout.php:137
+#: checkout.php:134
 #: admin/settings.php:778
 msgid "Send to library to get PDFs"
 msgstr ""
 
-#: checkout.php:140
+#: checkout.php:137
 msgid "You already sent your files"
 msgstr ""
 
-#: checkout.php:142
+#: checkout.php:139
 msgid "choose another option"
 msgstr ""
 
-#: checkout.php:144
+#: checkout.php:141
 msgid "Clear Data and Logout"
 msgstr ""
 
-#: checkout.php:150
+#: checkout.php:147
 #: index.php:289
 msgid "Do you really want to empty your basket?"
 msgstr ""
 
-#: checkout.php:151
+#: checkout.php:148
 #: index.php:290
 msgid "OK, empty my basket!"
 msgstr ""
 
-#: checkout.php:152
+#: checkout.php:149
 #: index.php:291
 msgid "No, keep basket!"
 msgstr ""
 
-#: checkout.php:160
+#: checkout.php:157
 msgid "Your articles have been successfully deleted! You will automatically be taken to the start page."
 msgstr ""
 
-#: checkout.php:191
+#: checkout.php:203
 msgid "Your message has been successfully sent!"
 msgstr ""
 
-#: checkout.php:271
+#: checkout.php:291
 msgid "Attach citations?"
 msgstr ""
 
-#: checkout.php:280
+#: checkout.php:300
 msgid "Your message"
 msgstr ""
 
-#: checkout.php:327
+#: checkout.php:347
 #: index.php:251
 msgid "External Source"
 msgstr ""
@@ -254,124 +254,124 @@ msgstr ""
 msgid "JournalTouch Cover Management"
 msgstr ""
 
-#: admin/covers.php:345
+#: admin/covers.php:344
 msgid "Cover Settings for Admins"
 msgstr ""
 
-#: admin/covers.php:350
+#: admin/covers.php:349
 msgid "Covers used"
 msgstr ""
 
-#: admin/covers.php:351
+#: admin/covers.php:350
 msgid "Help"
 msgstr ""
 
-#: admin/covers.php:359
+#: admin/covers.php:358
 msgid "Cover filter"
 msgstr ""
 
-#: admin/covers.php:360
+#: admin/covers.php:359
 msgid "Show all journals"
 msgstr ""
 
-#: admin/covers.php:360
+#: admin/covers.php:359
 msgid "All"
 msgstr ""
 
-#: admin/covers.php:361
+#: admin/covers.php:360
 msgid "Journal has manual and api covers"
 msgstr ""
 
-#: admin/covers.php:361
+#: admin/covers.php:360
 msgid "API & Manual"
 msgstr ""
 
-#: admin/covers.php:362
+#: admin/covers.php:361
 msgid "Journal has api only covers"
 msgstr ""
 
-#: admin/covers.php:362
+#: admin/covers.php:361
 msgid "API only"
 msgstr ""
 
-#: admin/covers.php:363
+#: admin/covers.php:362
 msgid "Journal has only manually added covers"
 msgstr ""
 
-#: admin/covers.php:363
+#: admin/covers.php:362
 msgid "Manual only"
 msgstr ""
 
-#: admin/covers.php:364
+#: admin/covers.php:363
 msgid "Journal has more than one cover. Note: only appear at end of list."
 msgstr ""
 
-#: admin/covers.php:364
+#: admin/covers.php:363
 msgid "Multiple"
 msgstr ""
 
-#: admin/covers.php:365
+#: admin/covers.php:364
 msgid "Journal has no cover"
 msgstr ""
 
-#: admin/covers.php:365
+#: admin/covers.php:364
 msgid "None"
 msgstr ""
 
-#: admin/covers.php:366
+#: admin/covers.php:365
 msgid "Covers for issn's that are not in journals.csv"
 msgstr ""
 
-#: admin/covers.php:366
+#: admin/covers.php:365
 msgid "Unused"
 msgstr ""
 
-#: admin/covers.php:367
+#: admin/covers.php:366
 msgid "Covers greater than 15KB"
 msgstr ""
 
-#: admin/covers.php:367
+#: admin/covers.php:366
 msgid "Large active cover"
 msgstr ""
 
-#: admin/covers.php:369
+#: admin/covers.php:368
 msgid "xxx"
 msgstr ""
 
-#: admin/covers.php:380
+#: admin/covers.php:379
 msgid "Available and missing covers"
 msgstr ""
 
-#: admin/covers.php:380
+#: admin/covers.php:379
 msgid "to"
 msgstr ""
 
-#: admin/covers.php:401
-#: admin/covers.php:420
+#: admin/covers.php:400
+#: admin/covers.php:419
 msgid "Delete file for good"
 msgstr ""
 
-#: admin/covers.php:421
+#: admin/covers.php:420
 msgid "Move file to manual folder (prevents being downloaded ever again by api)."
 msgstr ""
 
-#: admin/covers.php:440
+#: admin/covers.php:439
 msgid "Covers for"
 msgstr ""
 
-#: admin/covers.php:440
+#: admin/covers.php:439
 msgid "Cover(s) are not used for any journal with issn"
 msgstr ""
 
-#: admin/covers.php:445
+#: admin/covers.php:444
 msgid "Your covers"
 msgstr ""
 
-#: admin/covers.php:445
+#: admin/covers.php:444
 msgid "API covers"
 msgstr ""
 
-#: admin/covers.php:458
+#: admin/covers.php:457
 msgid ""
 "\n"
 "                    <h3>Help</h3>\n"
@@ -394,13 +394,13 @@ msgid ""
 "                "
 msgstr ""
 
-#: admin/covers.php:484
-#: admin/settings.php:979
+#: admin/covers.php:483
+#: admin/settings.php:1016
 msgid "Beware, you have unsaved settings"
 msgstr ""
 
-#: admin/covers.php:489
-#: admin/settings.php:984
+#: admin/covers.php:488
+#: admin/settings.php:1021
 msgid "Configuration successfully saved!"
 msgstr ""
 
@@ -432,12 +432,12 @@ msgid "API"
 msgstr ""
 
 #: admin/settings.php:431
-#: admin/settings.php:838
+#: admin/settings.php:865
 msgid "Covers"
 msgstr ""
 
 #: admin/settings.php:432
-#: admin/settings.php:862
+#: admin/settings.php:899
 msgid "Filter"
 msgstr ""
 
@@ -675,7 +675,7 @@ msgid "Translations: Menus"
 msgstr ""
 
 #: admin/settings.php:555
-#: admin/settings.php:964
+#: admin/settings.php:1001
 msgid "Tags"
 msgstr ""
 
@@ -1038,8 +1038,7 @@ msgstr ""
 msgid "If you want to restrict mailing to institutional user, you might specify the domain here (e.g. john.doe@<strong>my-university.net</strong>). Leave empty to allow all user mail addresses."
 msgstr ""
 
-##### admin/settings.php - SMTP Settings #####
-
+# #### admin/settings.php - SMTP Settings #####
 #: admin/settings.php:797
 msgid "(optional) SMTP Server settings"
 msgstr ""
@@ -1100,8 +1099,7 @@ msgstr ""
 msgid "The SMTP password, stored in plaintext. make sure you have .htaccess set up correctly!"
 msgstr ""
 
-##### admin/settings.php - Email Content #####
-
+# #### admin/settings.php - Email Content #####
 #: admin/settings.php:821
 msgid "Mailing: To User"
 msgstr ""
@@ -1109,7 +1107,6 @@ msgstr ""
 #: admin/settings.php:822
 msgid "Your From Address"
 msgstr ""
-
 
 #: admin/settings.php:824
 msgid "From which address shall mails be sent (e.g. library@my-university.net)."
@@ -1139,11 +1136,11 @@ msgstr ""
 msgid "The message will look like this:<br><br><strong>From mail: library@my-university.net<br>From name: Library Name<br>Subject: Your saved articles from JournalTouch</strong><br><br>Your message was: xxx<br><br>Here are your articles, enjoy!<br><br>Best regards, your library team!"
 msgstr ""
 
-#: admin/settings.php:831
+#: admin/settings.php:833
 msgid "Mailing: From User (Orders)"
 msgstr ""
 
-#: admin/settings.php:832
+#: admin/settings.php:834
 msgid "To (your receiving address)"
 msgstr ""
 
@@ -1191,219 +1188,233 @@ msgstr ""
 msgid "The password..."
 msgstr ""
 
+#: admin/settings.php:852
 msgid "DB Server"
 msgstr ""
 
+#: admin/settings.php:854
 msgid "Hostname of the DB server"
 msgstr ""
 
-#: admin/settings.php:834
+#: admin/settings.php:861
 msgid "Usually everything concerning you JournalTouch settings is saved into /data. This folder must be writable by the webserver. If you really need to, you can change some of the paths here. Yet, why would you want that?"
 msgstr ""
 
-#: admin/settings.php:835
+#: admin/settings.php:862
 msgid "Cache"
 msgstr ""
 
-#: admin/settings.php:837
+#: admin/settings.php:864
 msgid "Here are fetched tocs cached. See menu API."
 msgstr ""
 
-#: admin/settings.php:840
+#: admin/settings.php:867
 msgid "Here you put your own journal covers. Automatically downloaded covers are put into the \"api\" subfolder."
 msgstr ""
 
-#: admin/settings.php:841
+#: admin/settings.php:868
 msgid "Export"
 msgstr ""
 
-#: admin/settings.php:843
+#: admin/settings.php:870
 msgid "Here are exports from the basket cached."
 msgstr ""
 
-#: admin/settings.php:844
+#: admin/settings.php:871
 msgid "Journal list"
 msgstr ""
 
-#: admin/settings.php:846
+#: admin/settings.php:873
 msgid "Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef."
 msgstr ""
 
-#: admin/settings.php:850
-msgid "Journals.csv Columns"
-msgstr ""
-
-#: admin/settings.php:852
-msgid "Table Columns"
-msgstr ""
-
-#: admin/settings.php:853
-msgid "This is only a reference to the columns in journals.csv, since they are not in the file itself."
-msgstr ""
-
-#: admin/settings.php:856
-msgid "Titel"
-msgstr ""
-
-#: admin/settings.php:856
-#: admin/settings.php:862
 #: admin/settings.php:874
-#: admin/settings.php:895
-#: admin/settings.php:928
-#: admin/settings.php:937
-#: admin/settings.php:949
-msgid "Optional"
+msgid "JournalTouch upgrade history"
 msgstr ""
 
-#: admin/settings.php:859
-msgid "Optional (recommended). The title of the journal."
+#: admin/settings.php:876
+msgid "This folder is necessary to track completed upgrades of JournaTouch. Since it has to be writable, it is part of the data folder for ease of configuration."
 msgstr ""
 
-#: admin/settings.php:865
-msgid "Optional. Used for the filter menu, to filter journals by category. See config menu \"Filter\"."
-msgstr ""
-
-#: admin/settings.php:868
-msgid "Col2"
-msgstr ""
-
-#: admin/settings.php:868
-#: admin/settings.php:883
-msgid "Ignore"
-msgstr ""
-
+#: admin/settings.php:880
 msgid "Field Separator"
 msgstr ""
 
+#: admin/settings.php:882
 msgid "Field separator used in your CSV-file"
 msgstr ""
 
+#: admin/settings.php:883
 msgid "Separator"
 msgstr ""
 
-msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \";\""
+#: admin/settings.php:885
+msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \",\""
 msgstr ""
 
-#: admin/settings.php:871
-#: admin/settings.php:886
+#: admin/settings.php:887
+msgid "Journals.csv Columns"
+msgstr ""
+
+#: admin/settings.php:889
+msgid "Table Columns"
+msgstr ""
+
+#: admin/settings.php:890
+msgid "This is only a reference to the columns in journals.csv, since they are not in the file itself."
+msgstr ""
+
+#: admin/settings.php:893
+msgid "Titel"
+msgstr ""
+
+#: admin/settings.php:893
+#: admin/settings.php:899
+#: admin/settings.php:911
+#: admin/settings.php:932
+#: admin/settings.php:965
+#: admin/settings.php:974
+#: admin/settings.php:986
+msgid "Optional"
+msgstr ""
+
+#: admin/settings.php:896
+msgid "Optional (recommended). The title of the journal."
+msgstr ""
+
+#: admin/settings.php:902
+msgid "Optional. Used for the filter menu, to filter journals by category. See config menu \"Filter\"."
+msgstr ""
+
+#: admin/settings.php:905
+msgid "Col2"
+msgstr ""
+
+#: admin/settings.php:905
+#: admin/settings.php:920
+msgid "Ignore"
+msgstr ""
+
+#: admin/settings.php:908
+#: admin/settings.php:923
 msgid "Ignore. This column exists for historical reasons, but is not used for anything by JournalTouch."
 msgstr ""
 
-#: admin/settings.php:874
+#: admin/settings.php:911
 msgid "Favorites"
 msgstr ""
 
-#: admin/settings.php:877
+#: admin/settings.php:914
 msgid "Optional. These journals are filtered with the \"special\" filter in filter menu, if column isn't empty (anything is ok)."
 msgstr ""
 
-#: admin/settings.php:883
+#: admin/settings.php:920
 msgid "Col4"
 msgstr ""
 
-#: admin/settings.php:889
+#: admin/settings.php:926
 msgid "P-Issn"
 msgstr ""
 
-#: admin/settings.php:889
+#: admin/settings.php:926
 msgid "Required"
 msgstr ""
 
-#: admin/settings.php:892
+#: admin/settings.php:929
 msgid "Required. Without issn's we have nothing to work with :)"
 msgstr ""
 
-#: admin/settings.php:895
+#: admin/settings.php:932
 msgid "E-Issn"
 msgstr ""
 
-#: admin/settings.php:898
+#: admin/settings.php:935
 msgid "Optional. An e-issn to try if issn fails to get toc."
 msgstr ""
 
-#: admin/settings.php:901
+#: admin/settings.php:938
 msgid "Publisher"
 msgstr ""
 
-#: admin/settings.php:901
-#: admin/settings.php:910
-#: admin/settings.php:916
-#: admin/settings.php:922
-#: admin/settings.php:943
-#: admin/settings.php:955
-#: admin/settings.php:964
+#: admin/settings.php:938
+#: admin/settings.php:947
+#: admin/settings.php:953
+#: admin/settings.php:959
+#: admin/settings.php:980
+#: admin/settings.php:992
+#: admin/settings.php:1001
 msgid "Optional/Auto"
 msgstr ""
 
-#: admin/settings.php:904
+#: admin/settings.php:941
 msgid "Optional/Auto. Publisher. Used for cover download (currently: \"De Gruyter\", \"Elsevier\", \"Sage\" and \"Springer-Verlag\" will work). Publishers are automatically fetched if you used \"fetch metadata\"."
 msgstr ""
 
-#: admin/settings.php:910
+#: admin/settings.php:947
 msgid "New Marker"
 msgstr ""
 
-#: admin/settings.php:913
+#: admin/settings.php:950
 msgid "Optional/Auto. Marks journal (issue) as new if not empty. This is done automatically, but you might mark a journal as new by hand (e.g. if no toc is found)."
 msgstr ""
 
-#: admin/settings.php:916
+#: admin/settings.php:953
 msgid "Issue date"
 msgstr ""
 
-#: admin/settings.php:919
+#: admin/settings.php:956
 msgid "Optional/Auto. Date of last issue."
 msgstr ""
 
-#: admin/settings.php:922
+#: admin/settings.php:959
 msgid "Issue numbering"
 msgstr ""
 
-#: admin/settings.php:925
+#: admin/settings.php:962
 msgid "Optional/Auto. Format \"year/vol/issue\". Used for Crossref check."
 msgstr ""
 
-#: admin/settings.php:928
+#: admin/settings.php:965
 msgid "Print holding"
 msgstr ""
 
-#: admin/settings.php:931
+#: admin/settings.php:968
 msgid "Optional. Are you subscribed for the print edition of this journal? Just enter anything (e.g. \"p\"). It's used in combination with the shelfmark for the meta info button."
 msgstr ""
 
-#: admin/settings.php:937
+#: admin/settings.php:974
 msgid "Online holding"
 msgstr ""
 
-#: admin/settings.php:940
+#: admin/settings.php:977
 msgid "Optional. Are you subscribed for the online edition of the journal? This information is used to decide if a direct download button should be shown; see Your Institution\" setting."
 msgstr ""
 
-#: admin/settings.php:943
+#: admin/settings.php:980
 msgid "Toc available"
 msgstr ""
 
-#: admin/settings.php:946
+#: admin/settings.php:983
 msgid "Optional/Auto. You might want to show journals you are subscribed to, even though no toc can be fetched. Usually this is automatically set on update. If for some reason toc fetching does not work, you might clear this field in the table. The info is shown as meta info button."
 msgstr ""
 
-#: admin/settings.php:949
+#: admin/settings.php:986
 msgid "Shelfmark"
 msgstr ""
 
-#: admin/settings.php:952
+#: admin/settings.php:989
 msgid "Optional. If you got the print edition (too) you might provide the shelfmark here. The info is shown as meta info button."
 msgstr ""
 
-#: admin/settings.php:955
+#: admin/settings.php:992
 msgid "Journal's Homepage"
 msgstr ""
 
-#: admin/settings.php:958
+#: admin/settings.php:995
 msgid "Optional/Auto. The journal's website. Automatically fetched if you used \"fetch metadata\" (and information was available)."
 msgstr ""
 
-#: admin/settings.php:967
+#: admin/settings.php:1004
 msgid "Optional/Auto. Got some subject indexing? Separate tags with commas :)"
 msgstr ""
 
@@ -1456,7 +1467,7 @@ msgstr ""
 msgid "Update Premium"
 msgstr ""
 
-#: admin/services/getLatestJournalTocPremium.php:134
+#: admin/services/getLatestJournalTocPremium.php:133
 msgid "Most recent journal updates from the last PLACEHOLDER days"
 msgstr ""
 
@@ -1484,3 +1495,4 @@ msgstr ""
 #: sys/class.GetJournalToc.php:261
 msgid "Abstract"
 msgstr ""
+
