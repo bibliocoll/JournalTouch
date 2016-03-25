@@ -12,24 +12,32 @@
 /**
   * @brief   Load user configuration
   *
-  * Set the result always to $cfg = cfg_load();
-  *
-  * Without calling this, nothing will work ;)
+  * Always use $cfg = cfg_load() to get configuration. Without calling this, nothing will work ;)
   *
   * @see admin/settings.php - there the object is saved
+  *
+  * @todo Don't always load default config, only if new JournalTouch version is detected. If so
+  *       do it just once and save the new user_cfg.
   *
   * @return \b OBJ The configuration object
   */
 function cfg_load($user_cfg = '') {
     if (!$user_cfg) $user_cfg = realpath( __DIR__ ).'/../data/config/user_config.php';
 
+    // Always load the config-default.php, so nothing is ever missed; povides $cfg_demo
+    require(realpath( __DIR__ ).'/../data/config/config-default.php');
+
+    // If user config exist, add
     if (file_exists($user_cfg)) {
         $restore    = file_get_contents($user_cfg);
-        $cfg = unserialize($restore);
+        $cfg        = unserialize($restore);
+
+        // Overwrite $cfg_demo settings with user settings and use it as $cfg
+        $cfg = merge_recursive_ary_or_obj($cfg_demo, $cfg);
+        $cfg->sys->newInstallation  = false;
     } else {
-        //always load the config-default.php, so nothing is ever missed; povides $cfg
-        // @todo: REMOVE THE SUPRESS ERROR
-        @require(realpath( __DIR__ ).'/../data/config/config-default.php');
+        // rename $cfg_demo to $cfg
+        $cfg = $cfg_demo;
     }
 
     return $cfg;
@@ -208,5 +216,42 @@ function get_client_infos($cfg) {
     }
 
   return $html;
+}
+
+
+/**
+  * @brief   Helper function: Merge associative array or object with sub objects
+  *         (object can have array(s) as property)
+  *
+  * @return \b OBJ or ARY The merged array/object
+  */
+function merge_recursive_ary_or_obj(&$array1, &$array2) {
+    $merged = $array1;
+
+    foreach ($array2 as $key => &$value) {
+        // It's an object
+        if (is_string($key)) {
+            if (isset($merged->{$key}) && is_object($merged->{$key})) {
+                $merged->{$key} = merge_recursive_ary_or_obj($merged->{$key}, $value);
+            }
+            else {
+                $merged->{$key} = $value;
+            }
+        }
+        // It's an array
+        else if (is_array($value)) {
+            if (isset($merged[$key]) && is_array($merged[$key])) {
+                $merged[$key] = merge_recursive_ary_or_obj($merged[$key], $value);
+            }
+            else if (is_numeric($key)) {
+                if (!in_array($value, $merged))     $merged[] = $value;
+            }
+            else {
+                $merged[$key] = $value;
+            }
+        }
+    }
+
+    return $merged;
 }
 ?>
