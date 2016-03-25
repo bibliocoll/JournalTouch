@@ -8,7 +8,7 @@
  *
  * How it works
  * 1.   If an upgrade was completed successfully, the version number is written in
- *      admin/upgrade/history (as filename).
+ *      data/upgraded (as filename).
  * 2.   For each version an upgrade file with specific actions reflecting the
  *      necessary changes since the last version can exist (must not).
  *      Location: admin\upgrade\version ; Format "upgrade_%versionnumber%.php"
@@ -59,8 +59,9 @@ class JtUpgrader {
      * @return \b void
      */
     public function __construct($cfg) {
-        $this->basepath  = $cfg->sys->basepath;
-        $this->upgradedir = $this->basepath.'admin/upgrade/';
+        $this->basepath     = $cfg->sys->basepath;
+        $this->upgradedir   = $this->basepath.'admin/upgrade/';
+        $this->history      = $cfg->sys->data_upgraded;
     }
 
 
@@ -99,9 +100,9 @@ class JtUpgrader {
         $upgrade_files = preg_replace('/.*versions\/upgrade_(.*)\.php/', '\1', $upgrade_files);
 
         // Find all already completed upgrades
-        $completed = glob($this->upgradedir.'history/ver_*');
+        $completed = glob($this->history.'ver_*');
         // Remove everything but version number (only needed for pattern search and because of .gitkeep)
-        $completed = preg_replace('/.*history\/ver_/', '', $completed);
+        $completed = preg_replace('/.*upgraded\/ver_/', '', $completed);
 
         // Finally only keep the upgrade_files in memory that have not been run yet
         $upgrade_todo = array_diff($upgrade_files, $completed);
@@ -136,7 +137,7 @@ class JtUpgrader {
 
             // Everything went great? Ok, finish the upgrade
             if ($status) {
-                file_put_contents($this->upgradedir.'history/ver_'.$version, $this->release_note);
+                file_put_contents($this->history.'ver_'.$version, $this->release_note);
             }
 
             $this->status_message .= 'Successfully upgraded to: <strong>'.$version.'</strong><br>';

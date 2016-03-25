@@ -21,7 +21,7 @@ Changes
 
 
 Improvements
-- xxx
+- Moved admin/upgrade/history to data/upgraded because folder needs writing permission (Version 0.4 missed this requirement in the installation instructions)
 
 
 Fixes
@@ -44,23 +44,22 @@ Credits
 
 
 /**
- * Delete these folder on update
-*/
-$this->release_foldersDelete = array (
-//    'xxx1',
-//    'xxx2'
-);
-
-
-/**
  * @Note    Files that must be moved. Don't use trailing slashes.
  *          Use * (many chars) or ? (one character) as wildcards for source ('from').
  *          If you use wildcards for the source, set a * at the end of the target ('to')
  *
  *          If you want to copy a single file, spell it out in 'from' and 'to'
 */
-//$this->release_filesMove['from'][]  = 'xxx.php';
-//$this->release_filesMove['to'][]    = 'xxx/xxx.php';
+$this->release_filesMove['from'][]  = 'admin/upgrade/history/*';
+$this->release_filesMove['to'][]    = 'data/upgraded/*';
+
+
+/**
+ * Delete these folder on update
+ */
+$this->release_foldersDelete = array (
+    'admin/upgrade/history'
+);
 
 
 ?>

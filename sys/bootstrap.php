@@ -36,14 +36,6 @@ $cfg->sys->basepath  = realpath( __DIR__ ) .'/../';    // absolute path to Journ
 $cfg->prefs->current_lang   = (isset($_GET['lang']) && $_GET['lang'] != '') ? $_GET['lang'] : $cfg->prefs->language_default;
 require_once($cfg->sys->basepath.'sys/jt-gettext.php');
 
-// Set current version
-$cfg->sys->current_jt_version = 0.5;
-
-// Check if upgrade is required
-if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
-    echo 'JournalTouch has to be upgraded. Please go to <a href="admin/upgrade.php">Admin Upgrader</a>';
-    exit;
-}
 
 // Check if admin folder is secured by htaccess
 $cfg->sys->adminSecured = file_exists($cfg->sys->basepath.'admin/.htaccess');
@@ -57,6 +49,17 @@ $cfg->sys->data_cache    = ($cfg->sys->data_cache_usr)     ? $cfg->sys->data_cac
 $cfg->sys->data_covers   = ($cfg->sys->data_covers_usr)    ? $cfg->sys->data_covers_usr     : 'data/covers/';
 $cfg->sys->data_export   = ($cfg->sys->data_export_usr)    ? $cfg->sys->data_export_usr     : $cfg->sys->basepath.'data/export/';
 $cfg->sys->data_journals = ($cfg->sys->data_journals_usr)  ? $cfg->sys->data_journals_usr   : $cfg->sys->basepath.'data/journals/';
+$cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upgraded_usr    : $cfg->sys->basepath.'data/upgraded/';
+
+
+// Set current version
+$cfg->sys->current_jt_version = 0.5;
+
+// Check if upgrade is required
+if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
+    echo 'JournalTouch has to be upgraded. Please go to <a href="admin/upgrade.php">Admin Upgrader</a>';
+    exit;
+}
 
 
 // @deprecated 2015-08-30: Currently there is no use to force deletion of cached files, since ajax_toc.php handles it well to make sure a cache is valid

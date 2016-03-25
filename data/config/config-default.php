@@ -329,6 +329,7 @@ $cfg->sys->data_cache_usr       = ''; // If empty it points to data/cache
 $cfg->sys->data_covers_usr      = ''; // If empty it points to data/cover
 $cfg->sys->data_export_usr      = ''; // If empty it points to data/export
 $cfg->sys->data_journals_usr    = ''; // If empty it points to data/journals
+$cfg->sys->data_upgraded_usr    = ''; // If empty it points to data/upgraded
 
 
 

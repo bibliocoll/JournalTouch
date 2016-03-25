@@ -6,13 +6,13 @@ config.php
 
 # Some exclusions, so the folders always are created, even if initally empty
 !*.gitkeep
-!admin/upgrade/history/.gitkeep
 !admin/upgrade/versions/.gitkeep
 !data/cache/.gitkeep
 !data/cache/config-default.php
 !data/covers/.gitkeep
 !data/export/.gitkeep
 !data/journals/backup/.gitkeep
+!data/upgraded/.gitkeep
 !doc/jt-documentation.chm
 !doc/jt-doxygen.conf
 

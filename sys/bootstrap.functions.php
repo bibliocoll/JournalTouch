@@ -85,11 +85,12 @@ function language_switch($cfg) {
   * @return \b bool True if upgrade is needed, false otherwise
   */
 function check_upgrade_required($cfg) {
-    // The very first time, create an info, what is our initial JT version
-    // (the "fresh" installation). It's easy - it's the first info in history
+    // The very first run, create an info about our initial JT version
+    // (the "fresh" installation). It's easy - it's the first info in upgraded
+    // history
     $upd_dir    = $cfg->sys->basepath.'admin/upgrade/';
 
-    $historyDir     = glob($upd_dir.'history/ver_*');
+    $historyDir     = glob($cfg->sys->data_upgraded.'ver_*');
     $historyCount   = count($historyDir);
 
     // Write our initial version
@@ -97,15 +98,15 @@ function check_upgrade_required($cfg) {
         // Special case, coming from 0.3, which had no upgrade mechanism
         // Check for something that only existed in 0.3
         if (file_exists($cfg->sys->basepath.'locale/de_DE.gif')) {
-            file_put_contents($upd_dir.'history/ver_0.3', '');
+            file_put_contents($cfg->sys->data_upgraded.'ver_0.3', '');
         }
         else {
-            file_put_contents($upd_dir.'history/ver_'.$cfg->sys->current_jt_version, '');
+            file_put_contents($cfg->sys->data_upgraded.'ver_'.$cfg->sys->current_jt_version, '');
         }
     }
 
     // Now check if the current version differs from our last upgraded version
-    if (!file_exists($cfg->sys->basepath.'admin/upgrade/history/ver_'.$cfg->sys->current_jt_version)) {
+    if (!file_exists($cfg->sys->data_upgraded.'ver_'.$cfg->sys->current_jt_version)) {
         return true;
     } else {
         return false;
