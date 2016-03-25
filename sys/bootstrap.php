@@ -49,7 +49,7 @@ $cfg->sys->data_cache    = ($cfg->sys->data_cache_usr)     ? $cfg->sys->data_cac
 $cfg->sys->data_covers   = ($cfg->sys->data_covers_usr)    ? $cfg->sys->data_covers_usr     : 'data/covers/';
 $cfg->sys->data_export   = ($cfg->sys->data_export_usr)    ? $cfg->sys->data_export_usr     : $cfg->sys->basepath.'data/export/';
 $cfg->sys->data_journals = ($cfg->sys->data_journals_usr)  ? $cfg->sys->data_journals_usr   : $cfg->sys->basepath.'data/journals/';
-$cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upgraded_usr    : $cfg->sys->basepath.'data/upgraded/';
+$cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upgraded_usr   : $cfg->sys->basepath.'data/upgraded/';
 
 
 // Set current version
@@ -75,4 +75,22 @@ $cfg->csv_file = new stdClass();
 */
 $cfg->csv_file->separator  = ';';
 $cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
+
+
+// If this is a new installation, set the demo files as default
+if (isset($cfg->sys->newInstallation)) {
+    if (!is_writable($cfg->sys->basepath.'data/')) {
+        die('The webserver needs writing permission for the data folder!');
+    } else {
+        if (!file_exists($cfg->sys->data_journals.'journals.csv')) {
+            copy($cfg->sys->data_journals.'demo/journals.csv', $cfg->sys->data_journals.'journals.csv');
+        }
+        if (!file_exists($cfg->sys->data_journals.'tag-remap.txt')) {
+            copy($cfg->sys->data_journals.'demo/tag-remap.txt', $cfg->sys->data_journals.'tag-remap.txt');
+        }
+        if (!file_exists($cfg->sys->data_journals.'updates.json.txt')) {
+            copy($cfg->sys->data_journals.'demo/updates.json.txt', $cfg->sys->data_journals.'updates.json.txt');
+        }
+    }
+}
 ?>
