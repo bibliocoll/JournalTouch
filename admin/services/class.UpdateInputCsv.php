@@ -170,8 +170,6 @@ class GetJournalInfos {
      */
     public function update_journals_csv($fetch_meta = true, $fetch_recent = true, $clean_tags = false, $fetch_covers = false) {
         if (($handle = fopen($this->csv_file->path, "r")) !== FALSE) {
-            //include bootstrap.functions for valid_issn()
-            require_once(__DIR__ . '/../../sys/bootstrap.functions.php');
             // if fetch_covers enabled, create an instance
             if ($fetch_covers) {
                 require('class.GetCover.php');
@@ -179,13 +177,13 @@ class GetJournalInfos {
             }
 
             $this->log .= '<p>opened ' .$this->csv_file->path. ' for reading, starting run now.</p>'.PHP_EOL.'<p>';
-            while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== FALSE) {
+            while (($journal_rows = fgetcsv($handle, 0, $this->csv_file->separator)) !== false) {
                 $this->log .= '<p>';
 
                 $this->issn = '';
-                if (valid_issn($journal_rows[$this->csv_col->p_issn], TRUE) === TRUE) {
+                if (!empty($journal_rows[$this->csv_col->p_issn])) {
                     $this->issn = $journal_rows[$this->csv_col->p_issn];
-                } elseif (valid_issn($journal_rows[$this->csv_col->e_issn], TRUE) === TRUE) {
+                } elseif (!empty($journal_rows[$this->csv_col->e_issn])) {
                     $this->issn = $journal_rows[$this->csv_col->e_issn];
                 }
 
