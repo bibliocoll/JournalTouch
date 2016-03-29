@@ -186,7 +186,13 @@ class GetJournalInfos {
                 if (valid_issn($journal_rows[$this->csv_col->p_issn], TRUE) === TRUE) {
                     $this->issn = $journal_rows[$this->csv_col->p_issn];
                 } elseif (valid_issn($journal_rows[$this->csv_col->e_issn], TRUE) === TRUE) {
+                    $this->log .= 'Had no usable print ISSN for this row, using eISSN!<br />'.PHP_EOL;
                     $this->issn = $journal_rows[$this->csv_col->e_issn];
+                } else {
+                    $this->log .= 'Had no usable ISSN for this row, skipping!<br />'.PHP_EOL;
+                    if (!empty($journal_rows[$this->csv_col->title])) {
+                      $this->log .= 'Journal name: '. $journal_rows[$this->csv_col->title];
+                    }
                 }
 
                 $issn = $this->issn;
