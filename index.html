@@ -2,9 +2,9 @@
 <html>
 
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="JournalTouch : JournalTouch provides a touch-optimized interface for browsing current jounal tables of contents in Responsive Design. Fun!" />
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="JournalTouch : JournalTouch provides a touch-optimized interface for browsing current jounal tables of contents in Responsive Design. Fun!">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
@@ -32,367 +32,87 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h1>
-<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h1>
+<a id="about" class="anchor" href="#about" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>About</h1>
 
-<p>JournalTouch provides a touch-optimized interface for browsing current journal tables of contents in Responsive Design. Fun!</p>
+<p>JournalTouch provides a touch-optimized, responsive interface for browsing current journal table-of-contents.</p>
 
 <h1>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h1>
 
-<p><a href="https://github.com/copyright" class="user-mention">@copyright</a> 2014 MPI for Research on Collective Goods, Library</p>
+<h2>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prerequisites</h2>
 
-<p><a href="https://github.com/author" class="user-mention">@author</a> Daniel Zimmel <a href="mailto:zimmel@coll.mpg.de">zimmel@coll.mpg.de</a></p>
+<ol>
+<li>Make sure you have Apache and PHP available. Nothing else is needed</li>
+<li>Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily donwload covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.</li>
+</ol>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<ol>
+<li>Create a free <a href="http://www.journaltocs.ac.uk/index.php?action=register">JournalTocs account</a>. While not strictly required, it is highly recommended.</li>
+<li>Download JournalTouch (e.g. by clicking "Download ZIP", upper right on this page).</li>
+<li>Extract to your Apache webfolder. Make sure the data folder and its subfolders are writable by the webserver (e.g. the user/group www-data under Ubuntu).</li>
+<li>Go to <a href="http://myinstallation.net/admin">http://myinstallation.net/admin</a> and set enter your JournalTocs mail there (you also should make sure this folder is secured, e.g. by using a htaccess).</li>
+<li>Edit data/cover/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg-&gt;csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.</li>
+<li>Go again to <a href="http://myinstallation.net/admin">http://myinstallation.net/admin</a>. Under "Update options" click "Start" and wait. You journals.csv will get updated.</li>
+<li>Go to <a href="http://myinstallation.net/">http://myinstallation.net/</a> and be happy</li>
+<li>IF you are happy, set a cronjob to call <a href="http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;upd=true">http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;upd=true</a> daily or use <a href="http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;optCovers=on&amp;upd=true">http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;optCovers=on&amp;upd=true</a> if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
+
+<ol>
+<li>Example Cronjob: wget -O - -q -t 1 "<a href="http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;optCovers=on&amp;upd=true">http://myinstallation.net/admin/updateTocs.php?optRecent=on&amp;optCovers=on&amp;upd=true</a>" &gt;/dev/null 2&gt;&amp;1</li>
+</ol>
+</li>
+</ol>
+
+<h2>
+<a id="translations" class="anchor" href="#translations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Translations</h2>
+
+<ul>
+<li>If you want to change translations you can use <a href="https://poedit.net/">Poedit</a> - it's free.</li>
+<li>As of version 0.4 many things can be translated in the Settings menu in the admin panel :)</li>
+</ul>
+
+<h1>
+<a id="current-version-04" class="anchor" href="#current-version-04" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Current version: 0.4</h1>
+
+<p>See latest changelog: <a href="doc/github/version_0.4_unreleased.md">JournalTouch Version 0.4</a>.</p>
+
+<p>We're using the git-flow project structure, so the master branch always holds the latest stable version of this project.
+Work towards the next release happens on the <code>develop</code> branch. For more information, please refer to the <a href="https://github.com/bibliocoll/JournalTouch/wiki/Contributing">Wiki</a></p>
+
+<h1>
+<a id="legalese" class="anchor" href="#legalese" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Legalese</h1>
+
+<p><a href="https://github.com/copyright" class="user-mention">@copyright</a> 2014-2016 MPI for Research on Collective Goods, Library
+(Contact: <a href="mailto:fruehauf@coll.mpg.de">fruehauf@coll.mpg.de</a> and <a href="mailto:krug@coll.mpg.de">krug@coll.mpg.de</a>)</p>
+
+<p><a href="https://github.com/author" class="user-mention">@author</a> Alexander Krug <a href="mailto:krug@coll.mpg.de">krug@coll.mpg.de</a> (Maintainer)</p>
+
+<p><a href="https://github.com/author" class="user-mention">@author</a> Tobias Zeumer <a href="mailto:tzeumer@verweisungsform.de">tzeumer@verweisungsform.de</a></p>
+
+<p><a href="https://github.com/author" class="user-mention">@author</a> Daniel Zimmel <a href="mailto:dnl@mailbox.org">dnl@mailbox.org</a></p>
 
 <p>License: <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a> GPL version 3 or higher</p>
 
 <h1>
-<a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h1>
-
-<ul>
-<li>PHP 5 ([<a href="http://www.php.net%5D">http://www.php.net]</a>)</li>
-<li>API key for JournalTocs ([<a href="http://www.journaltocs.ac.uk%5D">http://www.journaltocs.ac.uk]</a>)</li>
-</ul><p>already included:</p>
-
-<ul>
-<li>Foundation 5 [<a href="http://foundation.zurb.com">http://foundation.zurb.com</a>]</li>
-<li>jQuery 2+ [<a href="http://jquery.com">http://jquery.com</a>]</li>
-<li>simpleCart js [<a href="http://simplecartjs.org">http://simplecartjs.org</a>] <strong>slightly modified</strong>
-</li>
-<li>Unveil.js [<a href="https://github.com/luis-almeida/unveil">https://github.com/luis-almeida/unveil</a>] for lazy loading</li>
-<li>waypoints.js [<a href="https://github.com/imakewebthings/jquery-waypoints">https://github.com/imakewebthings/jquery-waypoints</a>]</li>
-<li>PHPMailer [<a href="https://github.com/PHPMailer/PHPMailer">https://github.com/PHPMailer/PHPMailer</a>]</li>
-</ul><h1>
-<a name="live-demo" class="anchor" href="#live-demo"><span class="octicon octicon-link"></span></a>Live Demo</h1>
+<a id="live-demo" class="anchor" href="#live-demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Live Demo</h1>
 
 <p>Try here: <a href="http://www.coll.mpg.de/bib/jtdemo-public/">http://www.coll.mpg.de/bib/jtdemo-public/</a></p>
 
 <h1>
-<a name="installation--setup" class="anchor" href="#installation--setup"><span class="octicon octicon-link"></span></a>Installation &amp; Setup</h1>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies</h1>
 
-<h2>
-<a name="general" class="anchor" href="#general"><span class="octicon octicon-link"></span></a>General</h2>
-
-<p>The main page is <em>index.php</em> and reads the relevant journals from <em>input/</em>. Put a CSV file in here. Alternatively, set up a Google Drive Spreadsheet and read it directly from the web.
-It must at least contain the journal titles and a valid ISSN; configure optional columns in the <em>config/config.ini</em> (e.g. for filters). You can add any columns you like (extend the PHP classes).</p>
-
-<h3>
-<a name="configure-sources-for-the-tocs" class="anchor" href="#configure-sources-for-the-tocs"><span class="octicon octicon-link"></span></a>Configure sources for the TOCs</h3>
-
-<p>External (TOC) contents will be read from <em>index.php</em> with an AJAX call to <em>ajax/getCrossRefTOC.php</em> or <em>ajax/getJournalTOC.php</em>, respectively. This file outputs HTML to the caller which is ready to be inserted in <em>index.php</em> (Todo: make it more API-like). You will need a JournalTocs API key for the query (= your JournalTocs user e-mail). Set it in <em>config/config.ini</em>.
-If you want to read from other sources, write a similar handler like <em>ajax/getJournalTOC.php</em>.</p>
-
-<p>By default there are two queries; the first one queries the (experimental) CrossRef-API, and as a fallback option, there is a query to JournalTocs. To change this precedence and for more details refer to the corresponding ajax function in <em>js/local/conduit.js</em>. Error handling is as follows: any network (HTTP) problems will be handled in the Javascript ajax function (jQuery "fail" event). By default, if the frist query fails after five seconds, the first query gets canceled and the second query gets fired (change in <em>js/local/conduit.js</em>). Any other errors should be captured in the callers directly (<em>ajax/</em>).</p>
-
-<p>Please note: while you could set up an alternative ISSN in the config.ini, it is ignored by now.</p>
-
-<p>For example: </p>
-
-<p><em>getCrossRefTOC.php</em>:</p>
-
-<pre><code>if (empty($toc)) {
-/* write something we can read from our calling script */
-echo '&lt;span id="noTOC"/&gt;';
-} 
-</code></pre>
-
-<p>handle in <em>conduit.js</em>:</p>
-
-<pre><code>    if ($(returnData).filter('#noTOC').length &gt; 0) {
-    // ... fire a second event or write an error message...
-    }
-</code></pre>
-
-<h3>
-<a name="checkout-options" class="anchor" href="#checkout-options"><span class="octicon octicon-link"></span></a>Checkout options</h3>
-
-<p>Checkout options are handled in <em>checkout.php</em> and the imported classes.</p>
-
-<p>Be sure to set writing rights to <em>export/</em>.</p>
-
-<h3>
-<a name="user-interaction" class="anchor" href="#user-interaction"><span class="octicon octicon-link"></span></a>User interaction</h3>
-
-<p>User interaction is handled in <em>js/local/conduit.js</em>.</p>
-
-<h3>
-<a name="other-notes" class="anchor" href="#other-notes"><span class="octicon octicon-link"></span></a>Other notes</h3>
-
-<p>Important note for Excel CSV exports: expect problems if your file is not UTF-8 encoded! Excel does not export to UTF-8 by default.</p>
-
-<h2>
-<a name="setup-configuration-file" class="anchor" href="#setup-configuration-file"><span class="octicon octicon-link"></span></a>Setup configuration file</h2>
-
-<p>The configuration is handled in <em>config/config.ini</em>.
-Configuration parameters are grouped and will be read in the PHP classes as a multidimensional array. For details refer to the PHP documentation for parse_ini_file().</p>
-
-<p><strong>Example: read a configuration variable into the construct function in some class</strong></p>
-
-<pre><code>    $config = parse_ini_file('config/config.ini', TRUE);
-    $this-&gt;csv_col_title = $config['csv']['title'];
-</code></pre>
-
-<h2>
-<a name="touch-devices" class="anchor" href="#touch-devices"><span class="octicon octicon-link"></span></a>Touch devices</h2>
-
-<p>See the examples for special touchscreen customization below in <em>Customization/Responsiveness</em>.</p>
-
-<p>This webapp is reported to run sluggishly on touch devices running Chrome and Windows 8. On this system configuration, better use current versions of Internet Explorer or Firefox.</p>
+<ul>
+<li>PHP 5.3 or newer ([<a href="http://www.php.net">http://www.php.net</a>]), please use the most up-to-date version you have available</li>
+<li>API key for JournalTocs ([<a href="http://www.journaltocs.ac.uk">http://www.journaltocs.ac.uk</a>])</li>
+</ul>
 
 <h1>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+<a id="wiki" class="anchor" href="#wiki" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Wiki</h1>
 
-<h2>
-<a name="maintaining-journal-updates" class="anchor" href="#maintaining-journal-updates"><span class="octicon octicon-link"></span></a>Maintaining journal updates</h2>
-
-<p>The input file feeds the journal list. Be careful if you change the structure of your CSV file (you may need to reconfigure the csv group in <em>config/config.ini</em>).</p>
-
-<p>One of the not-so-trivial things is maintaining the marking of journals as "recently updated".
-There is a basic experimental service that checks on new journal issues. It must be called separately (e.g. daily from a cronjob), and it works only if you have licensed access to the JournalTOCs Premium API. 
-Run the service <em>services/getLatestJournals.php</em> (e.g. on a daily basis). It will output an array of ISSNs that are written to <em>input/latest-issns.json</em>. Adapt it to your needs. Currently, it runs a query to JournalTocs, compares the ISSNs with the existing file, and adds it to the file with the current calendar week (although the week is not used right now). Old weeks will be deleted. The output file will be read from <em>sys/class.ListJournals.php</em> in the function <code>isCurrent()</code> and add a 'new' marking to the journal array (which then you can read from index.php). </p>
-
-<p>Configure the file and your custom JournalTOCs URL in <em>config/config.ini</em>.</p>
-
-<p>Alternatively, you could set up alerting services for yourself (e-mail, feeds...) and keep the input file up-to-date manually:
-for the image slider ("Current this week") above the list or grid view ("Orbit") you will need to fill and update a special column (<em>config.ini</em>-default: <em>week</em>). Fill in the current calendar week when a new journal issue arrives; these journals will be displayed in the slider and get a special marking (default: "new" icon).</p>
-
-<p>The default setting is that you can combine the two functions (automatic comparison and manual setting).</p>
-
-<p>Please note: Orbit tends to slow things a lot on mobile devices if you have lots of images (any image will be preloaded by default). To change this, either do not use Orbit, or modify its source to implenent some sort of lazy loading.</p>
-
-<p>You can configure a column (default: "important") to mark important journals (fill in what you like). </p>
-
-<h2>
-<a name="cover-images" class="anchor" href="#cover-images"><span class="octicon octicon-link"></span></a>Cover images</h2>
-
-<p>If you have access to a cover service API, set the setting in <em>config/config.ini</em> to <code>true</code>, and configure your service in <em>sys/class.ListJournals.php</em> (<code>getCover()</code>). 
-By default, cover images will be loaded from <em>img/</em>, if there exists an image file named after the ISSN (e.g. <em>0123-4567.png</em>). If not, a placeholder will be used (configure in <em>config/config.ini</em>).</p>
-
-<p>All image content is preloaded from the input file. To make things load faster (e.g. on slow bandwith), the jQuery plugin unveil.js is loaded by default. The preload image is in the <em>img/</em>-directory and is called <em>lazyloader.gif</em>. The placeholder image must be set in the <em>src</em> attribute of the journal listing. The actual cover image must be placed in the attribute <em>data-src</em>. See the listing part in index.php.</p>
-
-<h2>
-<a name="php-classes" class="anchor" href="#php-classes"><span class="octicon octicon-link"></span></a>PHP Classes</h2>
-
-<p>The following classes are required:</p>
-
-<p><em>sys/class.CheckoutActions.php</em></p>
-
-<p><em>sys/class.GetUser.php</em></p>
-
-<p><em>sys/class.ListJournals.php</em></p>
-
-<p>Access the methods in these classes from <em>index.php</em> and <em>checkout.php</em></p>
-
-<p><strong>Example: access the journals</strong></p>
-
-<p>setup...</p>
-
-<pre><code>             require 'sys/class.ListJournals.php'; 
-             $lister = new ListJournals();
-             $journals = $lister-&gt;getJournals();
-</code></pre>
-
-<p>...and do something with it:</p>
-
-<pre><code>    foreach ($journals as $j) {
-           if (!empty($j['new'])) { 
-                 echo '&lt;li data-orbit-slide="headline"&gt;';
-                 echo '&lt;img class="issn getTOC" id="'.$j['id'].'" src="'.$j['img'].'"/&gt;';
-                 echo '&lt;div class="orbit-caption"&gt;'.$j['title'].'&lt;/div&gt;';
-                 echo '&lt;/li&gt;';
-           }
-    }
-</code></pre>
-
-<p>...this is handled in the method in <em>sys/class.ListJournals.php</em></p>
-
-<pre><code>         function getJournals()
-</code></pre>
-
-<p><strong>Example: set up the Mailer</strong></p>
-
-<p>setup...</p>
-
-<pre><code>            require 'sys/PHPMailer/PHPMailerAutoload.php';
-            $email = new PHPMailer();
-            $action = new CheckoutActions();
-</code></pre>
-
-<p>...and send the mail...</p>
-
-<pre><code>         if($_POST &amp;&amp; $_POST['mailer'])
-   {
-         $action-&gt;sendArticlesAsMail($file, $email);
-         }
-</code></pre>
-
-<p>...this is handled in the method in <em>sys/class.CheckoutActions.php</em></p>
-
-<pre><code>         function sendArticlesAsMail($file, $email)
-</code></pre>
-
-<p>(do not forget to pass the <code>PHPMailer()</code> object, here <code>$email</code>)</p>
-
-<h1>
-<a name="getting-the-tables-of-contents" class="anchor" href="#getting-the-tables-of-contents"><span class="octicon octicon-link"></span></a>Getting the tables of contents</h1>
-
-<p><em>index.php</em> contains a class named <code>.getTOC</code> which will trigger the AJAX call to fetch the TOC and insert a HTML snippet. The action is handled in <em>js/local/conduit.js</em>.</p>
-
-<p><strong>Important!</strong> Be careful when changing the HTML in the snippet! The DOM layout is essential for the jQuery functions to work as expected. If you need to make changes to the snippet, do not forget to change the jQuery selectors in <em>js/local/conduit.js</em> as well.</p>
-
-<h1>
-<a name="basket-functionality" class="anchor" href="#basket-functionality"><span class="octicon octicon-link"></span></a>Basket functionality</h1>
-
-<p>The basket is completely written in Javascript. For configuration, refer to the <a href="http://simplecartjs.org">simpleCart-JS documentation</a>.</p>
-
-<p>Basic configuration is in <em>index.php</em>. The CSS classes and IDs for the
-articles (<code>item_*</code>) need to exist in the HTML snippet that includes the table of contents (<em>ajax/getJournalTOC.php</em>).
-Actions for adding/removing/displaying the basket are handled in <em>js/local/conduit.js</em>.</p>
-
-<h1>
-<a name="checkout-options-1" class="anchor" href="#checkout-options-1"><span class="octicon octicon-link"></span></a>Checkout options</h1>
-
-<p>The default checkout main file is <em>checkout.php</em>. The click actions are configured in <em>js/local/conduit.js</em>.</p>
-
-<p>The text for E-Mail notifications is configured in <em>config/config.ini</em>.</p>
-
-<p>Please note: the current mixing of GET/POST and jQuery bits is chaotic. Beware of bugs. Please rewrite.</p>
-
-<h2>
-<a name="export-directory" class="anchor" href="#export-directory"><span class="octicon octicon-link"></span></a>Export directory</h2>
-
-<p>By default, a time-hashed file will be written to <em>export/</em> on calling <em>checkout.php</em> (<code>$action-&gt;saveArticlesAsCSV($mylist);</code>). 
-<strong>These files will not be deleted by default</strong> (extend the given methods to achieve this).</p>
-
-<h2>
-<a name="mailer" class="anchor" href="#mailer"><span class="octicon octicon-link"></span></a>Mailer</h2>
-
-<p>Mailing service configuration happens with PHPMailer. Configure your mail preferences in <em>config/config.ini</em>.</p>
-
-<p>By default, mailing is only possible for user accounts registered at a given host. Set the <em>domain</em> in the mailer group in <em>config/config.ini</em>. The users only put in their user names.
-For an alternative behavior, or if you want to allow free input, change the function <code>sendArticlesAsMail()</code> in <em>sys/classCheckoutActions.php</em>.</p>
-
-<p>If you want to offer a predefined list of allowed user mail accounts, set the option <em>userlist</em> to <em>true</em> in <em>config/config.ini</em>, and set up a function in <em>sys/class.GetUsers.php</em>.
-Return an array of users. Get it for example from a database query (add a function to the class, see the example <em>class.GetUsers.php</em>).</p>
-
-<h1>
-<a name="customization" class="anchor" href="#customization"><span class="octicon octicon-link"></span></a>Customization</h1>
-
-<h2>
-<a name="look-and-feel" class="anchor" href="#look-and-feel"><span class="octicon octicon-link"></span></a>Look and Feel</h2>
-
-<p>Built with the Foundation HTML5 framework. Please refer to the <a href="http://foundation.zurb.com/docs/">documentation</a>.</p>
-
-<p>For CSS customizations use <em>css/local.css</em> .</p>
-
-<h3>
-<a name="responsiveness" class="anchor" href="#responsiveness"><span class="octicon octicon-link"></span></a>Responsiveness</h3>
-
-<p>Foundation is a responsive design framework. It will adapt itself to different devices and screens. However, if you need more precise positionings and conditions, there are nice customization features.
-By default, there is a common stylesheet (<em>css/local.css</em>), and another one for special media queries (<em>css/media.css</em>).</p>
-
-<p><strong>Example: insert a special CSS for large screens (e.g. larger buttons for large touchscreens)</strong></p>
-
-<p>add the following media query to the stylesheet <em>media.css</em>:</p>
-
-<pre><code>    @media only screen and (min-width: 85.063em) {  
- ...CSS goes here...
-}
-</code></pre>
-
-<p><strong>Example: Hide some elements for small screens</strong></p>
-
-<pre><code>&lt;span class="hide-for-small"&gt;This element will be hidden on small screens&lt;/span&gt;
-</code></pre>
-
-<p>Refer to the <a href="http://foundation.zurb.com/docs/components/visibility.html">Foundation Visibility classes</a>.</p>
-
-<h3>
-<a name="orbit-slider-configuration" class="anchor" href="#orbit-slider-configuration"><span class="octicon octicon-link"></span></a>Orbit Slider Configuration</h3>
-
-<p>Orbit is an image slider shipped with Foundation. By default, it is inactive. It could be used to display most recent journal updates, or any other stuff you want to highlight. If you like fancy,
-configure the image slider directly in index.php.</p>
-
-<p><strong>Example: change setting</strong></p>
-
-<pre><code> &lt;ul id="myorbit" data-orbit data-options="animation_speed: 1000;timer_speed: 2000;animation: 'fade';bullets: false"&gt;
-</code></pre>
-
-<p>For all available options refer to the <a href="http://foundation.zurb.com/docs/components/orbit.html">Foundation Orbit Documentation</a>.</p>
-
-<h3>
-<a name="screensaver-function" class="anchor" href="#screensaver-function"><span class="octicon octicon-link"></span></a>Screensaver function</h3>
-
-<p>If you want a screensaver functionality, change the text in the <em>#screensaver</em>-div in <em>index.php</em>, and check out the function in <em>js/local/conduit.js</em>, which loads a block after a click/touch timeout.
-By default it is only active on large screens (see CSS in <em>css/media.css</em>).</p>
-
-<h3>
-<a name="dynamic-alphabet" class="anchor" href="#dynamic-alphabet"><span class="octicon octicon-link"></span></a>Dynamic Alphabet</h3>
-
-<p>On scrolling, the current letter will be highlighted (<em>#letterbox</em> is appended dynamically via jQuery). For configuration, see <em>js/local/conduit.js</em>. For this to work, be sure to have the <em>waypoints.min.js</em>-Plugin included in your <em>index.php</em>.</p>
-
-<h2>
-<a name="icons" class="anchor" href="#icons"><span class="octicon octicon-link"></span></a>Icons</h2>
-
-<p>Default for an unified look are the Foundation icons <a href="http://zurb.com/playground/foundation-icon-fonts-3">Foundation-Icons</a>. </p>
-
-<p><strong>Example: insert a star icon</strong></p>
-
-<pre><code>            &lt;i class="fi-star"&gt;&lt;/i&gt;
-</code></pre>
-
-<h2>
-<a name="filter" class="anchor" href="#filter"><span class="octicon octicon-link"></span></a>Filter</h2>
-
-<p>You can use the entries in a CSV column of your input file as filters. Set the column and filters in <em>config/config.ini</em>, group csv. 
-Comment out the filter value in the csv group if you do not have/want filters.
-Please note: anything in the "important" col. will get the special CSS-ID "topJ" (see
-<em>sys/class.ListJournals.php</em>). The other column contents will be added as CSS-IDs to the DOM.</p>
-
-<p>Filters will show up in the heading section of <em>index.php</em>, and their behavior on click is handled in <em>js/local/conduit.js</em>.</p>
-
-<h2>
-<a name="export-options" class="anchor" href="#export-options"><span class="octicon octicon-link"></span></a>Export options</h2>
-
-<p>Export for citation management software currently is very basic. To be
-able to digest heterogenous data from different sources (CrossRef,
-JournalTOCs...), some essential metadata fields should be normalized already
- in the TOC snippet (<em>ajax/get...</em>). </p>
-
-<p>When a user clicks on the basket checkout, a csv file will automatically be generated in <em>export/</em>. The function is in <em>sys/class.CheckoutActions.php</em>: <code>saveArticlesAsCSV($mylist)</code>. When a user wants to export data, all fields will be read from this csv file. Write your mapping into an export function. For example, see the
-function <code>saveArticlesAsEndnote()</code>.</p>
-
-<p>Caveat: in the current implementation, mapping of the metadata is limited to the given <em>simpleCart</em> fields (<code>item_name</code>, <code>item_link</code>, <code>item_options_</code>), and will be re-read from the source string when exporting. This is by no means a clean implementation. It would be better to modify the <em>simpleCart</em> js for a cleaner mapping (it is not really a mapping right now). (TODO)</p>
-
-<h1>
-<a name="android-hints" class="anchor" href="#android-hints"><span class="octicon octicon-link"></span></a>Android Hints</h1>
-
-<p>To port it to a native mobile environment, you can use Apache Cordova / PhoneGap.
-For details on the setup see README.Android.md</p>
-
-<h1>
-<a name="admin-module" class="anchor" href="#admin-module"><span class="octicon octicon-link"></span></a>Admin Module</h1>
-
-<p>There is no administration module.
-A comfortable way is using the Google Drive API for managing the Spreadsheet data; just publish it on the web and read the file directly from Google Drive. Set in <em>config/config.ini</em>.</p>
-
-<h1>
-<a name="todo" class="anchor" href="#todo"><span class="octicon octicon-link"></span></a>TODO</h1>
-
-<p>Make <em>ajax/get...TOC.php</em> more flexible (rewrite as a single class)</p>
-
-<p>More reliable integration of hotness</p>
-
-<p>Wrap in Cordova iOS</p>
-
-<p>Authentication/Personalization</p>
-
-<p>Cover API integration</p>
-
-<p>Admin Module for manipulating the CSV file if you do not want to use Google Drive or set a local solution (Excel including hassles).</p>
-
-<p>Cleanup/Rewrite Checkout (GET/POST handling is a bit chaotic)</p>
-
-<p>Mapping for export (extend simpleCart.js)</p>
+<p>The documentation for this project lives on the <a href="https://github.com/bibliocoll/JournalTouch/wiki/">wiki</a>, please continue reading there.</p>
       </section>
     </div>
 
@@ -400,7 +120,7 @@ A comfortable way is using the Google Drive API for managing the Spreadsheet dat
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">JournalTouch maintained by <a href="https://github.com/bibliocoll">bibliocoll</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
