@@ -290,9 +290,9 @@ class JtUpgrader {
 
                 $status = copy($src_filepath, $dest_filepath);
 
-                // Successfully copied?
+                // Sucessfully copied?
                 if ($status) {
-                    $status_log .=  "<p>Successfully copied $src_filepath to $dest_filepath<br>";
+                    $status_log .=  "<p>Sucessfully copied $src_filepath to $dest_filepath<br>";
                 } else {
                     $status_log .=  "FAILED copying $src_filepath to $dest_filepath<br><strong>UPGRADE STOPPED</strong><br>";
                     break;
@@ -301,9 +301,9 @@ class JtUpgrader {
                 // Ok copied, now delete src
                 $status = unlink($src_filepath);
 
-                // Successfully deleted?
+                // Sucessfully deleted?
                 if ($status) {
-                    $status_log .=  "Successfully deleted $src_filepath</p>";
+                    $status_log .=  "Sucessfully deleted $src_filepath</p>";
                 }
                 // Otherwise break loop
                 else {
@@ -356,9 +356,9 @@ class JtUpgrader {
             // Folder empty? Now remove it
             $status = rmdir($folder_path);
 
-            // Successfully deleted?
+            // Sucessfully deleted?
             if ($status) {
-                $status_log .=  "Successfully deleted $folder_path<br>";
+                $status_log .=  "Sucessfully deleted $folder_path<br>";
             }
             // Otherwise break loop
             else {

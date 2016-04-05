@@ -69,7 +69,7 @@ $max_show = 100;
 $entry_start = (isset($_GET['start'])) ? $_GET['start'] : 1;
 
 // Get available journals images (manual and api)
-// Merge everything in a big array with issn as key
+// Merge everthing in a big array with issn as key
 /*
     [1572-9125] => Array(
         [journal] => BIT. Numerical mathematics

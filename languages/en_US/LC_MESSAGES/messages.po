@@ -499,7 +499,7 @@ msgid "Enable button for direct download?"
 msgstr ""
 
 #: admin/settings.php:461
-msgid "If you enable this a button for directly downloading a article's pdf file (and only pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page."
+msgid "If you enable this a button for directly downloading a article's pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page."
 msgstr ""
 
 #: admin/settings.php:462
@@ -647,7 +647,7 @@ msgid "Enable languages"
 msgstr ""
 
 #: admin/settings.php:542
-msgid "Enable all languages that should be available to visitors. For all activated languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page."
+msgid "Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page."
 msgstr ""
 
 #: admin/settings.php:547
@@ -768,7 +768,7 @@ msgid "Library service"
 msgstr ""
 
 #: admin/settings.php:582
-msgid "The link to you catalogue/service with the journal's issn appended."
+msgid "The link to you catalogue/service witht the journal's issn appended."
 msgstr ""
 
 #: admin/settings.php:585
@@ -820,7 +820,7 @@ msgid "Make articles in tocs a clickable link"
 msgstr ""
 
 #: admin/settings.php:607
-msgid "If people access JournalTouch from somewhere where they have no access to the licensed ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves)."
+msgid "If people access JournalTouch from somewhere where they have no access to the licenced ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves)."
 msgstr ""
 
 #: admin/settings.php:608
@@ -1007,7 +1007,7 @@ msgid "Hide printing on kiosk pc's."
 msgstr ""
 
 #: admin/settings.php:779
-msgid "Don't allow users to send request for PDFs to library on kiosk pc's. To completely disable this feature, go to \"Settings\""
+msgid "Don't allow users to send request for PDFs to library on kiosk pc's. To completly disable this feature, go to \"Settings\""
 msgstr ""
 
 #: admin/settings.php:782

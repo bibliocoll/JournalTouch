@@ -202,7 +202,7 @@ class GetCover {
         // the directlink if provided
         if (!$status && $directlink) {
             $status = _save_image($directlink);
-            $this->log .= ($status) ? '&gt; Successfully downloaded via provided direct download link<br>' : '&gt; Failed downloading via provided direct download link<br>';
+            $this->log .= ($status) ? '&gt; Sucessfully downloaded via provided direct download link<br>' : '&gt; Failed downloading via provided direct download link<br>';
         }
 
 
@@ -210,7 +210,7 @@ class GetCover {
         // If a custom url was provided, try this first
         if (!$status && $this->custom_api_url) {
             $status = get_user_cover_api();
-            $this->log .= ($status) ? '&gt; Successfully downloaded via user cover api<br>' : '&gt; Failed downloading via user cover api<br>';
+            $this->log .= ($status) ? '&gt; Sucessfully downloaded via user cover api<br>' : '&gt; Failed downloading via user cover api<br>';
         }
 
         // Got no cover yet, try specific publisher, if provided
@@ -219,7 +219,7 @@ class GetCover {
             foreach ($this->src_publisher AS $publisher => $enabled) {
                 if ($this->publisher == strtolower($publisher) && $enabled == 1) {
                     $status = call_user_func(array($this, 'get_publisher_'.$publisher));
-                    $this->log .= ($status) ? '&gt; Successfully downloaded cover from publisher '.$publisher.'<br>' : '&gt; Failed downloading cover from publisher '.$publisher.'<br>';
+                    $this->log .= ($status) ? '&gt; Sucessfully downloaded cover from publisher '.$publisher.'<br>' : '&gt; Failed downloading cover from publisher '.$publisher.'<br>';
                     if ($status) break;
                 }
             }
@@ -230,7 +230,7 @@ class GetCover {
             foreach ($this->src_genric AS $source => $enabled) {
                 if ($enabled == 1) {
                     $status = call_user_func(array($this, 'get_generic_'.$source));
-                    $this->log .= ($status) ? '&gt; Successfully downloaded cover from generic: '.$source.'<br>' : '&gt; Failed downloading cover from generic: '.$source.'<br>';
+                    $this->log .= ($status) ? '&gt; Sucessfully downloaded cover from generic: '.$source.'<br>' : '&gt; Failed downloading cover from generic: '.$source.'<br>';
                     if ($status) break;
                 }
             }

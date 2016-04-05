@@ -177,7 +177,7 @@
 					var info		= values || {},
 						newItem		= new simpleCart.Item(info),
 						addItem 	= true,
-						// optionally suppress event triggers
+						// optionally supress event triggers
 						quiet 		= opt_quiet === true ? opt_quiet : false,
 						oldItem;
 

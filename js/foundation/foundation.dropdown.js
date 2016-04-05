@@ -261,7 +261,7 @@
       }
     },
 
-    // Insert rule to style pseudo elements
+    // Insert rule to style psuedo elements
     adjust_pip : function (pip_offset_base, p) {
       var sheet = Foundation.stylesheet;
 

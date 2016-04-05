@@ -5,7 +5,7 @@ data/*
 config.php
 sys/class.GetUsers.php
 
-# Some exclusions, so the folders always are created, even if initially empty
+# Some exclusions, so the folders always are created, even if initally empty
 !*.gitkeep
 !admin/upgrade/history/.gitkeep
 !admin/upgrade/versions/.gitkeep

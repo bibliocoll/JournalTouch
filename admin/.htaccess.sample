@@ -1,4 +1,4 @@
-# JournalTouch currently has no real admin area. For now you should limit access
+# JournalTouch currently has no real admin area. For now you should limit acces
 # to this folder by ip.
 
 #require ip 127.0.0.1

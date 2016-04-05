@@ -249,7 +249,7 @@ if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === TRUE) {
 } else {
   $users = FALSE;
 }
-// if GetUsers failed or was turned off, allow entering an address
+// if GetUsers failed or was turned off, allow entering an adress
 if ($users === FALSE) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
