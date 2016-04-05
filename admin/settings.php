@@ -172,7 +172,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
             $frm_value  = $value->$language;
         }
         // But sometimes using arrays can't really be prevented without getting
-        // really ugly. The one and only case currenly: the filters (multidimensional)
+        // really ugly. The one and only case currently: the filters (multidimensional)
         elseif (is_array($value)) {
             $frm_value  = (isset($value[$language])) ? $value[$language] : '';
         } else {
@@ -458,7 +458,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                             <div id="help_proxy" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you got a proxy (e.g. EZproxy) to allow patrons outside of your ip range access then set the base url here (e.g. http://www.umm.uni-heidelberg.de/ezproxy/login.auth?url=).') ?></span></div>
                         <input type="checkbox" name="cfg[prefs][show_dl_button]" <?php echo frm_checked($cfg->prefs->show_dl_button) ?> aria-describedby="help_show_dl_button">
                             <label for="cfg[prefs][show_dl_button]"><?php echo __('Enable button for direct download?') ?></label><br />
-                            <div id="help_show_dl_button" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you enable this a button for directly downloading a article\'s pdf file (and onyl pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page.') ?></span></div>
+                            <div id="help_show_dl_button" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If you enable this a button for directly downloading a article\'s pdf file (and only pdf currently) is displayed in the toc for a journal. This only applies to publishers where we were able to figure out the link to do that. The idea is to not force a user to the publishers landing page.') ?></span></div>
                         <label for="cfg[prefs][sfx]"><?php echo __('SFX Service') ?></label>
                             <input type="text" name="cfg[prefs][sfx]" value="<?php echo $cfg->prefs->sfx ?>" aria-describedby="help_sfx" />
                             <div id="help_sfx" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Your sfx baseurl (e.g. http://sfx.gbv.de/sfx_tuhh). Currently used as alternative for the direct download button.') ?></span></div>
@@ -539,7 +539,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                                 <select id="multiple-languages" multiple data-prompt="<?php echo __('Enable languages') ?>" name="cfg[prefs][languages][]" aria-describedby="help_languages">
                                     <?php echo $langs_frm; ?>
                                 </select>
-                                <div id="help_languages" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page.') ?></span></div>
+                                <div id="help_languages" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enable all languages that should be available to visitors. For all activated languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page.') ?></span></div>
                         </div>
                     </div>
                 </fieldset>
@@ -579,7 +579,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                         <?php echo frm_input_translatable('cfg_ary[translations][meta_journalHP]',  $cfg->translations['meta_journalHP'], __('Meta Button: Journal Homepage'), 'help_trans_meta_journalHP') ?>
                         <div id="help_trans_meta_journalHP" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The button linking to the journal\'s homepage (see journals.csv column 16).') ?></span></div>
                         <?php echo frm_input_translatable('cfg_ary[translations][meta_inst_service]',  $cfg->translations['meta_inst_service'], __('Library service'), 'help_trans_meta_inst_service') ?>
-                        <div id="help_trans_meta_inst_service" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The link to you catalogue/service witht the journal\'s issn appended.') ?></span></div>
+                        <div id="help_trans_meta_inst_service" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The link to you catalogue/service with the journal\'s issn appended.') ?></span></div>
                 </fieldset>
                 <fieldset>
                     <legend><?php echo __('Translations: Other') ?></legend>
@@ -604,7 +604,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                     <legend><?php echo __('Api: General Settings') ?></legend>
                         <input type="checkbox" name="cfg[api][all][articleLink]" <?php echo frm_checked($cfg->api->all->articleLink) ?> aria-describedby="help_articleLink" />
                             <label for="cfg[api][all][articleLink]"><?php echo __('Make articles in tocs a clickable link') ?></label>
-                            <div id="help_articleLink" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If people access JournalTouch from somewhere where they have no access to the licenced ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves).') ?></span></div>
+                            <div id="help_articleLink" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If people access JournalTouch from somewhere where they have no access to the licensed ressources, disabling the linking might be an option. They can still add the items to the basket and order them (or fetch them in the library themselves).') ?></span></div>
                         <label for="cfg[api][all][is_new_days]"><?php echo __('Mark issue for how many days as new?') ?></label>
                             <input type="text" name="cfg[api][all][is_new_days]" value="<?php echo $cfg->api->all->is_new_days ?>" aria-describedby="help_is_new_days" />
                             <div id="help_is_new_days" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('If a new issue is found on the update (use a daily cron to keep track) it is marked as new for as many days as specified here. You might think it\'d be much cooler if the journal\'s publishing frequency would be used. Well, we think so too, but where to get it - or who would want to enter it by hand. Anyway, if you got a premium account and use the data for the live view (see below) you can ignore this setting.)') ?></span></div>
@@ -776,7 +776,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
 
                         <input type="checkbox" name="cfg[kiosk][policy_NoSendLib]" <?php echo frm_checked($cfg->kiosk->policy_NoSendLib) ?> aria-describedby="help_kiosk_policy_NoSendLib" />
                             <label for="cfg[kiosk][policy_NoSendLib]"><?php echo (__('Disable').' "'.__('Send to library to get PDFs').'"') ?>?</label><br />
-                            <div id="help_kiosk_policy_NoSendLib" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t allow users to send request for PDFs to library on kiosk pc\'s. To completly disable this feature, go to "Settings"') ?></span></div>
+                            <div id="help_kiosk_policy_NoSendLib" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Don\'t allow users to send request for PDFs to library on kiosk pc\'s. To completely disable this feature, go to "Settings"') ?></span></div>
                 </fieldset>
                 <fieldset>
                     <legend><?php echo __('Policies: Main page') ?></legend>

@@ -206,7 +206,7 @@ function start_screensaver(srcDiv) {
         });
     };
     /**
-     * [Animated screensaver] Caluclate random new position for div
+     * [Animated screensaver] Calculate random new position for div
      * Credits go to Lee at https://stackoverflow.com/a/10386178
      * @return array with new coordinates
      */
@@ -221,7 +221,7 @@ function start_screensaver(srcDiv) {
         return [nh,nw];
     }
     /**
-     * [Animated screensaver] Caluclate random new speed for animation
+     * [Animated screensaver] Calculate random new speed for animation
      * Credits go to Lee at https://stackoverflow.com/a/10386178
      * @return float with speed value
      */

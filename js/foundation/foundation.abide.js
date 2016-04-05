@@ -9,7 +9,7 @@
     settings : {
       live_validate : true,
       focus_on_invalid : true,
-      error_labels: true, // labels with a for="inputId" will recieve an `error` class
+      error_labels: true, // labels with a for="inputId" will receive an `error` class
       timeout : 1000,
       patterns : {
         alpha: /^[a-zA-Z]+$/,
