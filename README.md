@@ -6,7 +6,7 @@ See latest changelog version 0.4: [JournalTouch Version 0.4](doc/github/version_
 # Installation
 ## Prerequisites
 1. Make sure you have Apache and PHP available. Nothing else is needed
-2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily donwload covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
+2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily download covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
 
 ## Quick Start
 1. Create a free [JournalTocs account](http://www.journaltocs.ac.uk/index.php?action=register). While not strictly required, it is highly recommended.
@@ -44,7 +44,7 @@ License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 
 # Dependencies
-- PHP 5.3 or newer ([http://www.php.net]), please use the most up-to-date version you have available
+- PHP 5.5 or newer ([http://www.php.net]), please use the most up-to-date version you have available
 - API key for JournalTocs ([http://www.journaltocs.ac.uk])
 
 # Wiki
