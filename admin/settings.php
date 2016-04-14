@@ -871,6 +871,9 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                     <label for="cfg[sys][data_journals_usr]"><?php echo __('Journal list') ?></label>
                         <input type="text" name="cfg[sys][data_journals_usr]" value="<?php echo $cfg->sys->data_journals_usr  ?>" placeholder="<?php echo $cfg->sys->data_journals ?>" aria-describedby="help_data_journals_usr" />
                         <div id="help_data_journals_usr" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Here remains the journals.csv - all you holdings in one file, nicely updated by JournalTouch via JournalTocs and CrossRef.') ?></span></div>
+                    <label for="cfg[sys][data_version_usr]"><?php echo __('JournalTouch upgrade history') ?></label>
+                        <input type="text" name="cfg[sys][data_upgraded_usr]" value="<?php echo $cfg->sys->data_upgraded_usr  ?>" placeholder="<?php echo $cfg->sys->data_upgraded ?>" aria-describedby="help_data_upgraded_usr" />
+                        <div id="help_data_upgraded_usr" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('This folder is necessary to track completed upgrades of JournaTouch. Since it has to be writable, it is part of the data folder for ease of configuration.') ?></span></div>
                 </fieldset>
             </div>
             <div class="content" id="formTab10">

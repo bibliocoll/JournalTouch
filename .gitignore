@@ -22,3 +22,4 @@ sys/class.GetUsers.php
 #!data/journals/journals.csv
 #!data/journals/tag-remap.txt
 #!data/journals/updates.json.txt
+!data/journals/demo/*
