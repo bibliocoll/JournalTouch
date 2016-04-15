@@ -6,7 +6,7 @@ $this->release_foldersDelete;
 */
 
 $this->release_note =
-'Version 0.5
+'Version 0.4.2
 New: xxxMajorFeaturexxx
 xxx
 
@@ -34,11 +34,11 @@ Known Issues
 
 
 Added 3rd party ressources
-- xxx: URL
+- updated ZURB Foundation 5 to most recent version (5.5.3)
 
 
 Credits
-- xxx
+- @realsobek for painstakingly reporting every issue he ran into during installation. thanks a bunch!
 ';
 
 
