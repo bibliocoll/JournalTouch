@@ -1,12 +1,12 @@
 # About
 JournalTouch provides a touch-optimized, responsive interface for browsing current journal table-of-contents.
 
-See latest changelog version 0.4.1: [JournalTouch Version 0.4](doc/github/version_0.4_unreleased.md).
+See latest changelog version 0.4.2: [JournalTouch Version 0.4](doc/github/version_0.4.x.md).
 
 # Installation
 ## Prerequisites
 1. Make sure you have Apache and PHP available. Nothing else is needed
-2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily donwload covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
+2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily download covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
 
 ## Quick Start
 1. Create a free [JournalTocs account](http://www.journaltocs.ac.uk/index.php?action=register). While not strictly required, it is highly recommended.
@@ -23,7 +23,7 @@ See latest changelog version 0.4.1: [JournalTouch Version 0.4](doc/github/versio
 - If you want to change translations you can use [Poedit](https://poedit.net/) - it's free.
 - As of version 0.4 many thing can be translated in the Settings menu in the admin panel :)
 
-# Current version: This is JournalTouch Version 0.4.1
+# Current version: This is JournalTouch Version 0.4.2
 
 We're using the git-flow project structure, so the master branch always holds the latest stable released version of this project.
 Work towards the next release happens on the `develop` branch. For more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)
@@ -44,7 +44,7 @@ License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 Try here: http://www.coll.mpg.de/bib/jtdemo-public/
 
 # Dependencies
-- PHP 5.3 or newer ([http://www.php.net]), please use the most up-to-date version you have available
+- PHP 5.5 or newer ([http://www.php.net]), please use the most up-to-date version you have available
 - API key for JournalTocs ([http://www.journaltocs.ac.uk])
 
 # Wiki
