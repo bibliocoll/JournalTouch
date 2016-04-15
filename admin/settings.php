@@ -523,7 +523,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                     <div class="row">
                         <div class="small-6 medium-6 large-6 columns">
                             <label for="cfg[prefs][language_default]" aria-describedby="help_language_default"><?php echo __('Default language') ?></label>
-                                <select name="cfg[prefs][language_default]" aria-describedby="help_language_default">
+                                <select id="language_default_select" name="cfg[prefs][language_default]" aria-describedby="help_language_default">
                                 <?php
                                     foreach ($langs_available AS $language => $enabled) {
                                         $disabled = (!$enabled) ? ' disabled' : '';
@@ -536,7 +536,7 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                         </div>
                         <div class="small-6 medium-6 large-6 columns">
                             <label for="cfg[prefs][languages][]" aria-describedby="help_languages"><?php echo __('Enabled languages (multiple choice)') ?></label>
-                                <select id="multiple-languages" multiple data-prompt="<?php echo __('Enable languages') ?>" name="cfg[prefs][languages][]" aria-describedby="help_languages">
+                                <select id="multiple_languages" multiple data-prompt="<?php echo __('Enable languages') ?>" name="cfg[prefs][languages][]" aria-describedby="help_languages">
                                     <?php echo $langs_frm; ?>
                                 </select>
                                 <div id="help_languages" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('Enable all languages that should be available to visitors. For alle actived languages some fields are translatable in this admin menu. If you activate a new language, the translation fields will only show up, after you saved the settings and reload the page.') ?></span></div>
