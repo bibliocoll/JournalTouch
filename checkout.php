@@ -70,18 +70,18 @@ $action = new CheckoutActions($cfg);
                         <label><?php echo __('Your e-mail') ?>
 
 <?php
-if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === TRUE) {
-  require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
-  $userHandle = new GetUsers($cfg);
-  $users = $userHandle->getUsers();
+if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === true) {
+    require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
+    $userHandle = new GetUsers($cfg);
+    $users = $userHandle->getUsers();
 } else {
-  $users = FALSE;
+    $users = false;
 }
 
 // If domain is empty, allow full emails; see also conduit.js
 $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
-if ($users === FALSE) {
+if ($users === false) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     print '<input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>';
 } else {
@@ -248,7 +248,7 @@ if(isset($_POST['mailer']))
                 <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
 // if GetUsers failed or was turned off, allow entering an adress
-if ($users === FALSE) {
+if ($users === false) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
     $coladd      = ($cfg->mail->domain) ? 3 : 0;
