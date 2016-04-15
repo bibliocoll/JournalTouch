@@ -98,8 +98,9 @@ class ListJournals
         $td = strtotime($date);
         $cdate = date("Y-m-d", strtotime("+{$this->api_all->is_new_days} day", $td));
         /* if there is a $date (e.g. from csv), compare with current date */
-        $curDate = new DateTime(NULL, DateTimeZone::UTC); // today
-        $myDate = new DateTime($cdate, DateTimeZone::UTC);
+        $utcTz = new DateTimeZone("UTC");
+        $curDate = new DateTime(NULL, $utcTz); // today
+        $myDate = new DateTime($cdate, $utcTz);
 
         if ($myDate >= $curDate) {
             return $date;
