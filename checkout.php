@@ -7,6 +7,14 @@ $myaction = $_GET;
 require_once($cfg->sys->basepath.'sys/class.CheckoutActions.php');
 /* setup methods & objects */
 $action = new CheckoutActions($cfg);
+
+if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === true) {
+    require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
+    $userHandle = new GetUsers($cfg);
+    $users = $userHandle->getUsers();
+} else {
+    $users = false;
+}
 ?>
 <!doctype html>
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
@@ -70,14 +78,6 @@ $action = new CheckoutActions($cfg);
                         <label><?php echo __('Your e-mail') ?>
 
 <?php
-if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === true) {
-    require_once($cfg->sys->basepath.'sys/class.GetUsers.php');
-    $userHandle = new GetUsers($cfg);
-    $users = $userHandle->getUsers();
-} else {
-    $users = false;
-}
-
 // If domain is empty, allow full emails; see also conduit.js
 $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
