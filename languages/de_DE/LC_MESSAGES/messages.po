@@ -1395,7 +1395,7 @@ msgstr "Elektronischer Bestand"
 
 #: admin/settings.php:940
 msgid "Optional. Are you subscribed for the online edition of the journal? This information is used to decide if a direct download button should be shown; see Your Institution\" setting."
-msgstr "Optional. Beseitzen Sie die elektronische Ausgabe des Journals? Diese Information wird genutzt um zu entscheiden, ob der Direktdownload-Button gezeigt werden soll (siehe Ihre Einrichtung-Einstellungen)."
+msgstr "Optional. Besitzen Sie die elektronische Ausgabe der Zeitschrift? Anhand dieser Information wird entschieden, ob der Direktdownload-Button gezeigt werden soll (siehe die Einstellungen für Ihre Einrichtung)."
 
 #: admin/settings.php:943
 msgid "ToC available"
