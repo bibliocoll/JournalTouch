@@ -39,7 +39,7 @@ if ($btn_cache) {
             $i++;
         }
     }
-    $del_message = "<strong>Sucess: $i files deleted</strong>";
+    $del_message = "<strong>Success: $i files deleted</strong>";
 }
 ?>
 

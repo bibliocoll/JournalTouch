@@ -247,7 +247,7 @@ if(isset($_POST['mailer']))
 
                 <div class="row sendArticlesToLib sendArticlesToUser">
 <?php
-// if GetUsers failed or was turned off, allow entering an adress
+// if GetUsers failed or was turned off, allow entering an address
 if ($users === false) {
     $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
     $postfix     = ($cfg->mail->domain) ? '@'.$cfg->mail->domain : '';
