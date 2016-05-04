@@ -71,11 +71,10 @@ To easily set default and api covers, the admin menu now also features a simple 
 - Sometimes the log is not outputted to the Journal Update page (likely because browser times out); you can manually check data/journals/LastUpdateLog.html or open it from the admin menu
 
 
-
 ##Other
 ###Added 3rd party ressources
 - Jquery UI: https://jqueryui.com/
-- updated ZURB Foundation 5 to latest version (5.5.3):
+- updated ZURB Foundation 5 to latest version (5.5.3): http://foundation.zurb.com/sites/docs/v/5.5.3/
 - foundation-select: https://github.com/roymckenzie/foundation-select
 - jquery.AreYouSure: https://github.com/codedance/jquery.AreYouSure
 - JQuerySerializeCheckbox.js: https://gist.github.com/TaoK/1572512
@@ -87,4 +86,4 @@ Last but not least. Thanks for suggestions and help from:
 - Andreas Bohne-Lang (Medizinische Fakultät Mannheim der Ruprecht-Karls-Universität Heidelberg) - EZproxy, Cover download, RSS
 - Oliver Löwe (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
 - @realsobek for the bug reports that lead to 0.4.2
-';
+- UB-Mannheim for spelling checks

@@ -106,7 +106,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <?php
 /* use filter translations from the config file */
 $filters_used = array_column($journals, 'filter');   // Get only the filters set for all journals
-$filters_used = array_count_values($filters_used);   // Count occurences of each filter
+$filters_used = array_count_values($filters_used);   // Count occurrences of each filter
 
 // Get all filters that are actually used in journals.csv
 foreach ($filters_used as $filter_key => $filter_count) {
