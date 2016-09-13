@@ -6,27 +6,16 @@ $this->release_foldersDelete;
 */
 
 $this->release_note =
-'Version 0.5
-New: xxxMajorFeaturexxx
-xxx
-
-
+'Version 0.4.4
 New
-- Introduced xxx
-- Added option xxx
-
 
 Changes
-- Moved admin/upgrade/history to data/upgraded because folder needs writing permission (Version 0.4 missed this requirement in the installation instructions)
-
 
 Improvements
-- No more errors if new versions of JournalTouch provide new settings. They now always get loaded from default settings.
-
 
 Fixes
-- xxx
-
+- article titles or abstracts from journaltocs or crossref with quotes in them should no longer break our html (technically, this was a dangling markup injection vulnerability, but the attacker would have to control jtocs/cr to exploit it)
+- this version has a correct version number, which should calm the updater
 
 Known Issues
 - The cover update does not work if you use the JournalTocs Premium update. JournalTocs now provides covers via api. Since I got no premium account, I can\'t modify admin/services/getLatestJournalTocPremium.php accordingly.
@@ -34,11 +23,8 @@ Known Issues
 
 
 Added 3rd party ressources
-- xxx: URL
-
 
 Credits
-- xxx
 ';
 
 
@@ -49,16 +35,16 @@ Credits
  *
  *          If you want to copy a single file, spell it out in 'from' and 'to'
 */
-$this->release_filesMove['from'][]  = 'admin/upgrade/history/*';
-$this->release_filesMove['to'][]    = 'data/upgraded/*';
+// $this->release_filesMove['from'][]  = 'admin/upgrade/history/*';
+// $this->release_filesMove['to'][]    = 'data/upgraded/*';
 
 
 /**
  * Delete these folder on update
  */
-$this->release_foldersDelete = array (
-    'admin/upgrade/history'
-);
+//$this->release_foldersDelete = array (
+//    'admin/upgrade/history'
+//);
 
 
 ?>
