@@ -46,7 +46,7 @@ $cfg->sys->kioskPolicy_HTML = get_client_infos($cfg);
 
 // Honor user choices for paths; else set default ones
 $cfg->sys->data_cache    = ($cfg->sys->data_cache_usr)     ? $cfg->sys->data_cache_usr      : $cfg->sys->basepath.'data/cache/';
-$cfg->sys->data_covers   = ($cfg->sys->data_covers_usr)    ? $cfg->sys->data_covers_usr     : $cfg->sys->basepath.'data/covers/';
+$cfg->sys->data_covers   = ($cfg->sys->data_covers_usr)    ? $cfg->sys->data_covers_usr     : 'data/covers/';
 $cfg->sys->data_export   = ($cfg->sys->data_export_usr)    ? $cfg->sys->data_export_usr     : $cfg->sys->basepath.'data/export/';
 $cfg->sys->data_journals = ($cfg->sys->data_journals_usr)  ? $cfg->sys->data_journals_usr   : $cfg->sys->basepath.'data/journals/';
 $cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upgraded_usr   : $cfg->sys->basepath.'data/upgraded/';
