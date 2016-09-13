@@ -87,7 +87,7 @@ if ($users === false) {
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
-        print '<option>'.$name.'</option>';
+        print '<option>'.htmlentities($name).'</option>';
     }
     print'	</select>';
 }

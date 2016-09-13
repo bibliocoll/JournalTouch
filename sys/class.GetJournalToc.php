@@ -363,7 +363,7 @@ class GetJournalInfos {
             $jt_authors = array();
             if (is_object($article->children('dc', TRUE)->creator)) {
                 foreach ($article->children('dc', TRUE)->creator as $author) {
-                    $jt_authors[] = ucwords(trim(preg_replace($aut_patterns, $aut_replacements, $author)));
+                    $jt_authors[] = htmlentities(ucwords(trim(preg_replace($aut_patterns, $aut_replacements, $author))));
                 }
             }
 
@@ -393,7 +393,7 @@ class GetJournalInfos {
             $jt_sort = $jt_sort.$jt_page;
 
 
-            $toc['authors'][]  = htmlentities($jt_authors);
+            $toc['authors'][]  = $jt_authors;
             $toc['title'][]    = htmlentities($jt_title);
             $toc['link'][]     = htmlentities($jt_link);
             $toc['doi'][]      = htmlentities($jt_doi);
@@ -484,7 +484,15 @@ class GetJournalInfos {
             // Article infos
             $cr_authors = array(0 => '');
             if (isset($pcoins['rft_au'])) {
-                $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+                if (is_array($pcoins['rft_au'])) {
+                  $cr_authors = array();
+                  foreach ($pcoins['rft.au'] as $au) {
+                    $cr_authors[] = htmlentities($au);
+                  }
+
+                } else {
+                  $cr_authors = array(0 => htmlentities($pcoins['rft_au']));
+                }
             }
             $cr_title    = $item['title'];
             $cr_link     = $item['doi'];
@@ -514,7 +522,7 @@ class GetJournalInfos {
             // only move to array if year is current or before
             $curY = date("Y");
             if ($cr_year >= $curY-1) {
-                $toc['authors'][]  = htmlentities($cr_authors);
+                $toc['authors'][]  = $cr_authors;
                 $toc['title'][]    = htmlentities($cr_title);
                 $toc['link'][]     = htmlentities($cr_link);
                 $toc['doi'][]      = htmlentities($cr_doi);
