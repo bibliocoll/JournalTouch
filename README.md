@@ -1,7 +1,7 @@
 # About
 JournalTouch provides a touch-optimized, responsive interface for browsing current journal table-of-contents.
 
-See latest changelog version 0.4.3: [JournalTouch Version 0.4](doc/github/version_0.4.x.md).
+See latest changelog version 0.4.4: [JournalTouch Version 0.4](doc/github/version_0.4.x.md).
 
 # Installation
 ## Prerequisites
@@ -23,7 +23,7 @@ See latest changelog version 0.4.3: [JournalTouch Version 0.4](doc/github/versio
 - If you want to change translations you can use [Poedit](https://poedit.net/) - it's free.
 - As of version 0.4 many thing can be translated in the Settings menu in the admin panel :)
 
-# Current version: This is JournalTouch Version 0.4.3
+# Current version: This is JournalTouch Version 0.4.4
 
 We're using the git-flow project structure, so the master branch always holds the latest stable released version of this project.
 Work towards the next release happens on the `develop` branch. For more information, please refer to the [Wiki] (https://github.com/bibliocoll/JournalTouch/wiki/Contributing)

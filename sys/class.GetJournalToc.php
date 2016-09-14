@@ -363,7 +363,7 @@ class GetJournalInfos {
             $jt_authors = array();
             if (is_object($article->children('dc', TRUE)->creator)) {
                 foreach ($article->children('dc', TRUE)->creator as $author) {
-                    $jt_authors[] = ucwords(trim(preg_replace($aut_patterns, $aut_replacements, $author)));
+                    $jt_authors[] = htmlentities(ucwords(trim(preg_replace($aut_patterns, $aut_replacements, $author))));
                 }
             }
 
@@ -394,19 +394,19 @@ class GetJournalInfos {
 
 
             $toc['authors'][]  = $jt_authors;
-            $toc['title'][]    = $jt_title;
-            $toc['link'][]     = $jt_link;
-            $toc['doi'][]      = $jt_doi;
-            $toc['abstract'][] = $jt_abstract;
-            $toc['date'][]     = $jt_date;
-            $toc['page'][]     = $jt_page;
+            $toc['title'][]    = htmlentities($jt_title);
+            $toc['link'][]     = htmlentities($jt_link);
+            $toc['doi'][]      = htmlentities($jt_doi);
+            $toc['abstract'][] = htmlentities($jt_abstract);
+            $toc['date'][]     = htmlentities($jt_date);
+            $toc['page'][]     = htmlentities($jt_page);
 
-            $toc['source'][]   = $jt_source;
+            $toc['source'][]   = htmlentities($jt_source);
             $toc['year'][]     = date('Y', strtotime($jt_date));
-            $toc['volume'][]   = $jt_volume;
-            $toc['issue'][]    = $jt_issue;
+            $toc['volume'][]   = htmlentities($jt_volume);
+            $toc['issue'][]    = htmlentities($jt_issue);
 
-            $toc['sort'][]     = $jt_sort;
+            $toc['sort'][]     = htmlentities($jt_sort);
 
             //i really want a doi. so remember this one for crossref! ~~krug 05.08.2015
             // Zeumer 2015-11-29: weird sometimes less mssing dois than toc[dois]
@@ -484,7 +484,15 @@ class GetJournalInfos {
             // Article infos
             $cr_authors = array(0 => '');
             if (isset($pcoins['rft_au'])) {
-                $cr_authors  = (is_array($pcoins['rft_au'])) ? $pcoins['rft.au'] : array(0 => $pcoins['rft_au']);
+                if (is_array($pcoins['rft_au'])) {
+                  $cr_authors = array();
+                  foreach ($pcoins['rft.au'] as $au) {
+                    $cr_authors[] = htmlentities($au);
+                  }
+
+                } else {
+                  $cr_authors = array(0 => htmlentities($pcoins['rft_au']));
+                }
             }
             $cr_title    = $item['title'];
             $cr_link     = $item['doi'];
@@ -515,19 +523,19 @@ class GetJournalInfos {
             $curY = date("Y");
             if ($cr_year >= $curY-1) {
                 $toc['authors'][]  = $cr_authors;
-                $toc['title'][]    = $cr_title;
-                $toc['link'][]     = $cr_link;
-                $toc['doi'][]      = $cr_doi;
-                $toc['abstract'][] = $cr_abstract;
-                $toc['date'][]     = $cr_date;
-                $toc['page'][]     = $cr_page;
+                $toc['title'][]    = htmlentities($cr_title);
+                $toc['link'][]     = htmlentities($cr_link);
+                $toc['doi'][]      = htmlentities($cr_doi);
+                $toc['abstract'][] = htmlentities($cr_abstract);
+                $toc['date'][]     = htmlentities($cr_date);
+                $toc['page'][]     = htmlentities($cr_page);
 
-                $toc['source'][]   = $cr_source;
-                $toc['year'][]     = $cr_year;
-                $toc['volume'][]   = $cr_vol;
-                $toc['issue'][]    = $cr_issue;
+                $toc['source'][]   = htmlentities($cr_source);
+                $toc['year'][]     = htmlentities($cr_year);
+                $toc['volume'][]   = htmlentities($cr_vol);
+                $toc['issue'][]    = htmlentities($cr_issue);
 
-                $toc['sort'][]     = $cr_sort;
+                $toc['sort'][]     = htmlentities($cr_sort);
             }
         }
 

@@ -34,7 +34,7 @@ msgstr ""
 #: checkout.php:83
 #: checkout.php:236
 #: checkout.php:245
-msgid "Your e-mail"
+msgid "Your e-mail address"
 msgstr ""
 
 #: checkout.php:83
@@ -44,7 +44,7 @@ msgstr ""
 
 #: checkout.php:95
 #: checkout.php:264
-msgid "please choose a name"
+msgid "Please, choose a name."
 msgstr ""
 
 #: checkout.php:102
@@ -53,7 +53,7 @@ msgstr ""
 
 #: checkout.php:103
 #: checkout.php:281
-msgid "if you have any comments for us please put them here!"
+msgid "If you have any comments for us please put them here!"
 msgstr ""
 
 #: checkout.php:114

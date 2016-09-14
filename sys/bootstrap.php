@@ -53,7 +53,7 @@ $cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upg
 
 
 // Set current version
-$cfg->sys->current_jt_version = "0.4.2";
+$cfg->sys->current_jt_version = '0.4.4';
 
 // Check if upgrade is required
 if (check_upgrade_required($cfg) && !defined('UPGRADE')) {

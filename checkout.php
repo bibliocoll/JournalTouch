@@ -82,19 +82,19 @@ if (isset($cfg->dbusers->userlist) && $cfg->dbusers->userlist === true) {
 $allowed = ($cfg->mail->domain) ? 'mail_domain' : 'mail_all';
 
 if ($users === false) {
-    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail');
+    $placeholder = ($cfg->mail->domain) ? __('your username') : __('Your e-mail address');
     print '<input name="username" id="'.$allowed.'" placeholder="'.$placeholder.'" type="text"/>';
 } else {
     print '<select name="username">';
     foreach ($users as $name=>$pw) {
-        print '<option>'.$name.'</option>';
+        print '<option>'.htmlentities($name).'</option>';
     }
     print'	</select>';
 }
 ?>
 
                         </label>
-                        <small id="errorUsername" class="error" style="display:none"><?php echo __('please choose a name') ?></small>
+                        <small id="errorUsername" class="error" style="display:none"><?php echo __('Please, choose a name.') ?></small>
 
                     </div>
                 </div>
@@ -102,7 +102,7 @@ if ($users === false) {
                 <div class="row">
                     <div class="small-12 columns">
                         <label><?php echo __('Your feedback message') ?>
-                            <textarea name="message" placeholder="<?php echo __('if you have any comments for us please put them here!'); ?>"><?php if (isset($_GET['message'])) { print $_GET['message']; } ?></textarea>
+                            <textarea name="message" placeholder="<?php echo __('If you have any comments for us please put them here!'); ?>"><?php if (isset($_GET['message'])) { print $_GET['message']; } ?></textarea>
                         </label>
                     </div>
                 </div>
@@ -287,7 +287,7 @@ if ($users === false) {
                 <div class="row sendArticlesToUser">
                     <div class="small-12 columns">
                         <label><?php echo __('Attach citations?') ?></label><!--<small class="error">beware: experimental feature</small>-->
-                        <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote</label>
+                        <input type="radio" id="attachFileEndnote" name="attachFile" value="endnote"><label for="attachFileEndnote">Endnote/Citavi</label>
                         <!-- <input type="radio" id="attachFileBibTeX" name="attachFile" value="bibtex" disabled="disabled"><label for="attachFileBibTeX">BibTeX</label> -->
                         <input type="radio" id="attachFileCSV" name="attachFile" value="csv"><label for="attachFileBibTeX">CSV</label>
                     </div>

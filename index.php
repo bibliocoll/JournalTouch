@@ -579,11 +579,15 @@ simpleCart.bind( 'beforeRemove' , function(){
 simpleCart.bind( 'afterAdd' , function(){
     // add class to button (for CSS formatting)
     $('#myArticles').addClass('full');
+    $("#shelfIsEmpty").hide();
+    $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
 });
 
 simpleCart.bind( 'load' , function(){
     if (simpleCart.quantity() > 0) {
         // add class to button (for CSS formatting)
+        $("#shelfIsEmpty").hide();
+        $('#checkOutButton, #emptyCartButton, #emptyConfirmButton').show();
         $('#myArticles').addClass('full');
      }
 });
