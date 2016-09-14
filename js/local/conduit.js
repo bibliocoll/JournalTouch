@@ -583,16 +583,18 @@ $(document).ready(function() {
 
 	// Open web link in popup ('on' works only from Reveal box!)
 	$(document).on("click","a.popup",function(event) {
-        event.preventDefault();
+    event.preventDefault();
 		//		$('a.popup').click(function(event) {
 		var url = $(this).attr("href");
-
-        // Load meta buttons above toc (if visible); but not on checkout page
-        if ($(this).parents('.listitem')) {
-    		issn = $(this).parents('.listitem').attr('data-issn').trim();
-            fetch_metabuttons_toc(issn);
-        }
-
+		try {
+      // Load meta buttons above toc (if visible); but not on checkout page
+      if ($(this).parents('.listitem')) {
+  		issn = $(this).parents('.listitem').attr('data-issn').trim();
+          fetch_metabuttons_toc(issn);
+      }
+		} catch (e) {
+			//console.log(e.message)
+		}
 		createModalFrame(url);
 		$('#externalPopover').foundation('reveal', 'open');
 		return false;
