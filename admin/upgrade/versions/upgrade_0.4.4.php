@@ -35,8 +35,8 @@ Credits
  *
  *          If you want to copy a single file, spell it out in 'from' and 'to'
 */
-// $this->release_filesMove['from'][]  = 'admin/upgrade/history/*';
-// $this->release_filesMove['to'][]    = 'data/upgraded/*';
+$this->release_filesMove['from'][]  = 'data/config/config-default.php';
+$this->release_filesMove['to'][]    = 'sys/config-default.php';
 
 
 /**
