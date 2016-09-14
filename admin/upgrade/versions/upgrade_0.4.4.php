@@ -10,21 +10,27 @@ $this->release_note =
 New
 
 Changes
+- config-default.php was moved from data/config/ to sys/, which means theres is one less non-user file in data/
 
 Improvements
 
 Fixes
 - article titles or abstracts from journaltocs or crossref with quotes in them should no longer break our html (technically, this was a dangling markup injection vulnerability, but the attacker would have to control jtocs/cr to exploit it)
-- this version has a correct version number, which should calm the updater
+- this version has a correct version number, which should calm the updater.
+- links to external sites now properly open in an iframe-popover when opened from the "view/print" page.
+- opening the cart via the "send articles" button in the lower right no longer leads to a cart with missing buttons
+- some more spelling fixes
 
 Known Issues
 - The cover update does not work if you use the JournalTocs Premium update. JournalTocs now provides covers via api. Since I got no premium account, I can\'t modify admin/services/getLatestJournalTocPremium.php accordingly.
 - Sometimes the log is not outputted to the Journal Update page (likely because browser times out); you can manually check data/journals/LastUpdateLog.html or open it from the admin menu
+- JournalTOCs has faulty data for some journals, with all information stored in the "abstract" field. if you find a journal where they have this problem, tell them.
 
 
 Added 3rd party ressources
 
 Credits
+ @realsobek, @MPIKGLibrary and @reicheltmediadesign for their bug reports and comments
 ';
 
 
@@ -35,8 +41,8 @@ Credits
  *
  *          If you want to copy a single file, spell it out in 'from' and 'to'
 */
-// $this->release_filesMove['from'][]  = 'admin/upgrade/history/*';
-// $this->release_filesMove['to'][]    = 'data/upgraded/*';
+$this->release_filesMove['from'][]  = 'data/config/config-default.php';
+$this->release_filesMove['to'][]    = 'sys/config-default.php';
 
 
 /**

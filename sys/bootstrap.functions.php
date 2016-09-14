@@ -25,7 +25,7 @@ function cfg_load($user_cfg = '') {
     if (!$user_cfg) $user_cfg = realpath( __DIR__ ).'/../data/config/user_config.php';
 
     // Always load the config-default.php, so nothing is ever missed; povides $cfg_demo
-    require(realpath( __DIR__ ).'/../data/config/config-default.php');
+    require(realpath( __DIR__ ).'/config-default.php');
 
     // If user config exist, add
     if (file_exists($user_cfg)) {
@@ -174,7 +174,7 @@ function valid_issn($input, $validate = TRUE) {
 /**
   * @brief  Save same data to identify client and only locally apply some
   *         jquery actions. Useful for kiosk or library pc's
-  * 
+  *
   * @return \b str HTML to output on page and that can be used by javascript
   */
 function get_client_infos($cfg) {
