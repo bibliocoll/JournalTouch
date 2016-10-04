@@ -5,7 +5,7 @@ See latest changelog version 0.4.4: [JournalTouch Version 0.4](doc/github/versio
 
 # Installation
 ## Prerequisites
-1. Make sure you have Apache and PHP available. Nothing else is needed
+1. Make sure you have Apache and PHP 5.5 or newer available. Nothing else is needed
 2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily download covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
 
 ## Quick Start
@@ -13,10 +13,10 @@ See latest changelog version 0.4.4: [JournalTouch Version 0.4](doc/github/versio
 2. Download JournalTouch (e.g. by clicking "Download ZIP", upper right on this page).
 3. Extract to your Apache webfolder. Make sure the data folder and its subfolders are writable by the webserver (e.g. the user/group www-data under Ubuntu).
 4. Go to http://myinstallation.net/admin and set enter your JournalTocs mail there (you also should make sure this folder is secured, e.g. by using a htaccess).
-5. Edit data/cover/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg->csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.
+5. Edit data/journals/journals.csv (text editor or e.g. Libre Office calc). In a text editor each semicolon represents a column separator. Print-ISSNs must be in column six (five semicolons before), E-ISSN go in column 6 (six semicolons before). There are no column headers, but you can refer to the config.php file and check the $cfg->csv_col variables to see what goes where. Yet, you only really need the ISSNs to get started, although we recommend adding the journal title too, e.g. if it can't be found online.
 6. Go again to http://myinstallation.net/admin. Under "Update options" click "Start" and wait. You journals.csv will get updated.
 7. Go to http://myinstallation.net/ and be happy
-8. IF you are happy, set a cronjob to call http://myinstallation.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
+8. If you are happy, set a cronjob to call http://myinstallation.net/admin/updateTocs.php?optRecent=on&upd=true daily or use http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true if you want to update covers too (Settings menu or release infos for 0.4 for more infos)
   1. Example Cronjob: wget -O - -q -t 1 "http://myinstallation.net/admin/updateTocs.php?optRecent=on&optCovers=on&upd=true" >/dev/null 2>&1
 
 ## Translations
