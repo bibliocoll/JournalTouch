@@ -316,7 +316,13 @@ class GetJournalInfos {
      */
     public function journaltoc_fetch_toc($issn, $user) {
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
+        libxml_use_internal_errors(true); //NOTE: comment out to have xml parser error messages in the frontend
         $xml = simplexml_load_file($jtURL);
+
+        // foreach (libxml_get_errors() as $error) {
+            //TODO: alternatively, output error messages somewhere else
+        //}
+        libxml_clear_errors();
 
         // Nothing usable returned
         if (!is_object($xml)) {
