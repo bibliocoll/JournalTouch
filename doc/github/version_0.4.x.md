@@ -86,3 +86,5 @@ Last but not least. Thanks for suggestions and help from:
 - Andreas Bohne-Lang (Medizinische Fakultät Mannheim der Ruprecht-Karls-Universität Heidelberg) - EZproxy, Cover download, RSS
 - Oliver Löwe (UB TU Bergakademie Freiberg) - incent to at least provide some quick start info, showing JournalTouch on "the Console" :)
 - @realsobek for the bug reports that lead to 0.4.2
+- UB-Mannheim for spelling checks
+- @buczek for making 0.4.5 not wanting to run the updater on a fresh install
