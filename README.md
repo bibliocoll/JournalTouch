@@ -5,7 +5,7 @@ See latest changelog version 0.4.4: [JournalTouch Version 0.4](doc/github/versio
 
 # Installation
 ## Prerequisites
-1. Make sure you have Apache and PHP 5.5 or newer available. Nothing else is needed
+1. HTTP Server (we assume `Apache 2`) with `PHP 5.5` or newer (for `mbstring`) and access to the Internet (the server will have to contact journaltocs.com / crossref.org)
 2. Be aware that much of the fun is with showing covers. But we don't (really) know freely available sources. JournalTocs Premium offers cover links, yet is not free. With version 0.4 JournalTouch introduces a way to easily download covers. But make sure to read the disclaimer in the admin menu very carefully - you might lack legal rights to use it at all.
 
 ## Quick Start
