@@ -287,7 +287,7 @@ class ListJournals
                 $row++;
                 $date = ($data[$this->csv_col->date]) ? $data[$this->csv_col->date] : $no_date;
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
-                $filter = explode(',', $filter);
+                $filter = explode($this->csv_file->separator2, $filter);
                 foreach ($filter as $filterindex => $filtername) {
                   $filter[$filterindex] = trim($filtername); //strip whitespace
                 }

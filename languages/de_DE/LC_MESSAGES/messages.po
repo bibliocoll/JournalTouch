@@ -1296,11 +1296,18 @@ msgstr "Feld-Trennzeichen"
 msgid "Field separator used in your CSV-file"
 msgstr "In Ihrer CSV-Datei verwendetes Trennzeichen"
 
+msgid "Second-level Field separator used in your CSV-file (e.g. Filters list)"
+msgstr "In Ihrer CSV-Datei verwendetes Trennzeichen zweiter Ordnung (z.B. für die Filterliste)"
+
 msgid "Separator"
 msgstr "Trennzeichen"
 
-msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \";\""
-msgstr "Das (Sonder)zeichen, mit dem in Ihrer CSV-Datei die Felder getrennt werden, üblicherweise \",\" oder \";\". Voreinstellung: \";\""
+msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \",\""
+msgstr "Das (Sonder)zeichen, mit dem in Ihrer CSV-Datei die Felder getrennt werden, üblicherweise \",\" oder \";\". Voreinstellung: \",\""
+
+
+msgid "The glyph used to separate list entries within fields in your CSV file, usually either \",\" or \";\". Defaults to \";\". Must NOT equal the separator used between fields!"
+msgstr "Das (Sonder)zeichen, mit dem in Ihrer CSV-Datei Werte innerhalb eines Felder getrennt werden, üblicherweise \",\" oder \";\". Voreinstellung: \";\". Darf nicht gleich sein mit dem Separator zwischen Feldern!"
 
 #: admin/settings.php:871
 #: admin/settings.php:886

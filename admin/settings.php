@@ -883,6 +883,10 @@ function frm_input_translatable($name, $value, $label = '', $aria = '', $textare
                     <label for="cfg[csv_file][separator]"><?php echo __('Separator') ?></label>
                         <input type="text" name="cfg[csv_file][separator]" value="<?php echo $cfg->csv_file->separator  ?>" placeholder="<?php echo $cfg->sys->data_journals ?>" aria-describedby="help_csv_separator" />
                         <div id="help_csv_separator" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The glyph used to separate fields in your CSV file, usually either "," or ";". Defaults to ","') ?></span></div>
+                    <legend><?php echo __('Second-level Field separator used in your CSV-file (e.g. Filters list)') ?></legend>
+                    <label for="cfg[csv_file][separator2]"><?php echo __('Separator') . ' 2'?></label>
+                        <input type="text" name="cfg[csv_file][separator2]" value="<?php echo $cfg->csv_file->separator2  ?>" placeholder="<?php echo $cfg->sys->data_journals ?>" aria-describedby="help_csv_separator2" />
+                        <div id="help_csv_separator2" class="tooltip" role="tooltip" aria-hidden="true"><span><?php echo __('The glyph used to separate list entries within fields in your CSV file, usually either "," or ";". Defaults to ";". Must NOT equal the separator used between fields!') ?></span></div>
                 </fieldset>
                 <h3><?php echo __('Journals.csv Columns') ?></h3>
                 <fieldset>
