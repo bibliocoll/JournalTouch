@@ -287,6 +287,10 @@ class ListJournals
                 $row++;
                 $date = ($data[$this->csv_col->date]) ? $data[$this->csv_col->date] : $no_date;
                 $filter = (!empty($data[$this->csv_col->filter]) ? strtolower($data[$this->csv_col->filter]) : "any");
+                $filter = explode(',', $filter);
+                foreach ($filter as $filterindex => $filtername) {
+                  $filter[$filterindex] = trim($filtername); //strip whitespace
+                }
                 $topJ = (!empty($data[$this->csv_col->important]) ? "topJ" : "");
                 $img = $this->getCover($myISSN);
                 $new = $this->isCurrent($data[$this->csv_col->date],$myISSN);
