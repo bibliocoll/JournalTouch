@@ -332,6 +332,15 @@ $cfg_demo->sys->data_journals_usr    = ''; // If empty it points to data/journal
 $cfg_demo->sys->data_upgraded_usr    = ''; // If empty it points to data/upgraded
 
 
+$cfg_demo->csv_file = new stdClass();
+/**
+* Which file with your journals information and what separator is used.
+* Usually you won't have to change anything here.
+*/
+$cfg_demo->csv_file->separator  = ';'; // field separator
+$cfg_demo->csv_file->separator2 = ','; // separator for values within list-type fields
+
+
 
 $cfg_demo->csv_col = new stdClass();
 /**

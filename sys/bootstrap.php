@@ -51,9 +51,14 @@ $cfg->sys->data_export   = ($cfg->sys->data_export_usr)    ? $cfg->sys->data_exp
 $cfg->sys->data_journals = ($cfg->sys->data_journals_usr)  ? $cfg->sys->data_journals_usr   : $cfg->sys->basepath.'data/journals/';
 $cfg->sys->data_upgraded = ($cfg->sys->data_upgraded_usr)  ? $cfg->sys->data_upgraded_usr   : $cfg->sys->basepath.'data/upgraded/';
 
+$cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
+
+if ($cfg->csv_file->separator === $cfg->csv_file->separator2) {
+    echo '<div class="alert-box warning radius">You have set the same value for the Field Separator for your CSV file and the Separator between multiple values within a field. Please go to the <a href="admin/settings.php">Admin Page</a> (journal.csv tab) and make sure the two Separators are different and as you need them.</div>';
+}
 
 // Set current version
-$cfg->sys->current_jt_version = '0.4.4';
+$cfg->sys->current_jt_version = '0.4.5';
 
 // Check if upgrade is required
 if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
@@ -67,15 +72,6 @@ $cfg->prefs->cache_max_age = "365 days";     // files older than this are purged
 
 // Output files and paths - there is no point to bother a user with changing it
 $cfg->api->jt->outfile  = $cfg->sys->data_journals.'updates.json.txt';   // Premium: The file the updates are saved to temporarily. You'll have to run services/getLatestJournals.php regularly
-
-$cfg->csv_file = new stdClass();
-/**
-* Which file with your journals information and what separator is used.
-* Usually you won't have to change anything here.
-*/
-$cfg->csv_file->separator  = ';';
-$cfg->csv_file->path       = $cfg->sys->data_journals.'journals.csv';
-
 
 // If this is a new installation, set the demo files as default
 if (isset($cfg->sys->newInstallation)) {

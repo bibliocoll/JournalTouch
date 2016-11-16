@@ -23,14 +23,14 @@
  */
 require('sys/bootstrap.php');
 
-$lang = $cfg->prefs->current_lang; //Shorthand for current language
-
-// Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
 //require_once('./config.php'); // './' makes sure we don't go looking for config.php in the include_path
 if (!isset($cfg)) {
     echo 'something is very wrong with the configuration';
     exit;
 }
+$lang = $cfg->prefs->current_lang; //Shorthand for current language
+
+// Experimental - testing caching. May be nearly pointless if JT is only used in a local kiosk
 if ($cfg->prefs->cache_main_enable) {
     $query = (isset($_GET)) ? md5(implode('&', $_GET)) : '';
     $cachefile    = $cfg->sys->data_cache."index_$query.cache.html";
@@ -106,6 +106,7 @@ $journalUpdates = $lister->getJournalUpdates();
 <?php
 /* use filter translations from the config file */
 $filters_used = array_column($journals, 'filter');   // Get only the filters set for all journals
+$filters_used = array_reduce($filters_used, "array_merge", array()); // $filters_used still is an array of arrays, flatten.
 $filters_used = array_count_values($filters_used);   // Count occurrences of each filter
 
 // Get all filters that are actually used in journals.csv
@@ -422,8 +423,12 @@ foreach ($journals as $j) {
     $new_issues = ($j['new']) ? ' new' : '';
     $len_title = strlen($j['title']);
     $nbr_title = ($len_title < 50) ? $j['title'] : substr($j['title'], 0, strrpos($j['title'], ' ', $len_title * -1 + 50)).' ...';
+    $filterclasses = '';
+    foreach ($j['filter'] as $filtertext) {
+      $filterclasses .= 'filter-'.$filtertext.' ';
+    }
 
-    echo '<div class="listitem search-filter filter-'.$j['filter'].' '.$j['tags'].' '.$j['topJ'].$new_issues.'" data-title="'.$j['title'].'" data-issn="'.$j['id'].'" data-pubdate="'. strtotime($j['date']).'">';
+    echo '<div class="listitem search-filter '.$filterclasses.$j['tags'].' '.$j['topJ'].$new_issues.'" data-title="'.$j['title'].'" data-issn="'.$j['id'].'" data-pubdate="'. strtotime($j['date']).'">';
     echo '<span id="toc-'.$j['id'].'" data-issn="'.$j['id'].'" data-pubdate="'.$j['date'].'"></span>';
     echo '<img class="getTOC '.$j['id'].'" src="img/lazyloader.gif" data-src="'.$j['img'].'">';
 

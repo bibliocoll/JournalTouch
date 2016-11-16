@@ -370,6 +370,7 @@ class GetJournalInfos {
         if ($max_age_days == 15 && $this->api_all->is_new_days) $max_age_days = $this->api_all->is_new_days;
 
         $jtURL = "http://www.journaltocs.ac.uk/api/journals/$issn?output=articles&user=$user";
+        libxml_use_internal_errors(true); //NOTE: comment out to have xml parser error messages in the frontend
         $xml = simplexml_load_file($jtURL);
 
         if (!is_object($xml)) return false;
@@ -399,11 +400,20 @@ class GetJournalInfos {
             $this->journal_row['new'] = 'JTnew';
             $this->hits_jt_new++;
             $this->log .= "<b>JT (recent)</b>: ".$this->journal_row['title']." ($issn) was updated <a href=\"$jtURL\" target=\"_blank\"> within the last $max_age_days days</a><br>";
+            foreach (libxml_get_errors() as $error) {
+                $this->log .="XML Parser Error (line ".$error->line."): ".$error->message."<br>";
+            }
+            libxml_clear_errors();
+
             return true;
         }
         elseif (!$is_new && $recent_date) {
             $this->journal_row['new'] = '';
             $this->log .= "<b>JT (recent)</b>: ".$this->journal_row['title']." (<a href=\"$jtURL\" target=\"_blank\">$issn</a>) has no new update within the last $max_age_days days<br>";
+            foreach (libxml_get_errors() as $error) {
+                $this->log .="XML Parser Error (line ".$error->line."): ".$error->message."<br>";
+            }
+            libxml_clear_errors();
         }
         else {
             return false;

@@ -1278,10 +1278,16 @@ msgstr ""
 msgid "Field separator used in your CSV-file"
 msgstr ""
 
+msgid "Second-level Field separator used in your CSV-file (e.g. Filters list)"
+msgstr ""
+
 msgid "Separator"
 msgstr ""
 
 msgid "The glyph used to separate fields in your CSV file, usually either \",\" or \";\". Defaults to \";\""
+msgstr ""
+
+msgid "The glyph used to separate list entries within fields in your CSV file, usually either \",\" or \";\". Defaults to \",\". Must NOT equal the separator used between fields!"
 msgstr ""
 
 #: admin/settings.php:871
