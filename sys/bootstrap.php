@@ -58,7 +58,7 @@ if ($cfg->csv_file->separator === $cfg->csv_file->separator2) {
 }
 
 // Set current version
-$cfg->sys->current_jt_version = '0.4.4';
+$cfg->sys->current_jt_version = '0.4.5';
 
 // Check if upgrade is required
 if (check_upgrade_required($cfg) && !defined('UPGRADE')) {
