@@ -49,9 +49,6 @@ Work towards the next release happens on the `develop` branch. For more informat
 
 License: http://www.gnu.org/licenses/gpl.html GPL version 3 or higher
 
-# Live Demo
-Try here: http://www.coll.mpg.de/bib/jtdemo-public/
-
 # Dependencies
 - PHP 5.5 or newer ([http://www.php.net]), please use the most up-to-date version you have available
 - API key for JournalTocs ([http://www.journaltocs.ac.uk])
